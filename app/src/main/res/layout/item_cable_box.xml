@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/ll_cable"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_gravity="center"
+            android:id="@+id/vcnum"
+            android:drawableRight="@drawable/ic_copy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="2321"
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="normal"/>
+
+        <TextView
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_gravity="center"
+            android:id="@+id/stbno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:drawableRight="@drawable/ic_copy"
+            android:text="1212"
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="normal"/>
+
+        <TextView
+            android:layout_gravity="center"
+            android:drawableRight="@drawable/ic_copy"
+            android:id="@+id/cafnum"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="1214"
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="normal"/>
+
+        <TextView
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/expirtydate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="22-03-20"
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="normal"/>
+
+
+        <TextView
+            android:layout_gravity="center"
+
+            android:id="@+id/amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:gravity="right"
+            android:paddingRight="@dimen/_20sdp"
+            android:text="50.0"
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="normal"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cable_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:paddingLeft="@dimen/_15sdp"
+            android:text="Status"
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:id="@+id/cable_lpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="LP Date"
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="bold"></TextView>
+
+
+        <TextView
+            android:id="@+id/cable_lpamount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:paddingLeft="@dimen/_20sdp"
+            android:text="LP Amount"
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="bold"></TextView>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

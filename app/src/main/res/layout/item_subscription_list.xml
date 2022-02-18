@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:background="@drawable/rounded_butoon_border"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp">
+
+        <TextView
+            android:id="@+id/txt_subscription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:paddingLeft="@dimen/_15sdp"
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/_11sdp"></TextView>
+
+
+        <TextView
+            android:id="@+id/txt_mrp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:paddingLeft="@dimen/_20sdp"
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/_11sdp"></TextView>
+
+        <TextView
+            android:id="@+id/txt_gst"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:paddingLeft="@dimen/_10sdp"
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/_11sdp"></TextView>
+
+
+        <TextView
+            android:id="@+id/txt_amount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:paddingLeft="@dimen/_10sdp"
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/_11sdp"></TextView>
+
+    </LinearLayout>
+
+
+</LinearLayout>

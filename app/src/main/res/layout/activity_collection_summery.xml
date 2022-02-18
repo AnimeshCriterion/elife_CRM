@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:paddingLeft="@dimen/_10sdp"
+
+                    android:text="Collection Summary"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_14sdp"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_200sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_weight="0.5"
+                        android:background="@color/darkblue"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+
+                            android:text="Monthly Total"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+                            android:text="Collection"
+
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+                        <View
+                            android:layout_width="@dimen/_150sdp"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@color/White" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+                            android:text="Rs 150"
+
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_16sdp"></TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+
+                            android:text="From 2 customers"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_10sdp"></TextView>
+
+                        <View
+                            android:layout_width="@dimen/_150sdp"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@color/White" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+                            android:text="Total Pending"
+
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_12sdp"></TextView>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+                            android:text="Amount"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+
+                            android:text="Rs 85.78"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_16sdp"></TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+
+                            android:text="From 2 customers"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_10sdp"></TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_200sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_weight="0.5"
+                        android:background="@color/darkblue"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+
+                            android:text="Today's Payment"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+
+                            android:text="Collected"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+                        <View
+                            android:layout_width="@dimen/_150sdp"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@color/White" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+
+                            android:text="Rs 50"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_16sdp"></TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+
+                            android:text="From 2 customers"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_10sdp"></TextView>
+
+                        <View
+                            android:layout_width="@dimen/_150sdp"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@color/White" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+                            android:text="Monthly Online Collection"
+
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+
+                            android:text="Rs 0"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_16sdp"></TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+                            android:text="From 0 customers"
+
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_10sdp"></TextView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/darkblue" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="Customer Summary"
+
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_14sdp"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_weight="0.5"
+                        android:background="@color/darkblue"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+                            android:text="Todays Customers"
+
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+
+                            android:text="9"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_16sdp"></TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+
+                            android:text="In which 0 inactive"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_10sdp"></TextView>
+
+                        <View
+                            android:layout_width="@dimen/_150sdp"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@color/darkblue" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:background="@color/darkblue"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_weight="0.5"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+                            android:text="Total Subscription"
+
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+
+                            android:text="50"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_16sdp"></TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+                            android:text="From 1 Active"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/_10sdp"></TextView>
+
+                        <View
+                            android:layout_width="@dimen/_150sdp"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@color/darkblue" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

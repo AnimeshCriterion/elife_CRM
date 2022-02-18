@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_45sdp"
+        android:background="@drawable/gradient_bg_splash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:padding="@dimen/_4sdp"
+            android:src="@drawable/back_arrow" />
+
+        <TextView
+            android:id="@+id/tool_bar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_toRightOf="@id/iv_back"
+            android:fontFamily="@font/abeezee_regular"
+            android:text="Complaint Receipt"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/rounded_butoon"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="HEADER"
+                        android:textAlignment="center"
+                        android:textColor="@color/darkblue"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <View
+                        android:layout_width="@dimen/_300sdp"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@color/border" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:text="Name                  "
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_threedots" />
+
+                        <TextView
+                            android:id="@+id/txt_cust_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:text="Subscriber Id"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_threedots" />
+
+                        <TextView
+                            android:id="@+id/txt_subid"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:text="Complaint Code"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_threedots" />
+
+                        <TextView
+                            android:id="@+id/txt_complaint_code"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:text="Complaint Date "
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_threedots" />
+
+                        <TextView
+                            android:id="@+id/txt_comp_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:text="Complaint"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_threedots" />
+
+                        <TextView
+                            android:id="@+id/txt_complaint"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:text="Complaint Code"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold"></TextView>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_threedots" />
+
+                        <TextView
+                            android:id="@+id/txt_comp_code"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold"></TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:text="Record time"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+                        <TextView
+
+                            android:id="@+id/txt_rec_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:text="21-Jan-20 7:30 PM"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"></TextView>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="@dimen/_300sdp"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@color/border" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/rounded_butoon"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginBottom="@dimen/_7sdp"
+                                    android:layout_weight="0.5"
+                                    android:fontFamily="@font/abeezee_regular"
+                                    android:paddingLeft="@dimen/_10sdp"
+                                    android:text="Product"
+                                    android:textColor="@color/Black"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold"></TextView>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_1sdp"
+                                    android:background="@color/darkblue">
+
+                                </View>
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:layout_marginBottom="@dimen/_4sdp"
+                                    android:layout_weight="0.5"
+                                    android:fontFamily="@font/abeezee_regular"
+                                    android:paddingLeft="@dimen/_10sdp"
+
+                                    android:text="Priority"
+                                    android:textColor="@color/Black"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold"></TextView>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_1sdp"
+                                    android:background="@color/darkblue">
+
+                                </View>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:layout_marginBottom="@dimen/_4sdp"
+                                    android:layout_weight="0.5"
+                                    android:fontFamily="@font/abeezee_regular"
+                                    android:paddingLeft="@dimen/_10sdp"
+                                    android:text="Complaint Status"
+                                    android:textColor="@color/Black"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold"></TextView>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_1sdp"
+                                    android:background="@color/darkblue">
+
+                                </View>
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:layout_marginBottom="@dimen/_4sdp"
+                                    android:layout_weight="0.5"
+                                    android:fontFamily="@font/abeezee_regular"
+                                    android:paddingLeft="@dimen/_10sdp"
+                                    android:text="Assign To"
+                                    android:textColor="@color/Black"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold"></TextView>
+
+                            </LinearLayout>
+
+
+                            <View
+                                android:layout_width="@dimen/_1sdp"
+                                android:layout_height="match_parent"
+                                android:background="@color/darkblue">
+
+                            </View>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5"
+                                android:orientation="vertical">
+
+
+                                <TextView
+                                    android:id="@+id/txt_product"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginBottom="@dimen/_7sdp"
+                                    android:layout_weight="0.5"
+                                    android:fontFamily="@font/abeezee_regular"
+                                    android:paddingLeft="@dimen/_7sdp"
+                                    android:textColor="@color/Black"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold"></TextView>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_1sdp"
+                                    android:background="@color/darkblue" />
+
+                                <TextView
+                                    android:id="@+id/txt_priority"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:layout_marginBottom="@dimen/_4sdp"
+                                    android:layout_weight="0.5"
+                                    android:fontFamily="@font/abeezee_regular"
+                                    android:paddingLeft="@dimen/_7sdp"
+                                    android:textColor="@color/Black"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_1sdp"
+                                    android:background="@color/darkblue" />
+
+                                <TextView
+                                    android:id="@+id/txt_comp_status"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:layout_marginBottom="@dimen/_4sdp"
+                                    android:layout_weight="0.5"
+                                    android:fontFamily="@font/abeezee_regular"
+                                    android:paddingLeft="@dimen/_7sdp"
+                                    android:textColor="@color/Black"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_1sdp"
+                                    android:background="@color/darkblue" />
+
+                                <TextView
+                                    android:id="@+id/txt_assignto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:layout_marginBottom="@dimen/_4sdp"
+                                    android:layout_weight="0.5"
+                                    android:fontFamily="@font/abeezee_regular"
+                                    android:paddingLeft="@dimen/_7sdp"
+                                    android:textColor="@color/Black"
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="@dimen/_300sdp"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@color/border" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="Thank You"
+                        android:textAlignment="center"
+                        android:textColor="@color/darkblue"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="@dimen/_300sdp"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@color/border" />
+
+                    <ListView
+                        android:id="@+id/lv_footer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@color/darkblue"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/share"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_15sdp"
+                android:text="Share Receipt "
+                android:textColor="@color/blue"
+                android:textSize="@dimen/_14sdp"
+                android:visibility="gone"></TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_conn"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:background="@drawable/rounded_button_darkblue"
+                    android:text="Connect"
+                    android:textColor="@color/White"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btn_done"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:layout_weight="5"
+                    android:background="@drawable/rounded_button_darkblue"
+                    android:text="PRINT"
+                    android:textAllCaps="false"
+                    android:textColor="@color/White"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btn_dis"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:background="@drawable/rounded_button_darkblue"
+                    android:text="Disconnect"
+                    android:textColor="@color/White"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btn_next"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:layout_weight="5"
+                    android:background="@drawable/rounded_button_darkblue"
+                    android:text="Next"
+                    android:textAllCaps="false"
+                    android:textColor="@color/White" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/share_receipt_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:drawableEnd="@drawable/ic_baseline_mobile_screen_share_24"
+                    android:text="Share Receipt"
+                    android:textColor="@color/Black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/share_on_whatsapp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:drawableEnd="@drawable/whatsapp"
+                    android:text="Share on Whatsapp"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:textColor="@color/Black"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@color/darkblue"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:layout_weight="0.5"
+            android:fontFamily="@font/abeezee_regular"
+            android:gravity="center"
+            android:text="eLife CRM"
+            android:textAlignment="center"
+            android:textColor="@color/White"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold"/>
+
+
+        <ImageView
+            android:id="@+id/iv_all"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_weight="0.8"
+            android:paddingRight="@dimen/_10sdp"
+            android:src="@drawable/ic_baseline_message_white"
+
+            android:visibility="gone">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/iv_whatsappshare"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_weight="0.6"
+            android:paddingRight="@dimen/_90sdp"
+            android:src="@drawable/ic_whatsapp"
+            android:visibility="gone">
+
+        </ImageView>
+
+    </LinearLayout>
+
+</LinearLayout>

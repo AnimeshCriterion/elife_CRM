@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:drawablePadding="@dimen/_10sdp"
+            android:gravity="center"
+            android:paddingLeft="@dimen/_10sdp"
+            android:text="Are you sure you want to submit?     "
+            android:textColor="@color/darkblue"
+            android:textSize="@dimen/_14sdp"/>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:paddingLeft="@dimen/_20sdp"
+                android:text="CANCEL"
+                android:gravity="right"
+                android:textColor="@color/red"
+                android:textSize="@dimen/_12sdp"></TextView>
+
+            <TextView
+                android:id="@+id/Submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:paddingLeft="@dimen/_30sdp"
+                android:text="SUBMIT"
+                android:textColor="@color/darkblue"
+                android:textSize="@dimen/_12sdp"></TextView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

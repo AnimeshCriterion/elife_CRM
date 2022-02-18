@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.InvoiceHistoryActivity">
+
+    <RelativeLayout
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_45sdp"
+        android:background="@drawable/gradient_bg_splash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:padding="@dimen/_4sdp"
+            android:src="@drawable/back_arrow" />
+
+        <TextView
+            android:textStyle="bold"
+            android:fontFamily="@font/abeezee_regular"
+            android:id="@+id/tool_bar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_toRightOf="@id/iv_back"
+            android:text="Invoice History"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18sdp" />
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:id="@+id/custmersearch_edit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginEnd="@dimen/_45sdp"
+            android:background="@drawable/rounded_button_edit"
+            android:drawableLeft="@drawable/ic_baseline_search_24"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/abeezee_regular"
+            android:hint="Search"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/_10sdp"
+            android:textSize="@dimen/_14sdp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cv_filter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/pb_searching"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/custmersearch_edit"
+            app:layout_constraintEnd_toEndOf="@+id/custmersearch_edit"
+            app:layout_constraintTop_toTopOf="@+id/custmersearch_edit" />
+
+        <androidx.cardview.widget.CardView
+
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:id="@+id/cv_filter"
+            android:layout_width="35dp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/filter_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_funnel" />
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.github.aakira.expandablelayout.ExpandableLinearLayout
+        android:id="@+id/expandableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        app:ael_duration="500"
+        app:ael_expanded="false"
+        app:ael_interpolator="bounce"
+        app:ael_orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:fontFamily="@font/abeezee_regular"
+            android:gravity="center"
+            android:text="Select Employee"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/edittext_bg1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/spn_employee"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_weight="9"
+                android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_submit_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="16dp"
+            android:text="Submit"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+    <LinearLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:orientation="vertical">
+        <ScrollView
+            android:layout_marginTop="@dimen/_5sdp"
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:background="@color/colorPrimaryDark"
+                            android:id="@+id/today"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+                            android:text="Today"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+                        <TextView
+                            android:id="@+id/yesterday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+                            android:text="Yesterday"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+                        <TextView
+                            android:id="@+id/thismonth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+                            android:text="This Month"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+
+                        <TextView
+                            android:id="@+id/datepicker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:gravity="center"
+                            android:text="Date"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:orientation="horizontal">
+
+
+                    <View
+                        android:id="@+id/v1"
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_weight="0.2"
+                        android:background="@color/darkblue"
+                        android:visibility="invisible" />
+
+                    <View
+                        android:id="@+id/v2"
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_weight="0.2"
+                        android:background="@color/darkblue"
+                        android:visibility="invisible" />
+
+                    <View
+                        android:id="@+id/v3"
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_weight="0.2"
+                        android:background="@color/darkblue"
+                        android:visibility="invisible" />
+
+                    <View
+                        android:id="@+id/v4"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_3sdp"
+                        android:layout_weight="0.2"
+                        android:background="@color/darkblue"
+                        android:visibility="invisible" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/from_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:gravity="center"
+                        android:text="Today"
+                        android:textColor="@color/Black"
+                        android:textSize="@dimen/_12sdp"/>
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/to_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:gravity="center"
+                        android:text="Today"
+                        android:textColor="@color/Black"
+                        android:textSize="@dimen/_12sdp"/>
+                </LinearLayout>
+                <TextView
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:textAlignment="center"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:id="@+id/txt_not_found"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/_18sdp"
+                    android:text="There is no data you are searching for"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:id="@+id/rv_invoice_list"
+                    tools:listitem="@layout/item_invoice_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:padding="@dimen/_8sdp"
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/darkblue"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/txt_total_collection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:fontFamily="@font/abeezee_regular"
+                android:gravity="bottom"
+                android:paddingLeft="@dimen/_20sdp"
+                android:textStyle="bold"
+                android:textColor="@color/White"
+                android:textSize="@dimen/_15sdp"/>
+
+            <TextView
+                android:id="@+id/txt_total_balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:fontFamily="@font/abeezee_regular"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:paddingLeft="@dimen/_20sdp"
+                android:textColor="@color/White"
+                android:textStyle="bold"
+                android:textSize="@dimen/_15sdp"></TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

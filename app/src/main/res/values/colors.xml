@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <color name="colorPrimary">#07889b</color>
+    <color name="colorPrimaryDark">#005b6d</color>
+    <color name="colorAccent">#54b8cc</color>
+
+    <!--<color name="colorPrimary">#232F34</color>
+   <color name="colorPrimaryDark">#344955</color>
+   <color name="colorAccent">#F9AA33</color>-->
+
+
+    <color name="colorBlack">#000000</color>
+    <color name="background">#005b6d</color>
+    <color name="White">#FFFFFF</color>
+    <color name="blue">#54b8cc</color>
+    <color name="green">#4CAF50</color>
+    <color name="red">#FF5722</color>
+    <color name="border">#DEDEDE</color>
+
+    <color name="Black">#000</color>
+    <color name="text_black">#000</color>
+    <color name="darkblue">#005b6d</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="Unassigned">#F2451C</color>
+    <color name="Assign">#FDCB46</color>
+    <color name="Open">#83E2E9</color>
+    <color name="InProgress">#619FFC</color>
+    <color name="Closed">#43BF57</color>
+    <color name="Reopen">#b33bff</color>
+    <color name="Reassign">#b33bff</color>
+
+    <color name="Paid">#43BF57</color>
+    <color name="UnPaid_UnpaidForwarded">#F2451C</color>
+    <color name="PartialPaid_PartialForwarded">#FDCB46</color>
+
+    <color name="Active">#b33bff</color>
+    <color name="Inactive">#F2451C</color>
+
+
+
+
+</resources>
