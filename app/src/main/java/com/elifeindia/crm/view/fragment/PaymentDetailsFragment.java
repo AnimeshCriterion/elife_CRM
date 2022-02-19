@@ -2,6 +2,7 @@ package com.elifeindia.crm.view.fragment;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -89,10 +91,10 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     ExpandableLayout expandableLayout;
     CardView cv_filter;
     String receiptDateTime, no, amount, dateTime, areaId = "", roleType, companyId, empName, empMob, empId = "0", custId = "0", fromDate, toDate, triplePlayId = "0", value = "";
-    SearchableSpinner spn_emp;
+    SearchableSpinner searchableSpinner;
     Spinner spinnerArea;
     EditText paymentsearch_edit;
-    ArrayAdapter<String> adapter_state_adj1;
+    ArrayAdapter<String> adapterEmployeeList;
     ArrayAdapter<String> adapterAreaList;
     ImageView iv_calendar;
     ProgressBar pb_searching;
@@ -104,6 +106,8 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     String selectedPhoto = "filename";
     Bitmap image;
     List<PaymentRecieptList.PaymentReciept> paymentReciepts;
+    Button btn_share;
+    ProgressDialog progressBar;
 
 
     private static final String TAG = "PdfCreatorActivity";
@@ -117,12 +121,10 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_payment_details, container, false);
 
-        spn_emp = v.findViewById(R.id.spn_employee);
+        searchableSpinner = v.findViewById(R.id.spn_employee);
         spinnerArea = v.findViewById(R.id.spn_area2);
         iv_calendar = v.findViewById(R.id.iv_calendar);
         paymentsearch_edit = v.findViewById(R.id.custmersearch_edit);
@@ -130,6 +132,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         expandableLayout = v.findViewById(R.id.expandableLayout);
         txt_total_collection = v.findViewById(R.id.txt_total_collection);
         txt_total_balance = v.findViewById(R.id.txt_total_balance);
+        btn_share = v.findViewById(R.id.btn_share);
 
         all = v.findViewById(R.id.all);
         today = v.findViewById(R.id.today);
@@ -146,6 +149,12 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         today.setBackgroundResource(R.color.colorPrimaryDark);
         today.setTextColor(getResources().getColor(R.color.white));
 
+        companyId = SharedPrefsData.getString(getActivity(), Constants.CompanyID, Constants.PREF_NAME);
+        roleType = SharedPrefsData.getString(getActivity(), Constants.RoleType, Constants.PREF_NAME);
+        empName = SharedPrefsData.getString(getActivity(), Constants.EmployeeName, Constants.PREF_NAME);
+        empMob = SharedPrefsData.getString(getActivity(), Constants.EmployeeMob, Constants.PREF_NAME);
+        empId = String.valueOf(SharedPrefsData.getInt(getActivity(), Constants.EmpId, Constants.PREF_NAME));
+
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.US);
         Date date = new Date();
         receiptDateTime = sdf1.format(date);
@@ -153,7 +162,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         context = getActivity();
         mFragmentManager = getFragmentManager();
 
-        v.findViewById(R.id.btn_share).setOnClickListener(new View.OnClickListener() {
+        btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Bitmap receiptBitmap;
@@ -169,17 +178,6 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                 }
             }
         });
-
-        companyId = SharedPrefsData.getString(getActivity(), Constants.CompanyID, Constants.PREF_NAME);
-        roleType = SharedPrefsData.getString(getActivity(), Constants.RoleType, Constants.PREF_NAME);
-        empName = SharedPrefsData.getString(getActivity(), Constants.EmployeeName, Constants.PREF_NAME);
-        empMob = SharedPrefsData.getString(getActivity(), Constants.EmployeeMob, Constants.PREF_NAME);
-
-        if (roleType.equals("Admin")) {
-            empId = "0";
-        } else {
-            empId = String.valueOf(SharedPrefsData.getInt(getActivity(), Constants.EmpId, Constants.PREF_NAME));
-        }
 
 
         all.setOnClickListener(new View.OnClickListener() {
@@ -207,7 +205,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                 to_date.setVisibility(View.GONE);
                 from_date.setVisibility(View.GONE);
                 from_date.setText((todayDateString()));
-                presenter.loadPaymentList(getActivity(), companyId, custId, todayDateString(), todayDateString(), triplePlayId, value, empId);
+                presenter.loadPaymentListDateWise(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
 
             }
@@ -234,8 +232,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                 to_date.setVisibility(View.GONE);
                 from_date.setVisibility(View.VISIBLE);
                 from_date.setText((todayDateString()));
-                presenter.loadPaymentList(getActivity(), companyId, custId, todayDateString(), todayDateString(), triplePlayId, value, empId);
-
+                presenter.loadPaymentListDateWise(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
             }
         });
@@ -262,8 +259,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                 to_date.setVisibility(View.GONE);
                 from_date.setVisibility(View.VISIBLE);
                 from_date.setText((getYesterdayDateString()));
-                presenter.loadPaymentList(getActivity(), companyId, custId, getYesterdayDateString(), getYesterdayDateString(), triplePlayId, value, empId);
-
+                presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
             }
         });
@@ -307,7 +303,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                 fromDate = startDateStr;
                 toDate = endDateStr;
 
-                presenter.loadPaymentList(getActivity(), companyId, custId, startDateStr, endDateStr, triplePlayId, value, empId);
+                presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
             }
         });
@@ -327,7 +323,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
                 datepicker.setBackgroundResource(R.color.colorPrimaryDark);
                 datepicker.setTextColor(getResources().getColor(R.color.white));
-                 //loadRangeDatePickerMultipleBooking();
+                loadRangeDatePickerMultipleBooking();
 
             }
         });
@@ -335,7 +331,12 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         viewUtils = new ViewUtils();
         presenter = new PaymentListPresenter(this);
         presenter.start();
-        presenter.loadArea(getContext(), "2", "2");
+        progressBar = new ProgressDialog(getContext());
+        progressBar.setCancelable(false);//you can cancel it by pressing back button
+        progressBar.setMessage("Please wait...");
+        presenter.loadArea(getContext(), companyId, empId);
+        presenter.loadEmployeeList(getContext(), companyId,empId,roleType);
+
 
 
 //        paymentsearch_edit.addTextChangedListener(new TextWatcher() {
@@ -361,7 +362,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    presenter.loadPaymentListForSearch(getActivity(), companyId, custId, fromDate, toDate, triplePlayId, v.toString(), empId);
+                    presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
                     pb_searching.setVisibility(View.VISIBLE);
 
                     return true;
@@ -394,10 +395,8 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
         fromDate = todayDateString();
         toDate = todayDateString();
-
-        presenter.loadPaymentList(getActivity(), companyId, custId, todayDateString(), todayDateString(), triplePlayId, value, empId);
-        presenter.loadEmployeeList(getActivity(), companyId, String.valueOf(SharedPrefsData.getInt(getActivity(), Constants.EmpId, Constants.PREF_NAME)), roleType);
-
+        progressBar.show();
+        presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
         return v;
     }
@@ -425,13 +424,13 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
     @Override
     public void showError(String message) {
-        //viewUtils.toast(getActivity(), message);
+        viewUtils.toast(getActivity(), message);
 
     }
 
     @Override
     public void showResult(PaymentRecieptList paymentRecieptList) {
-
+        progressBar.dismiss();
         txt_total_balance.setText("Payments\n" + paymentRecieptList.getPaymentReciept().size());
         txt_total_collection.setText("Total Amount\n" + paymentRecieptList.getTotal_Paid_amount());
         no = String.valueOf(paymentRecieptList.getPaymentReciept().size());
@@ -457,11 +456,11 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
     @Override
     public void showEmployeeList(EmployeeList employeeList) {
-        final List<EmployeeList.Employee> employee = employeeList.getEmployee();
+        final  List<EmployeeList.Employee> employee = employeeList.getEmployee();
 
         final ArrayList<String> empNames = new ArrayList<>();
-        final ArrayList<String> empIds = new ArrayList<String>();
-        final ArrayList<String> empMobNos = new ArrayList<String>();
+        final ArrayList<String> empIds = new ArrayList<>();
+        final ArrayList<String> empMobNos = new ArrayList<>();
 
         empNames.add("--Select--");
         empMobNos.add("All Contacts");
@@ -470,17 +469,14 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         for (int i = 0; i < employee.size(); i++) {
             empNames.add(employee.get(i).getEmployeeName());
             empIds.add(employee.get(i).getEmployeeID().toString());
-            empMobNos.add(employee.get(i).getContactNo().toString());
+            empMobNos.add(employee.get(i).getContactNo());
 
         }
 
-
-        adapter_state_adj1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, empNames);
-        adapter_state_adj1.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spn_emp.setAdapter(adapter_state_adj1);
-
-        AdapterView.OnItemSelectedListener onItemSelectedListener2 =
-                new AdapterView.OnItemSelectedListener() {
+        adapterEmployeeList = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, empNames);
+        adapterEmployeeList.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        searchableSpinner.setAdapter(adapterEmployeeList);
+        AdapterView.OnItemSelectedListener onItemSelectedListener2 = new AdapterView.OnItemSelectedListener() {
 
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -488,24 +484,11 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
                             empId = empIds.get(position);
                             empName = empNames.get(position);
-                            empMob = empMobNos.get(position);
-
-                            presenter.loadPaymentList(getActivity(), companyId, custId, fromDate, toDate, triplePlayId, value, empId);
-                            //SharedPrefsData.putString(getActivity(), Constants.EmpId, empId, Constants.PREF_NAME);
+                             empMob = empMobNos.get(position);
+                            presenter.loadEmployeeList(getContext(), companyId,empId,roleType);
 
                         } else {
-
-                            if (roleType.equals("Admin")) {
-                                empName = "All Employees";
-                                empMob = "All Contacts";
-                                empId = "0";
-                                presenter.loadPaymentList(getActivity(), companyId, custId, fromDate, toDate, triplePlayId, value, empId);
-                                //SharedPrefsData.putString(getActivity(), Constants.EmpId, "0", Constants.PREF_NAME);
-
-                            } else {
-                                presenter.loadPaymentList(getActivity(), companyId, custId, fromDate, toDate, triplePlayId, value, empId);
-                            }
-
+                            presenter.loadEmployeeList(getContext(), companyId,empId,roleType);
                         }
 
                     }
@@ -514,7 +497,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 };
-        spn_emp.setOnItemSelectedListener(onItemSelectedListener2);
+        searchableSpinner.setOnItemSelectedListener(onItemSelectedListener2);
     }
 
     @Override
@@ -531,8 +514,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         adapterAreaList = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, areaNames);
         adapterAreaList.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerArea.setAdapter(adapterAreaList);
-        AdapterView.OnItemSelectedListener onItemSelectedListener2 =
-                new AdapterView.OnItemSelectedListener() {
+        AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
 
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -543,7 +525,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                             areaId = areaIds.get(position);
                             SharedPrefsData.putString(getContext(), Constants.CustAreaId, areaId, Constants.PREF_NAME);
                             areaId = SharedPrefsData.getString(getContext(), Constants.CustAreaId, Constants.PREF_NAME);
-                            //  presenter.loadCustomersDateWise(getContext(), companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+                            presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
                           /*  if (i != 1) {
                                 presenter.loadCustomersDateWise(getContext(), companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
@@ -556,7 +538,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                             SharedPrefsData.putString(getContext(), Constants.CustAreaId, areaId, Constants.PREF_NAME);
                             value = "";
                             paymentsearch_edit.setText("");
-                            // presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+                            presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
                            /* if (i != 1) {
                                 presenter.loadCustomersDateWise(getContext(), companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
@@ -583,7 +565,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 };
-        spinnerArea.setOnItemSelectedListener(onItemSelectedListener2);
+        spinnerArea.setOnItemSelectedListener(onItemSelectedListener);
 
     }
 
@@ -646,7 +628,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                 fromDate = selectedDateStart;
                 toDate = selectedDateEnd;
 
-                presenter.loadPaymentList(getActivity(), companyId, custId, fromDate, toDate, triplePlayId, value, empId);
+                presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
 
                 //showSlotSelectionCustomDialog(datepair.first,datepair.second);

@@ -93,7 +93,6 @@ public class CustomerListPresenter implements CustomerListContract.Presenter {
 
     @Override
     public void loadArea(Context context, String CompanyId, String Employee_ID) {
-
         if(NetCheck.isInternetConnection(context)){
             NetworkUtils.getUserApiInstance()
                     .getArea(CompanyId, Employee_ID)
@@ -157,7 +156,6 @@ public class CustomerListPresenter implements CustomerListContract.Presenter {
 
     @Override
     public void loadCustomersDateWise(Context context, String Company_ID, String User_ID, String Employee_ID, String AreaId, String Date, String StatusId, String count, String pageNo, String Value) {
-
         if(NetCheck.isInternetConnection(context)){
             NetworkUtils.getUserApiInstance()
                     .getCustemersListDateWise(Company_ID, User_ID, Employee_ID, AreaId, Date, StatusId, count, pageNo,Value)

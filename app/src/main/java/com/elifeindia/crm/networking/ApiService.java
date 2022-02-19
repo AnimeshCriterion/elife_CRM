@@ -139,7 +139,8 @@ public interface ApiService {
             @Query("To_Date") String To_Date,
             @Query("Triple_play_ID") String Triple_play_ID,
             @Query("Value") String Value,
-            @Query("Employee_ID") String Employee_ID);
+            @Query("Employee_ID") String Employee_ID,
+            @Query("Area_ID") String Area_ID);
 
     @GET("Values/GetComplainttypelist?")
     Observable<ComplaintTypeList> getComplaintTypeList(

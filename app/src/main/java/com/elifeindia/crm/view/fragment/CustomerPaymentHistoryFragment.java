@@ -146,7 +146,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
                 to_date.setVisibility(View.GONE);
                 from_date.setVisibility(View.GONE);
 
-                presenter.loadPaymentList(getActivity(), companyId, custId, "", "", triplePlayId, value, empId);
+                presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
 
             }
@@ -176,7 +176,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
                 to_date.setVisibility(View.GONE);
                 from_date.setVisibility(View.VISIBLE);
                 from_date.setText((todayDateString()));
-                presenter.loadPaymentList(getActivity(), companyId, custId, todayDateString(), todayDateString(), triplePlayId, value, empId);
+                presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
 
             }
@@ -207,7 +207,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
                 to_date.setVisibility(View.GONE);
                 from_date.setVisibility(View.VISIBLE);
                 from_date.setText((getYesterdayDateString()));
-                presenter.loadPaymentList(getActivity(), companyId, custId, getYesterdayDateString(), getYesterdayDateString(), triplePlayId, value, empId);
+                presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
             }
         });
@@ -249,7 +249,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
                 fromDate = startDateStr;
                 toDate = endDateStr;
 
-                 presenter.loadPaymentList(getActivity(), companyId, custId, startDateStr, endDateStr, triplePlayId, value, empId);
+                presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
             }
         });
@@ -287,7 +287,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                presenter.loadPaymentList(getActivity(), companyId, custId, fromDate, toDate, triplePlayId, charSequence.toString(), empId);
+                presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
             }
 
@@ -305,7 +305,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
                 if (expandableLayout.isExpanded()) {
                     expandableLayout.collapse();
                 } else {
-                    presenter.loadEmployeeList(getActivity(), companyId, SharedPrefsData.getString(getActivity(), Constants.EmpId, Constants.PREF_NAME), roleType);
+                    presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
                     expandableLayout.expand();
                 }
             }
@@ -315,7 +315,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
         fromDate = todayDateString();
         toDate = todayDateString();
 
-        presenter.loadPaymentList(getActivity(), companyId, custId, "", "", triplePlayId, value, empId);
+        presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
 
 
@@ -425,7 +425,6 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
         txt_total_balance.setText("No Of Payments\n"+paymentRecieptList.getPaymentReciept().size());
         txt_total_collection.setText("Total Amount\n"+paymentRecieptList.getTotal_Paid_amount());
 
-
         List<PaymentRecieptList.PaymentReciept> paymentReciepts = paymentRecieptList.getPaymentReciept();
 
         if(paymentReciepts.size()==0){
@@ -467,7 +466,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
                         }else{
                             empId = employee.get(position).getEmployeeID().toString();
                         }
-                        presenter.loadPaymentList(getActivity(), companyId, custId,fromDate,toDate,triplePlayId,value,empId);
+                        presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
                         //SharedPrefsData.putString(getActivity(), Constants.EmpId, empId, Constants.PREF_NAME);
 
@@ -542,7 +541,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
                 fromDate = selectedDateStart;
                 toDate = selectedDateEnd;
 
-                presenter.loadPaymentList(getActivity(), companyId, custId, fromDate, toDate, triplePlayId, value, empId);
+                presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
 
 
                 //showSlotSelectionCustomDialog(datepair.first,datepair.second);

@@ -62,8 +62,6 @@ public class CollectionDetailsActivity extends AppCompatActivity{
         Pager pager = new Pager(getSupportFragmentManager());
         pager.addFrag(new PaymentDetailsFragment(),"Details");
       //  pager.addFrag(new PaymentSummaryFragment(),"Summary");
-
-
         viewPager.setAdapter(pager);
     }
 

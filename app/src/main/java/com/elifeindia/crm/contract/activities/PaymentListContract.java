@@ -20,11 +20,11 @@ public interface PaymentListContract {
 
     interface Presenter {
         void start();
-        void loadPaymentListForSearch(Context context, String Company_ID, String Customer_ID, String From_Date, String To_Date, String Triple_play_ID, String Value, String Employee_ID);
-        void loadPaymentList(Context context, String Company_ID, String Customer_ID, String From_Date, String To_Date, String Triple_play_ID, String Value, String Employee_ID);
-        void loadEmployeeList(Context context, String Company_ID, String id, String Role_type);
+        void loadPaymentListForSearch(Context context, String Company_ID, String Customer_ID, String From_Date, String To_Date, String Triple_play_ID, String Value, String Employee_ID,String Area_ID);
+        void loadPaymentList(Context context, String Company_ID, String Customer_ID, String From_Date, String To_Date, String Triple_play_ID, String Value, String Employee_ID,String Area_ID);
         void loadArea(Context context, String CompanyId, String Employee_ID);
-        void loadCustomersDateWise(Context context, String Company_ID, String User_ID, String Employee_ID, String AreaId, String Date);
+        void loadPaymentListDateWise(Context context, String Company_ID, String Customer_ID, String From_Date, String To_Date, String Triple_play_ID, String Value, String Employee_ID,String Area_ID);
+        void loadEmployeeList(Context context, String Company_ID,String Employee_ID,String Role_Type);
 
     }
 

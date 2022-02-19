@@ -57,7 +57,7 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
     String areaId = "0", companyId, empId, userId, StatusId = "0", selectCont = "100", pageNo = "1", Value = "";
     Spinner spn_area, spn_status;
     EditText custmersearch_edit;
-    ArrayAdapter<String> adapter_state_adj1, adapterStatus;
+    ArrayAdapter<String> areaListAdapter, adapterStatus;
     ImageView iv_calendar, iv_search;
     AdapterCallback adapterCallback;
     TextView txt_not_found, tool_bar_text, txt_req_date;
@@ -281,9 +281,9 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
             areaNames.add(area.get(i).getAreaName());
             areaIds.add(area.get(i).getAreaID().toString());
         }
-        adapter_state_adj1 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, areaNames);
-        adapter_state_adj1.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spn_area.setAdapter(adapter_state_adj1);
+        areaListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, areaNames);
+        areaListAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spn_area.setAdapter(areaListAdapter);
         AdapterView.OnItemSelectedListener onItemSelectedListener2 =
                 new AdapterView.OnItemSelectedListener() {
 
