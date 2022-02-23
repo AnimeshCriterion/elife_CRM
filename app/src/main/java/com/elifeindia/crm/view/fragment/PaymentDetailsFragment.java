@@ -143,6 +143,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         to_date = v.findViewById(R.id.to_date);
         pb_searching = v.findViewById(R.id.pb_searching);
         txt_not_found = v.findViewById(R.id.txt_not_found);
+        cv_filter = v.findViewById(R.id.cv_filter);
 
         all.setVisibility(View.GONE);
 
@@ -165,10 +166,10 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Bitmap receiptBitmap;
-//                receiptBitmap = takeScreenshot(v);
-//                saveBitmap(receiptBitmap);
-//                shareItOnWhatsApp();
+               /* Bitmap receiptBitmap;
+                receiptBitmap = takeScreenshot(v);
+                saveBitmap(receiptBitmap);
+                shareItOnWhatsApp();*/
                 try {
                     createPdfWrapper();
                 } catch (FileNotFoundException e) {
@@ -205,7 +206,8 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                 to_date.setVisibility(View.GONE);
                 from_date.setVisibility(View.GONE);
                 from_date.setText((todayDateString()));
-                presenter.loadPaymentListDateWise(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
+                progressBar.show();
+                presenter.loadPaymentListDateWise(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
 
 
             }
@@ -232,7 +234,8 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                 to_date.setVisibility(View.GONE);
                 from_date.setVisibility(View.VISIBLE);
                 from_date.setText((todayDateString()));
-                presenter.loadPaymentListDateWise(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
+                progressBar.show();
+                presenter.loadPaymentListDateWise(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
 
             }
         });
@@ -259,7 +262,8 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                 to_date.setVisibility(View.GONE);
                 from_date.setVisibility(View.VISIBLE);
                 from_date.setText((getYesterdayDateString()));
-                presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
+                progressBar.show();
+                presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
 
             }
         });
@@ -302,8 +306,8 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
                 fromDate = startDateStr;
                 toDate = endDateStr;
-
-                presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
+                progressBar.show();
+                presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
 
             }
         });
@@ -335,34 +339,13 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         progressBar.setCancelable(false);//you can cancel it by pressing back button
         progressBar.setMessage("Please wait...");
         presenter.loadArea(getContext(), companyId, empId);
-        presenter.loadEmployeeList(getContext(), companyId,empId,roleType);
-
-
-
-//        paymentsearch_edit.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                presenter.loadPaymentListForSearch(getActivity(), companyId, custId, fromDate, toDate, triplePlayId, charSequence.toString(), empId);
-//                pb_searching.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//            }
-//        });
-
-
+        presenter.loadEmployeeList(getContext(), companyId, empId, roleType);
         paymentsearch_edit.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
+                    progressBar.show();
+                    presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
                     pb_searching.setVisibility(View.VISIBLE);
 
                     return true;
@@ -372,7 +355,6 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         });
 
 
-        cv_filter = v.findViewById(R.id.cv_filter);
         cv_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -396,7 +378,27 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         fromDate = todayDateString();
         toDate = todayDateString();
         progressBar.show();
-        presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
+        presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
+
+
+//        paymentsearch_edit.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                presenter.loadPaymentListForSearch(getActivity(), companyId, custId, fromDate, toDate, triplePlayId, charSequence.toString(), empId);
+//                pb_searching.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
+
 
         return v;
     }
@@ -456,7 +458,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
     @Override
     public void showEmployeeList(EmployeeList employeeList) {
-        final  List<EmployeeList.Employee> employee = employeeList.getEmployee();
+        final List<EmployeeList.Employee> employee = employeeList.getEmployee();
 
         final ArrayList<String> empNames = new ArrayList<>();
         final ArrayList<String> empIds = new ArrayList<>();
@@ -473,30 +475,31 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
         }
 
-        adapterEmployeeList = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, empNames);
+        adapterEmployeeList = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, empNames);
         adapterEmployeeList.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         searchableSpinner.setAdapter(adapterEmployeeList);
         AdapterView.OnItemSelectedListener onItemSelectedListener2 = new AdapterView.OnItemSelectedListener() {
 
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        if (position > 0) {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    empId = empIds.get(position);
+                    empName = empNames.get(position);
+                    empMob = empMobNos.get(position);
+                    paymentsearch_edit.setText(empName);
+                    progressBar.show();
+                    presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
 
-                            empId = empIds.get(position);
-                            empName = empNames.get(position);
-                             empMob = empMobNos.get(position);
-                            presenter.loadEmployeeList(getContext(), companyId,empId,roleType);
+                } else {
+                    // presenter.loadEmployeeList(getContext(), companyId, empId, roleType);
+                }
 
-                        } else {
-                            presenter.loadEmployeeList(getContext(), companyId,empId,roleType);
-                        }
+            }
 
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                };
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
         searchableSpinner.setOnItemSelectedListener(onItemSelectedListener2);
     }
 
@@ -516,16 +519,17 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         spinnerArea.setAdapter(adapterAreaList);
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
 
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                        if (position > 0) {
-                            value = "";
-                            paymentsearch_edit.setText("");
-                            areaId = areaIds.get(position);
-                            SharedPrefsData.putString(getContext(), Constants.CustAreaId, areaId, Constants.PREF_NAME);
-                            areaId = SharedPrefsData.getString(getContext(), Constants.CustAreaId, Constants.PREF_NAME);
-                            presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
+                if (position > 0) {
+                    value = "";
+                    paymentsearch_edit.setText("");
+                    areaId = areaIds.get(position);
+                    SharedPrefsData.putString(getContext(), Constants.CustAreaId, areaId, Constants.PREF_NAME);
+                    areaId = SharedPrefsData.getString(getContext(), Constants.CustAreaId, Constants.PREF_NAME);
+                    progressBar.show();
+                    presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
 
                           /*  if (i != 1) {
                                 presenter.loadCustomersDateWise(getContext(), companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
@@ -533,19 +537,20 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
                             }*/
 
-                        } else {
-                            areaId = "0";
-                            SharedPrefsData.putString(getContext(), Constants.CustAreaId, areaId, Constants.PREF_NAME);
-                            value = "";
-                            paymentsearch_edit.setText("");
-                            presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
+                } else {
+                    areaId = "0";
+                    SharedPrefsData.putString(getContext(), Constants.CustAreaId, areaId, Constants.PREF_NAME);
+                    value = "";
+                    paymentsearch_edit.setText("");
+                    progressBar.show();
+                    presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
 
                            /* if (i != 1) {
                                 presenter.loadCustomersDateWise(getContext(), companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
                                 progressBar.show();
 
                             }*/
-                        }
+                }
 //                        if(position==0){
 //                            areaId="";
 //
@@ -559,12 +564,12 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 //                        }
 
 
-                    }
+            }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                };
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
         spinnerArea.setOnItemSelectedListener(onItemSelectedListener);
 
     }
@@ -627,8 +632,8 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
                 fromDate = selectedDateStart;
                 toDate = selectedDateEnd;
-
-                presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
+                progressBar.show();
+                presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
 
 
                 //showSlotSelectionCustomDialog(datepair.first,datepair.second);
@@ -638,6 +643,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         });
         picker.show(mFragmentManager, "");
     }
+
     public Bitmap takeScreenshot(View v) {
         LinearLayout rootView = v.findViewById(R.id.root);
         rootView.setDrawingCacheEnabled(true);
@@ -698,15 +704,15 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getActivity()),
                 BuildConfig.APPLICATION_ID + ".provider", imagePath);
 
-//        Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-//        whatsappIntent.setType("image/*");
-//        whatsappIntent.setPackage("com.whatsapp");
-//        whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
-//        try {
-//            startActivity(whatsappIntent);
-//        } catch (android.content.ActivityNotFoundException ex) {
-//            Toast.makeText(this, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
-//        }
+        Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+        whatsappIntent.setType("image/*");
+        whatsappIntent.setPackage("com.whatsapp");
+        whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
+        try {
+            startActivity(whatsappIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getContext(), "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
+        }
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/*");
@@ -718,9 +724,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         try {
             sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(sharingIntent);
-
         } catch (Exception e) {
-
             e.printStackTrace();
         }
     }
@@ -734,10 +738,8 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                                REQUEST_CODE_ASK_PERMISSIONS);
-                                    }
+                                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                            REQUEST_CODE_ASK_PERMISSIONS);
                                 }
                             });
                     return;
@@ -761,7 +763,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     }
 
     private void createPdf() throws FileNotFoundException, DocumentException {
-        File docsFolder = new File(Environment.getExternalStorageDirectory() + "/eLife CRM Receipts");
+        File docsFolder = new File(Environment.getDataDirectory() + "/eLife CRM Receipts");
         if (!docsFolder.exists()) {
             docsFolder.mkdir();
             Log.i(TAG, "Created a new directory for PDF");

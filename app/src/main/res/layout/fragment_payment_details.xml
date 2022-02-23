@@ -76,7 +76,7 @@
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         app:ael_duration="500"
-        app:ael_expanded="true"
+        app:ael_expanded="false"
         app:ael_interpolator="bounce"
         app:ael_orientation="vertical">
 
@@ -389,7 +389,7 @@
                 android:layout_gravity="center"
                 android:textColor="@color/White"
                 android:textStyle="bold"
-                android:textSize="@dimen/_15sdp"></TextView>
+                android:textSize="@dimen/_15sdp"/>
 
         </LinearLayout>
 

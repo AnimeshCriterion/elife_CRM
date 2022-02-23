@@ -60,30 +60,51 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/bluetooth_device_list"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".view.activities.NotificationsActivity" />
-        <activity android:name=".view.activities.ComplaintDetailsActivity" />
-        <activity android:name=".view.activities.UpdateCableSubscriptionActivity"></activity>
-        <activity android:name=".view.activities.PaymentDetailsActivity" />
-        <activity android:name=".view.activities.CollectPaymentActivity2" />
-        <activity android:name=".view.activities.EditComplaintEmpActivity" />
-        <activity android:name=".printersdk.PaymentReceiptActivity" />
-        <activity android:name=".view.activities.CollectionDetailsActivity" />
+        <activity android:name=".view.activities.NotificationsActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activities.ComplaintDetailsActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activities.UpdateCableSubscriptionActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activities.PaymentDetailsActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activities.CollectPaymentActivity2"
+            android:exported="true"/>
+        <activity android:name=".view.activities.EditComplaintEmpActivity"
+            android:exported="true"/>
+        <activity android:name=".printersdk.PaymentReceiptActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activities.CollectionDetailsActivity"
+            android:exported="true"/>
         <activity
             android:name=".view.activities.EditComplaintActivity"
-            android:noHistory="true" />
-        <activity android:name=".view.activities.GenerateInvoiceActivity"></activity>
-        <activity android:name=".printersdk.PaymentReceiptReprentingActivity" />
-        <activity android:name=".view.activities.BillShareActivity" />
-        <activity android:name=".view.activities.AboutAppActivity" />
-        <activity android:name=".printersdk.PrinterSettingsActivity" />
-        <activity android:name=".view.activities.CableSubscriptionActivity" />
-        <activity android:name=".view.activities.InternetSubscriptionActivity" />
-        <activity android:name=".view.activities.CustomersDetailsActivity"></activity>
-        <activity android:name=".view.activities.HomeActivity" />
+            android:noHistory="true"
+            android:exported="true"/>
+        <activity android:name=".view.activities.GenerateInvoiceActivity"
+            android:exported="true"/>
+        <activity android:name=".printersdk.PaymentReceiptReprentingActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activities.BillShareActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activities.AboutAppActivity"
+            android:exported="true"/>
+        <activity android:name=".printersdk.PrinterSettingsActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activities.CableSubscriptionActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activities.InternetSubscriptionActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activities.CustomersDetailsActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activities.HomeActivity"
+            android:exported="true"/>
         <activity android:name=".view.activities.CustomerListActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".view.activities.UpdateInternetSubscriptionActivity" />
-        <activity android:name=".view.activities.LoginActivity">
+            android:launchMode="singleTop"
+            android:exported="true"/>
+        <activity android:name=".view.activities.UpdateInternetSubscriptionActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activities.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -92,7 +113,8 @@
         </activity>
         <activity
             android:name=".view.activities.MainActivity"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:exported="true"/>
 
         <meta-data
             android:name="preloaded_fonts"

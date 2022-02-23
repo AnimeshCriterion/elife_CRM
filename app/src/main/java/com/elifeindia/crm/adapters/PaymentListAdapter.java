@@ -45,7 +45,7 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyviewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull MyviewHolder holder, int position) {
 
         try {
             holder.acno.setText("Ac No : "+paymentReciepts.get(position).getAccountNo());

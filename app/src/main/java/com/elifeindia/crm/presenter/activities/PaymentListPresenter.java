@@ -35,7 +35,7 @@ public class PaymentListPresenter implements PaymentListContract.Presenter {
     public void loadPaymentListForSearch(Context context, String Company_ID, String Customer_ID, String From_Date, String To_Date, String Triple_play_ID, String Value, String Employee_ID, String Area_ID) {
         if (NetCheck.isInternetConnection(context)) {
             NetworkUtils.getUserApiInstance()
-                    .getPaymentRecieptList(Company_ID, Area_ID, Customer_ID, From_Date, To_Date, Triple_play_ID, Value, Employee_ID)
+                    .getPaymentRecieptList(Company_ID, Customer_ID, From_Date, To_Date, Triple_play_ID, Value, Employee_ID, Area_ID)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<PaymentRecieptList>() {
@@ -65,7 +65,7 @@ public class PaymentListPresenter implements PaymentListContract.Presenter {
     public void loadPaymentList(Context context, String Company_ID, String Customer_ID, String From_Date, String To_Date, String Triple_play_ID, String Value, String Employee_ID, String Area_ID) {
         if (NetCheck.isInternetConnection(context)) {
             NetworkUtils.getUserApiInstance()
-                    .getPaymentRecieptList(Company_ID, Area_ID, Customer_ID, From_Date, To_Date, Triple_play_ID, Value, Employee_ID)
+                    .getPaymentRecieptList(Company_ID, Customer_ID, From_Date, To_Date, Triple_play_ID, Value, Employee_ID, Area_ID)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<PaymentRecieptList>() {
@@ -129,7 +129,7 @@ public class PaymentListPresenter implements PaymentListContract.Presenter {
 
         if (NetCheck.isInternetConnection(context)) {
             NetworkUtils.getUserApiInstance()
-                    .getPaymentRecieptList(Company_ID, Area_ID, Customer_ID, From_Date, To_Date, Triple_play_ID, Value, Employee_ID)
+                    .getPaymentRecieptList(Company_ID, Customer_ID, From_Date, To_Date, Triple_play_ID, Value, Employee_ID, Area_ID)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<PaymentRecieptList>() {
