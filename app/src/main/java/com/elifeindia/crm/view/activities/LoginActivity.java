@@ -129,11 +129,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             SharedPrefsData.putString(getApplicationContext(), Constants.CompanyID, login.getCompanyID().toString(), Constants.PREF_NAME);
             SharedPrefsData.putString(getApplicationContext(), Constants.CompanyName, login.getCompanyName(), Constants.PREF_NAME);
             SharedPrefsData.putString(getApplicationContext(), Constants.EmployeeCode, login.getEmployeeCode(), Constants.PREF_NAME);
-            SharedPrefsData.putInt(getApplicationContext(), Constants.EmpId, login.getEmployeeID(), Constants.PREF_NAME);
+            SharedPrefsData.putString(getApplicationContext(), Constants.EmpId, login.getEmployeeID().toString(), Constants.PREF_NAME);
             SharedPrefsData.putString(getApplicationContext(), Constants.EmployeeName, login.getEmployeeName(), Constants.PREF_NAME);
-             SharedPrefsData.putString(getApplicationContext(), Constants.EmployeeMob, "", Constants.PREF_NAME);
+            SharedPrefsData.putString(getApplicationContext(), Constants.EmployeeMob, "", Constants.PREF_NAME);
             SharedPrefsData.putString(getApplicationContext(), Constants.RoleName, login.getRoleName(), Constants.PREF_NAME);
-            SharedPrefsData.putInt(getApplicationContext(), Constants.RoleId, login.getRoleId(), Constants.PREF_NAME);
+            SharedPrefsData.putString(getApplicationContext(), Constants.RoleId, login.getRoleId().toString(), Constants.PREF_NAME);
             SharedPrefsData.putString(getApplicationContext(), Constants.RoleType, login.getRoleType(), Constants.PREF_NAME);
             SharedPrefsData.putString(getApplicationContext(), Constants.UserId, login.getUserId().toString(), Constants.PREF_NAME);
             SharedPrefsData.putString(getApplicationContext(), Constants.UserName, login.getUserName(), Constants.PREF_NAME);

@@ -1,5 +1,6 @@
 package com.elifeindia.crm.view.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,6 +43,7 @@ import com.elifeindia.crm.view.activities.ComplaintDetailsActivity;
 import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -60,13 +63,15 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
     ExpandableLayout expandableLayout;
     CardView cv_filter;
     String areaId = "", companyId, empId="0", custId="0", fromDate, toDate, statusId="0", value="";
-    Spinner spn_emp, spn_status;
     EditText paymentsearch_edit;
+    Spinner spn_emp, spn_status;
     ArrayAdapter<String> adapter_emp, adapter_status;
     ImageView iv_calendar;
     TextView all,today, yesterday, thismonth, datepicker, from_date, to_date, txt_total_balance, txt_total_collection;
     FragmentManager mFragmentManager;
     AdapterCallback adapterCallback;
+    LinearLayout layoutEmployee;
+    ProgressDialog progressDialog;
 
 
 
@@ -80,7 +85,7 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
 
         View v = inflater.inflate(R.layout.activity_complaint_details, container, false);
 
-         spn_emp = v.findViewById(R.id.spn_employee);
+        spn_emp = v.findViewById(R.id.spn_employee);
         iv_calendar = v.findViewById(R.id.iv_calendar);
         paymentsearch_edit = v.findViewById(R.id.custmersearch_edit);
         rv_payment_list = v.findViewById(R.id.rv_payment_list);
@@ -96,26 +101,29 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
         from_date = v.findViewById(R.id.from_date);
         to_date = v.findViewById(R.id.to_date);
         cv_filter= v.findViewById(R.id.cv_filter);
-
-
+        layoutEmployee = v.findViewById(R.id.ll_employee);
 
         viewUtils = new ViewUtils();
         presenter = new ComplaintListPresenter(this);
         presenter.start();
         adapterCallback=this;
-
-
         //from_date.setText((todayDateString()));
         from_date.setVisibility(View.GONE);
-        mFragmentManager= getFragmentManager();
+        layoutEmployee.setVisibility(View.GONE);
+        v.findViewById(R.id.tool_bar).setVisibility(View.GONE);
 
+        mFragmentManager= getFragmentManager();
         companyId = SharedPrefsData.getString(getActivity(), Constants.CompanyID, Constants.PREF_NAME);
         custId = SharedPrefsData.getString(getActivity(), Constants.CustomerID, Constants.PREF_NAME);
         empId = SharedPrefsData.getString(getActivity(), Constants.EmpId, Constants.PREF_NAME);
 
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading...");
 
-        v.findViewById(R.id.tool_bar).setVisibility(View.GONE);
-        cv_filter.setVisibility(View.GONE);
+        progressDialog.show();
+        presenter.loadComplaintList(getActivity(), companyId, empId, custId, "0",  null, null, "");
+        presenter.loadComplaintStatus(getActivity(),companyId,"0");
+
 
         all.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +151,7 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
 
                 to_date.setVisibility(View.GONE);
                 from_date.setText(ViewUtils.changeDateFormat(todayDateString()));
+                progressDialog.show();
                 presenter.loadComplaintList(getActivity(), companyId, empId, custId, "0",  null, null, "");
 
 
@@ -173,6 +182,7 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
                 to_date.setVisibility(View.GONE);
                 from_date.setVisibility(View.VISIBLE);
                 from_date.setText(ViewUtils.changeDateFormat(todayDateString()));
+                progressDialog.show();
                 presenter.loadComplaintList(getActivity(), companyId, empId, custId, "0",  fromDate, toDate, "");
 
             }
@@ -204,6 +214,7 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
                 from_date.setVisibility(View.VISIBLE);
                 from_date.setText(ViewUtils.changeDateFormat(getYesterdayDateString()));
 
+                progressDialog.show();
                 presenter.loadComplaintList(getActivity(), companyId, empId, custId, "0",  fromDate, toDate, "");
             }
         });
@@ -246,10 +257,11 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
 
                 fromDate = startDateStr;
                 toDate = endDateStr;
-
+                progressDialog.show();
                 presenter.loadComplaintList(getActivity(), companyId, empId, custId, "0",  fromDate, toDate, "");
             }
         });
+
         datepicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -266,13 +278,10 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
                 datepicker.setBackgroundResource(R.color.colorPrimaryDark);
                 datepicker.setTextColor(getResources().getColor(R.color.white));
 
-
                 loadRangeDatePickerMultipleBooking();
 
             }
         });
-
-
 
         paymentsearch_edit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -282,6 +291,7 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                progressDialog.show();
                 presenter.loadComplaintList(getActivity(), companyId, empId, custId, "0",  fromDate, toDate, charSequence.toString());
 
             }
@@ -292,8 +302,8 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
             }
         });
 
-
         cv_filter = v.findViewById(R.id.cv_filter);
+
         cv_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -311,18 +321,17 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
         //fromDate = getYesterdayDateString();
         //toDate = getYesterdayDateString();
 
-        presenter.loadComplaintList(getActivity(), companyId, empId, custId, "0",  null, null, "");
 
         return v;
     }
 
     private String todayDateString() {
-
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         return dateFormat.format(cal.getTime());
 
     }
+
     private String getYesterdayDateString() {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -331,6 +340,7 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
         return dateFormat.format(cal.getTime());
 
     }
+
     public void loadRangeDatePickerMultipleBooking() {
         MaterialDatePicker.Builder<Pair<Long,Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
         long today = MaterialDatePicker.todayInUtcMilliseconds();
@@ -402,7 +412,6 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
 
     }
 
-
     @Override
     public void init() {
 
@@ -415,7 +424,7 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
 
     @Override
     public void showResult(ComplaintList paymentRecieptList) {
-
+        progressDialog.dismiss();
         txt_total_balance.setText("Count : "+paymentRecieptList.getCount());
 //        txt_total_collection.setText("Closed : "+paymentRecieptList.getTotal_Paid_amount());
 
@@ -519,10 +528,12 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
                         if(position>0){
 
                             statusId = statusIds.get(position);
-                            presenter.loadComplaintList(getActivity(), companyId, "0", "0", statusId,  fromDate, toDate, "");
+                            progressDialog.show();
+                            presenter.loadComplaintList(getActivity(), companyId, empId, custId, statusId,  fromDate, toDate, "");
 
                         }else{
-                            presenter.loadComplaintList(getActivity(), companyId, "0", "0", "0",  fromDate, toDate, "");
+                            progressDialog.show();
+                            presenter.loadComplaintList(getActivity(), companyId, empId, custId, "0",  null, null, "");
 
                         }
 //                        if(position==0){

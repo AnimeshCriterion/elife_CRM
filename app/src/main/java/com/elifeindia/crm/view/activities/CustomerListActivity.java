@@ -125,8 +125,9 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
             public void onClick(View view) {
 
                 Value = custmersearch_edit.getText().toString();
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
                 progressBar.show();
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+
 
             }
         });
@@ -136,8 +137,9 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     Value = custmersearch_edit.getText().toString();
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
                     progressBar.show();
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+
 
                     return true;
                 }
@@ -201,7 +203,7 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
 
         companyId = SharedPrefsData.getString(this, Constants.CompanyID, Constants.PREF_NAME);
         userId = SharedPrefsData.getString(this, Constants.UserId, Constants.PREF_NAME);
-        empId = String.valueOf(SharedPrefsData.getInt(this, Constants.EmpId, Constants.PREF_NAME));
+        empId =SharedPrefsData.getString(this, Constants.EmpId, Constants.PREF_NAME);
         areaId = SharedPrefsData.getString(this, Constants.CustAreaId, Constants.PREF_NAME);
         SharedPrefsData.putString(this, Constants.PageNo, "1", Constants.PREF_NAME);
         SharedPrefsData.putString(this, Constants.ReceiptFlag, "false", Constants.ReceiptFlag);
@@ -231,8 +233,8 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
 
     @Override
     public void showResult(CustemersList custemersList) {
+        progressBar.dismiss();
         List<CustemersList.Customer> custemersLists = custemersList.getCustomer();
-
         tool_bar_text.setText("Customer List (" + custemersList.getRowcount() + ")");
 
         if (custemersLists.size() == 0) {
@@ -299,8 +301,8 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
                             presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
 
                             if (i != 1) {
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
                                 progressBar.show();
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
 
                             }
 
@@ -312,8 +314,9 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
                             // presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
 
                             if (i != 1) {
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
                                 progressBar.show();
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+
 
                             }
                         }
@@ -370,10 +373,11 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
                             StatusId = statusIds.get(position);
                             SharedPrefsData.putString(CustomerListActivity.this, Constants.StatusId, StatusId, Constants.PREF_NAME);
                             StatusId = SharedPrefsData.getString(CustomerListActivity.this, Constants.StatusId, Constants.PREF_NAME);
+                            progressBar.show();
                             presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
                             if (i != 1) {
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
                                 progressBar.show();
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
 
                             }
                         } else {
@@ -382,10 +386,12 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
                             SharedPrefsData.putString(CustomerListActivity.this, Constants.StatusId, StatusId, Constants.PREF_NAME);
                             Value = "";
                             custmersearch_edit.setText("");
+                            progressBar.show();
                             presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
                             if (i != 1) {
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
                                 progressBar.show();
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+
 
                             }
                         }

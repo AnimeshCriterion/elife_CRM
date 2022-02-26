@@ -27,17 +27,17 @@
             android:src="@drawable/back_arrow" />
 
         <TextView
-            android:textStyle="bold"
-            android:fontFamily="@font/abeezee_regular"
             android:id="@+id/tool_bar_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_toRightOf="@id/iv_back"
+            android:fontFamily="@font/abeezee_regular"
             android:text="Complaint Register &amp; History"
             android:textColor="@color/white"
-            android:textSize="@dimen/_18sdp" />
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

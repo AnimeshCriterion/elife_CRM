@@ -99,6 +99,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
                         }).show();
             }
         });
+
         findViewById(R.id.ll_invoice).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -284,7 +285,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             }
         });
 
-        presenter.loadApi(this,String.valueOf( SharedPrefsData.getInt(this, Constants.RoleId, Constants.PREF_NAME)));
+        presenter.loadApi(this, SharedPrefsData.getString(this, Constants.RoleId, Constants.PREF_NAME));
 
 
     }

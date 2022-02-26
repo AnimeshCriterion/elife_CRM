@@ -68,7 +68,7 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
     TextView txt_not_found, all ,today, yesterday, thismonth, datepicker, from_date, to_date, txt_total_balance, txt_total_collection;
     FragmentManager mFragmentManager;
     AdapterCallback adapterCallback;
-    ProgressBar pb_searching;
+   // ProgressBar pb_searching;
     List<ComplaintStatusList.Complaintstatus> complaintstatuses;
     ArrayList<String> statusNames, statusIds;
 
@@ -102,13 +102,13 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
         if(roleType.equals("Admin")){
 
 //            empId="0";
-            empId = String.valueOf(SharedPrefsData.getInt(this, Constants.EmpId, Constants.PREF_NAME));
+            empId =SharedPrefsData.getString(this, Constants.EmpId, Constants.PREF_NAME);
             ll_employee.setVisibility(View.VISIBLE);
 
         }else{
 
             ll_employee.setVisibility(View.GONE);
-            empId = String.valueOf(SharedPrefsData.getInt(ComplaintDetailsActivity.this, Constants.EmpId, Constants.PREF_NAME));
+            empId = SharedPrefsData.getString(ComplaintDetailsActivity.this, Constants.EmpId, Constants.PREF_NAME);
 
         }
 
@@ -278,7 +278,7 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 presenter.loadComplaintListForSearch(ComplaintDetailsActivity.this, companyId, empId, custId, statusId,  fromDate, toDate, charSequence.toString());
-                pb_searching.setVisibility(View.VISIBLE);
+              //  pb_searching.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -415,7 +415,7 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
         from_date = findViewById(R.id.from_date);
         to_date = findViewById(R.id.to_date);
         cv_filter= findViewById(R.id.cv_filter);
-        pb_searching = findViewById(R.id.pb_searching);
+       // pb_searching = findViewById(R.id.pb_searching);
         txt_not_found = findViewById(R.id.txt_not_found);
         ll_employee = findViewById(R.id.ll_employee);
 
@@ -447,7 +447,7 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
             txt_not_found.setVisibility(View.VISIBLE);
             // viewUtils.showAlertDialog(getActivity(), "Data not found", "There is no data you are searching for");
         }else {
-            pb_searching.setVisibility(View.GONE);
+           // pb_searching.setVisibility(View.GONE);
             rv_payment_list.setVisibility(View.VISIBLE);
             txt_not_found.setVisibility(View.GONE);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ComplaintDetailsActivity.this, RecyclerView.VERTICAL, false);

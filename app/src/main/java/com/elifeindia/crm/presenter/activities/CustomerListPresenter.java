@@ -18,7 +18,6 @@ import rx.schedulers.Schedulers;
 
 public class CustomerListPresenter implements CustomerListContract.Presenter {
     CustomerListContract.View mView;
-    ProgressDialog progressBar;
 
     public CustomerListPresenter(CustomerListContract.View mView) {
         this.mView = mView;
@@ -50,12 +49,11 @@ public class CustomerListPresenter implements CustomerListContract.Presenter {
                         @Override
                         public void onNext(CustemersList custemersList) {
                             mView.showResult(custemersList);
-                            progressBar.dismiss();
+
                         }
                     });
         }else{
             mView.showError("Connection Error");
-            progressBar.dismiss();
         }
 
 
@@ -123,10 +121,6 @@ public class CustomerListPresenter implements CustomerListContract.Presenter {
 
     @Override
     public void getPaymentStatus(Context context, String Id) {
-        progressBar = new ProgressDialog(context);
-        progressBar.setCancelable(false);//you can cancel it by pressing back button
-        progressBar.setMessage("Please wait...");
-        progressBar.show();
         if(NetCheck.isInternetConnection(context)){
             NetworkUtils.getUserApiInstance()
                     .getPaymentStatus("0")
@@ -169,19 +163,16 @@ public class CustomerListPresenter implements CustomerListContract.Presenter {
                         @Override
                         public void onError(Throwable e) {
                             mView.showError(e.toString());
-                            progressBar.dismiss();
                         }
 
                         @Override
                         public void onNext(CustemersList custemersList) {
                             mView.showCustomersDateWise(custemersList);
-                            progressBar.dismiss();
 
                         }
                     });
         }else{
             mView.showError("Connection Error");
-            progressBar.dismiss();
 
         }
     }

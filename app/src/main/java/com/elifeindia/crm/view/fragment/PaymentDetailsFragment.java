@@ -163,7 +163,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         roleType = SharedPrefsData.getString(getActivity(), Constants.RoleType, Constants.PREF_NAME);
         empName = SharedPrefsData.getString(getActivity(), Constants.EmployeeName, Constants.PREF_NAME);
         empMob = SharedPrefsData.getString(getActivity(), Constants.EmployeeMob, Constants.PREF_NAME);
-        empId = String.valueOf(SharedPrefsData.getInt(getActivity(), Constants.EmpId, Constants.PREF_NAME));
+        empId = SharedPrefsData.getString(getActivity(), Constants.EmpId, Constants.PREF_NAME);
 
 
 

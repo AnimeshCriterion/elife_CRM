@@ -21,7 +21,7 @@ import rx.schedulers.Schedulers;
 
 public class ComplaintListPresenter implements ComplaintListContract.Presenter {
     ComplaintListContract.View mView;
-    ProgressDialog progressBar;
+   // ProgressDialog progressBar;
 
     public ComplaintListPresenter(ComplaintListContract.View mView) {
         this.mView = mView;
@@ -36,8 +36,6 @@ public class ComplaintListPresenter implements ComplaintListContract.Presenter {
     @Override
     public void loadComplaintList(Context context, String Company_ID, String Employee_ID, String Customer_ID, String Complaint_Status_ID,
                                   String From_date, String To_Date, String Value ){
-
-
         if(NetCheck.isInternetConnection(context)) {
             NetworkUtils.getUserApiInstance()
                     .getComplaintList(Company_ID, Employee_ID, Customer_ID, Complaint_Status_ID, From_date, To_Date, Value)
@@ -47,7 +45,7 @@ public class ComplaintListPresenter implements ComplaintListContract.Presenter {
                         @Override
                         public void onCompleted() {
                             try {
-                                progressBar.dismiss();
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -66,7 +64,6 @@ public class ComplaintListPresenter implements ComplaintListContract.Presenter {
         }else {
             mView.showError("Connection Error");
             try {
-                progressBar.dismiss();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -134,10 +131,10 @@ public class ComplaintListPresenter implements ComplaintListContract.Presenter {
 
     @Override
     public void loadEmployeeList(Context context, String Company_ID, String id, String Role_type) {
-        progressBar = new ProgressDialog(context);
+      /*  progressBar = new ProgressDialog(context);
         progressBar.setCancelable(false);//you can cancel it by pressing back button
         progressBar.setMessage("Please wait...");
-        progressBar.show();
+        progressBar.show();*/
         if(NetCheck.isInternetConnection(context)){
             NetworkUtils.getUserApiInstance()
                     .getEmployeeList(Company_ID, id, Role_type)
