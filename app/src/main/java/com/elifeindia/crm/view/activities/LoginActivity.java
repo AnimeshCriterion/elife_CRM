@@ -16,12 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.contract.activities.LoginContract;
-import com.elifeindia.crm.model.ComplaintList;
 import com.elifeindia.crm.model.FooterModel;
 import com.elifeindia.crm.model.HeaderModel;
 import com.elifeindia.crm.model.Login;
 import com.elifeindia.crm.presenter.activities.LoginPresenter;
-import com.elifeindia.crm.printersdk.App;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;

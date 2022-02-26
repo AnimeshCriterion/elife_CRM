@@ -26,9 +26,6 @@ public class ViewUtils {
     //Snack bar
 
     //Progress bar
-
-
-
     public void showAlertDialog(Context context, String title, String msg) {
         alertDialog = new AlertDialog.Builder(context);
         alertDialog.setCancelable(false);//you can cancel it by pressing back button

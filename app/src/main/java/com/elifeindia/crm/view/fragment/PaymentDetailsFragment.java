@@ -1,12 +1,15 @@
 package com.elifeindia.crm.view.fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -41,6 +44,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.elifeindia.crm.BuildConfig;
 import com.elifeindia.crm.R;
+import com.elifeindia.crm.TestActivity;
 import com.elifeindia.crm.adapters.PaymentListAdapter;
 import com.elifeindia.crm.contract.activities.PaymentListContract;
 import com.elifeindia.crm.model.AreaResponse;
@@ -60,6 +64,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfDocument;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -67,9 +72,12 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -80,17 +88,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Random;
 import java.util.TimeZone;
 
 public class PaymentDetailsFragment extends Fragment implements PaymentListContract.View {
 
+    private static final int ACTIVITY_VIEW_ATTACHMENT = 101;
     PaymentListContract.Presenter presenter;
     ViewUtils viewUtils;
     RecyclerView rv_payment_list;
     PaymentListAdapter paymentListAdapter;
     ExpandableLayout expandableLayout;
     CardView cv_filter;
-    String receiptDateTime, no, amount, dateTime, areaId = "", roleType, companyId, empName, empMob, empId = "0", custId = "0", fromDate, toDate, triplePlayId = "0", value = "";
+    String no, amount, dateTime, areaId = "", roleType, companyId, empName, empMob, empId = "0", custId = "0", fromDate, toDate, triplePlayId = "0", value = "";
     SearchableSpinner searchableSpinner;
     Spinner spinnerArea;
     EditText paymentsearch_edit;
@@ -108,7 +118,6 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     List<PaymentRecieptList.PaymentReciept> paymentReciepts;
     Button btn_share;
     ProgressDialog progressBar;
-
 
     private static final String TAG = "PdfCreatorActivity";
     final private int REQUEST_CODE_ASK_PERMISSIONS = 111;
@@ -156,9 +165,8 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         empMob = SharedPrefsData.getString(getActivity(), Constants.EmployeeMob, Constants.PREF_NAME);
         empId = String.valueOf(SharedPrefsData.getInt(getActivity(), Constants.EmpId, Constants.PREF_NAME));
 
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.US);
-        Date date = new Date();
-        receiptDateTime = sdf1.format(date);
+
+
 
         context = getActivity();
         mFragmentManager = getFragmentManager();
@@ -170,6 +178,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                 receiptBitmap = takeScreenshot(v);
                 saveBitmap(receiptBitmap);
                 shareItOnWhatsApp();*/
+              //  startActivity(new Intent(getContext(), TestActivity.class));
                 try {
                     createPdfWrapper();
                 } catch (FileNotFoundException e) {
@@ -683,7 +692,6 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     private void shareIt() {
         Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getActivity()),
                 BuildConfig.APPLICATION_ID + ".provider", imagePath);
-
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/*");
         String shareBody = "Hey check out eLife CRM Payment Receipt";
@@ -734,18 +742,15 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         if (hasWriteStoragePermission != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_CONTACTS)) {
-                    showMessageOKCancel("You need to allow access to Storage",
-                            new DialogInterface.OnClickListener() {
+                    showMessageOKCancel("You need to allow access to Storage", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                            REQUEST_CODE_ASK_PERMISSIONS);
+                                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
                                 }
                             });
                     return;
                 }
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        REQUEST_CODE_ASK_PERMISSIONS);
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
             }
             return;
         } else {
@@ -762,16 +767,41 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                 .show();
     }
 
+
     private void createPdf() throws FileNotFoundException, DocumentException {
-        File docsFolder = new File(Environment.getDataDirectory() + "/eLife CRM Receipts");
-        if (!docsFolder.exists()) {
-            docsFolder.mkdir();
-            Log.i(TAG, "Created a new directory for PDF");
+        @SuppressLint("SimpleDateFormat")
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File directoryName = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/elifeCRM");
+        if (!directoryName.isFile()) {
+            if (!(directoryName.isDirectory())) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    try {
+                        Files.createDirectory(Paths.get(directoryName.getAbsolutePath()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), "IOException", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    directoryName.mkdir();
+                    directoryName.setWritable(true);
+                    directoryName.setExecutable(true);
+                    directoryName.setReadable(true);
+
+                }
+            }
+
         }
-        String pdfname = "elife crm reports" + receiptDateTime + ".pdf";
-        pdfFile = new File(docsFolder.getAbsolutePath(), pdfname);
-        OutputStream output = new FileOutputStream(pdfFile);
-        Document document = new Document(PageSize.A4);
+
+
+        String pdfname = timeStamp + ".pdf";
+        pdfFile = new File(directoryName.getAbsolutePath(), pdfname);
+        pdfFile.setExecutable(true);
+        pdfFile.setWritable(true);
+        pdfFile.setReadable(true);
+        FileOutputStream output = new FileOutputStream(pdfFile);
+        Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+        PdfWriter.getInstance(document, output);
+        document.open();
         PdfPTable table = new PdfPTable(new float[]{3, 3, 3, 3, 3});
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
         table.getDefaultCell().setFixedHeight(25);
@@ -797,9 +827,6 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
             table.addCell(String.valueOf(paymentReciepts.get(i).getPaymentDate().substring(0, 10)));
 
         }
-//        System.out.println("Done");
-        PdfWriter.getInstance(document, output);
-        document.open();
         Font f = new Font(Font.FontFamily.TIMES_ROMAN, 30.0f, Font.UNDERLINE, BaseColor.BLUE);
         Font g = new Font(Font.FontFamily.TIMES_ROMAN, 20.0f, Font.NORMAL, BaseColor.BLUE);
 
@@ -811,19 +838,33 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         document.add(new Paragraph("No of Payments " + no + "\n", f));
         document.add(new Paragraph("\n"));
         document.add(table);
-//        for (int i = 0; i < MyList1.size(); i++) {
-//            document.add(new Paragraph(String.valueOf(MyList1.get(i))));
-//        }
         document.close();
-        Log.e("osman", paymentReciepts.toString());
-        previewPdf();
+        previewPdf(pdfFile);
+        Log.e("data", paymentReciepts.toString());
+        Log.e("pdfFile", pdfFile.toString());
+
+
     }
 
-    private void previewPdf() {
+
+
+    private void previewPdf(File pdfFile) {
         PackageManager packageManager = context.getPackageManager();
         Intent testIntent = new Intent(Intent.ACTION_VIEW);
         testIntent.setType("application/pdf");
-        List list = packageManager.queryIntentActivities(testIntent, PackageManager.MATCH_DEFAULT_ONLY);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        Uri uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", pdfFile);
+        for (ResolveInfo resolveInfo : resInfoList) {
+            String packageName = resolveInfo.activityInfo.packageName;
+            context.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setDataAndType(uri, "application/pdf");
+        context.startActivity(intent);
+
+       /* List list = packageManager.queryIntentActivities(testIntent, PackageManager.MATCH_DEFAULT_ONLY);
         if (list.size() > 0) {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);
@@ -834,6 +875,25 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         } else {
             Toast.makeText(context, "Download a PDF Viewer to see the generated PDF", Toast.LENGTH_SHORT).show();
         }
+*/
+
+
+
+       /* try {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                Uri contentUri = FileProvider.getUriForFile(getContext(),  BuildConfig.APPLICATION_ID+".fileProvider", pdfFile);
+                intent.setDataAndType(contentUri,"application/pdf");
+            } else {
+                intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+            }
+            startActivityForResult(intent, ACTIVITY_VIEW_ATTACHMENT);
+        } catch (ActivityNotFoundException anfe) {
+            Toast.makeText(getContext(), "No activity found to open this attachment.", Toast.LENGTH_LONG).show();
+        }*/
+
     }
 
 

@@ -9,8 +9,14 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
+
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -25,6 +31,7 @@
     <application
         android:name=".printersdk.App"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/launcher_icon"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -33,8 +40,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:replace="usesCleartextTraffic">
-        <activity android:name=".view.activities.UpdateCustomerActivity"></activity>
+        tools:replace="usesCleartextTraffic"
+        tools:targetApi="n">
+        <activity
+            android:name=".TestActivity"
+            android:exported="false"
+            android:label="@string/title_activity_test"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.activities.UpdateCustomerActivity" />
         <activity android:name=".view.activities.InvoiceActivity" />
         <activity android:name=".view.activities.InvoiceHistoryActivity" />
         <activity android:name=".CustomerLoginActivity" />
@@ -51,59 +64,90 @@
             tools:replace="android:authorities">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_path" />
+        </provider>
+        <!--
+ <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_path"
                 tools:replace="android:resource" />
         </provider>
-
+        -->
         <activity
             android:name=".printersdk.BluetoothDeviceList"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/bluetooth_device_list"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".view.activities.NotificationsActivity"
-            android:exported="true"/>
-        <activity android:name=".view.activities.ComplaintDetailsActivity"
-            android:exported="true"/>
-        <activity android:name=".view.activities.UpdateCableSubscriptionActivity"
-            android:exported="true"/>
-        <activity android:name=".view.activities.PaymentDetailsActivity"
-            android:exported="true"/>
-        <activity android:name=".view.activities.CollectPaymentActivity2"
-            android:exported="true"/>
-        <activity android:name=".view.activities.EditComplaintEmpActivity"
-            android:exported="true"/>
-        <activity android:name=".printersdk.PaymentReceiptActivity"
-            android:exported="true"/>
-        <activity android:name=".view.activities.CollectionDetailsActivity"
-            android:exported="true"/>
+        <activity
+            android:name=".view.activities.NotificationsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.ComplaintDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.UpdateCableSubscriptionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.PaymentDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.CollectPaymentActivity2"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.EditComplaintEmpActivity"
+            android:exported="true" />
+        <activity
+            android:name=".printersdk.PaymentReceiptActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.CollectionDetailsActivity"
+            android:exported="true" />
         <activity
             android:name=".view.activities.EditComplaintActivity"
-            android:noHistory="true"
-            android:exported="true"/>
-        <activity android:name=".view.activities.GenerateInvoiceActivity"
-            android:exported="true"/>
-        <activity android:name=".printersdk.PaymentReceiptReprentingActivity"
-            android:exported="true"/>
-        <activity android:name=".view.activities.BillShareActivity"
-            android:exported="true"/>
-        <activity android:name=".view.activities.AboutAppActivity"
-            android:exported="true"/>
-        <activity android:name=".printersdk.PrinterSettingsActivity"
-            android:exported="true"/>
-        <activity android:name=".view.activities.CableSubscriptionActivity"
-            android:exported="true"/>
-        <activity android:name=".view.activities.InternetSubscriptionActivity"
-            android:exported="true"/>
-        <activity android:name=".view.activities.CustomersDetailsActivity"
-            android:exported="true"/>
-        <activity android:name=".view.activities.HomeActivity"
-            android:exported="true"/>
-        <activity android:name=".view.activities.CustomerListActivity"
-            android:launchMode="singleTop"
-            android:exported="true"/>
-        <activity android:name=".view.activities.UpdateInternetSubscriptionActivity"
-            android:exported="true"/>
-        <activity android:name=".view.activities.LoginActivity"
+            android:exported="true"
+            android:noHistory="true" />
+        <activity
+            android:name=".view.activities.GenerateInvoiceActivity"
+            android:exported="true" />
+        <activity
+            android:name=".printersdk.PaymentReceiptReprentingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.BillShareActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.AboutAppActivity"
+            android:exported="true" />
+        <activity
+            android:name=".printersdk.PrinterSettingsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.CableSubscriptionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.InternetSubscriptionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.CustomersDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.HomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.CustomerListActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".view.activities.UpdateInternetSubscriptionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -113,8 +157,8 @@
         </activity>
         <activity
             android:name=".view.activities.MainActivity"
-            android:label="@string/app_name"
-            android:exported="true"/>
+            android:exported="true"
+            android:label="@string/app_name" />
 
         <meta-data
             android:name="preloaded_fonts"
