@@ -123,12 +123,9 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
         ivbtn_search_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Value = custmersearch_edit.getText().toString();
                 progressBar.show();
                 presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
-
-
             }
         });
 
@@ -209,8 +206,6 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
         SharedPrefsData.putString(this, Constants.ReceiptFlag, "false", Constants.ReceiptFlag);
         presenter.loadArea(CustomerListActivity.this, companyId, empId);
         presenter.getPaymentStatus(CustomerListActivity.this, "0");
-
-
         //presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "");
 
         presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);

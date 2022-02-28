@@ -716,6 +716,7 @@
                 android:textSize="@dimen/_11sdp" />
 
         </LinearLayout>
+
         <LinearLayout
 
             android:id="@+id/ll_invoice"

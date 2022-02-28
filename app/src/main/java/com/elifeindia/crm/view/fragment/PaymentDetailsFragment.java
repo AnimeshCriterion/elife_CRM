@@ -362,8 +362,6 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                 return false;
             }
         });
-
-
         cv_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -382,7 +380,6 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
             }
         });
-
 
         fromDate = todayDateString();
         toDate = todayDateString();
@@ -827,15 +824,16 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
             table.addCell(String.valueOf(paymentReciepts.get(i).getPaymentDate().substring(0, 10)));
 
         }
-        Font f = new Font(Font.FontFamily.TIMES_ROMAN, 30.0f, Font.UNDERLINE, BaseColor.BLUE);
+        Font fontStyling = new Font(Font.FontFamily.TIMES_ROMAN, 30.0f, Font.UNDERLINE, BaseColor.BLUE);
         Font g = new Font(Font.FontFamily.TIMES_ROMAN, 20.0f, Font.NORMAL, BaseColor.BLUE);
 
-        document.add(new Paragraph("Collected By : " + empName, f));
-        document.add(new Paragraph("Mob No : " + empMob, f));
-        document.add(new Paragraph("From Date : " + fromDate, f));
-        document.add(new Paragraph("To Date : " + toDate, f));
-        document.add(new Paragraph("Total Amount Rs " + amount + "/-", f));
-        document.add(new Paragraph("No of Payments " + no + "\n", f));
+        document.add(new Paragraph("Collected By : " + empName, fontStyling));
+        document.add(new Paragraph("Mobile No : " + empMob, fontStyling));
+        document.add(new Paragraph("WhatsApp No : " + empMob, fontStyling));
+        document.add(new Paragraph("From Date : " + fromDate, fontStyling));
+        document.add(new Paragraph("To Date : " + toDate, fontStyling));
+        document.add(new Paragraph("Total Amount Rs " + amount + "/-", fontStyling));
+        document.add(new Paragraph("No of Payments " + no + "\n", fontStyling));
         document.add(new Paragraph("\n"));
         document.add(table);
         document.close();

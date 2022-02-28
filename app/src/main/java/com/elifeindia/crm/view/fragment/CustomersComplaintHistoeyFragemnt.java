@@ -14,12 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
@@ -39,11 +37,9 @@ import com.elifeindia.crm.presenter.activities.ComplaintListPresenter;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
-import com.elifeindia.crm.view.activities.ComplaintDetailsActivity;
 import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

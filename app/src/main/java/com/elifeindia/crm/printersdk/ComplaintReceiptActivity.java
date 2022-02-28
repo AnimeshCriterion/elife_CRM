@@ -1,14 +1,23 @@
 package com.elifeindia.crm.printersdk;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +47,16 @@ import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.view.activities.ComplaintDetailsActivity;
 import com.elifeindia.crm.view.activities.CustomerListActivity;
 import com.elifeindia.crm.view.activities.CustomersDetailsActivity;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -46,7 +65,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,12 +91,14 @@ import static com.elifeindia.crm.view.activities.EditComplaintActivity.priorityE
 import static com.elifeindia.crm.view.activities.EditComplaintActivity.complaintTypeEdit;
 
 public class ComplaintReceiptActivity extends AppCompatActivity implements ComplaintReceiptContract.View {
+    private static final int REQUEST_CODE_ASK_PERMISSIONS = 10112;
     ComplaintReceiptContract.Presenter presenter;
     Button btn_next;
     ListView lv_footer;
     File imagePath;
     ImageView iv_back;
     String dateTime = "";
+    File pdfFile;
     TextView txt_header, txt_cust_name, txt_complaint, txt_complaint_code, txt_accountno, txt_subid, txt_comp_date, txt_comp_code, txt_product, txt_priority, txt_comp_status, txt_assignto;
     TextView shareRecieptBtn, shareOnWhatsapp;
 
@@ -147,7 +172,14 @@ public class ComplaintReceiptActivity extends AppCompatActivity implements Compl
                 Bitmap receiptBitmap;
                 receiptBitmap = takeScreenshot();
                 saveBitmap(receiptBitmap);
-                shareItOnWhatsApp();
+               // shareItOnWhatsApp();
+                try {
+                    createPdfWrapper();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -219,18 +251,20 @@ public class ComplaintReceiptActivity extends AppCompatActivity implements Compl
 
     }
 
+
     private void shareItOnWhatsApp() {
 
         String custWhatsAppNo = SharedPrefsData.getString(ComplaintReceiptActivity.this, Constants.WhatsupNo, Constants.PREF_NAME);
 
-        //String smsNumber = "919030144534"; // E164 format without '+' sign
-        String smsNumber = "91" + custWhatsAppNo; // E164 format without '+' sign
+        String smsNumber = "919030144534"; // E164 format without '+' sign
+       // String smsNumber = "91" + custWhatsAppNo; // E164 format without '+' sign
 
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
 
         //sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
 
         sendIntent.setType("text/plain");
+
 
         sendIntent.putExtra(Intent.EXTRA_TEXT,
                 "*Complaint Receipt*\n" +
@@ -261,6 +295,139 @@ public class ComplaintReceiptActivity extends AppCompatActivity implements Compl
             return;
         }
         startActivity(sendIntent);
+
+    }
+
+
+    private void createPdfWrapper() throws FileNotFoundException, DocumentException {
+        int hasWriteStoragePermission = ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (hasWriteStoragePermission != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_CONTACTS)) {
+                    showMessageOKCancel("You need to allow access to Storage", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
+                        }
+                    });
+                    return;
+                }
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
+            }
+            return;
+        } else {
+            createPdf();
+        }
+    }
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
+
+    private void createPdf() throws FileNotFoundException, DocumentException {
+        @SuppressLint("SimpleDateFormat")
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File directoryName = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/elifeCRM");
+        if (!directoryName.isFile()) {
+            if (!(directoryName.isDirectory())) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    try {
+                        Files.createDirectory(Paths.get(directoryName.getAbsolutePath()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "IOException", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    directoryName.mkdir();
+                    directoryName.setWritable(true);
+                    directoryName.setExecutable(true);
+                    directoryName.setReadable(true);
+                }
+            }
+
+        }
+
+
+        String pdfname = timeStamp + ".pdf";
+        pdfFile = new File(directoryName.getAbsolutePath(), pdfname);
+        pdfFile.setExecutable(true);
+        pdfFile.setWritable(true);
+        pdfFile.setReadable(true);
+        FileOutputStream output = new FileOutputStream(pdfFile);
+        Document document = new Document(PageSize.A4, 60, 60, 50, 50);
+        PdfWriter.getInstance(document, output);
+        document.open();
+        Font fontStyling = new Font(Font.FontFamily.TIMES_ROMAN, 25.0f, Font.NORMAL, BaseColor.BLACK);
+        Font fontStyling2 = new Font(Font.FontFamily.TIMES_ROMAN, 25.0f, Font.BOLD, BaseColor.BLACK);
+        Font g = new Font(Font.FontFamily.TIMES_ROMAN, 20.0f, Font.NORMAL, BaseColor.BLUE);
+        document.add(new Paragraph("Complaint Receipt\nCustomer Details", fontStyling2));
+        document.add(new Paragraph("Name: " + txt_cust_name.getText().toString(), fontStyling));
+        document.add(new Paragraph("Subscriber ID: " + txt_subid.getText().toString(), fontStyling));
+        document.add(new Paragraph("Complain Code: " + txt_complaint_code.getText().toString(), fontStyling));
+        document.add(new Paragraph("Complain Date: " + txt_comp_date.getText().toString(), fontStyling));
+        document.add(new Paragraph("Complain: " + txt_complaint.getText().toString() + " /-", fontStyling));
+        document.add(new Paragraph("\nComplain Details", fontStyling2));
+        document.add(new Paragraph("Product: " + txt_product.getText().toString(), fontStyling));
+        document.add(new Paragraph("Priority: " + txt_priority.getText().toString(), fontStyling));
+        document.add(new Paragraph("Complain Status: " + txt_comp_status.getText().toString(), fontStyling));
+        document.add(new Paragraph("Assigned To: " + txt_assignto.getText().toString(), fontStyling));
+        document.add(new Paragraph("\n-----------------------------------------\n" + txt_header.getText().toString().trim(), fontStyling));
+        document.close();
+        previewPdf(pdfFile);
+    }
+
+
+    private void previewPdf(File pdfFile) {
+        PackageManager packageManager = getApplicationContext().getPackageManager();
+        Intent testIntent = new Intent(Intent.ACTION_VIEW);
+        testIntent.setType("application/pdf");
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        List<ResolveInfo> resInfoList = getApplicationContext().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        Uri uri = FileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getApplicationContext().getPackageName() + ".provider", pdfFile);
+        for (ResolveInfo resolveInfo : resInfoList) {
+            String packageName = resolveInfo.activityInfo.packageName;
+            getApplicationContext().grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setDataAndType(uri, "application/pdf");
+        startActivity(intent);
+
+       /* List list = packageManager.queryIntentActivities(testIntent, PackageManager.MATCH_DEFAULT_ONLY);
+        if (list.size() > 0) {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            Uri uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", pdfFile);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(uri, "application/pdf");
+            context.startActivity(intent);
+        } else {
+            Toast.makeText(context, "Download a PDF Viewer to see the generated PDF", Toast.LENGTH_SHORT).show();
+        }
+*/
+
+
+
+       /* try {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                Uri contentUri = FileProvider.getUriForFile(getContext(),  BuildConfig.APPLICATION_ID+".fileProvider", pdfFile);
+                intent.setDataAndType(contentUri,"application/pdf");
+            } else {
+                intent.setDataAndType(Uri.fromFile(pdfFile), "application/pdf");
+            }
+            startActivityForResult(intent, ACTIVITY_VIEW_ATTACHMENT);
+        } catch (ActivityNotFoundException anfe) {
+            Toast.makeText(getContext(), "No activity found to open this attachment.", Toast.LENGTH_LONG).show();
+        }*/
 
     }
 
