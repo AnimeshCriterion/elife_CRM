@@ -11,6 +11,7 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -169,17 +170,17 @@ public class ComplaintReceiptActivity extends AppCompatActivity implements Compl
             @Override
             public void onClick(View v) {
 
-                Bitmap receiptBitmap;
+              /*  Bitmap receiptBitmap;
                 receiptBitmap = takeScreenshot();
-                saveBitmap(receiptBitmap);
-               // shareItOnWhatsApp();
-                try {
+                saveBitmap(receiptBitmap);*/
+                shareItOnWhatsApp();
+               /* try {
                     createPdfWrapper();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (DocumentException e) {
                     e.printStackTrace();
-                }
+                }*/
 
             }
         });
@@ -253,48 +254,38 @@ public class ComplaintReceiptActivity extends AppCompatActivity implements Compl
 
 
     private void shareItOnWhatsApp() {
-
         String custWhatsAppNo = SharedPrefsData.getString(ComplaintReceiptActivity.this, Constants.WhatsupNo, Constants.PREF_NAME);
+        Log.e("TAG", "shareItOnWhatsApp: "+custWhatsAppNo );
 
-        String smsNumber = "919030144534"; // E164 format without '+' sign
-       // String smsNumber = "91" + custWhatsAppNo; // E164 format without '+' sign
+        try {
+            String text = "*Complaint Receipt*\n" +
+                    "*Customer Details*\n" +
+                    "Name: " + txt_cust_name.getText().toString() + "\n" +
+                    "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
+                    "Complain Code: " + txt_complaint_code.getText().toString() + "\n" +
+                    "Complain Date: " + txt_comp_date.getText().toString() + "\n" +
+                    "Complain: " + txt_complaint.getText().toString() + "\n" +
+                    "\n" +
+                    "*Complain Details*\n" +
+                    "------------------------\n" +
+                    "Product: " + txt_product.getText().toString() + "\n" +
+                    "Priority: " + txt_priority.getText().toString() + "\n" +
+                    "Complain Status: " + txt_comp_status.getText().toString() + "\n" +
+                    "Assigned To: " + txt_assignto.getText().toString() + "\n" +
 
-        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                    "------------------------\n" +
+                    "" + txt_header.getText().toString().trim();// Replace with your message.
 
-        //sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
+            String toNumber = "91"+custWhatsAppNo; // Replace with mobile phone number without +Sign or leading zeros, but with country code
+            //Suppose your country is India and your phone number is “xxxxxxxxxx”, then you need to send “91xxxxxxxxxx”.
 
-        sendIntent.setType("text/plain");
-
-
-        sendIntent.putExtra(Intent.EXTRA_TEXT,
-                "*Complaint Receipt*\n" +
-                        "*Customer Details*\n" +
-                        "Name: " + txt_cust_name.getText().toString() + "\n" +
-                        "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
-                        "Complain Code: " + txt_complaint_code.getText().toString() + "\n" +
-                        "Complain Date: " + txt_comp_date.getText().toString() + "\n" +
-                        "Complain: " + txt_complaint.getText().toString() + "\n" +
-                        "\n" +
-                        "*Complain Details*\n" +
-                        "------------------------\n" +
-                        "Product: " + txt_product.getText().toString() + "\n" +
-                        "Priority: " + txt_priority.getText().toString() + "\n" +
-                        "Complain Status: " + txt_comp_status.getText().toString() + "\n" +
-                        "Assigned To: " + txt_assignto.getText().toString() + "\n" +
-
-                        "------------------------\n" +
-                        "" + txt_header.getText().toString().trim()
-        );
-
-        sendIntent.putExtra("jid", PhoneNumberUtils.stripSeparators(smsNumber) + "@s.whatsapp.net");//phone number without "+" prefix
-
-        //sendIntent.putExtra("jid", smsNumber + "@s.whatsapp.net"); //phone number without "+" prefix
-        sendIntent.setPackage("com.whatsapp");
-        if (sendIntent.resolveActivity(getPackageManager()) == null) {
-            Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show();
-            return;
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+toNumber +"&text="+text));
+            startActivity(intent);
         }
-        startActivity(sendIntent);
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
