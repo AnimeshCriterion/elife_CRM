@@ -775,6 +775,7 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
         String customerPhoneNumber = WhatsupNo;
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
         sendIntent.setPackage("com.whatsapp");
+        Log.e("TAG Share ", "openWhatsApp: "+WhatsupNo );
 
 
         String message =

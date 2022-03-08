@@ -33,7 +33,7 @@ public interface CustomerListContract {
         void loadApiSearch(Context context, String Company_ID, String User_ID, String Employee_ID, String Value, String count, String pageNo);
         void loadArea(Context context, String CompanyId, String Employee_ID);
         void getPaymentStatus(Context context, String Id);
-        void loadCustomersDateWise(Context context, String Company_ID, String User_ID, String Employee_ID, String AreaId, String Date, String StatusId, String count, String pageNo, String Value);
+        void loadCustomersDateWise(Context context, String Company_ID, String User_ID, String Employee_ID, String AreaId, String Date, String StatusId, String count, String pageNo, String Value,String field_value,String field_name);
     }
     
 }

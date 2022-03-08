@@ -238,6 +238,20 @@
                     android:textColor="@color/white"
                     android:padding="16dp" />
             </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFilterSelection"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_height="wrap_content"
+                android:elevation="4dp"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                tools:listitem="@layout/item_view_filter_type"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:background="@drawable/bg_rect_with_stroke"/>
+
+
             <TextView
                 android:visibility="gone"
                 android:layout_marginTop="@dimen/_20sdp"
@@ -253,9 +267,13 @@
                 android:textSize="@dimen/_18sdp"
                 android:text="There is no data you are searching for"/>
 
+
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_customer_list"
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_5sdp"
                 tools:listitem="@layout/item_customer_list"
                 android:layout_height="match_parent" />
 

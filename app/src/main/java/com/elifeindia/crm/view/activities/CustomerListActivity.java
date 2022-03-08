@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.adapters.AdapterCallback;
 import com.elifeindia.crm.adapters.CustomerListAdapter;
+import com.elifeindia.crm.adapters.FilterTypeAdapter;
 import com.elifeindia.crm.adapters.PagingAdapter;
 import com.elifeindia.crm.contract.activities.CustomerListContract;
 import com.elifeindia.crm.model.AreaResponse;
@@ -36,6 +37,7 @@ import com.elifeindia.crm.model.PaymentStatusModel;
 import com.elifeindia.crm.presenter.activities.CustomerListPresenter;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
+import com.elifeindia.crm.utils.StaticAppData;
 import com.elifeindia.crm.utils.ViewUtils;
 import com.github.aakira.expandablelayout.ExpandableLayout;
 
@@ -54,7 +56,7 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
     ExpandableLayout expandableLayout;
     CardView cv_filter;
     ImageButton ivbtn_search_submit;
-    String areaId = "0", companyId, empId, userId, StatusId = "0", selectCont = "100", pageNo = "1", Value = "";
+    String areaId = "0", companyId, empId, userId, StatusId = "0", selectCont = "100", pageNo = "1", Value = "",field_value="",field_name="";
     Spinner spn_area, spn_status;
     EditText custmersearch_edit;
     ArrayAdapter<String> areaListAdapter, adapterStatus;
@@ -62,6 +64,8 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
     AdapterCallback adapterCallback;
     TextView txt_not_found, tool_bar_text, txt_req_date;
     float result, i = 1, j = 1;
+    RecyclerView recyclerViewFilterType;
+    FilterTypeAdapter filterTypeAdapter;
 
     ProgressDialog progressBar;
 
@@ -80,6 +84,11 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
         rv_paging = findViewById(R.id.rv_paging);
         txt_req_date = findViewById(R.id.txt_req_date);
         txt_not_found = findViewById(R.id.txt_not_found);
+        recyclerViewFilterType = findViewById(R.id.rvFilterSelection);
+        recyclerViewFilterType.setLayoutManager(new LinearLayoutManager(getApplicationContext(),RecyclerView.HORIZONTAL,false));
+        filterTypeAdapter = new FilterTypeAdapter(this, StaticAppData.filterDataList());
+        recyclerViewFilterType.setAdapter(filterTypeAdapter);
+
 
         viewUtils = new ViewUtils();
         presenter = new CustomerListPresenter(this);
@@ -88,44 +97,37 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
         progressBar = new ProgressDialog(this);
         progressBar.setCancelable(false);//you can cancel it by pressing back button
         progressBar.setMessage("Please wait...");
-
         Bundle b = getIntent().getExtras();
 
+        filterTypeAdapter.setListener(new FilterTypeAdapter.FilterTypeListener() {
+            @Override
+            public void onClickFilterBtn(int position) {
+                if (StaticAppData.filterDataList().get(position).matches("All")){
+                    field_name="";
+                    progressBar.show();
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "","","");
+                }else if (StaticAppData.filterDataList().get(position).matches("Name")){
+                    field_name="name";
+                }else if (StaticAppData.filterDataList().get(position).matches("A/C No")){
+                    field_name="account_no";
+                }else if (StaticAppData.filterDataList().get(position).matches("Contact No")){
+                    field_name="mobile_no";
+                }else if (StaticAppData.filterDataList().get(position).matches("Subscriber ID")){
+                    field_name="Subscriber_id";
+                }else if (StaticAppData.filterDataList().get(position).matches("Box No")){
+                    field_name="Box_no";
+                }
 
-//        iv_search.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                presenter.loadApi(CustomerListActivity.this, companyId, userId, empId, custmersearch_edit.getText().toString());
-//            }
-//        });
+            }
+        });
 
-//        custmersearch_edit.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                String s = charSequence.toString();
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//                Value=charSequence.toString();
-//                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//
-//            }
-//        });
 
         ivbtn_search_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Value = custmersearch_edit.getText().toString();
                 progressBar.show();
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,"","");
             }
         });
 
@@ -134,10 +136,9 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     Value = custmersearch_edit.getText().toString();
+                    field_value= Value;
                     progressBar.show();
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
-
-
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
                     return true;
                 }
                 return false;
@@ -167,7 +168,7 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
                         txt_req_date.setText(sdf.format(mcurrentDate.getTime()));
                         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                         String date = sdf1.format(mcurrentDate.getTime());
-                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, date, StatusId, selectCont, pageNo, Value);
+                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, date, StatusId, selectCont, pageNo, Value,field_value,field_name);
                         //SharedPrefsData.putString(CustomerListActivity.this, Constants.RequestDate, txt_req_date.getText().toString(), Constants.PREF_NAME);
 
                     }
@@ -206,9 +207,7 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
         SharedPrefsData.putString(this, Constants.ReceiptFlag, "false", Constants.ReceiptFlag);
         presenter.loadArea(CustomerListActivity.this, companyId, empId);
         presenter.getPaymentStatus(CustomerListActivity.this, "0");
-        //presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "");
-
-        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
 
 
     }
@@ -293,11 +292,11 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
                             areaId = areaIds.get(position);
                             SharedPrefsData.putString(CustomerListActivity.this, Constants.CustAreaId, areaId, Constants.PREF_NAME);
                             areaId = SharedPrefsData.getString(CustomerListActivity.this, Constants.CustAreaId, Constants.PREF_NAME);
-                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
 
                             if (i != 1) {
                                 progressBar.show();
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
 
                             }
 
@@ -310,7 +309,7 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
 
                             if (i != 1) {
                                 progressBar.show();
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
 
 
                             }
@@ -369,10 +368,10 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
                             SharedPrefsData.putString(CustomerListActivity.this, Constants.StatusId, StatusId, Constants.PREF_NAME);
                             StatusId = SharedPrefsData.getString(CustomerListActivity.this, Constants.StatusId, Constants.PREF_NAME);
                             progressBar.show();
-                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
                             if (i != 1) {
                                 progressBar.show();
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
 
                             }
                         } else {
@@ -382,10 +381,10 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
                             Value = "";
                             custmersearch_edit.setText("");
                             progressBar.show();
-                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
                             if (i != 1) {
                                 progressBar.show();
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
 
 
                             }
@@ -465,7 +464,7 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
             pageNo = SharedPrefsData.getString(this, Constants.PageNo, Constants.PREF_NAME);
             Value = "";
             custmersearch_edit.setText("");
-            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
             progressBar = new ProgressDialog(this);
             progressBar.setCancelable(false);//you can cancel it by pressing back button
             progressBar.setMessage("Please wait...");
@@ -488,7 +487,7 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
         pageNo = id;
         Value = "";
         custmersearch_edit.setText("");
-        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
         progressBar = new ProgressDialog(this);
         progressBar.setCancelable(false);//you can cancel it by pressing back button
         progressBar.setMessage("Please wait...");

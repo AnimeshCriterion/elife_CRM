@@ -258,7 +258,10 @@ public class ComplaintReceiptActivity extends AppCompatActivity implements Compl
         Log.e("TAG", "shareItOnWhatsApp: "+custWhatsAppNo );
 
         try {
-            String text = "*Complaint Receipt*\n" +
+            Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+            sendIntent.setPackage("com.whatsapp");
+
+            String message = "*Complaint Receipt*\n" +
                     "*Customer Details*\n" +
                     "Name: " + txt_cust_name.getText().toString() + "\n" +
                     "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
@@ -276,12 +279,21 @@ public class ComplaintReceiptActivity extends AppCompatActivity implements Compl
                     "------------------------\n" +
                     "" + txt_header.getText().toString().trim();// Replace with your message.
 
-            String toNumber = "91"+custWhatsAppNo; // Replace with mobile phone number without +Sign or leading zeros, but with country code
+            String url = "https://api.whatsapp.com/send?phone=" + custWhatsAppNo + "&text=" + message;
+            sendIntent.setData(Uri.parse(url));
+
+            if (sendIntent.resolveActivity(getPackageManager()) == null) {
+                Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            startActivity(sendIntent);
+
+           /* String toNumber = "91"+custWhatsAppNo; // Replace with mobile phone number without +Sign or leading zeros, but with country code
             //Suppose your country is India and your phone number is “xxxxxxxxxx”, then you need to send “91xxxxxxxxxx”.
 
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+toNumber +"&text="+text));
-            startActivity(intent);
+            startActivity(intent);*/
         }
         catch (Exception e){
             e.printStackTrace();

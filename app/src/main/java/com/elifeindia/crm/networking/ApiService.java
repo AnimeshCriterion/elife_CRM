@@ -70,7 +70,9 @@ public interface ApiService {
             @Query("Status_ID") String Status_ID,
             @Query("selectCount") String selectCount,
             @Query("page_no") String page_no,
-            @Query("Value") String Value);
+            @Query("Value") String Value,
+            @Query("Field_Value") String field_value,
+            @Query("Field_Name") String field_name);
 
     @GET("Values/GetArea?")
     Observable<AreaResponse> getArea (@Query("Company_ID") String Company_ID, @Query("Employee_ID") String Employee_ID);

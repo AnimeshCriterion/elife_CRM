@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.elifeindia.crm.R;
@@ -79,6 +80,14 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             public void onClick(View view) {
 
                 Intent i = new Intent(HomeActivity.this, ComplaintDetailsActivity.class);
+                startActivity(i);
+            }
+        });
+        findViewById(R.id.cardViewResetPassword).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawer_layout.closeDrawer(GravityCompat.START);
+                Intent i = new Intent(HomeActivity.this, ResetPasswordActivity.class);
                 startActivity(i);
             }
         });

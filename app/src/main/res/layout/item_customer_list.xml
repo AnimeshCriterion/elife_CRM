@@ -19,8 +19,7 @@
         android:elevation="@dimen/_5sdp"
         app:cardCornerRadius="@dimen/_10sdp"
         app:cardElevation="@dimen/_5sdp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="2dp">
+        tools:ignore="MissingConstraints">
 
 
         <LinearLayout
