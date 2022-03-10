@@ -4,9 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -18,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -108,11 +104,11 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
                     presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "","","");
                 }else if (StaticAppData.filterDataList().get(position).matches("Name")){
                     field_name="name";
-                }else if (StaticAppData.filterDataList().get(position).matches("A/C No")){
+                }else if (StaticAppData.filterDataList().get(position).matches("A/c No")){
                     field_name="account_no";
-                }else if (StaticAppData.filterDataList().get(position).matches("Contact No")){
+                }else if (StaticAppData.filterDataList().get(position).matches("Mobile")){
                     field_name="mobile_no";
-                }else if (StaticAppData.filterDataList().get(position).matches("Subscriber ID")){
+                }else if (StaticAppData.filterDataList().get(position).matches("Sub ID")){
                     field_name="Subscriber_id";
                 }else if (StaticAppData.filterDataList().get(position).matches("Box No")){
                     field_name="Box_no";
