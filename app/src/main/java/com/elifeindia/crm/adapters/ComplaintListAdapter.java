@@ -59,7 +59,7 @@ public class ComplaintListAdapter extends RecyclerView.Adapter<ComplaintListAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyviewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyviewHolder holder,  int position) {
 
         try {
 //            holder.acno.setText("Ac No : "+paymentReciepts.get(position).getSubscriberID());

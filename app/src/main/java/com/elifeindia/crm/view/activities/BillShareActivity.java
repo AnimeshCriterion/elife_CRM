@@ -81,8 +81,6 @@ import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetail
 import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsBillShareAdapter.activation_Date;
 import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsBillShareAdapter.expiry_Date;
 import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.paidAmount;
-
-
 public class BillShareActivity extends AppCompatActivity {
 
     TextView txt_total, btn_next, btn_done, btn_send, txt_header, txt_cust_name, txt_accountno, invoicenumber, txt_mob_no, txt_invoice_date, txt_sub_id,
@@ -283,7 +281,8 @@ public class BillShareActivity extends AppCompatActivity {
         String strTotal = String.valueOf(Float.parseFloat(subsAmount) + Float.parseFloat(prevBalance));
         txt_total.setText(strTotal);
         txt_paid_amnt.setText(paidAmount);
-        newBalance = String.valueOf(Float.parseFloat(strTotal) - Float.parseFloat(paidAmount));
+     //   newBalance = String.valueOf(Float.parseFloat(strTotal) - Float.parseFloat(paidAmount));
+        newBalance = "10";
         txt_balance.setText(newBalance);
 
 

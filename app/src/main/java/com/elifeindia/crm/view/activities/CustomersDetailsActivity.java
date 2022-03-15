@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -54,8 +55,6 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customers_details);
-
-
         accountnumber = findViewById(R.id.accountnumber);
         subscriberid = findViewById(R.id.subscriberid);
         areaid = findViewById(R.id.areaid);
@@ -81,7 +80,6 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         editCustDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(CustomersDetailsActivity.this, UpdateCustomerActivity.class);
 
                 intent.putExtra("AccNo", accountnumber.getText().toString());
@@ -246,14 +244,13 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
             }
         });
 
+
         viewUtils = new ViewUtils();
         presenter = new CustomerDetailsPresenter(this);
         presenter.start();
-
         presenter.loadApi(this, SharedPrefsData.getString(this, Constants.CustomerID, Constants.PREF_NAME));
         presenter.loadCableBoxListApi(SharedPrefsData.getString(this, Constants.CustomerID, Constants.PREF_NAME));
         presenter.loadInternetBoxListApi(SharedPrefsData.getString(this, Constants.CustomerID, Constants.PREF_NAME));
-
 
     }
 
@@ -270,19 +267,16 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
 
     @Override
     public void showResult(CustomerData customerData) {
-
         address.setText(customerData.getAddress());
         areaid.setText(customerData.getAreaCustomerID().toString());
         txt_mob_no.setText(customerData.getContactNo());
         txt_whatsapp_no.setText(customerData.getWhatsupNo());
-
         SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.WhatsupNo, customerData.getWhatsupNo(), Constants.PREF_NAME);
         SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.CustMob, customerData.getContactNo(), Constants.PREF_NAME);
         SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.CustomerBalance, customerData.getBalance(), Constants.PREF_NAME);
-
         balance.setText(customerData.getBalance());
         // SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.CustomerBalance, customerData.getBalance().toString(), Constants.PREF_NAME);
-        subscriberid.setText(customerData.getSubscriberID().toString());
+        subscriberid.setText(customerData.getSubscriberID());
         accountnumber.setText(customerData.getAccountNo().toString());
         customername.setText(customerData.getName());
 
@@ -331,6 +325,8 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.SubId, subscriberid.getText().toString(), Constants.PREF_NAME);
         SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.CustomerName, customername.getText().toString(), Constants.PREF_NAME);
 
+        Log.e("CustomerDetails", "showResult:  "+customerData.getInvoiceType()+ subscriberid.getText().toString()+customername.getText().toString());
+
         try {
             txt_status.setText(customerData.getStatusName().toString());
         } catch (Exception e) {
@@ -341,7 +337,6 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
 
     @Override
     public void showCableBoxList(CustemersCableBoxData custemersCableBoxData) {
-
         List<CustemersCableBoxData.CableBox> cableBoxList = custemersCableBoxData.getCableBox();
 
         if (cableBoxList.size() == 0) {
@@ -383,7 +378,6 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         startActivity(new Intent(CustomersDetailsActivity.this, CustomerListActivity.class));
         finish();
 

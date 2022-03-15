@@ -3,6 +3,7 @@ package com.elifeindia.crm.presenter.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.elifeindia.crm.contract.activities.GenerateInvoiceContract;
@@ -15,6 +16,7 @@ import com.elifeindia.crm.model.InsertPayment;
 import com.elifeindia.crm.model.InternetBoxWithSubscription;
 import com.elifeindia.crm.model.PaymentTypeList;
 import com.elifeindia.crm.model.UpdateBox;
+import com.elifeindia.crm.model.generateinvoice.InsertInvoiceModel;
 import com.elifeindia.crm.networking.NetworkUtils;
 import com.google.gson.JsonObject;
 
@@ -95,6 +97,7 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.toString());
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -118,6 +121,7 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.toString());
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -146,6 +150,7 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.toString());
+                        progressBar.dismiss();
                     }
 
                     @Override
@@ -174,6 +179,7 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.toString());
+                        progressBar.dismiss();
                     }
 
                     @Override
@@ -199,6 +205,7 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.toString());
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -221,6 +228,7 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.toString());
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -244,6 +252,7 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.toString());
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -273,6 +282,8 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.toString());
+                        e.printStackTrace();
+                        progressBar.dismiss();
                     }
 
                     @Override
@@ -303,6 +314,39 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
                         mView.showInvoice(getInvoiceModel);
                     }
                 });
+    }
+
+    @Override
+    public void insertInvoice2(Context context, InsertInvoiceModel model) {
+        final ProgressDialog progressBar;
+        progressBar = new ProgressDialog(context);
+        progressBar.setCancelable(false);//you can cancel it by pressing back button
+        progressBar.setMessage("Please wait...");
+        progressBar.show();
+        NetworkUtils.getUserApiInstance()
+                .insertInvoice2(model)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<InsertPayment>() {
+                    @Override
+                    public void onCompleted() {
+                        progressBar.dismiss();
+
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(e.toString());
+                        e.printStackTrace();
+                        progressBar.dismiss();
+                    }
+
+                    @Override
+                    public void onNext(InsertPayment insertPayment) {
+                        mView.insertInvoice(insertPayment);
+                    }
+                });
+
+
     }
 
 }

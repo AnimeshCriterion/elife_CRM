@@ -19,6 +19,7 @@ import com.elifeindia.crm.model.InternetSubscriptionDetails;
 import com.elifeindia.crm.model.Login;
 import com.elifeindia.crm.model.PaymentTypeList;
 import com.elifeindia.crm.model.UpdateBox;
+import com.elifeindia.crm.model.generateinvoice.InsertInvoiceModel;
 import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
@@ -79,6 +80,7 @@ public interface GenerateInvoiceContract {
 
         void insertInvoice(Context context, JsonObject jsonObject);
         void getInvoice(Context context, String invId);
+        void insertInvoice2(Context context, InsertInvoiceModel model);
 
 
         }

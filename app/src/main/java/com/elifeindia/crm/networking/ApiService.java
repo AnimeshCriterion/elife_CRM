@@ -34,6 +34,7 @@ import com.elifeindia.crm.model.PriorityList;
 import com.elifeindia.crm.model.ProductList;
 import com.elifeindia.crm.model.RolewiseAccess;
 import com.elifeindia.crm.model.UpdateBox;
+import com.elifeindia.crm.model.generateinvoice.InsertInvoiceModel;
 import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
@@ -378,6 +379,9 @@ public interface ApiService {
 
     @POST("Values/Insert_Invoice?")
     Observable<InsertPayment> insertInvoice (@Body JsonObject jsonObject);
+
+    @POST("Values/Insert_Invoice?")
+    Observable<InsertPayment> insertInvoice2(@Body InsertInvoiceModel model);
 
 
     @GET("Values/GetInvoice?")

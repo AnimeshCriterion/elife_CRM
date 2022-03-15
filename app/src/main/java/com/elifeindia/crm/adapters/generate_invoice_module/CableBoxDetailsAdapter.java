@@ -131,6 +131,7 @@ public class CableBoxDetailsAdapter extends RecyclerView.Adapter<CableBoxDetails
             holder.amount.setEnabled(false);
             holder.ll_subscription.setVisibility(View.VISIBLE);
         }
+
         holder.amount.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

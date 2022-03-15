@@ -108,7 +108,6 @@ public class CableSubscriptionAdapter extends RecyclerView.Adapter<CableSubscrip
         });
         String date = ViewUtils.changeDateFormat(cableBoxList.get(position).getExpiryDate().toString());
 
-
         holder.expirtydate.setText(date);
         holder.amount.setText(cableBoxList.get(position).getBoxAmount().toString());
         String boxId = cableBoxList.get(position).getCableBoxID().toString();

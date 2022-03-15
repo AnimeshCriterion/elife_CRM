@@ -11,9 +11,7 @@ import com.elifeindia.crm.model.CustomersInternetBoxData;
 public interface CustomerDetailsContract {
     interface View {
         void init();
-
         void showError(String message);
-
         void showResult(CustomerData customerData);
         void showCableBoxList(CustemersCableBoxData custemersCableBoxData);
         void showInernetBoxList(CustomersInternetBoxData customersInternetBoxData);
@@ -21,7 +19,6 @@ public interface CustomerDetailsContract {
 
     interface Presenter {
         void start();
-
         void loadApi(Context context, String Customer_ID);
         void loadCableBoxListApi(String Customer_ID);
         void loadInternetBoxListApi(String Customer_ID);

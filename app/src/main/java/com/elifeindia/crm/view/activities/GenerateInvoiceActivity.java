@@ -1,4 +1,4 @@
- package com.elifeindia.crm.view.activities;
+package com.elifeindia.crm.view.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -91,8 +91,8 @@ import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDet
 public class GenerateInvoiceActivity extends AppCompatActivity implements GenerateInvoiceContract.View, AdapterCallbackTextView, AdapterCallback {
 
     private LinearLayout ll_noofdays;
-    public static CableBoxWithSubscription cableBoxWithSubscription = new CableBoxWithSubscription();
-    public static InternetBoxWithSubscription internetBoxWithSubscription = new InternetBoxWithSubscription();
+    public static CableBoxWithSubscription cableBoxWithSubscription;
+    public static InternetBoxWithSubscription internetBoxWithSubscription;
 
     public static GetInvoiceModel getInvoiceModelInvoice = new GetInvoiceModel();
 
@@ -157,22 +157,21 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate_invoice);
-
-        adapterCallback = this;
-        adapterCall = this;
-        presenter = new GenerateInvoicePresenter(this);
-        presenter.start();
-
         customerID = SharedPrefsData.getString(this, Constants.CustomerID, Constants.PREF_NAME);
         companyID = SharedPrefsData.getString(this, Constants.CompanyID, Constants.PREF_NAME);
 
+        adapterCallback = this;
+        adapterCall = this;
+
+        presenter = new GenerateInvoicePresenter(this);
+        presenter.start();
         presenter.loadCustomerSubscribeList(customerID);
         presenter.loadPaymentTypeList(companyID);
         presenter.getBillType("");
-
-        presenter.loadCableBoxListApi(SharedPrefsData.getString(GenerateInvoiceActivity.this, Constants.CustomerID, Constants.PREF_NAME));
+        presenter.loadCableBoxListApi(customerID);
 
         InvType = SharedPrefsData.getString(this, Constants.InvoiceType, Constants.PREF_NAME);
+
         if (InvType.equals("Collective")) {
             spn_triple_pay.setVisibility(View.INVISIBLE);
 
@@ -200,7 +199,6 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                     c = "0";
 
                 if (edt_payingamount.getText().toString().equals("")) {
-
                     txt_new_bal.setText(String.valueOf(totalAmnt));
                     txt_final_amnt.setText("0");
 
@@ -262,19 +260,12 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
                 JsonParser parser = new JsonParser();
 
-
                 if (triplePlay.equals("Cable")) {
-
                     jsonStr = gson.toJson(cableBoxWithSubscription);
-
-                    //Toast.makeText(GenerateInvoiceActivity.this, "Cable box "+ jsonStr, Toast.LENGTH_SHORT).show();
-
                     json = (JsonObject) parser.parse(jsonStr);
                     JsonArray jsonArray = new JsonArray();
                     json.add("internetBoxwithSubscription", jsonArray);
                     json.remove("nameValuePairs");
-
-
                     json.addProperty("company_ID", companyID);
                     json.addProperty("invoice_Date", todayDateString());
                     json.addProperty("tax_Amount", tax_Amount);
@@ -294,7 +285,6 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                     json.addProperty("payment_Date", todayDateString());
                     json.addProperty("transaction_No", "null");
 
-
                 } else if (triplePlay.equals("Internet")) {
 
                     jsonStr = gson.toJson(internetBoxWithSubscription);
@@ -305,7 +295,6 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                     JsonArray jsonArray = new JsonArray();
                     json.add("cableBoxwithSubscription", jsonArray);
                     json.remove("nameValuePairs");
-
 
                     json.addProperty("company_ID", companyID);
                     json.addProperty("invoice_Date", todayDateString());
@@ -363,7 +352,6 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
         for (int i = 1; i <= 12; i++) {
             statesList.add(i);
         }
-
         adapter_state_adj4 = new ArrayAdapter<String>(GenerateInvoiceActivity.this, android.R.layout.simple_dropdown_item_1line, statesList);
         adapter_state_adj4.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spn_no_of_months.setAdapter(adapter_state_adj4);
@@ -398,9 +386,9 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
         empId = SharedPrefsData.getString(this, Constants.EmpId, Constants.PREF_NAME);
 
         //Me
-        Log.e("CustomerBalance",CustomerBalance );
-        Log.e("userId",userId );
-        Log.e("empId",empId );
+        Log.e("CustomerBalance", CustomerBalance);
+        Log.e("userId", userId);
+        Log.e("empId", empId);
 
         txt_prev_bal.setText(CustomerBalance);
 
@@ -415,12 +403,12 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                 String no_of_days = charSequence.toString();
 
                 //Me
-                Log.e("no_of_days",no_of_days );
+                Log.e("no_of_days", no_of_days);
 
                 txt_expiry_date.setText(strExpiryDate);
 
                 //Me
-                Log.e("strExpiryDate",strExpiryDate );
+                Log.e("strExpiryDate", strExpiryDate);
 
             }
 
@@ -446,7 +434,6 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
     @Override
     public void showCustomerSubscribeList(CustomerSubscribeList customerSubscribeList) {
-
         final List<CustomerSubscribeList.CusSubscribeType> cusSubscribeTypeList = customerSubscribeList.getCusSubscribeType();
 
         ArrayList statesList = new ArrayList();
@@ -467,21 +454,19 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                         triplePlay = cusSubscribeTypeList.get(position).getTriplePlay().toString();
 
                         //Me
-                        Log.e("tripleId",tripleId );
-                        Log.e("triplePlay",triplePlay );
+                        Log.e("tripleId", tripleId);
+                        Log.e("triplePlay", triplePlay);
 
                         if (InvType.equals("Collective")) {
-                            presenter.loadCableBoxListApi(SharedPrefsData.getString(GenerateInvoiceActivity.this, Constants.CustomerID, Constants.PREF_NAME));
-                            presenter.loadInternetBoxListApi(SharedPrefsData.getString(GenerateInvoiceActivity.this, Constants.CustomerID, Constants.PREF_NAME));
-
+                            presenter.loadCableBoxListApi(customerID);
+                            presenter.loadInternetBoxListApi(customerID);
 
                         } else {
-
                             if (triplePlay.equals("Cable")) {
-                                presenter.loadCableBoxListApi(SharedPrefsData.getString(GenerateInvoiceActivity.this, Constants.CustomerID, Constants.PREF_NAME));
+                                presenter.loadCableBoxListApi(customerID);
 
                             } else if (triplePlay.equals("Internet")) {
-                                presenter.loadInternetBoxListApi(SharedPrefsData.getString(GenerateInvoiceActivity.this, Constants.CustomerID, Constants.PREF_NAME));
+                                presenter.loadInternetBoxListApi(customerID);
 
                             }
                             SharedPrefsData.putString(GenerateInvoiceActivity.this, Constants.TriplePlay, triplePlay, Constants.PREF_NAME);
@@ -517,7 +502,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                         pTypeId = paymentTypes.get(position).getPaymentTypeID().toString();
 
                         //Me
-                        Log.e("pTypeId",pTypeId );
+                        Log.e("pTypeId", pTypeId);
 
                         SharedPrefsData.putString(GenerateInvoiceActivity.this, Constants.PaymentTypeId, pTypeId, Constants.PREF_NAME);
 
@@ -537,7 +522,6 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
     @Override
     public void showCableBoxList(CableBoxWithSubscription cableBoxWithSubscription1) {
         cableBoxWithSubscription = cableBoxWithSubscription1;
-
         cableBoxList = cableBoxWithSubscription.getCableBoxwithSubscription();
         cableBoxAmnt = cableBoxWithSubscription.geTotal_CableBox_amount();
 
@@ -606,8 +590,8 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             billID.add(bill_type.get(i).getBill_Type_ID().toString());
 //            empMobNos.add(employee.get(i).getContactNo().toString());
             //Me
-            Log.e("billTypeName",billTypeName.toString());
-            Log.e("billID",billID.toString());
+            Log.e("billTypeName", billTypeName.toString());
+            Log.e("billID", billID.toString());
 
         }
 
@@ -656,8 +640,8 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             view.setText(ViewUtils.changeDateFormat(boxTypeModel.getExpiry_Date()));
 
             //Me
-            Log.e("activation_Date_1",activation_Date);
-            Log.e("expiry_Date_1",expiry_Date);
+            Log.e("activation_Date_1", activation_Date);
+            Log.e("expiry_Date_1", expiry_Date);
 
 
         } else if (strApiCallType.equals("spn_bill_type")) {
@@ -666,8 +650,8 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             view.setText(ViewUtils.changeDateFormat(boxTypeModel.getExpiry_Date()));
 
             //Me
-            Log.e("activation_Date_2",activation_Date);
-            Log.e("expiry_Date",expiry_Date);
+            Log.e("activation_Date_2", activation_Date);
+            Log.e("expiry_Date", expiry_Date);
 
 
         } else {
@@ -693,8 +677,8 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             expiry_Date = boxTypeModel.getExpiry_Date().substring(0, 10);
 
             //Me
-            Log.e("activation_Date",activation_Date);
-            Log.e("expiry_Date",expiry_Date);
+            Log.e("activation_Date", activation_Date);
+            Log.e("expiry_Date", expiry_Date);
         }
 
         cableBoxWithSubscription.setTotal_CableBox_amount(boxTypeModel.getBox_Amount());
@@ -724,7 +708,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
             expiry_Date = boxTypeModel.getExpiry_Date().substring(0, 10);
             //activation_Date = boxTypeModel.getActivation_Date().substring(0 ,10);
-            newInternetActDate = boxTypeModel.getActivation_Date().substring(0 ,10);
+            newInternetActDate = boxTypeModel.getActivation_Date().substring(0, 10);
 
             newInternetExpDate = boxTypeModel.getExpiry_Date().substring(0, 10);
 
@@ -735,16 +719,16 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             view1.setText(ViewUtils.changeDateFormat(boxTypeModel.getActivation_Date()));
 
             //Me
-            Log.e("expiry_Date2",expiry_Date);
-            Log.e("newInternetActDate2",newInternetActDate);
+            Log.e("expiry_Date2", expiry_Date);
+            Log.e("newInternetActDate2", newInternetActDate);
 
         } else if (strApiCallType.equals("strActivationDateInternet")) {
             activation_DateInternet = boxTypeModel.getActivation_Date().substring(0, 10);
             expiry_DateInternet = boxTypeModel.getExpiry_Date().substring(0, 10);
             view.setText(ViewUtils.changeDateFormat(boxTypeModel.getExpiry_Date()));
             //Me
-            Log.e("activation_Date3",activation_DateInternet);
-            Log.e("expiry_Date3",expiry_DateInternet);
+            Log.e("activation_Date3", activation_DateInternet);
+            Log.e("expiry_Date3", expiry_DateInternet);
 
 
         } else {
@@ -763,8 +747,8 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             expiry_DateInternet = boxTypeModel.getExpiry_Date().substring(0, 10);
 
             //Me
-            Log.e("activation_DateInterne4",activation_DateInternet);
-            Log.e("expiry_DateInternet4",expiry_DateInternet);
+            Log.e("activation_DateInterne4", activation_DateInternet);
+            Log.e("expiry_DateInternet4", expiry_DateInternet);
 
         }
 
@@ -872,7 +856,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                                 view3.setText(noofMonth);
 
                                 //Me
-                                Log.e("noofMonth",noofMonth);
+                                Log.e("noofMonth", noofMonth);
 
 //                                if (noofMonth != "1"){
 //                                    prevMonthValue = noofMonth;
@@ -946,7 +930,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                     calendar.add(Calendar.DATE, 1);  // number of days to add
                     activation_Date = sdf.format(calendar.getTime());
                     //Me
-                    Log.e("activation_Date",activation_Date);
+                    Log.e("activation_Date", activation_Date);
                 }
 
                 presenter.updateCableBox(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date, noofMonth, noofDays, "null", "null", "null", box_Amount, todayDateString());
@@ -1118,7 +1102,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
                 totalAmnt = Float.parseFloat(newbox_Amount) + Float.parseFloat(CustomerBalance);
                 txt_subscription_amnt.setText(newbox_Amount);
-               // cableBoxAmnt = String.valueOf(ans);
+                // cableBoxAmnt = String.valueOf(ans);
                 txt_total_amount.setText(String.valueOf(totalAmnt));
                 edt_payingamount.setText(String.valueOf(totalAmnt));
 
@@ -1175,7 +1159,6 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void onClickCallback(View view, int position, String id) {
