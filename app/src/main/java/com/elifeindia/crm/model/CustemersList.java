@@ -1,5 +1,6 @@
 package com.elifeindia.crm.model;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -41,7 +42,7 @@ public class CustemersList {
     }
 
 
-    public class Customer {
+    public class Customer implements Serializable {
 
         @SerializedName("customer_ID")
         @Expose

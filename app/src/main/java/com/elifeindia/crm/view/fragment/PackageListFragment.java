@@ -92,17 +92,19 @@ public class PackageListFragment extends Fragment implements PackageListFragCont
         boolean isLoadBouquet = SharedPrefsData.getBool(getActivity(), Constants.isLoadBouquet, Constants.PREF_NAME);
 
         //Toast.makeText(getActivity(), ""+isLoadBouquet, Toast.LENGTH_SHORT).show();
-
+        presenter.loadBouquet(getActivity(), companyId, custId);
         if (isLoadBouquet) {
             presenter.loadBouquet(getActivity(), companyId, custId);
-
         } else {
-            txt_total_amount.setText(bouquetModela.getTotal_Bouquet());
-
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-            rv_channel_list.setLayoutManager(mLayoutManager);
-            bouquetSubscriptionListAdapter = new BouquetSubscriptionListAdapter(getActivity(), bouquetModelBouquet, bouquetModelBouquet, adapterCallback);
-            rv_channel_list.setAdapter(bouquetSubscriptionListAdapter);
+            try {
+                txt_total_amount.setText(bouquetModela.getTotal_Bouquet());
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+                rv_channel_list.setLayoutManager(mLayoutManager);
+                bouquetSubscriptionListAdapter = new BouquetSubscriptionListAdapter(getActivity(), bouquetModelBouquet, bouquetModelBouquet, adapterCallback);
+                rv_channel_list.setAdapter(bouquetSubscriptionListAdapter);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
 
@@ -164,11 +166,8 @@ public class PackageListFragment extends Fragment implements PackageListFragCont
     public void showBouquet(BouquetModel bouquetModel) {
         bouquetModelBouquet = bouquetModel.getBouquet();
         bouquetModela = bouquetModel;
-
         txt_total_amount.setText(bouquetModel.getTotal_Bouquet());
         SharedPrefsData.putBool(getActivity(), Constants.isLoadBouquet, false, Constants.PREF_NAME);
-
-
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rv_channel_list.setLayoutManager(mLayoutManager);
         bouquetSubscriptionListAdapter = new BouquetSubscriptionListAdapter(getActivity(), bouquetModelBouquet, bouquetModelBouquet, adapterCallback);

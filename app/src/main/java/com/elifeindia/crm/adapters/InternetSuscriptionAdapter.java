@@ -1,5 +1,6 @@
 package com.elifeindia.crm.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -38,7 +39,7 @@ public class InternetSuscriptionAdapter extends RecyclerView.Adapter<InternetSus
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
         holder.cable_status.setText("Status : "+internetBoxes.get(position).getStatusName());
         holder.cable_lpamount.setText(String.valueOf("LP Amount : "+internetBoxes.get(position).getPaidAmount()));
@@ -54,7 +55,7 @@ public class InternetSuscriptionAdapter extends RecyclerView.Adapter<InternetSus
         holder.macadress.setText(internetBoxes.get(position).getMac().toString());
         String date = "null";
         try {
-            date = ViewUtils.changeDateFormat(internetBoxes.get(position).getExpiryDate().toString());
+            date = ViewUtils.changeDateFormat(internetBoxes.get(position).getExpiryDate());
         } catch (Exception e) {
             e.printStackTrace();
         }

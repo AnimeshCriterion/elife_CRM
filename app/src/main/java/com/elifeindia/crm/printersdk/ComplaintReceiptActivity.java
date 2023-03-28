@@ -48,6 +48,7 @@ import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.view.activities.ComplaintDetailsActivity;
 import com.elifeindia.crm.view.activities.CustomerListActivity;
 import com.elifeindia.crm.view.activities.CustomersDetailsActivity;
+import com.elifeindia.crm.view.activities.EditComplaintActivity;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -196,7 +197,9 @@ public class ComplaintReceiptActivity extends AppCompatActivity implements Compl
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(i);
                 } else {
-                    finish();
+                    Intent i = new Intent(ComplaintReceiptActivity.this, ComplaintDetailsActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(i);
                 }
 
 
@@ -219,13 +222,14 @@ public class ComplaintReceiptActivity extends AppCompatActivity implements Compl
             txt_complaint.setText(complaintType);*/
 
             final String url = RetrofitAdapter.GET_COMPLAINT + complaintId;
+            Log.d("TAG", "onCreate: "+url.toString());
 
             getComplaintCode(url);
 
 
         } else {
             try {
-                /*txt_cust_name.setText(SharedPrefsData.getString(this, Constants.CustomerName, Constants.PREF_NAME));
+                txt_cust_name.setText(SharedPrefsData.getString(this, Constants.CustomerName, Constants.PREF_NAME));
                 //txt_accountno.setText(SharedPrefsData.getString(this, Constants.AccNo, Constants.PREF_NAME));
                 txt_subid.setText(SharedPrefsData.getString(this, Constants.SubId, Constants.PREF_NAME));
                 txt_comp_date.setText(complaintDateEdit);
@@ -234,9 +238,10 @@ public class ComplaintReceiptActivity extends AppCompatActivity implements Compl
                 txt_comp_status.setText(compStatusEdit);
                 txt_assignto.setText(assignToEdit);
                 txt_complaint.setText(complaintTypeEdit);
-                //txt_complaint_code.setText(complaintIdEdit);*/
+                //txt_complaint_code.setText(complaintIdEdit);
 
-                final String url = RetrofitAdapter.GET_COMPLAINT + complaintIdEdit;
+                final String url = RetrofitAdapter.GET_COMPLAINT + SharedPrefsData.getString(ComplaintReceiptActivity.this, Constants.ComplaintID, Constants.PREF_NAME);;
+                Log.d("TAG", "onCreate: "+url.toString());
 
                 getComplaintCode(url);
 
@@ -470,6 +475,7 @@ public class ComplaintReceiptActivity extends AppCompatActivity implements Compl
                     for (int i = 0; i < array.length(); i++) {
 
                         JSONObject object1 = array.getJSONObject(i);
+                        Log.d("TAG", "onResponse: "+object1.toString());
                         String compCode = object1.getString("complaint_Code");
                         txt_complaint_code.setText(compCode);
 

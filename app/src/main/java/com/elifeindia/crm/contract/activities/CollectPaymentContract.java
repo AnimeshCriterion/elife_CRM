@@ -1,15 +1,10 @@
 package com.elifeindia.crm.contract.activities;
 
 
-import com.elifeindia.crm.model.BoxAlacarteList;
-import com.elifeindia.crm.model.BoxBouquetList;
 import com.elifeindia.crm.model.CustomerInvoice;
 import com.elifeindia.crm.model.CustomerSubscribeList;
 import com.elifeindia.crm.model.InsertPayment;
-import com.elifeindia.crm.model.InternetSubscriptionDetails;
 import com.elifeindia.crm.model.PaymentTypeList;
-
-import org.json.JSONObject;
 
 public interface CollectPaymentContract {
     interface View {
@@ -31,7 +26,7 @@ public interface CollectPaymentContract {
         void loadCustomerInvoice(String custId, String triplePlayId);
         void loadInsertPayment(String Customer_ID, String paymentType_Id, String invoice_ID, String date,
                                String total_amount, String paid_Amount, String balance, String transaction_No,
-                               String company_ID, String user_ID);
+                               String company_ID, String user_ID, String s);
     }
 
 

@@ -1,27 +1,40 @@
 package com.elifeindia.crm.view.activities;
 
+import static com.elifeindia.crm.view.activities.HomeActivity.hideUpdateSubscription;
+
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.util.Log;
+import android.util.TypedValue;
+import com.elifeindia.crm.Capture;
+import android.view.MenuItem;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.util.Pair;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elifeindia.crm.R;
+import com.elifeindia.crm.UpdateSubscription.UpdateSubscriptionAtivity;
 import com.elifeindia.crm.adapters.AdapterCallback;
 import com.elifeindia.crm.adapters.CustomerListAdapter;
 import com.elifeindia.crm.adapters.FilterTypeAdapter;
@@ -30,20 +43,29 @@ import com.elifeindia.crm.contract.activities.CustomerListContract;
 import com.elifeindia.crm.model.AreaResponse;
 import com.elifeindia.crm.model.CustemersList;
 import com.elifeindia.crm.model.PaymentStatusModel;
+import com.elifeindia.crm.networking.AdapterInterface;
 import com.elifeindia.crm.presenter.activities.CustomerListPresenter;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.StaticAppData;
 import com.elifeindia.crm.utils.ViewUtils;
 import com.github.aakira.expandablelayout.ExpandableLayout;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
-public class  CustomerListActivity extends AppCompatActivity implements CustomerListContract.View, AdapterCallback {
+public class CustomerListActivity extends AppCompatActivity implements CustomerListContract.View, AdapterCallback , AdapterInterface {
     CustomerListContract.Presenter presenter;
     ViewUtils viewUtils;
     RecyclerView rv_customer_list, rv_paging;
@@ -51,8 +73,8 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
     CustomerListAdapter customerListAdapter;
     ExpandableLayout expandableLayout;
     CardView cv_filter;
-    ImageButton ivbtn_search_submit;
-    String areaId = "0", companyId, empId, userId, StatusId = "0", selectCont = "100", pageNo = "1", Value = "",field_value="",field_name="";
+    ImageButton ivbtn_search_submit,iv_scan_button;
+    String areaId = "0", companyId, empId, userId, StatusId = "0", selectCont = "100", pageNo = "1", Value = "", field_value = "", field_name = "";
     Spinner spn_area, spn_status;
     EditText custmersearch_edit;
     ArrayAdapter<String> areaListAdapter, adapterStatus;
@@ -64,16 +86,32 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
     FilterTypeAdapter filterTypeAdapter;
 
     ProgressDialog progressBar;
+    View view;
+    String customerID;
+    LinearLayout daterange;
+    TextView fromDate,toDate;
+    String fromDateData,toDataData;
+    FragmentManager mFragmentManager;
+    ImageView calenderDateRange;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_list);
 
+        Log.d("TAG", "onCreate: Anmesh pratatp singh");
+
         spn_area = findViewById(R.id.spn_area);
         iv_calendar = findViewById(R.id.iv_calendar);
+        fromDate=findViewById(R.id.from_date);
+        toDate=findViewById(R.id.to_date);
+        iv_scan_button=findViewById(R.id.iv_scan_button);
+        calenderDateRange=findViewById(R.id.calenderDateRange);
         custmersearch_edit = findViewById(R.id.custmersearch_edit);
         ivbtn_search_submit = findViewById(R.id.ivbtn_search_submit);
+        daterange=findViewById(R.id.daterange);
 //        iv_search = findViewById(R.id.iv_search);
         spn_status = findViewById(R.id.spn_status);
         tool_bar_text = findViewById(R.id.tool_bar_text);
@@ -81,9 +119,36 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
         txt_req_date = findViewById(R.id.txt_req_date);
         txt_not_found = findViewById(R.id.txt_not_found);
         recyclerViewFilterType = findViewById(R.id.rvFilterSelection);
-        recyclerViewFilterType.setLayoutManager(new LinearLayoutManager(getApplicationContext(),RecyclerView.HORIZONTAL,false));
+        recyclerViewFilterType.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.HORIZONTAL, false));
         filterTypeAdapter = new FilterTypeAdapter(this, StaticAppData.filterDataList());
         recyclerViewFilterType.setAdapter(filterTypeAdapter);
+
+
+        calenderDateRange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                loadRangeDatePickerMultipleBooking();
+
+            }
+        });
+
+        iv_scan_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentIntegrator intentIntegrator = new IntentIntegrator(CustomerListActivity.this);
+                //set prompt text
+                intentIntegrator.setPrompt("for flash volume up key");
+                //locked orientation
+                intentIntegrator.setOrientationLocked(true);
+                //set beep enabled
+                intentIntegrator.setBeepEnabled(true);
+                //set capture activity
+                intentIntegrator.setCaptureActivity(Capture.class);
+                //initiate scann prcess
+                intentIntegrator.initiateScan();
+            }
+        });
 
 
         viewUtils = new ViewUtils();
@@ -98,114 +163,207 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
         filterTypeAdapter.setListener(new FilterTypeAdapter.FilterTypeListener() {
             @Override
             public void onClickFilterBtn(int position) {
-                if (StaticAppData.filterDataList().get(position).matches("All")){
-                    field_name="";
+                if (StaticAppData.filterDataList().get(position).matches("All")) {
+                    field_name = "";
+                    daterange.setVisibility(View.GONE);
                     progressBar.show();
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "","","");
-                }else if (StaticAppData.filterDataList().get(position).matches("Name")){
-                    field_name="name";
-                }else if (StaticAppData.filterDataList().get(position).matches("A/c No")){
-                    field_name="account_no";
-                }else if (StaticAppData.filterDataList().get(position).matches("Mobile")){
-                    field_name="mobile_no";
-                }else if (StaticAppData.filterDataList().get(position).matches("Sub ID")){
-                    field_name="Subscriber_id";
-                }else if (StaticAppData.filterDataList().get(position).matches("Box No")){
-                    field_name="Box_no";
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+                } else if (StaticAppData.filterDataList().get(position).matches("Name")) {
+                    field_name = "name";
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+                } else if (StaticAppData.filterDataList().get(position).matches("A/c No")) {
+                    field_name = "account_no";
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+
+                } else if (StaticAppData.filterDataList().get(position).matches("Mobile")) {
+                    field_name = "contact_no";
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+
+                } else if (StaticAppData.filterDataList().get(position).matches("Sub ID")) {
+                    field_name = "Subscriber_id";
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+
+                } else if (StaticAppData.filterDataList().get(position).matches("Box No")) {
+                    field_name = "Box_no";
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+
                 }
 
             }
         });
+        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, "", "",fromDateData,toDataData);
 
 
         ivbtn_search_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Value = custmersearch_edit.getText().toString();
-                progressBar.show();
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,"","");
-            }
-        });
-
-        custmersearch_edit.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    Value = custmersearch_edit.getText().toString();
-                    field_value= Value;
+                if (field_name.isEmpty()) {
                     progressBar.show();
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
-                    return true;
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, "", ""," "," ");
+                } else {
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", Value, field_name," "," ");
+
                 }
-                return false;
             }
         });
 
 
-        iv_calendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                // To show current date in the datepicker
-                final Calendar mcurrentDate = Calendar.getInstance();
-                int mYear = mcurrentDate.get(Calendar.YEAR);
-                int mMonth = mcurrentDate.get(Calendar.MONTH);
-                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+        RxTextView.textChanges(custmersearch_edit)
+                .debounce(1, TimeUnit.SECONDS)
+                .subscribe(textChanged -> {
+                    Value = custmersearch_edit.getText().toString();
+                    if (field_name.isEmpty()) {
+                        try {
+                            if(fromDateData==null && toDataData==null){
+                                Log.d("TAG", "onnnnnn2");
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, "", ""," ","  ");
+                            }
+                            else {
+                                Log.d("TAG", "onnnnnn1");
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, "", "",fromDateData,toDataData);
 
-                DatePickerDialog mDatePicker = new DatePickerDialog(
-                        CustomerListActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker datepicker,
-                                          int selectedyear, int selectedmonth,
-                                          int selectedday) {
-
-                        mcurrentDate.set(Calendar.YEAR, selectedyear);
-                        mcurrentDate.set(Calendar.MONTH, selectedmonth);
-                        mcurrentDate.set(Calendar.DAY_OF_MONTH, selectedday);
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.US);
-                        txt_req_date.setText(sdf.format(mcurrentDate.getTime()));
-                        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                        String date = sdf1.format(mcurrentDate.getTime());
-                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, date, StatusId, selectCont, pageNo, Value,field_value,field_name);
-                        //SharedPrefsData.putString(CustomerListActivity.this, Constants.RequestDate, txt_req_date.getText().toString(), Constants.PREF_NAME);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", Value, field_name,fromDateData,toDataData);
+                        Log.d("TAG", "onCreateStep2: ");
+                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, "", "","","");
 
                     }
-                }, mYear, mMonth, mDay);
-                // mDatePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-                mDatePicker.setTitle("Select Expiry Date");
-                mDatePicker.show();
-            }
+                });
 
+
+        iv_calendar.setOnClickListener(view -> {
+            // To show current date in the datepicker
+            final Calendar mcurrentDate = Calendar.getInstance();
+            int mYear = mcurrentDate.get(Calendar.YEAR);
+            int mMonth = mcurrentDate.get(Calendar.MONTH);
+            int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog mDatePicker = new DatePickerDialog(
+                    CustomerListActivity.this, (datepicker, selectedyear, selectedmonth, selectedday) -> {
+
+                mcurrentDate.set(Calendar.YEAR, selectedyear);
+                mcurrentDate.set(Calendar.MONTH, selectedmonth);
+                mcurrentDate.set(Calendar.DAY_OF_MONTH, selectedday);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy", Locale.US);
+                txt_req_date.setText(sdf.format(mcurrentDate.getTime()));
+                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                String date = sdf1.format(mcurrentDate.getTime());
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, date, StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
+                Log.d("TAG", "onCreateStep3: ");
+
+                //SharedPrefsData.putString(CustomerListActivity.this, Constants.RequestDate, txt_req_date.getText().toString(), Constants.PREF_NAME);
+
+            }, mYear, mMonth, mDay);
+            // mDatePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+            mDatePicker.setTitle("Select Expiry Date");
+            mDatePicker.show();
         });
 
-        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-                finish();
-            }
+        findViewById(R.id.iv_back).setOnClickListener(view -> {
+            onBackPressed();
+            finish();
         });
         cv_filter = findViewById(R.id.cv_filter);
-        cv_filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (expandableLayout.isExpanded()) {
-                    expandableLayout.collapse();
-                } else {
-                    expandableLayout.expand();
-                }
+        cv_filter.setOnClickListener(view -> {
+            if (expandableLayout.isExpanded()) {
+                expandableLayout.collapse();
+            } else {
+                expandableLayout.expand();
             }
         });
 
         companyId = SharedPrefsData.getString(this, Constants.CompanyID, Constants.PREF_NAME);
         userId = SharedPrefsData.getString(this, Constants.UserId, Constants.PREF_NAME);
-        empId =SharedPrefsData.getString(this, Constants.EmpId, Constants.PREF_NAME);
+        empId = SharedPrefsData.getString(this, Constants.EmpId, Constants.PREF_NAME);
         areaId = SharedPrefsData.getString(this, Constants.CustAreaId, Constants.PREF_NAME);
         SharedPrefsData.putString(this, Constants.PageNo, "1", Constants.PREF_NAME);
         SharedPrefsData.putString(this, Constants.ReceiptFlag, "false", Constants.ReceiptFlag);
         presenter.loadArea(CustomerListActivity.this, companyId, empId);
         presenter.getPaymentStatus(CustomerListActivity.this, "0");
-        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
+        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
+        Log.d("TAG", "onCreateStep4: ");
 
 
+    }
+
+    private void openAlertScanner() {
+
+    }
+
+    private void loadRangeDatePickerMultipleBooking() {
+        MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
+        long today = MaterialDatePicker.todayInUtcMilliseconds();
+
+
+        int dialogTheme = 0;
+        TypedValue typedValue = new TypedValue();
+        if (CustomerListActivity.this.getTheme().resolveAttribute(R.attr.materialCalendarTheme, typedValue, true)) {
+            dialogTheme = typedValue.data;
+        }
+
+        Calendar calendarForPair = new GregorianCalendar();
+        calendarForPair.add(Calendar.DATE, 0);
+        long after = calendarForPair.getTimeInMillis();
+        Pair<Long, Long> todayPair = new Pair<>(today, after);
+        builder.setSelection(todayPair);
+        builder.setTheme(dialogTheme);
+        builder.setTitleText("Select Range of Dates");
+
+
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.clear();
+        calendar.setTimeInMillis(today);
+        calendar.roll(Calendar.YEAR, 1);
+        long oneYearForward = calendar.getTimeInMillis();
+
+
+//        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
+//        constraintsBuilder.setStart(today);
+//        constraintsBuilder.setEnd(oneYearForward);
+//        constraintsBuilder.setValidator(DateValidatorPointForward.now());
+
+        // builder.setCalendarConstraints(constraintsBuilder.build());
+
+        MaterialDatePicker<?> picker = builder.build();
+
+        picker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Object selection) {
+
+                Pair<Long, Long> datepair = (Pair<Long, Long>) selection;
+                Log.d("Calendar: ", selection.toString());
+                Date dateObjectStart = new Date(datepair.first);
+                Date dateObjectEnd = new Date(datepair.second);
+
+                //Set Date in Required Format
+                SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String selectedDateStart = dateTimeFormat.format(dateObjectStart);
+                String selectedDateEnd = dateTimeFormat.format(dateObjectEnd);
+                Log.d("Calendar: ", " " + selectedDateStart + " " + selectedDateEnd);
+
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, "", "",selectedDateStart,selectedDateEnd);
+                daterange.setVisibility(View.VISIBLE);
+                fromDate.setText(("From Date :"+selectedDateStart));
+                toDate.setText(("To Date :"+selectedDateEnd));
+
+                fromDateData = selectedDateStart;
+                toDataData = selectedDateEnd;
+
+
+                progressBar.show();
+
+
+                //showSlotSelectionCustomDialog(datepair.first,datepair.second);
+                //startRecurringBedSelectionFragment(datepair.first,datepair.second);
+
+            }
+        });
+        picker.show(getSupportFragmentManager(), "");
     }
 
     @Override
@@ -219,6 +377,7 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
     @Override
     public void showError(String message) {
         // viewUtils.toast(this, message);
+        progressBar.dismiss();
     }
 
     @Override
@@ -236,11 +395,43 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
             rv_customer_list.setVisibility(View.VISIBLE);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
             rv_customer_list.setLayoutManager(mLayoutManager);
-            customerListAdapter = new CustomerListAdapter(this, custemersLists);
+            customerListAdapter = new CustomerListAdapter(this, custemersLists,this);
             rv_customer_list.setAdapter(customerListAdapter);
         }
 
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //initiale intent result
+        super.onActivityResult(requestCode, resultCode, data);
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        //check condition
+        if (intentResult.getContents() != null) {
+            //when result content is not null
+            //initialze alert dialog
+
+
+            if (intentResult.getContents() != null) {
+                Toast.makeText(CustomerListActivity.this, "Sub Id: "+intentResult.getContents(), Toast.LENGTH_SHORT).show();
+                Value=intentResult.getContents();
+                if (field_name.isEmpty()) {
+                    progressBar.show();
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, "", ""," "," ");
+                } else {
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", Value, field_name," "," ");
+
+                }
+            } else {
+                Toast.makeText(CustomerListActivity.this, "Please Scan QR code again!", Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+            Toast.makeText(CustomerListActivity.this, "OOPs ... You did not scan any QR", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     @Override
     public void showSearchResult(CustemersList custemersList) {
@@ -257,7 +448,7 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
             rv_customer_list.setVisibility(View.VISIBLE);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
             rv_customer_list.setLayoutManager(mLayoutManager);
-            customerListAdapter = new CustomerListAdapter(this, custemersLists);
+            customerListAdapter = new CustomerListAdapter(this, custemersLists,this);
             rv_customer_list.setAdapter(customerListAdapter);
         }
     }
@@ -288,11 +479,11 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
                             areaId = areaIds.get(position);
                             SharedPrefsData.putString(CustomerListActivity.this, Constants.CustAreaId, areaId, Constants.PREF_NAME);
                             areaId = SharedPrefsData.getString(CustomerListActivity.this, Constants.CustAreaId, Constants.PREF_NAME);
-                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
+                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
 
                             if (i != 1) {
                                 progressBar.show();
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name, " "," ");
 
                             }
 
@@ -305,7 +496,7 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
 
                             if (i != 1) {
                                 progressBar.show();
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
 
 
                             }
@@ -364,10 +555,10 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
                             SharedPrefsData.putString(CustomerListActivity.this, Constants.StatusId, StatusId, Constants.PREF_NAME);
                             StatusId = SharedPrefsData.getString(CustomerListActivity.this, Constants.StatusId, Constants.PREF_NAME);
                             progressBar.show();
-                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
+                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
                             if (i != 1) {
                                 progressBar.show();
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
 
                             }
                         } else {
@@ -377,10 +568,10 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
                             Value = "";
                             custmersearch_edit.setText("");
                             progressBar.show();
-                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
+                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
                             if (i != 1) {
                                 progressBar.show();
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
 
 
                             }
@@ -444,7 +635,7 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
             rv_customer_list.setVisibility(View.VISIBLE);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
             rv_customer_list.setLayoutManager(mLayoutManager);
-            customerListAdapter = new CustomerListAdapter(this, custemersLists);
+            customerListAdapter = new CustomerListAdapter(this, custemersLists,this);
             rv_customer_list.setAdapter(customerListAdapter);
         }
 
@@ -460,7 +651,7 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
             pageNo = SharedPrefsData.getString(this, Constants.PageNo, Constants.PREF_NAME);
             Value = "";
             custmersearch_edit.setText("");
-            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
+            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
             progressBar = new ProgressDialog(this);
             progressBar.setCancelable(false);//you can cancel it by pressing back button
             progressBar.setMessage("Please wait...");
@@ -483,11 +674,50 @@ public class  CustomerListActivity extends AppCompatActivity implements Customer
         pageNo = id;
         Value = "";
         custmersearch_edit.setText("");
-        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value,field_value,field_name);
+        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
         progressBar = new ProgressDialog(this);
         progressBar.setCancelable(false);//you can cancel it by pressing back button
         progressBar.setMessage("Please wait...");
         progressBar.show();
     }
 
+    @Override
+    public void onItemClicked(Object custemersLists, ImageView imageActionButton) {
+        CustemersList.Customer customer=(CustemersList.Customer)custemersLists;
+        customerID=String.valueOf(customer.getCustomerID());
+        PopupMenu popup = new PopupMenu(CustomerListActivity.this,imageActionButton);
+        //Inflating the Popup using xml file
+        popup.getMenuInflater().inflate(R.menu.customeractionmenu, popup.getMenu());
+
+        //registering popup with OnMenuItemClickListener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                if ("Update Subscription".equals(item.getTitle().toString())) {
+
+                    if(hideUpdateSubscription==true) {
+                        Log.d("TAG", "onMenuItemClick: " + customer.getCustomerID());
+                        SharedPrefsData.putBool(CustomerListActivity.this, Constants.isLoadAlacarte, true, Constants.PREF_NAME);
+                        SharedPrefsData.putBool(CustomerListActivity.this, Constants.isLoadInternetPkg, true, Constants.PREF_NAME);
+                        SharedPrefsData.putBool(CustomerListActivity.this, Constants.isLoadBouquet, true, Constants.PREF_NAME);
+                        SharedPrefsData.putString(CustomerListActivity.this, Constants.CustomerID, String.valueOf(customer.getCustomerID()), Constants.PREF_NAME);
+                        Intent intent = new Intent(CustomerListActivity.this, UpdateSubscriptionAtivity.class);
+                        intent.putExtra("CustomerID", customer);
+                        startActivity(intent);
+                    }
+                    else {
+                           Toast.makeText(CustomerListActivity.this, "You are not Authorize to access this features !", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+
+                else {
+                    Toast.makeText(CustomerListActivity.this, "Coming Soon !", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
+
+        popup.show();//showing popup menu
+    }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.model.CustemersList;
+import com.elifeindia.crm.networking.AdapterInterface;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.view.activities.CustomersDetailsActivity;
@@ -22,13 +24,17 @@ import java.util.List;
 
 public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapter.MyviewHolder>{
 
-    Context context;
-    List<CustemersList.Customer> custemersLists;
-
-    public CustomerListAdapter(Context context, List<CustemersList.Customer> custemersLists) {
+    public CustomerListAdapter(Context context, List<CustemersList.Customer> custemersLists, AdapterInterface adapterInterface) {
         this.context = context;
         this.custemersLists = custemersLists;
+        this.adapterInterface = adapterInterface;
     }
+
+    Context context;
+    List<CustemersList.Customer> custemersLists;
+    AdapterInterface adapterInterface;
+
+
 
     @NonNull
     @Override
@@ -53,6 +59,13 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         SharedPrefsData.putString(context, Constants.CustomerName, cname, Constants.PREF_NAME);
         holder.txt_cust_name.setText(cname);
         holder.txt_balance.setText(custemersLists.get(position).getBalance().toString());
+        holder.imageActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapterInterface.onItemClicked(custemersLists.get(position),holder.imageActionButton);
+            }
+        });
+
         holder.acno.setText("  A/C : "+ acno);
         try {
             holder.areaid.setText("A Id : "+ custemersLists.get(position).getAreaCustomerID().toString());
@@ -138,11 +151,13 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
     public class MyviewHolder extends RecyclerView.ViewHolder {
         TextView customer_status, txt_cust_name, areaname, subid, acno, edate, address, subarea, nob_no, status, txt_balance, areaid, whatsup_no;
         CardView cv_customer;
+        ImageView imageActionButton;
 
         public MyviewHolder(@NonNull View itemView) {
             super(itemView);
             areaid = itemView.findViewById(R.id.areaid);
             nob_no = itemView.findViewById(R.id.nob_no);
+            imageActionButton=itemView.findViewById(R.id.imageActionButton);
             subarea = itemView.findViewById(R.id.subarea);
             address = itemView.findViewById(R.id.address);
             edate = itemView.findViewById(R.id.edate);

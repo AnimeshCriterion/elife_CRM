@@ -17,6 +17,8 @@ import com.elifeindia.crm.model.InternetBoxWithSubscription;
 import com.elifeindia.crm.model.PaymentTypeList;
 import com.elifeindia.crm.model.UpdateBox;
 import com.elifeindia.crm.model.generateinvoice.InsertInvoiceModel;
+import com.elifeindia.crm.networking.CableBoxSubscription;
+import com.elifeindia.crm.networking.InternetBoxUpdateSubscription;
 import com.elifeindia.crm.networking.NetworkUtils;
 import com.google.gson.JsonObject;
 
@@ -138,8 +140,31 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
         progressBar.setCancelable(false);//you can cancel it by pressing back button
         progressBar.setMessage("Please wait...");
         progressBar.show();
+        Log.d("TAG", "updateCableBox: "+box_Amount);
+        CableBoxSubscription cableBoxSubscription=new CableBoxSubscription();
+        cableBoxSubscription.setUserId(Integer.valueOf(user_Id));
+        cableBoxSubscription.setCustomerId(Integer.valueOf(customer_Id));
+        cableBoxSubscription.setCableBoxID(Integer.valueOf(cable_Box_ID));
+        cableBoxSubscription.setBoxID(0);
+        cableBoxSubscription.setVcno(vcno);
+        cableBoxSubscription.setStbno(stbno);
+        cableBoxSubscription.setiPtv("");
+        cableBoxSubscription.setCafno(cafno);
+        cableBoxSubscription.setBillTypeID(Integer.valueOf(bill_Type_ID));
+        cableBoxSubscription.setConnectionStatusID(Integer.valueOf(connection_Status_ID));
+        cableBoxSubscription.setActivationDate(activation_Date);
+        cableBoxSubscription.setExpiryDate(expiry_Date);
+        cableBoxSubscription.setNoofMonth(Integer.valueOf(noofMonth));
+        cableBoxSubscription.setNoofDays(0);
+        cableBoxSubscription.setBoxAmount(0.0);
+//        cableBoxSubscription.setAlacarteAmount(Integer.valueOf(alacarte_Amount));
+//        cableBoxSubscription.setBouquetAmount(Integer.valueOf(bouquet_Amount));
+//        cableBoxSubscription.setTaxAmount(Integer.valueOf(tax_Amount));
+        cableBoxSubscription.setBoxAmount(Double.valueOf(box_Amount));
+        cableBoxSubscription.setDate(date);
+        cableBoxSubscription.setInvoiceID(0);
         NetworkUtils.getUserApiInstance()
-                .updateCableBox(user_Id, customer_Id, cable_Box_ID, box_ID, boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date,  expiry_Date, noofMonth, noofDays, alacarte_Amount, bouquet_Amount, tax_Amount, box_Amount , date)
+                .updateCableBox(cableBoxSubscription)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<UpdateBox>() {
@@ -161,14 +186,86 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
     }
 
     @Override
+    public void updateCableBoxSubscription(Context context, String user_Id, String customer_Id, String cable_Box_ID, String box_ID, String boxType_ID, String vcno, String stbno, String cafno, String bill_Type_ID, String connection_Status_ID, String activation_Date, String expiry_Date, String noofMonth, String noofDays, String alacarte_Amount, String bouquet_Amount, String tax_Amount, String box_Amount, String date) {
+        final ProgressDialog progressBar;
+        progressBar = new ProgressDialog(context);
+        progressBar.setCancelable(false);//you can cancel it by pressing back button
+        progressBar.setMessage("Please wait...");
+        progressBar.show();
+        CableBoxSubscription cableBoxSubscription=new CableBoxSubscription();
+        cableBoxSubscription.setUserId(Integer.valueOf(user_Id));
+        cableBoxSubscription.setCustomerId(Integer.valueOf(customer_Id));
+        cableBoxSubscription.setCableBoxID(Integer.valueOf(cable_Box_ID));
+        cableBoxSubscription.setBoxID(0);
+        cableBoxSubscription.setBoxTypeID(Integer.valueOf(boxType_ID));
+        cableBoxSubscription.setVcno(vcno);
+        cableBoxSubscription.setStbno(stbno);
+        cableBoxSubscription.setiPtv("");
+        cableBoxSubscription.setCafno(cafno);
+        cableBoxSubscription.setBillTypeID(Integer.valueOf(bill_Type_ID));
+        cableBoxSubscription.setConnectionStatusID(Integer.valueOf(connection_Status_ID));
+        cableBoxSubscription.setActivationDate(activation_Date);
+        cableBoxSubscription.setExpiryDate(expiry_Date);
+        cableBoxSubscription.setNoofMonth(Integer.valueOf(noofMonth));
+        cableBoxSubscription.setNoofDays(0);
+//        cableBoxSubscription.setAlacarteAmount(Integer.valueOf(alacarte_Amount));
+//        cableBoxSubscription.setBouquetAmount(Integer.valueOf(bouquet_Amount));
+//        cableBoxSubscription.setTaxAmount(Integer.valueOf(tax_Amount));
+        cableBoxSubscription.setBoxAmount(Double.valueOf(box_Amount));
+        cableBoxSubscription.setDate(date);
+        cableBoxSubscription.setInvoiceID(0);
+        NetworkUtils.getUserApiInstance()
+                .updateCableBoxUpdateSubscription(cableBoxSubscription)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<UpdateBox>() {
+                    @Override
+                    public void onCompleted() {
+                        progressBar.dismiss();
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(e.toString());
+                        progressBar.dismiss();
+                    }
+
+                    @Override
+                    public void onNext(UpdateBox boxBouquetList) {
+
+                      //  mView.showCableBox(boxBouquetList, view, view1);
+                    }
+                });
+    }
+
+    @Override
     public void updateInternetBox(Context context, final TextView view, final TextView view1, String user_Id, String customer_Id, String internet_Box_ID, String box_ID, String boxType_ID, String ip, String mac, String bill_Type_ID, String connection_Status_ID, String activation_Date, String expiry_Date, String noofMonth, String noofDays, String package_Amount, String tax_Amount, String box_Amount, String date) {
         final ProgressDialog progressBar;
         progressBar = new ProgressDialog(context);
         progressBar.setCancelable(false);//you can cancel it by pressing back button
         progressBar.setMessage("Please wait...");
         progressBar.show();
+        InternetBoxUpdateSubscription internetBoxUpdateSubscription=new InternetBoxUpdateSubscription();
+        internetBoxUpdateSubscription.setUserId(Integer.valueOf(user_Id));
+        internetBoxUpdateSubscription.setCustomerId(Integer.valueOf(customer_Id));
+        internetBoxUpdateSubscription.setInternetBoxID(Integer.valueOf(internet_Box_ID));
+        internetBoxUpdateSubscription.setBoxID(0);
+        internetBoxUpdateSubscription.setBoxTypeID(2);
+        internetBoxUpdateSubscription.setIp(ip);
+        internetBoxUpdateSubscription.setBoxAmount(0.0);
+        internetBoxUpdateSubscription.setMac(mac);
+        internetBoxUpdateSubscription.setBillTypeID(Integer.valueOf(bill_Type_ID));
+        internetBoxUpdateSubscription.setConnectionStatusID(Integer.valueOf(connection_Status_ID));
+        internetBoxUpdateSubscription.setNoofMonth(Integer.valueOf(noofMonth));
+        internetBoxUpdateSubscription.setActivationDate(activation_Date);
+        internetBoxUpdateSubscription.setExpiryDate(expiry_Date);
+        internetBoxUpdateSubscription.setNoofDays(0);
+//        internetBoxUpdateSubscription.setPackageAmount(Double.valueOf(package_Amount));
+//        internetBoxUpdateSubscription.setTaxAmount(Double.valueOf(tax_Amount));
+//        internetBoxUpdateSubscription.setBoxAmount(Double.valueOf(box_Amount));
+        internetBoxUpdateSubscription.setDate(date);
+        internetBoxUpdateSubscription.setInvoiceID(0);
         NetworkUtils.getUserApiInstance()
-                .updateInternetBox(user_Id, customer_Id, internet_Box_ID, box_ID, boxType_ID, ip, mac, bill_Type_ID, connection_Status_ID, activation_Date,  expiry_Date, noofMonth, noofDays, package_Amount, tax_Amount, box_Amount, date)
+                .getInternetExpiry(internetBoxUpdateSubscription)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<UpdateBox>() {
@@ -189,6 +286,51 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
                 });
     }
 
+    @Override
+    public void updateInternetBoxForSubscription(Context context, String user_Id, String customer_Id, String internet_Box_ID, String box_ID, String boxType_ID, String ip, String mac, String bill_Type_ID, String connection_Status_ID, String activation_Date, String expiry_Date, String noofMonth, String noofDays, String package_Amount, String tax_Amount, String box_Amount, String date) {
+        final ProgressDialog progressBar;
+        progressBar = new ProgressDialog(context);
+        progressBar.setCancelable(false);//you can cancel it by pressing back button
+        progressBar.setMessage("Please wait...");
+        progressBar.show();
+        InternetBoxUpdateSubscription internetBoxUpdateSubscription=new InternetBoxUpdateSubscription();
+        internetBoxUpdateSubscription.setUserId(Integer.valueOf(user_Id));
+        internetBoxUpdateSubscription.setCustomerId(Integer.valueOf(customer_Id));
+        internetBoxUpdateSubscription.setInternetBoxID(Integer.valueOf(internet_Box_ID));
+        internetBoxUpdateSubscription.setBoxID(0);
+        internetBoxUpdateSubscription.setBoxTypeID(Integer.valueOf(boxType_ID));
+        internetBoxUpdateSubscription.setIp(ip);
+        internetBoxUpdateSubscription.setMac(mac);
+        internetBoxUpdateSubscription.setConnectionStatusID(Integer.valueOf(connection_Status_ID));
+        internetBoxUpdateSubscription.setActivationDate(activation_Date);
+        internetBoxUpdateSubscription.setNoofMonth(Integer.valueOf(noofMonth));
+        internetBoxUpdateSubscription.setExpiryDate(expiry_Date);
+        internetBoxUpdateSubscription.setNoofDays(Integer.valueOf(noofDays));
+        internetBoxUpdateSubscription.setPackageAmount(Double.valueOf(package_Amount));
+        internetBoxUpdateSubscription.setTaxAmount(Double.valueOf(tax_Amount));
+       // internetBoxUpdateSubscription.setBoxAmount(Double.valueOf(box_Amount));
+        internetBoxUpdateSubscription.setDate(date);
+        NetworkUtils.getUserApiInstance()
+                .updateInternetBoxSubscription(internetBoxUpdateSubscription)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<UpdateBox>() {
+                    @Override
+                    public void onCompleted() {
+                        progressBar.dismiss();
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(e.toString());
+                        progressBar.dismiss();
+                    }
+
+                    @Override
+                    public void onNext(UpdateBox boxBouquetList) {
+                    //    mView.showInternetBox(boxBouquetList);
+                    }
+                });
+    }
 
 
     @Override
@@ -303,6 +445,7 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
                 .subscribe(new Subscriber<GetInvoiceModel>() {
                     @Override
                     public void onCompleted() {
+
                     }
                     @Override
                     public void onError(Throwable e) {

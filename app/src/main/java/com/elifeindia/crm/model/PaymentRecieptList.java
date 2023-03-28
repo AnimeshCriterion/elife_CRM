@@ -63,7 +63,15 @@ public class PaymentRecieptList {
         @Expose
         private String subscriberID;
 
+private  String address;
 
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
 
         @SerializedName("contact_No")
         @Expose

@@ -163,9 +163,14 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         roleType = SharedPrefsData.getString(getActivity(), Constants.RoleType, Constants.PREF_NAME);
         empName = SharedPrefsData.getString(getActivity(), Constants.EmployeeName, Constants.PREF_NAME);
         empMob = SharedPrefsData.getString(getActivity(), Constants.EmployeeMob, Constants.PREF_NAME);
-        empId = SharedPrefsData.getString(getActivity(), Constants.EmpId, Constants.PREF_NAME);
+        Log.d(TAG, "onCreateView: " + roleType);
 
+        if (roleType.equals("Admin")) {
+            empId = "0";
+        } else {
+            empId = SharedPrefsData.getString(getActivity(), Constants.EmpId, Constants.PREF_NAME);
 
+        }
 
 
         context = getActivity();
@@ -178,7 +183,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
                 receiptBitmap = takeScreenshot(v);
                 saveBitmap(receiptBitmap);
                 shareItOnWhatsApp();*/
-              //  startActivity(new Intent(getContext(), TestActivity.class));
+                //  startActivity(new Intent(getContext(), TestActivity.class));
                 try {
                     createPdfWrapper();
                 } catch (FileNotFoundException e) {
@@ -366,7 +371,6 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
             @Override
             public void onClick(View view) {
                 if (roleType.equals("Admin")) {
-
                     if (expandableLayout.isExpanded()) {
                         expandableLayout.collapse();
                     } else {
@@ -478,7 +482,6 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
             empNames.add(employee.get(i).getEmployeeName());
             empIds.add(employee.get(i).getEmployeeID().toString());
             empMobNos.add(employee.get(i).getContactNo());
-
         }
 
         adapterEmployeeList = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, empNames);
@@ -490,11 +493,13 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     empId = empIds.get(position);
+                    Log.d(TAG, "onItemSelected: " + empIds.get(position));
                     empName = empNames.get(position);
                     empMob = empMobNos.get(position);
                     paymentsearch_edit.setText(empName);
                     progressBar.show();
-                    presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
+                    presenter.loadArea(getContext(), companyId, empId);
+                    //  presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
 
                 } else {
                     // presenter.loadEmployeeList(getContext(), companyId, empId, roleType);
@@ -687,7 +692,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     }
 
     private void shareIt() {
-        Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getActivity()),
+        Uri uri = FileProvider.getUriForFile(requireActivity(),
                 BuildConfig.APPLICATION_ID + ".provider", imagePath);
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/*");
@@ -706,7 +711,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     }
 
     private void shareItOnWhatsApp() {
-        Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getActivity()),
+        Uri uri = FileProvider.getUriForFile(requireActivity(),
                 BuildConfig.APPLICATION_ID + ".provider", imagePath);
 
         Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
@@ -735,19 +740,19 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     }
 
     private void createPdfWrapper() throws FileNotFoundException, DocumentException {
-        int hasWriteStoragePermission = ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int hasWriteStoragePermission = ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE);
         if (hasWriteStoragePermission != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_CONTACTS)) {
                     showMessageOKCancel("You need to allow access to Storage", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
-                                }
-                            });
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
+                        }
+                    });
                     return;
                 }
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
             }
             return;
         } else {
@@ -843,7 +848,6 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
 
     }
-
 
 
     private void previewPdf(File pdfFile) {

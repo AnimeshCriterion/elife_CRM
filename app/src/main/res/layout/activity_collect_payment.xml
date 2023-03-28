@@ -359,39 +359,44 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
+
                 <LinearLayout
-                    android:visibility="gone"
+                    android:visibility="visible"
+                    android:id="@+id/discount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="0.5"
+                        android:layout_weight="1"
                         android:fontFamily="@font/abeezee_regular"
                         android:paddingLeft="@dimen/_10sdp"
-
-                        android:text="Discount                      :"
+                        android:text="Discount           "
                         android:textColor="@color/Black"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="normal"></TextView>
+                        android:textSize="16sp"
+                        android:textStyle="normal"/>
+                    <ImageView
+                         android:layout_gravity="center"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:src="@drawable/ic_threedots"/>
+
 
                     <EditText
-                        android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:id="@+id/discount_editext"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
-                        android:layout_weight="0.5"
+                        android:layout_weight="1"
                         android:background="@drawable/rounded_butoon"
-                        android:drawableLeft="@drawable/ic_india_rupee_currency_symbol"
-                        android:drawablePadding="@dimen/_4sdp"
-                        android:hint="0 "
+                         android:hint="0 "
+                        android:text="0"
                         android:imeOptions="actionDone"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:maxLength="4"
                         android:maxLines="1"
                         android:paddingLeft="@dimen/_5sdp"
@@ -477,7 +482,50 @@
                     android:layout_height="@dimen/_1sdp"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@color/border" />
+                    android:background="@color/border"
+                    android:visibility="gone" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:text="Comment (if any)  "
+                        android:textColor="@color/Black"
+                        android:textSize="16sp"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_gravity="top"
+                        android:src="@drawable/ic_threedots" />
+
+                    <EditText
+                        android:id="@+id/commentbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_butoon"
+                        android:drawablePadding="@dimen/_4sdp"
+                        android:gravity="top"
+                        android:hint="Comment "
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:textColor="@color/Black"
+                        android:textSize="16sp" />
+
+
+                </LinearLayout>
+
 
 
                 <LinearLayout
@@ -486,32 +534,36 @@
                     android:layout_margin="@dimen/_5sdp"
                     android:orientation="horizontal">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:textColor="@color/Black"
+                        android:textSize="16sp"
+                        android:text="Payment Date"/>
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:src="@drawable/ic_threedots"/>
 
                     <TextView
                         android:id="@+id/today_date"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/_24sdp"
                         android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="0.3"
+                        android:layout_weight="1"
                         android:fontFamily="@font/abeezee_regular"
                         android:gravity="center"
-                        android:paddingLeft="@dimen/_10sdp"
                         android:text="22-09-2020 7:30 PM"
                         android:textColorHint="@color/Black"
-                        android:textSize="14sp"></TextView>
+                        android:textSize="14sp" />
 
                     <View
                         android:layout_width="@dimen/_1sdp"
                         android:layout_height="match_parent"
                         android:background="@color/border" />
-
-                    <ImageView
-                        android:id="@+id/comment"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_24sdp"
-                        android:layout_weight="0.3"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:src="@drawable/ic_baseline_message_24"></ImageView>
 
                     <View
                         android:layout_width="@dimen/_1sdp"
@@ -526,6 +578,7 @@
                         android:visibility="gone"
                         android:src="@drawable/ic_baseline_edit_24"></ImageView>
                 </LinearLayout>
+
 
                 <View
                     android:layout_width="match_parent"

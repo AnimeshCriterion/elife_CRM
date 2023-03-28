@@ -820,16 +820,20 @@
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold" />
 
-            <TextView
+            <EditText
                 android:id="@+id/txt_prev_bal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:textAlignment="center"
+                android:background="@null"
+                android:editable="false"
+                android:enabled="true"
                 android:gravity="center"
+                android:inputType="numberDecimal"
+                android:textAlignment="center"
                 android:textColor="@color/darkblue"
                 android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txt_total_amount"
@@ -838,6 +842,7 @@
                 android:layout_weight="0.5"
                 android:textAlignment="center"
                 android:gravity="center"
+                android:inputType="numberDecimal"
                 android:textColor="@color/darkblue"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"/>
@@ -887,7 +892,6 @@
                 android:layout_weight="5"
                 android:layout_height="@dimen/_30sdp"
                 android:background="@drawable/rounded_butoon"
-                android:drawableLeft="@drawable/ic_india_rupee_currency_symbol"
                 android:drawablePadding="@dimen/_4sdp"
                 android:hint="Enter Amount "
                 android:layout_marginTop="@dimen/_10sdp"
@@ -900,6 +904,25 @@
                 android:textColor="@color/Black"
                 android:textSize="@dimen/_12sdp" />
 
+            <EditText
+                android:visibility="gone"
+                android:hint="Discount : 0"
+                android:id="@+id/edt_discount"
+                android:layout_width="0dp"
+                android:enabled="true"
+                android:layout_weight="5"
+                android:text="0"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/rounded_butoon"
+                 android:drawablePadding="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/_12sdp" />
 
             <TextView
                 android:hint="Balance : 0"
@@ -910,8 +933,7 @@
                 android:gravity="center_vertical"
                 android:layout_height="@dimen/_30sdp"
                 android:background="@drawable/rounded_butoon"
-                android:drawableLeft="@drawable/ic_india_rupee_currency_symbol"
-                android:drawablePadding="@dimen/_4sdp"
+                 android:drawablePadding="@dimen/_4sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
@@ -920,25 +942,7 @@
                 android:paddingLeft="@dimen/_5sdp"
                 android:textColor="@color/Black"
                 android:textSize="@dimen/_12sdp" />
-            <EditText
-                android:visibility="gone"
-                android:hint="Discount : 0"
-                android:id="@+id/edt_discount"
-                android:layout_width="0dp"
-                android:enabled="false"
-                android:layout_weight="5"
-                android:layout_height="@dimen/_30sdp"
-                android:background="@drawable/rounded_butoon"
-                android:drawableLeft="@drawable/ic_india_rupee_currency_symbol"
-                android:drawablePadding="@dimen/_4sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:imeOptions="actionDone"
-                android:inputType="numberDecimal"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:paddingLeft="@dimen/_5sdp"
-                android:textColor="@color/Black"
-                android:textSize="@dimen/_12sdp" />
+
         </LinearLayout>
 
         <LinearLayout

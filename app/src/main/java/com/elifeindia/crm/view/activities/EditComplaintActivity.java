@@ -1,9 +1,13 @@
 package com.elifeindia.crm.view.activities;
 
+import static com.elifeindia.crm.adapters.ComplaintListAdapter.complaintCode;
+import static com.elifeindia.crm.adapters.ComplaintListAdapter.complaintId;
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,19 +21,20 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.elifeindia.crm.R;
-import com.elifeindia.crm.contract.activities.AddReportContract;
 import com.elifeindia.crm.contract.activities.EditReportContract;
+import com.elifeindia.crm.model.ComplaintList;
 import com.elifeindia.crm.model.ComplaintStatusList;
 import com.elifeindia.crm.model.ComplaintTypeList;
 import com.elifeindia.crm.model.EmployeeList;
 import com.elifeindia.crm.model.InsertPayment;
 import com.elifeindia.crm.model.PriorityList;
 import com.elifeindia.crm.model.ProductList;
-import com.elifeindia.crm.presenter.activities.AddReportPresenter;
 import com.elifeindia.crm.presenter.activities.EditReportPresenter;
 import com.elifeindia.crm.printersdk.ComplaintReceiptActivity;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
+import com.elifeindia.crm.utils.ViewUtils;
+import com.google.gson.Gson;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -40,12 +45,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import static com.elifeindia.crm.adapters.ComplaintListAdapter.complaintCode;
-import static com.elifeindia.crm.adapters.ComplaintListAdapter.complaintId;
-
 public class EditComplaintActivity extends AppCompatActivity implements EditReportContract.View {
     EditReportContract.Presenter presenter;
-    TextView complaint_date, complaint_assign_date, customer_name, custmer_location;
+    TextView complaint_date, complaint_assign_date, customer_name, custmer_location,updateBy,UpdatedDate,assignBy,createdBy,createdDate,closeBy,closeDate;
     EditText edt_comment;
     Button addcompalintbtn;
 
@@ -56,23 +58,44 @@ public class EditComplaintActivity extends AppCompatActivity implements EditRepo
     Spinner spn_complaint, spn_Product, spn_assigned_to, spn_status, spn_priority, spn_emp;
     ArrayAdapter<String> adapter_emp, adapter_Product, adapter_complaint, adapter_status, adapter_priority;
 
+    ComplaintList.Complaint complaint;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_report);
-        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        findViewById(R.id.iv_back).setOnClickListener(view -> onBackPressed());
+
+        updateBy=findViewById(R.id.updated_by);
+        UpdatedDate=findViewById(R.id.update_date);
+        assignBy=findViewById(R.id.Assign_by);
+        createdBy=findViewById(R.id.created_by);
+        createdDate=findViewById(R.id.created_date);
+        closeBy=findViewById(R.id.close_by);
+        closeDate=findViewById(R.id.close_date);
+        Gson gson = new Gson();
+        String studentDataObjectAsAString = getIntent().getStringExtra("ComplainDetailsData");
+        complaint = gson.fromJson(studentDataObjectAsAString, ComplaintList.Complaint.class);
+        Log.d("TAG", "onCreate: "+complaint.toString());
+        try {
+            assignBy.setText(complaint.getCreatedBy());
+            createdBy.setText(complaint.getCreatedBy());
+            createdDate.setText(ViewUtils.changeDateTimeFormat(complaint.getComplaintDate()));
+            closeBy.setText(complaint.getClosebyName().toString());
+            closeDate.setText(ViewUtils.changeDateTimeFormat(complaint.getClosedDate()));
+            updateBy.setText(complaint.getLastUpdateBy());
+            UpdatedDate.setText(ViewUtils.changeDateTimeFormat(complaint.getLastUpdateDate()));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         presenter = new EditReportPresenter(this);
         presenter.start();
 
         compId = SharedPrefsData.getString(this, Constants.CompanyID, Constants.PREF_NAME);
         userId = SharedPrefsData.getString(this, Constants.UserId, Constants.PREF_NAME);
         custId = SharedPrefsData.getString(this, Constants.CustomerID, Constants.PREF_NAME);
-
         customer_name.setText(SharedPrefsData.getString(this, Constants.CustomerName, Constants.PREF_NAME));
         custmer_location.setText(SharedPrefsData.getString(this, Constants.CustomerAddress, Constants.PREF_NAME));
 
@@ -85,21 +108,18 @@ public class EditComplaintActivity extends AppCompatActivity implements EditRepo
 
 
         addcompalintbtn = findViewById(R.id.addcompalintbtn);
-        addcompalintbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        addcompalintbtn.setOnClickListener(view -> {
 
-                if(isValid()){
+            if(isValid()){
 
-                    try {
-                        presenter.updateComplaint(EditComplaintActivity.this, complaintId, compId, custId, complaintCode, complaintDateEdit, complaintTypeId, "",prodId, todayDateString(), assignToID, statusId, edt_comment.getText().toString(), priorityId, userId, complaintAssignDate);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
+                try {
+                    presenter.updateComplaint(EditComplaintActivity.this, complaintId, compId, custId, complaintCode, complaintDateEdit, complaintTypeId, "",prodId, todayDateString(), assignToID, statusId, edt_comment.getText().toString(), priorityId, userId, complaintAssignDate);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-              }
-        });
+
+            }
+          });
 
         String PriorityID =  SharedPrefsData.getString(this, Constants.PriorityID, Constants.PREF_NAME);
         String ProductID =  SharedPrefsData.getString(this, Constants.ProductID, Constants.PREF_NAME);
@@ -137,20 +157,15 @@ public class EditComplaintActivity extends AppCompatActivity implements EditRepo
         complaint_assign_date.setEnabled(false);
 
 
-        complaint_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // To show current date in the datepicker
-                final Calendar mcurrentDate = Calendar.getInstance();
-                int mYear = mcurrentDate.get(Calendar.YEAR);
-                int mMonth = mcurrentDate.get(Calendar.MONTH);
-                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+        complaint_date.setOnClickListener(view -> {
+            // To show current date in the datepicker
+            final Calendar mcurrentDate = Calendar.getInstance();
+            int mYear = mcurrentDate.get(Calendar.YEAR);
+            int mMonth = mcurrentDate.get(Calendar.MONTH);
+            int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog mDatePicker = new DatePickerDialog(
-                        EditComplaintActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker datepicker,
-                                          int selectedyear, int selectedmonth,
-                                          int selectedday) {
+            DatePickerDialog mDatePicker = new DatePickerDialog(
+                    EditComplaintActivity.this, (datepicker, selectedyear, selectedmonth, selectedday) -> {
 
                         mcurrentDate.set(Calendar.YEAR, selectedyear);
                         mcurrentDate.set(Calendar.MONTH, selectedmonth);
@@ -180,63 +195,58 @@ public class EditComplaintActivity extends AppCompatActivity implements EditRepo
 
                         //SharedPrefsData.putString(CustomerListActivity.this, Constants.RequestDate, txt_req_date.getText().toString(), Constants.PREF_NAME);
 
-                    }
-                }, mYear, mMonth, mDay);
-                // mDatePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-                mDatePicker.setTitle("Select Expiry Date");
-                mDatePicker.show();
-            }
+                    }, mYear, mMonth, mDay);
+            // mDatePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+            mDatePicker.setTitle("Select Expiry Date");
+            mDatePicker.show();
         });
 
-        complaint_assign_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Calendar mcurrentDate = Calendar.getInstance();
-                int mYear = mcurrentDate.get(Calendar.YEAR);
-                int mMonth = mcurrentDate.get(Calendar.MONTH);
-                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+        complaint_assign_date.setOnClickListener(view -> {
+            final Calendar mcurrentDate = Calendar.getInstance();
+            int mYear = mcurrentDate.get(Calendar.YEAR);
+            int mMonth = mcurrentDate.get(Calendar.MONTH);
+            int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog mDatePicker = new DatePickerDialog(
-                        EditComplaintActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker datepicker,
-                                          int selectedyear, int selectedmonth,
-                                          int selectedday) {
+            DatePickerDialog mDatePicker = new DatePickerDialog(
+                    EditComplaintActivity.this, new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker datepicker,
+                                      int selectedyear, int selectedmonth,
+                                      int selectedday) {
 
-                        mcurrentDate.set(Calendar.YEAR, selectedyear);
-                        mcurrentDate.set(Calendar.MONTH, selectedmonth);
-                        mcurrentDate.set(Calendar.DAY_OF_MONTH, selectedday);
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy hh:mm aa", Locale.US);
-                        //txt_req_date.setText(sdf.format(mcurrentDate.getTime()));
-                        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                    mcurrentDate.set(Calendar.YEAR, selectedyear);
+                    mcurrentDate.set(Calendar.MONTH, selectedmonth);
+                    mcurrentDate.set(Calendar.DAY_OF_MONTH, selectedday);
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy hh:mm aa", Locale.US);
+                    //txt_req_date.setText(sdf.format(mcurrentDate.getTime()));
+                    SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            compAssignformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US);
-                        }
-
-                        String newDate = getIntent().getStringExtra("DateClose");
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            compAssignTime = LocalDateTime.parse(newDate,compAssignformatter);
-                        }
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            complaintAssignDate = String.valueOf(compAssignTime);
-                        }
-
-
-                        //complaintAssignDate = sdf1.format(mcurrentDate.getTime());
-                        complaint_assign_date.setText(sdf.format(mcurrentDate.getTime()));
-
-                        //SharedPrefsData.putString(CustomerListActivity.this, Constants.RequestDate, txt_req_date.getText().toString(), Constants.PREF_NAME);
-
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        compAssignformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US);
                     }
-                }, mYear, mMonth, mDay);
-                // mDatePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-                mDatePicker.setTitle("Select Expiry Date");
-                mDatePicker.show();
 
-            }
+                    String newDate = getIntent().getStringExtra("DateClose");
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        compAssignTime = LocalDateTime.parse(newDate,compAssignformatter);
+                    }
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        complaintAssignDate = String.valueOf(compAssignTime);
+                    }
+
+
+                    //complaintAssignDate = sdf1.format(mcurrentDate.getTime());
+                    complaint_assign_date.setText(sdf.format(mcurrentDate.getTime()));
+
+                    //SharedPrefsData.putString(CustomerListActivity.this, Constants.RequestDate, txt_req_date.getText().toString(), Constants.PREF_NAME);
+
+                }
+            }, mYear, mMonth, mDay);
+            // mDatePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+            mDatePicker.setTitle("Select Expiry Date");
+            mDatePicker.show();
+
         });
 
     }
@@ -427,13 +437,11 @@ public class EditComplaintActivity extends AppCompatActivity implements EditRepo
 
     @Override
     public void updateResponse(InsertPayment insertPayment) {
-
         try {
             complaintIdEdit = SharedPrefsData.getString(EditComplaintActivity.this, Constants.ComplaintID, Constants.PREF_NAME);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         Toast.makeText(this, "Complaint updated successfully", Toast.LENGTH_SHORT).show();
         Intent i =new  Intent(this, ComplaintReceiptActivity.class);
         i.putExtra("activity_name", "UpdateComplaint");
@@ -443,21 +451,18 @@ public class EditComplaintActivity extends AppCompatActivity implements EditRepo
     }
 
     private String todayDateString() {
-
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm aa");
         Calendar cal = Calendar.getInstance();
         return dateFormat.format(cal.getTime());
 
     }
     private String todayDateShow() {
-
         DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa");
         Calendar cal = Calendar.getInstance();
         return dateFormat.format(cal.getTime());
 
     }
     private boolean isValid() {
-
         if (prodId.equalsIgnoreCase("0")) {
             Toast.makeText(this, "Please Select product", Toast.LENGTH_SHORT).show();
             return false;

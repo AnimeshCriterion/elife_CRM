@@ -49,6 +49,8 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
     InternetSuscriptionAdapter internetSuscriptionAdapter;
     LinearLayout cablelayout, internetlayout, ll_pay, ll_bill_share, ll_invoice, ll_report;
 
+    public  static String customerBalance;
+
     String sodowo, city, email, areaName, subArea, renew, custId, userId, companyId;
 
     @Override
@@ -69,6 +71,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         internetlayout = findViewById(R.id.internetlayout);
         ll_bill_share = findViewById(R.id.ll_bill_share);
         ll_invoice = findViewById(R.id.ll_invoice);
+
         ll_report = findViewById(R.id.ll_report);
         txt_whatsapp_no = findViewById(R.id.txt_whatsapp_no);
         txt_mob_no = findViewById(R.id.txt_mob_no);
@@ -81,7 +84,6 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CustomersDetailsActivity.this, UpdateCustomerActivity.class);
-
                 intent.putExtra("AccNo", accountnumber.getText().toString());
                 intent.putExtra("SubsId", subscriberid.getText().toString());
                 intent.putExtra("CustName", customername.getText().toString());
@@ -102,7 +104,6 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
                 intent.putExtra("CustID", custId);
                 intent.putExtra("UserId", userId);
                 intent.putExtra("CompanyId", companyId);
-
                 startActivity(intent);
             }
         });
@@ -149,6 +150,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
 
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:" + txt_mob_no.getText().toString()));
+                startActivity(intent);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }
@@ -222,7 +224,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
                 SharedPrefsData.putBool(CustomersDetailsActivity.this, Constants.isLoadAlacarte, true, Constants.PREF_NAME);
                 SharedPrefsData.putBool(CustomersDetailsActivity.this, Constants.isLoadInternetPkg, true, Constants.PREF_NAME);
                 SharedPrefsData.putBool(CustomersDetailsActivity.this, Constants.isLoadBouquet, true, Constants.PREF_NAME);
-                startActivity(new Intent(CustomersDetailsActivity.this, GenerateInvoiceActivity.class));
+                   startActivity(new Intent(CustomersDetailsActivity.this, GenerateInvoiceActivity.class));
             }
         });
 
@@ -267,6 +269,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
 
     @Override
     public void showResult(CustomerData customerData) {
+        customerBalance= String.valueOf(customerData.getBalance());
         address.setText(customerData.getAddress());
         areaid.setText(customerData.getAreaCustomerID().toString());
         txt_mob_no.setText(customerData.getContactNo());

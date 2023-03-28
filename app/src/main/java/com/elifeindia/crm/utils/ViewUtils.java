@@ -50,7 +50,6 @@ public class ViewUtils {
         SimpleDateFormat EEEddMMMyyyy = new SimpleDateFormat("dd MMM yyyy", Locale.US);
         String outputDateStr = "";
         outputDateStr = parseDate(DateTime1, ymdFormat, EEEddMMMyyyy);
-
         return outputDateStr;
     }
 

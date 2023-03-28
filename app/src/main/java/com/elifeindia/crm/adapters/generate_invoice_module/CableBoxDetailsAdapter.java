@@ -1,5 +1,6 @@
 package com.elifeindia.crm.adapters.generate_invoice_module;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -27,8 +28,8 @@ import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
 import com.elifeindia.crm.view.activities.GenerateInvoiceActivity;
-import com.elifeindia.crm.view.activities.LoginActivity;
 import com.elifeindia.crm.view.activities.UpdateCableSubscriptionActivity;
+import com.elifeindia.crm.UpdateSubscription.UpdateSubscriptionPackageA;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -46,14 +47,16 @@ public class CableBoxDetailsAdapter extends RecyclerView.Adapter<CableBoxDetails
     AlacarteListAdapter alacarteListAdapter;
     BouquetListAdapter bouquetListAdapter;
     Calendar mcurrentDate;
+    String s;
 
     GenerateInvoiceActivity generateInvoiceActivity;
 
-    public CableBoxDetailsAdapter(Context context, List<CableBoxWithSubscription.CableBoxwithSubscriptionDTO> cableBoxList, AdapterCallbackTextView adapterCallback, AdapterCallback adapterCall) {
+    public CableBoxDetailsAdapter(Context context, List<CableBoxWithSubscription.CableBoxwithSubscriptionDTO> cableBoxList, AdapterCallbackTextView adapterCallback, AdapterCallback adapterCall, String a) {
         this.context = context;
         this.cableBoxList = cableBoxList;
         this.adapterCallback = adapterCallback;
         this.adapterCall = adapterCall;
+        this.s=a;
     }
 
     @NonNull
@@ -64,12 +67,12 @@ public class CableBoxDetailsAdapter extends RecyclerView.Adapter<CableBoxDetails
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
         holder.cable_status.setText("Status : " + cableBoxList.get(position).getCableBox().getStatus_Name());
         try {
 
-            holder.cable_lpamount.setText("LP Amount : " + cableBoxList.get(position).getCableBox().getPaid_Amount().toString());
+            holder.cable_lpamount.setText("LP Amount : " + cableBoxList.get(position).getCableBox().getPaid_Amount());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,7 +87,6 @@ public class CableBoxDetailsAdapter extends RecyclerView.Adapter<CableBoxDetails
 
         if (cableBoxList.get(position).getCableBox().getStatus_Name().equals("Active")) {
             holder.cb_box_status.setChecked(true);
-
         } else {
             holder.cb_box_status.setChecked(false);
 
@@ -97,7 +99,6 @@ public class CableBoxDetailsAdapter extends RecyclerView.Adapter<CableBoxDetails
 
                 if (holder.cb_box_status.isChecked()) {
                     adapterCallback.onClickCallback(holder.txt_expiry_date, holder.amount, holder.spn_no_of_months, holder.spn_bill_type, holder.ll_noofdays, position, "ADD");
-
                 } else {
                     adapterCallback.onClickCallback(holder.txt_expiry_date, holder.amount, holder.spn_no_of_months, holder.spn_bill_type, holder.ll_noofdays, position, "SUB");
 
@@ -225,7 +226,6 @@ public class CableBoxDetailsAdapter extends RecyclerView.Adapter<CableBoxDetails
             holder.spn_no_of_months.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     noofMonth = cableBoxList.get(position).getCableBox().getNoofMonth().toString();
                     adapterCallback.onClickCallback(holder.txt_expiry_date, holder.amount, holder.spn_no_of_months, holder.spn_bill_type, holder.ll_noofdays, position, "spn_no_of_months");
 
@@ -276,10 +276,26 @@ public class CableBoxDetailsAdapter extends RecyclerView.Adapter<CableBoxDetails
             @Override
             public void onClick(View view) {
 
-                String boxId = cableBoxList.get(position).getCableBox().getCable_Box_ID().toString();
-                SharedPrefsData.putString(context, Constants.CableBoxID, boxId, Constants.PREF_NAME);
+                if(s.equals("A")){
+                    try {
+                        String boxId = cableBoxList.get(position).getCableBox().getCable_Box_ID().toString();
+                        SharedPrefsData.putString(context, Constants.CableBoxID, boxId, Constants.PREF_NAME);
+                        context.startActivity(new Intent(context, UpdateSubscriptionPackageA.class));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    try {
+                        String boxId = cableBoxList.get(position).getCableBox().getCable_Box_ID().toString();
+                        SharedPrefsData.putString(context, Constants.CableBoxID, boxId, Constants.PREF_NAME);
+                        context.startActivity(new Intent(context, UpdateCableSubscriptionActivity.class));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
-                context.startActivity(new Intent(context, UpdateCableSubscriptionActivity.class));
+
 
             }
         });

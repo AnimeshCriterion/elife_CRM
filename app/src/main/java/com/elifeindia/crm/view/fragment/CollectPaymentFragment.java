@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -63,6 +64,8 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
     float ans = 0;
     String balance="", InvType;
     RelativeLayout tool_bar;
+    private  LinearLayout discount;
+    private  EditText commentbox;
 
     public CollectPaymentFragment() {
         // Required empty public constructor
@@ -82,6 +85,8 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
         customer_name = v.findViewById(R.id.customer_name);
         custmer_address = v.findViewById(R.id.custmer_address);
         subs_amount = v.findViewById(R.id.subs_amount);
+        discount=v.findViewById(R.id.discount);
+        commentbox=v.findViewById(R.id.commentbox);
         total_amount = v.findViewById(R.id.total_amount);
         balance_amount = v.findViewById(R.id.balance_amount);
         today_date = v.findViewById(R.id.today_date);
@@ -90,6 +95,13 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
         tool_bar.setVisibility(View.GONE);
 
         InvType = SharedPrefsData.getString(getActivity(), Constants.InvoiceType, Constants.PREF_NAME);
+
+        if (SharedPrefsData.getString(requireActivity(), Constants.RoleType, Constants.PREF_NAME).equals("Admin") || SharedPrefsData.getString(requireActivity(), Constants.RoleType, Constants.PREF_NAME).equals("Manager")) {
+            discount.setVisibility(View.VISIBLE);
+        }
+        else {
+            discount.setVisibility(View.GONE);
+        }
 
 
         edt_payingamount.addTextChangedListener(new TextWatcher() {
@@ -140,7 +152,7 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
 
 
                 if(discount_editext.getText().toString().equals("")){
-                    balance_amount.setText(SharedPrefsData.getString(getActivity(), Constants.CableBoxAmount, Constants.PREF_NAME));
+                    balance_amount.setText(total_amount.getText().toString());
                 }else {
                     float ans = 0;
                     try {
@@ -183,7 +195,12 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
                 if(edt_payingamount.length()==0){
                     edt_payingamount.setError("Enter the paying amount");
                     edt_payingamount.requestFocus();
-                }else{
+                }
+                else if(discount_editext.length()==0){
+                    discount_editext.setError("Enter the Discount amount");
+                    discount_editext.requestFocus();
+                }
+                else {
                     AlertDialog.Builder alertDialog;
                     alertDialog = new AlertDialog.Builder(getActivity());
                     alertDialog.setCancelable(false);//you can cancel it by pressing back button
@@ -212,7 +229,7 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
 
                             presenter.loadInsertPayment( customer_ID, pTypeId, invoiceId,
                                     fdate, total_amount.getText().toString(), edt_payingamount.getText().toString(),
-                                    balance_amount.getText().toString(), "", company_ID, user_ID);
+                                    balance_amount.getText().toString(), commentbox.getText().toString().trim(), company_ID, user_ID,discount_editext.getText().toString());
 
                         }
                     });
@@ -344,7 +361,9 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
         String paymentId = insertPayment.id;
         SharedPrefsData.putString(getActivity(), Constants.PaymentId, paymentId, Constants.PREF_NAME);
         viewUtils.toast(getActivity(), "Payment inserted successfully");
-        startActivity(new Intent(getActivity(), PaymentReceiptActivity.class));
+        Intent intent=new Intent(getActivity(), PaymentReceiptActivity.class);
+        intent.putExtra("paymentId",paymentId);
+        startActivity(intent);
 
     }
 }

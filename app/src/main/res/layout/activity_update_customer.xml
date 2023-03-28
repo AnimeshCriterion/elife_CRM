@@ -504,17 +504,17 @@
                     android:textColor="@color/darkblue"
                     android:textSize="@dimen/_11sdp" />
 
-                <TextView
+                <Spinner
                     android:id="@+id/cust_connection_status"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -524,8 +524,9 @@
                     android:id="@+id/renew_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Renew"
+                    android:text="Auto Renew"
                     android:layout_weight="1"
+                    android:visibility="visible"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:fontFamily="@font/abeezee_regular"
                     android:textColor="@color/darkblue"
@@ -536,6 +537,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cable"
+                    android:visibility="gone"
                     android:layout_weight="1"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:fontFamily="@font/abeezee_regular"

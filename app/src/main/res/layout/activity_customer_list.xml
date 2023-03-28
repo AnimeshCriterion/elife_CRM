@@ -29,19 +29,33 @@
             android:src="@drawable/back_arrow" />
 
         <TextView
-            android:textStyle="bold"
-            android:fontFamily="@font/abeezee_regular"
             android:id="@+id/tool_bar_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_toRightOf="@id/iv_back"
+            android:fontFamily="@font/abeezee_regular"
             android:text="Customer List"
             android:textColor="@color/white"
-            android:textSize="@dimen/_18sdp" />
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/calenderDateRange"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="2"
+            android:src="@drawable/ic_calendar"
+            android:visibility="visible"
+            app:tint="@color/white" />
 
     </RelativeLayout>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout3"
@@ -82,6 +96,18 @@
             app:layout_constraintBottom_toBottomOf="@+id/custmersearch_edit"
             app:layout_constraintEnd_toEndOf="@+id/custmersearch_edit"
             app:layout_constraintTop_toTopOf="@+id/custmersearch_edit" />
+
+        <ImageButton
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:id="@+id/iv_scan_button"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/custmersearch_edit"
+            app:layout_constraintEnd_toStartOf="@+id/ivbtn_search_submit"
+            app:layout_constraintTop_toTopOf="@+id/custmersearch_edit"
+            android:background="@drawable/ic_baseline_qr_code_scanner_24"
+            />
+
 
         <ProgressBar
             android:visibility="gone"
@@ -172,6 +198,7 @@
                         android:src="@drawable/ic_calendar"
                         android:layout_width="0dp"
                         android:layout_weight="2"
+                        android:visibility="gone"
                         android:layout_height="@dimen/_20sdp"/>
                 </LinearLayout>
 
@@ -248,7 +275,6 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal"
                 tools:listitem="@layout/item_view_filter_type"
-                android:layout_marginStart="@dimen/_8sdp"
                 android:background="@drawable/bg_rect_with_stroke"/>
 
 
@@ -268,12 +294,43 @@
                 android:text="There is no data you are searching for"/>
 
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/daterange"
+                android:visibility="gone"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/from_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:gravity="center"
+                    android:text="Today"
+                    android:visibility="visible"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_12sdp"/>
+                <TextView
+                    android:visibility="visible"
+                    android:id="@+id/to_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:gravity="center"
+                    android:text="Today"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_12sdp"/>
+            </LinearLayout>
+
+
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_customer_list"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/_5sdp"
                 tools:listitem="@layout/item_customer_list"
                 android:layout_height="match_parent" />
 

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.squareup.picasso.Picasso;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,12 +21,17 @@ import java.util.List;
 public class SliderAdapterExample extends
         SliderViewAdapter<SliderAdapterVH> {
 
+    public SliderAdapterExample(Context context, List<SliderItem> mSliderItems) {
+        this.context = context;
+        this.mSliderItems = mSliderItems;
+    }
+
     private Context context;
     private List<SliderItem> mSliderItems = new ArrayList<>();
 
-    public SliderAdapterExample(Context context) {
-        this.context = context;
-    }
+//    public SliderAdapterExample(Context context) {
+//        this.context = context;
+//    }
 
     public void renewItems(List<SliderItem> sliderItems) {
         this.mSliderItems = sliderItems;
@@ -61,11 +67,16 @@ public class SliderAdapterExample extends
                 .error(R.color.colorPrimaryDark)
                 .placeholder(R.color.colorPrimaryDark)
                 .into(viewHolder.imageViewBackground);
+      //  Picasso.with(context).load(sliderItem.getImageUrl()).into(viewHolder.imageViewBackground);
+      //  Picasso.with(context).load(sliderItem.getImageUrl())
+               // .placeholder(R.color.colorPrimaryDark)
+               // .error(R.color.colorPrimaryDark)
+               // .into(viewHolder.imageViewBackground);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "This is item in position " + position, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(context, "This is item in position " + sliderItem.getImageUrl(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -440,8 +440,8 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
+                        android:layout_height="1dp"
+                        android:background="@color/darkblue" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -656,6 +656,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
+                        android:text="0"
                         android:paddingLeft="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginBottom="@dimen/_7sdp"
@@ -674,6 +675,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
+                        android:text="0"
                         android:paddingLeft="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginBottom="@dimen/_7sdp"
@@ -691,12 +693,11 @@
                         android:id="@+id/payment_Mode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.3"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginBottom="@dimen/_7sdp"
+                        android:layout_weight="0.3"
                         android:fontFamily="@font/abeezee_regular"
                         android:paddingLeft="@dimen/_10sdp"
-                        android:text="Payment Mode"
                         android:textColor="@color/Black"
                         android:textSize="@dimen/_15sdp"
                         android:textStyle="bold" />
@@ -710,12 +711,11 @@
                         android:id="@+id/collectBy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.3"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginBottom="@dimen/_7sdp"
+                        android:layout_weight="0.3"
                         android:fontFamily="@font/abeezee_regular"
                         android:paddingLeft="@dimen/_10sdp"
-                        android:text="Collected By"
                         android:textColor="@color/Black"
                         android:textSize="@dimen/_15sdp"
                         android:textStyle="bold" />

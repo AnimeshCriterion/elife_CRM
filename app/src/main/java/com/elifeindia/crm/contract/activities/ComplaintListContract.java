@@ -23,7 +23,7 @@ public interface ComplaintListContract {
 
     interface Presenter {
         void start();
-        void loadComplaintList(Context context, String Company_ID, String Employee_ID, String Customer_ID, String Complaint_Status_ID, String From_date, String To_Date, String Value);
+        void  loadComplaintList(Context context, String Company_ID, String Employee_ID, String Customer_ID, String Complaint_Status_ID, String From_date, String To_Date, String Value);
         void loadComplaintListForSearch(Context context, String Company_ID, String Employee_ID, String Customer_ID, String Complaint_Status_ID, String From_date, String To_Date, String Value);
         void loadComplaintStatus(Context context, String Company_ID, String id);
         void loadEmployeeList(Context context, String Company_ID, String id, String Role_type);

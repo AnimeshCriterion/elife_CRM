@@ -124,9 +124,9 @@ public class BouquetListBillShareAdapter extends RecyclerView.Adapter<BouquetLis
 
 
         if (TotalBouquetsRecords.trim().equals("")) {
-            TotalBouquetsRecords = " Package       " + " " + "  " + "Amount" + "\n" +
-                    "-------------------------------" + "\n" +
-                    parsedStr + space + ace + Amt + "\n";
+            TotalBouquetsRecords = " Package       " + "   " + "     " + "Amount" + "\n" +
+                    "-------------------------------------" + "\n" +
+                    parsedStr + space + ace + Amt ;
         } else {
             TotalBouquetsRecords = TotalBouquetsRecords +
                     parsedStr + space + ace + Amt + "\n";

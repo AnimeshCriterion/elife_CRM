@@ -1,5 +1,6 @@
 package com.elifeindia.crm.networking;
 
+import com.elifeindia.crm.UpdateSubscription.UpdateINternetSubscriptionActivityForUpdateSubscription;
 import com.elifeindia.crm.model.AlacarteModel;
 import com.elifeindia.crm.model.AreaResponse;
 import com.elifeindia.crm.model.BillTypeModel;
@@ -8,6 +9,7 @@ import com.elifeindia.crm.model.BoxAlacarteList;
 import com.elifeindia.crm.model.BoxBouquetList;
 import com.elifeindia.crm.model.BoxTypeModel;
 import com.elifeindia.crm.model.CableBoxWithSubscription;
+import com.elifeindia.crm.model.ChangePasswordModel;
 import com.elifeindia.crm.model.ComplaintList;
 import com.elifeindia.crm.model.ComplaintStatusList;
 import com.elifeindia.crm.model.ComplaintTypeList;
@@ -15,6 +17,7 @@ import com.elifeindia.crm.model.CustemersCableBoxData;
 import com.elifeindia.crm.model.CustemersList;
 import com.elifeindia.crm.model.CustomerData;
 import com.elifeindia.crm.model.CustomerInvoice;
+import com.elifeindia.crm.model.CustomerStatusResponse;
 import com.elifeindia.crm.model.CustomerSubscribeList;
 import com.elifeindia.crm.model.CustomersInternetBoxData;
 import com.elifeindia.crm.model.EmployeeList;
@@ -37,8 +40,7 @@ import com.elifeindia.crm.model.UpdateBox;
 import com.elifeindia.crm.model.generateinvoice.InsertInvoiceModel;
 import com.google.gson.JsonObject;
 
-import org.json.JSONObject;
-
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -73,14 +75,19 @@ public interface ApiService {
             @Query("page_no") String page_no,
             @Query("Value") String Value,
             @Query("Field_Value") String field_value,
-            @Query("Field_Name") String field_name);
+            @Query("Field_Name") String field_name,
+            @Query("From_Date") String From_Date,
+            @Query("To_Date") String To_Date);
 
     @GET("Values/GetArea?")
-    Observable<AreaResponse> getArea (@Query("Company_ID") String Company_ID, @Query("Employee_ID") String Employee_ID);
+    Observable<AreaResponse> getArea(@Query("Company_ID") String Company_ID, @Query("Employee_ID") String Employee_ID);
 
 
     @GET("Values/GetCustomer?")
     Observable<CustomerData> getCustomerData(@Query("Customer_ID") String Customer_ID);
+
+   @GET("Values/GetCustomer?")
+    Call<CustomerData> getCustomerDataForUpdate(@Query("Customer_ID") String Customer_ID);
 
     @GET("Values/GetCableboxList?")
     Observable<CustemersCableBoxData> getCustemersCableBoxData(@Query("Customer_ID") String Customer_ID);
@@ -125,7 +132,8 @@ public interface ApiService {
             @Field("balance") String balance,
             @Field("transaction_No") String transaction_No,
             @Field("company_ID") String company_ID,
-            @Field("user_ID") String user_ID);
+            @Field("user_ID") String user_ID,
+    @Field("discount") String Discount);
 
 
     @GET("Values/GetEmployeeList?")
@@ -162,13 +170,13 @@ public interface ApiService {
 
 
     @GET("Values/Geprioritylist?")
-    Observable<PriorityList> getPriorityList (
+    Observable<PriorityList> getPriorityList(
             @Query("Company_ID") String Company_ID,
             @Query("Priority_ID") String Priority_ID);
 
     @FormUrlEncoded
     @POST("Values/InsertComplaint?")
-    Observable<InsertPayment> insertComplaint (
+    Observable<InsertPayment> insertComplaint(
             @Field("Complaint_ID") String Complaint_ID,
             @Field("Company_ID") String Company_ID,
             @Field("Customer_ID") String paymentType_Id,
@@ -198,7 +206,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("Values/UpdateComplaint?")
-    Observable<InsertPayment> updateComplaint (
+    Observable<InsertPayment> updateComplaint(
             @Field("Complaint_ID") String Complaint_ID,
             @Field("Company_ID") String Company_ID,
             @Field("Customer_ID") String paymentType_Id,
@@ -217,7 +225,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("Values/OpencloseComplaint?")
-    Observable<InsertPayment> opencloseComplaint (
+    Observable<InsertPayment> opencloseComplaint(
             @Field("complaint_ID") String Company_ID,
             @Field("open_Date") String open_Date,
             @Field("open_By") String open_By,
@@ -256,33 +264,33 @@ public interface ApiService {
             @Query("Customer_ID") String Customer_ID);
 
     @GET("Values/GetPackageList?")
-        Observable<InternetPackageModel> getInternetPackageList(
+    Observable<InternetPackageModel> getInternetPackageList(
             @Query("Company_ID") String Company_ID,
             @Query("Customer_ID") String Customer_ID);
 
     @FormUrlEncoded
     @POST("Values/Insert_CablePackage?")
-    Observable<InsertPayment> insertCablePackage (
+    Call<InsertPayment> insertCablePackage(
             @Field("user_Id") String user_Id,
             @Field("company_Id") String company_Id,
             @Field("cable_Box_ID") String cable_Box_ID,
-            @Field("packageId") String packageId,
+            @Field("packageId") int packageId,
             @Field("packagetype") String packagetype,
             @Field("date") String date);
 
     @FormUrlEncoded
     @POST("Values/Delete_CablePackage?")
-    Observable<InsertPayment> deleteCablePackage (
+    Call<InsertPayment> deleteCablePackage(
             @Field("user_Id") String user_Id,
             @Field("company_Id") String company_Id,
             @Field("cable_Box_ID") String cable_Box_ID,
-            @Field("packageId") String packageId,
+            @Field("packageId") int packageId,
             @Field("packagetype") String packagetype,
             @Field("date") String date);
 
     @FormUrlEncoded
     @POST("Values/Insert_InternetPackage?")
-    Observable<InsertPayment> insert_InternetPackage (
+    Call<InsertPayment> insert_InternetPackage(
             @Field("user_Id") String user_Id,
             @Field("company_Id") String company_Id,
             @Field("Internet_Box_ID") String cable_Box_ID,
@@ -292,7 +300,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("Values/Delete_InternetPackage?")
-    Observable<InsertPayment> delete_InternetPackage (
+    Call<InsertPayment> delete_InternetPackage(
             @Field("user_Id") String user_Id,
             @Field("company_Id") String company_Id,
             @Field("Internet_Box_ID") String cable_Box_ID,
@@ -317,55 +325,26 @@ public interface ApiService {
             @Query("Customer_ID") String Customer_ID);
 
 
-    @FormUrlEncoded
-    @POST("Values/Update_CableBox?")
-    Observable<UpdateBox> updateCableBox (
-            @Field("user_Id") String user_Id,
-            @Field("customer_Id") String customer_Id,
-            @Field("cable_Box_ID") String cable_Box_ID,
-            @Field("box_ID") String box_ID,
-            @Field("boxType_ID") String boxType_ID,
-            @Field("vcno") String vcno,
-            @Field("stbno") String stbno,
-            @Field("cafno") String cafno,
-            @Field("bill_Type_ID") String bill_Type_ID,
-            @Field("connection_Status_ID") String connection_Status_ID,
-            @Field("activation_Date") String activation_Date,
-            @Field("expiry_Date") String expiry_Date,
-            @Field("noofMonth") String noofMonth,
-            @Field("noofDays") String noofDays,
-            @Field("alacarte_Amount") String alacarte_Amount,
-            @Field("bouquet_Amount") String bouquet_Amount,
-            @Field("tax_Amount") String tax_Amount,
-            @Field("box_Amount") String box_Amount,
-            @Field("date") String date);
+ 
+    @POST("Values/Get_CableExpiry")
+    Observable<UpdateBox> updateCableBox(
+            @Body CableBoxSubscription cableBoxSubscription);
+
+ @POST("Values/Update_CableBox?")
+ Observable<UpdateBox> updateCableBoxUpdateSubscription(@Body CableBoxSubscription cableBoxSubscription);
 
 
-    @FormUrlEncoded
+
+    @POST("Values/Get_Internetexpiry")
+    Observable<UpdateBox> getInternetExpiry(@Body InternetBoxUpdateSubscription internetBoxUpdateSubscription);
+
     @POST("Values/Update_InternetBox?")
-    Observable<UpdateBox> updateInternetBox (
-            @Field("user_Id") String user_Id,
-            @Field("customer_Id") String customer_Id,
-            @Field("internet_Box_ID") String internet_Box_ID,
-            @Field("box_ID") String box_ID,
-            @Field("boxType_ID") String boxType_ID,
-            @Field("ip") String ip,
-            @Field("mac") String mac,
-            @Field("bill_Type_ID") String bill_Type_ID,
-            @Field("connection_Status_ID") String connection_Status_ID,
-            @Field("activation_Date") String activation_Date,
-            @Field("expiry_Date") String expiry_Date,
-            @Field("noofMonth") String noofMonth,
-            @Field("noofDays") String noofDays,
-            @Field("package_Amount") String package_Amount,
-            @Field("tax_Amount") String tax_Amount,
-            @Field("box_Amount") String box_Amount,
-            @Field("date") String date);
+    Observable<UpdateBox> updateInternetBoxSubscription(@Body InternetBoxUpdateSubscription internetBoxUpdateSubscription);
 
 
     @FormUrlEncoded
     @POST("Values/Generate_Invoice?")
-    Observable<InsertPayment> generate_Invoice (
+    Observable<InsertPayment> generate_Invoice(
             @Field("user_Id") String user_Id,
             @Field("customer_Id") String customer_Id,
             @Field("triple_play_ID") String internet_Box_ID,
@@ -378,7 +357,7 @@ public interface ApiService {
             @Field("transaction_No") String expiry_Date);
 
     @POST("Values/Insert_Invoice?")
-    Observable<InsertPayment> insertInvoice (@Body JsonObject jsonObject);
+    Observable<InsertPayment> insertInvoice(@Body JsonObject jsonObject);
 
     @POST("Values/Insert_Invoice?")
     Observable<InsertPayment> insertInvoice2(@Body InsertInvoiceModel model);
@@ -387,6 +366,23 @@ public interface ApiService {
     @GET("Values/GetInvoice?")
     Observable<GetInvoiceModel> getInvoice(
             @Query("Invoice_ID") String Invoice_ID);
+
+
+    @POST("Values/UpdateUSERCredential")
+    Observable<ChangePasswordModel> changePassword(
+            @Query("UserId") String UserId,
+            @Query("Username") String Username,
+            @Query("Oldpassword") String Oldpassword,
+            @Query("Password") String Password
+    );
+
+    @GET("Values/GetConnection_StatusList")
+    Call<CustomerStatusResponse> getCustomerStatus(
+    );
+
+
+
+
 
 
 }

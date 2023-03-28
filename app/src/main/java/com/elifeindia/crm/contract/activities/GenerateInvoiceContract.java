@@ -67,12 +67,28 @@ public interface GenerateInvoiceContract {
                             String noofDays, String alacarte_Amount, String bouquet_Amount,
                             String tax_Amount, String box_Amount, String date);
 
+        void updateCableBoxSubscription(Context context, String user_Id, String customer_Id,
+                            String cable_Box_ID, String box_ID, String boxType_ID, String vcno,
+                            String stbno, String cafno, String bill_Type_ID, String connection_Status_ID,
+                            String activation_Date, String expiry_Date, String noofMonth,
+                            String noofDays, String alacarte_Amount, String bouquet_Amount,
+                            String tax_Amount, String box_Amount, String date);
+
+
 
         void updateInternetBox(Context context, TextView view, TextView view1, String user_Id, String customer_Id,
                                String internet_Box_ID, String box_ID, String boxType_ID,
                                String ip, String mac, String bill_Type_ID, String connection_Status_ID,
                                String activation_Date, String expiry_Date, String noofMonth, String noofDays,
                                String package_Amount, String tax_Amount, String box_Amount, String date);
+
+        void updateInternetBoxForSubscription(Context context,  String user_Id, String customer_Id,
+                                              String internet_Box_ID, String box_ID, String boxType_ID,
+                                              String ip, String mac, String bill_Type_ID, String connection_Status_ID,
+                                              String activation_Date, String expiry_Date, String noofMonth, String noofDays,
+                                              String package_Amount, String tax_Amount, String box_Amount, String date);
+
+
 
         void generate_Invoice(Context context, String user_Id, String customer_Id, String triple_play_ID, String date,
                               String triple_play, String paid_Amount, String employee_ID, String paymentType_ID,

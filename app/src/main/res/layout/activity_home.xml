@@ -62,17 +62,21 @@
                     android:orientation="vertical"
                     >
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tool_bar"
-                        android:layout_marginBottom="16dp">
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:id="@+id/cv"-->
+<!--                        android:layout_margin="@dimen/_10sdp"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/tool_bar"-->
+<!--                        android:layout_marginBottom="16dp">-->
 
                         <com.smarteist.autoimageslider.SliderView
                             android:id="@+id/imageSlider"
                             android:layout_width="match_parent"
+                            android:layout_margin="@dimen/_10sdp"
                             android:layout_height="@dimen/_150sdp"
+                            android:layout_below="@+id/tool_bar"
+                            android:layout_marginBottom="16dp"
                             app:sliderAnimationDuration="600"
                             app:sliderAutoCycleDirection="back_and_forth"
                             app:sliderAutoCycleEnabled="true"
@@ -87,32 +91,32 @@
                             app:sliderScrollTimeInSec="1"
                             app:sliderStartAutoCycle="true" />
 
-                    </androidx.cardview.widget.CardView>
+<!--                    </androidx.cardview.widget.CardView>-->
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_dashboard"
-                    android:visibility="gone"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
                     <LinearLayout
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_marginEnd="@dimen/_5sdp"
                             android:id="@+id/btn_customerList"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
                             android:background="@drawable/card_bg"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:padding="20dp">
@@ -124,25 +128,25 @@
                                 android:src="@drawable/ic_baseline_people_outline" />
 
                             <TextView
-                                android:textColor="@color/colorPrimaryDark"
-                                android:fontFamily="@font/abeezee_regular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="5dp"
+                                android:fontFamily="@font/abeezee_regular"
                                 android:gravity="center"
                                 android:text="Customer\nDetails"
+                                android:textColor="@color/colorPrimaryDark"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_marginStart="@dimen/_5sdp"
                             android:id="@+id/collectiondetails_btn"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/_5sdp"
                             android:layout_weight="1"
                             android:background="@drawable/card_bg"
                             android:gravity="center"
@@ -156,14 +160,14 @@
                                 android:src="@drawable/ic_baseline_account_balance_wallet_" />
 
                             <TextView
-                                android:textColor="@color/colorPrimaryDark"
-                                android:fontFamily="@font/abeezee_regular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="5dp"
+                                android:fontFamily="@font/abeezee_regular"
                                 android:gravity="center"
                                 android:text="Collection\nDetails"
+                                android:textColor="@color/colorPrimaryDark"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -172,20 +176,21 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_marginEnd="@dimen/_5sdp"
                             android:id="@+id/compliantslist_btn"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_weight="1"
+                            android:layout_margin="@dimen/_5sdp"
                             android:background="@drawable/card_bg"
                             android:gravity="center"
                             android:orientation="vertical"
@@ -198,14 +203,14 @@
                                 android:src="@drawable/ic_baseline_message_24" />
 
                             <TextView
-                                android:textColor="@color/colorPrimaryDark"
-                                android:fontFamily="@font/abeezee_regular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="5dp"
+                                android:fontFamily="@font/abeezee_regular"
                                 android:gravity="center"
                                 android:text="Complaint\nDetails"
+                                android:textColor="@color/colorPrimaryDark"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -213,17 +218,17 @@
 
 
                         <LinearLayout
-                            android:visibility="gone"
-                            android:layout_marginStart="@dimen/_5sdp"
                             android:id="@+id/addcomplaint_btn"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/_5sdp"
                             android:layout_weight="1"
                             android:background="@drawable/card_bg"
                             android:gravity="center"
                             android:orientation="vertical"
-                            android:padding="20dp">
+                            android:padding="20dp"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:layout_width="50dp"
@@ -248,20 +253,20 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <LinearLayout
-                            android:layout_marginEnd="@dimen/_5sdp"
                             android:id="@+id/ll_invoice"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_weight="1"
                             android:background="@drawable/card_bg"
                             android:gravity="center"
@@ -275,14 +280,14 @@
                                 android:src="@drawable/ic_receipt" />
 
                             <TextView
-                                android:textColor="@color/colorPrimaryDark"
-                                android:fontFamily="@font/abeezee_regular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="5dp"
+                                android:fontFamily="@font/abeezee_regular"
                                 android:gravity="center"
                                 android:text="Invoice\nDetails"
+                                android:textColor="@color/colorPrimaryDark"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -290,11 +295,11 @@
 
 
                         <LinearLayout
-                            android:layout_marginStart="@dimen/_5sdp"
                             android:id="@+id/ll_compl_summary"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/_5sdp"
                             android:layout_weight="1"
                             android:background="@drawable/card_bg"
                             android:gravity="center"
@@ -308,14 +313,14 @@
                                 android:src="@drawable/ic_complaint_summary" />
 
                             <TextView
-                                android:textColor="@color/colorPrimaryDark"
-                                android:fontFamily="@font/abeezee_regular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="5dp"
+                                android:fontFamily="@font/abeezee_regular"
                                 android:gravity="center"
                                 android:text="Complaint\nSummary"
+                                android:textColor="@color/colorPrimaryDark"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -333,6 +338,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_60sdp"
             android:layout_alignParentBottom="true"
+            android:elevation="@dimen/_10sdp"
             android:background="@drawable/home_botton_bg_white"
             android:gravity="center"
             android:orientation="horizontal"

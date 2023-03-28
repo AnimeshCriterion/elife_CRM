@@ -1,30 +1,34 @@
 package com.elifeindia.crm.printersdk;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static com.elifeindia.crm.printersdk.Constant.MESSAGE_UPDATE_PARAMETER;
+import static com.elifeindia.crm.view.fragment.CollectPaymentFragment.triplePlay;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.calon.thermalprinter.CalonThermalPrinter;
 import com.elifeindia.crm.BuildConfig;
@@ -37,14 +41,6 @@ import com.elifeindia.crm.presenter.activities.PaymentReceiptPresenter;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.view.activities.CustomerListActivity;
-import com.elifeindia.crm.view.activities.CustomersDetailsActivity;
-import com.elifeindia.crm.view.activities.MainActivity;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 import com.printer.command.EscCommand;
 import com.printer.command.LabelCommand;
 
@@ -62,21 +58,18 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.Vector;
 
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static com.elifeindia.crm.printersdk.Constant.MESSAGE_UPDATE_PARAMETER;
-import static com.elifeindia.crm.view.fragment.CollectPaymentFragment.triplePlay;
-
 public class PaymentReceiptActivity extends AppCompatActivity implements PaymentReceiptContract.View {
     PaymentReceiptContract.Presenter presenter;
     TextView txt_subid, txt_accountno, txt_header, custmername_pay, billdate_pay, invoicenumber_pay, txt_rec_time, txt_prev_bal, paidamount_pay;
     TextView btn_send, txt_discount, balance_pay, paymentmode_text, txt_collected_by, txt_emp_mob_no;
     ImageView iv_all, iv_whatsappshare;
     TextView txt_bill_type, btn_done, btn_next;
-    String receipt, CustMob, invno, accNo, name, subId, dateTime, totalAmnt, empMobNo, collectedBy, payMode, remainBal, paidAmnt, footer = "";
+    String receipt, CustMob, invno, accNo, name, subId, dateTime, totalAmnt, empMobNo, collectedBy, payMode, remainBal, paidAmnt, footer = "",discount;
     public static String invoiceNumber;
     BluetoothAdapter mBluetoothAdapter;
     CalonThermalPrinter calOnPrinter = new CalonThermalPrinter();
     File imagePath;
+    TextView mobileTv,addressTv;
     private int id = 0;
     private ThreadPool threadPool;
     private static final int CONN_STATE_DISCONN = 0x007;
@@ -101,6 +94,8 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
         invoicenumber_pay = findViewById(R.id.invoicenumber_pay);
         billdate_pay = findViewById(R.id.billdate_pay);
         txt_rec_time = findViewById(R.id.txt_rec_time);
+//        mobileTv=findViewById(R.id.customer_mobile);
+//        addressTv=findViewById(R.id.customer_address);
         txt_prev_bal = findViewById(R.id.txt_prev_bal);
         paidamount_pay = findViewById(R.id.paidamount_pay);
         txt_discount = findViewById(R.id.txt_discount);
@@ -138,24 +133,24 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
         });
 
         txt_bill_type.setText(BillType);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Dexter.withContext(this)
-                    .withPermission(WRITE_EXTERNAL_STORAGE)
-                    .withListener(new PermissionListener() {
-                        @Override
-                        public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                        }
-
-                        @Override
-                        public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                        }
-
-                        @Override
-                        public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                        }
-                    })
-                    .check();
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            Dexter.withContext(this)
+//                    .withPermission(WRITE_EXTERNAL_STORAGE)
+//                    .withListener(new PermissionListener() {
+//                        @Override
+//                        public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+//                        }
+//
+//                        @Override
+//                        public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+//                        }
+//
+//                        @Override
+//                        public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+//                        }
+//                    })
+//                    .check();
+//        }
 
         iv_all.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,7 +174,9 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
 
         presenter = new PaymentReceiptPresenter(this);
         presenter.start();
-        String pId = SharedPrefsData.getString(this, Constants.PaymentId, Constants.PREF_NAME);
+       // String pId = SharedPrefsData.getString(this, Constants.PaymentId, Constants.PREF_NAME);
+        String pId=getIntent().getStringExtra("paymentId");
+        Log.d("TAG", "onCreate: "+pId);
         presenter.loadPaymentReceipt(this, pId);
 
         String compId = SharedPrefsData.getString(this, Constants.CompanyID, Constants.PREF_NAME);
@@ -224,7 +221,15 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
 //                        }
 //                    }
 //                } );
-                findBTprint();
+                if (ContextCompat.checkSelfPermission(PaymentReceiptActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(PaymentReceiptActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT,Manifest.permission.BLUETOOTH_SCAN},400);
+
+                }
+                else
+                {
+                    findBTprint();
+                }
+
             }
 
         });
@@ -253,7 +258,15 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
 //                        }
 //                    }
 //                } );
-                findBTprint();
+
+                if (ContextCompat.checkSelfPermission(PaymentReceiptActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(PaymentReceiptActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT,Manifest.permission.BLUETOOTH_SCAN},400);
+                }
+                else
+                {
+                    findBTprint();
+                }
+
             }
 
         });
@@ -380,18 +393,24 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
     @Override
     public void showReceipt(PaymentReciept paymentReciept) {
 
+      //  Log.d("TAG", "showReceipt:Animesh " + paymentReciept);
+
         name = paymentReciept.getName();
         accNo = paymentReciept.getAccountNo().toString();
         subId = paymentReciept.getSubscriberID();
+
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.US);
         Date date = new Date();
         dateTime = sdf1.format(date);
         totalAmnt = paymentReciept.getTotalAmount().toString();
         paidAmnt = paymentReciept.getPaidAmount().toString();
+        discount=paymentReciept.getDiscount();
         remainBal = paymentReciept.getBalance().toString();
         payMode = paymentReciept.getPaymentType();
         collectedBy = paymentReciept.getEmployee_Name();
         empMobNo = paymentReciept.getEmployee_Contact();
+//        mobileTv.setText(paymentReciept.getContact_No());
+//        addressTv.setText(paymentReciept.getAddress());
 
         custmername_pay.setText(name);
         txt_accountno.setText(accNo);
@@ -415,6 +434,7 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
         invno = paymentReciept.getInvoiceNumber();
         txt_rec_time.setText(paymentReciept.getPaymentDate());
         paymentReciept.getSoDoWo();
+        txt_discount.setText(paymentReciept.getDiscount());
 
 
         // txt_network_name.setText(paymentReciept.getTitle());
@@ -775,7 +795,7 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
         String customerPhoneNumber = WhatsupNo;
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
         sendIntent.setPackage("com.whatsapp");
-        Log.e("TAG Share ", "openWhatsApp: "+WhatsupNo );
+        Log.e("TAG Share ", "openWhatsApp: " + WhatsupNo);
 
 
         String message =
@@ -790,7 +810,7 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
                         "*Payment Details*\n" +
                         "Total Amount: " + totalAmnt + "\n" +
                         "Paid Amount: " + paidAmnt + "\n" +
-                        "Discount: 0\n" +
+                        "Discount:"+ discount + "\n" +
                         "Remaining Amount: " + remainBal + "\n" +
                         "\n" +
                         "Payment Mode: " + payMode + "\n" +
@@ -819,6 +839,16 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
         try {
             this.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
             if (!this.mBluetoothAdapter.isEnabled()) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
                 this.mBluetoothAdapter.enable();
             }
 
@@ -881,7 +911,7 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
                                         "-------------------------------" + "\n" +
                                         "Total Amt : " + totalAmnt + "\n" +
                                         "Paid Amt  : " + paidAmnt + "\n" +
-                                        "Discount  : 0\n" +
+                                        "Discount  : " + discount + "\n" +
                                         "Remaining : " + remainBal + "\n" +
 
                                         "------------------------------" + "\n" +
@@ -912,6 +942,23 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
             }
         } catch (NullPointerException ex1) {
             ex1.getMessage();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 400: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                findBTprint();
+                }
+                else
+                {
+
+                }
+                return;
+            }
         }
     }
 }

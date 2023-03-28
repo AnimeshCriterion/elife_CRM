@@ -364,7 +364,255 @@
                             android:textSize="@dimen/_12sdp"/>
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/edittext_bg1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:orientation="horizontal">
 
+                        <TextView
+                            android:textStyle="bold"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.7"
+                            android:text="  Created By"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                        <View
+                            android:background="@color/colorPrimary"
+                            android:layout_width="@dimen/_1sdp"
+                            android:layout_height="match_parent"/>
+                        <TextView
+                            android:layout_marginStart="8.5sp"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:id="@+id/created_by"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_weight="0.5"
+                            android:paddingRight="@dimen/_15sdp"
+                            android:text=""
+                            android:enabled="false"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/edittext_bg1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.7"
+                            android:text="  Created Date"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                        <View
+                            android:background="@color/colorPrimary"
+                            android:layout_width="@dimen/_1sdp"
+                            android:layout_height="match_parent"/>
+                        <TextView
+                            android:layout_marginStart="8.5sp"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:id="@+id/created_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_weight="0.5"
+                            android:drawableRight="@drawable/ic_calendar"
+                            android:paddingRight="@dimen/_15sdp"
+                            android:enabled="false"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/edittext_bg1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.7"
+                            android:text="  Updated By"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                        <View
+                            android:background="@color/colorPrimary"
+                            android:layout_width="@dimen/_1sdp"
+                            android:layout_height="match_parent"/>
+                        <TextView
+                            android:layout_marginStart="8.5sp"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:id="@+id/updated_by"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_weight="0.5"
+                            android:paddingRight="@dimen/_15sdp"
+                            android:enabled="false"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/edittext_bg1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.7"
+                            android:text="  Updated date"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                        <View
+                            android:background="@color/colorPrimary"
+                            android:layout_width="@dimen/_1sdp"
+                            android:layout_height="match_parent"/>
+                        <TextView
+                            android:layout_marginStart="8.5sp"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:id="@+id/update_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_weight="0.5"
+                            android:drawableRight="@drawable/ic_calendar"
+                            android:paddingRight="@dimen/_15sdp"
+                            android:enabled="false"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/edittext_bg1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.7"
+                            android:text="  Assign By"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                        <View
+                            android:background="@color/colorPrimary"
+                            android:layout_width="@dimen/_1sdp"
+                            android:layout_height="match_parent"/>
+                        <TextView
+                            android:layout_marginStart="8.5sp"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:id="@+id/Assign_by"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_weight="0.5"
+                            android:paddingRight="@dimen/_15sdp"
+                            android:enabled="false"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/edittext_bg1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.7"
+                            android:text="  Closed By"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                        <View
+                            android:background="@color/colorPrimary"
+                            android:layout_width="@dimen/_1sdp"
+                            android:layout_height="match_parent"/>
+                        <TextView
+                            android:layout_marginStart="8.5sp"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:id="@+id/close_by"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_weight="0.5"
+                            android:paddingRight="@dimen/_15sdp"
+                            android:enabled="false"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/edittext_bg1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:fontFamily="@font/abeezee_regular"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.7"
+                            android:text="  Closed Date"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                        <View
+                            android:background="@color/colorPrimary"
+                            android:layout_width="@dimen/_1sdp"
+                            android:layout_height="match_parent"/>
+                        <TextView
+                            android:layout_marginStart="8.5sp"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical"
+                            android:id="@+id/close_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_weight="0.5"
+                            android:paddingRight="@dimen/_15sdp"
+                            android:enabled="false"
+                            android:drawableRight="@drawable/ic_calendar"
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_12sdp"/>
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_marginTop="@dimen/_8sdp"
                         android:background="@drawable/edittext_bg1"

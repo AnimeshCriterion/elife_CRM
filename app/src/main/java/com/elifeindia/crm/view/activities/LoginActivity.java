@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         iv_show_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 i = i + 1;
                 if (i % 2 == 0) {
                     edt_pass.setTransformationMethod(null);
@@ -71,7 +70,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                         SharedPrefsData.putString(getApplicationContext(), Constants.UserName, username, Constants.PREF_NAME);
                         SharedPrefsData.putString(getApplicationContext(), Constants.Password, pass, Constants.PREF_NAME);
                         SharedPrefsData.putBool(getApplicationContext(), Constants.Remember_me, true, Constants.PREF_NAME);
-
                     } else {
                         presenter.loginApi(LoginActivity.this, username, pass);
                         SharedPrefsData.putString(getApplicationContext(), Constants.UserName, "", Constants.PREF_NAME);
@@ -125,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void showResult(Login login) {
-        if (login.getStatus().matches(Constants.Successful)){
+        if (login.getStatus().matches(Constants.Successful)) {
             SharedPrefsData.putString(getApplicationContext(), Constants.CompanyID, login.getCompanyID().toString(), Constants.PREF_NAME);
             SharedPrefsData.putString(getApplicationContext(), Constants.CompanyName, login.getCompanyName(), Constants.PREF_NAME);
             SharedPrefsData.putString(getApplicationContext(), Constants.EmployeeCode, login.getEmployeeCode(), Constants.PREF_NAME);
@@ -144,9 +142,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
 
-        }
-        else  {
-            viewUtils.toast(this,"Please enter valid username and password");
+        } else {
+            viewUtils.toast(this, "Please enter valid username and password");
         }
 
     }

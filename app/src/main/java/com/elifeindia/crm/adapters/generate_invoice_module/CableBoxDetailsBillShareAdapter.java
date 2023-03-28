@@ -1,5 +1,6 @@
 package com.elifeindia.crm.adapters.generate_invoice_module;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -72,7 +73,7 @@ public class CableBoxDetailsBillShareAdapter extends RecyclerView.Adapter<CableB
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
 //        holder.cable_status.setText("Status : "+cableBoxList.get(position).getCableBox().getStatus_Name());
 //        try {
@@ -131,20 +132,19 @@ public class CableBoxDetailsBillShareAdapter extends RecyclerView.Adapter<CableB
     private void viewsetter(int position, MyViewHolder holder) {
 
         if (internetBoxList.size() == 0){
-
             holder.table_layout.setVisibility(View.VISIBLE);
             holder.cable_text.setText("CABLE BOX");
             holder.txt_ala.setVisibility(View.VISIBLE);
 
             holder.vcno_text.setText("VcNo");
             holder.stbno_text.setText("STB No");
-
             holder.stbno.setText(cableBoxList.get(position).getCableBox().getStbno().toString());
             holder.cafnum.setText(cableBoxList.get(position).getCableBox().getCafno().toString());
             holder.vcnum.setText(cableBoxList.get(position).getCableBox().getVcno().toString());
             String date = null;
             date = ViewUtils.changeDateFormat(cableBoxList.get(position).getCableBox().getExpiry_Date().toString());
-            holder.expirtydate.setText(date);
+          //  holder.expirtydate.setText(date);
+            holder.expirtydate.setText(ViewUtils.changeDateFormat(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)));
             // holder.txt_expiry_date.setText(date);
 
 
@@ -229,7 +229,8 @@ public class CableBoxDetailsBillShareAdapter extends RecyclerView.Adapter<CableB
 
             String date = null;
             date = ViewUtils.changeDateFormat(internetBoxList.get(position).getInternetBox().getExpiry_Date().toString());
-            holder.expirtydate.setText(date);
+            //holder.expirtydate.setText(date);
+            holder.expirtydate.setText(ViewUtils.changeDateFormat(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)));
 
             ip = internetBoxList.get(position).getInternetBox().getIp();
 

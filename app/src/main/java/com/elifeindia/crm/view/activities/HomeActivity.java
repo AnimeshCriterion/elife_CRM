@@ -3,15 +3,18 @@ package com.elifeindia.crm.view.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.core.view.GravityCompat;
@@ -30,10 +33,20 @@ import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.github.javiersantos.appupdater.enums.Duration;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.InstallState;
+import com.google.android.play.core.install.InstallStateUpdatedListener;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.InstallStatus;
+import com.google.android.play.core.install.model.UpdateAvailability;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
+
+import java.util.ArrayList;
 
 
 public class HomeActivity extends AppCompatActivity implements HomeContract.View {
@@ -43,7 +56,12 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     private SliderAdapterExample adapter;
     TextView txt_empname, txt_empmob, txt_networkname;
     LinearLayout ll_dashboard;
-    public static  Boolean hideReport=false, hideCollectPayment=false, hideInvoice=false;
+    public static  Boolean hideReport=false, hideCollectPayment=false, hideInvoice=false,hideUpdateSubscription=false;
+    private AppUpdateManager mUpdateManager;
+    private static final int RC_APP_UPDATE = 100;
+    private  DrawerLayout drawerLayout;
+      ArrayList<SliderItem> imagesList;
+
 
 
     @Override
@@ -51,13 +69,52 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        new AppUpdater(HomeActivity.this).setUpdateFrom(UpdateFrom.GOOGLE_PLAY).setDisplay(Display.DIALOG).
-                setDuration(Duration.INDEFINITE).start();
+//        new AppUpdater(HomeActivity.this).setUpdateFrom(UpdateFrom.GOOGLE_PLAY).setDisplay(Display.DIALOG).
+//                setDuration(Duration.INDEFINITE).start();
 
         ll_dashboard = findViewById(R.id.ll_dashboard);
+        drawer_layout=findViewById(R.id.drawer_layout);
+        imagesList=new ArrayList<>();
+        SliderItem slider1=new SliderItem();
+        slider1.setImageUrl("http://ecableapi.elifeindia.in/Content/slider/s1.jpg");
+        imagesList.add(slider1);
+        SliderItem slider2=new SliderItem();
+        slider2.setImageUrl("http://ecableapi.elifeindia.in/Content/slider/s2.jpg");
+        imagesList.add(slider2);
+        SliderItem slider3=new SliderItem();
+        slider3.setImageUrl("http://ecableapi.elifeindia.in/Content/slider/s3.jpg");
+        imagesList.add(slider3);
+        SliderItem slider4=new SliderItem();
+        slider4.setImageUrl("http://ecableapi.elifeindia.in/Content/slider/s4.jpg");
+        imagesList.add(slider4);
+
 
         presenter = new HomePresenter(this);
         presenter.start();
+
+
+        mUpdateManager = AppUpdateManagerFactory.create(this);
+        mUpdateManager.getAppUpdateInfo().addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+
+                try {
+                    Log.d("TAG", "onSuccessUp[date: " + UpdateAvailability.UPDATE_AVAILABLE);
+                    mUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.IMMEDIATE, HomeActivity.this, RC_APP_UPDATE);
+                } catch (IntentSender.SendIntentException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+        }).addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show());
+
+        try {
+            mUpdateManager.registerListener(installStateUpdatedListener);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         findViewById(R.id.btn_customerList).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,9 +311,6 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
         sliderView = findViewById(R.id.imageSlider);
 
-
-        adapter = new SliderAdapterExample(this);
-        sliderView.setSliderAdapter(adapter);
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
@@ -266,33 +320,38 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         sliderView.setAutoCycle(true);
         sliderView.startAutoCycle();
 
-        SliderItem sliderItem0 = new SliderItem();
-        //sliderItem0.setDescription("Slider Item Added Manually");
-        sliderItem0.setImageUrl("https://elifeindia.in/images/slideshow/s5.jpg");
-        adapter.addItem(sliderItem0);
-
-        SliderItem sliderItem = new SliderItem();
-      //  sliderItem.setDescription("Slider Item Added Manually");
-        sliderItem.setImageUrl("https://elifeindia.in/images/slideshow/s4.jpg");
-        adapter.addItem(sliderItem);
+        adapter = new SliderAdapterExample(this,imagesList);
+        sliderView.setSliderAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
 
-        SliderItem sliderItem1 = new SliderItem();
-       // sliderItem1.setDescription("Slider Item Added Manually");
-        sliderItem1.setImageUrl("https://elifeindia.in/images/slideshow/s5.jpg");
-        adapter.addItem(sliderItem1);
-
-        SliderItem sliderItem2 = new SliderItem();
-        //sliderItem2.setDescription("Slider Item Added Manually");
-        sliderItem2.setImageUrl("https://elifeindia.in/images/slideshow/s4.jpg");
-        adapter.addItem(sliderItem2);
-
-        sliderView.setOnIndicatorClickListener(new DrawController.ClickListener() {
-            @Override
-            public void onIndicatorClicked(int position) {
-               // Log.i("GGG", "onIndicatorClicked: " + sliderView.getCurrentPagePosition());
-            }
-        });
+//        SliderItem sliderItem0 = new SliderItem();
+//        //sliderItem0.setDescription("Slider Item Added Manually");
+//        sliderItem0.setImageUrl("http://ecableapi.elifeindia.in/Content/slider/s1.jpg");
+//        adapter.addItem(sliderItem0);
+//
+//        SliderItem sliderItem = new SliderItem();
+//      //  sliderItem.setDescription("Slider Item Added Manually");
+//        sliderItem.setImageUrl("http://ecableapi.elifeindia.in/Content/slider/s2.jpg");
+//        adapter.addItem(sliderItem);
+//
+//
+//        SliderItem sliderItem1 = new SliderItem();
+//       // sliderItem1.setDescription("Slider Item Added Manually");
+//        sliderItem1.setImageUrl("http://ecableapi.elifeindia.in/Content/slider/s3.jpg");
+//        adapter.addItem(sliderItem1);
+//
+//        SliderItem sliderItem2 = new SliderItem();
+//        //sliderItem2.setDescription("Slider Item Added Manually");
+//        sliderItem2.setImageUrl("http://ecableapi.elifeindia.in/Content/slider/s4.jpg");
+//        adapter.addItem(sliderItem2);
+//
+//        sliderView.setOnIndicatorClickListener(new DrawController.ClickListener() {
+//            @Override
+//            public void onIndicatorClicked(int position) {
+//               // Log.i("GGG", "onIndicatorClicked: " + sliderView.getCurrentPagePosition());
+//            }
+//        });
 
         presenter.loadApi(this, SharedPrefsData.getString(this, Constants.RoleId, Constants.PREF_NAME));
 
@@ -316,6 +375,27 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     public void showError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+    private final InstallStateUpdatedListener installStateUpdatedListener = new InstallStateUpdatedListener() {
+        @Override
+        public void onStateUpdate(@NonNull InstallState installState) {
+            if (installState.installStatus() == InstallStatus.DOWNLOADED) {
+                showCompletedUpdate();
+            }
+        }
+
+        private void showCompletedUpdate() {
+            Snackbar snackbar = Snackbar.make(drawer_layout, "New App is Ready", Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction("Install", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mUpdateManager.completeUpdate();
+                }
+            });
+            snackbar.show();
+        }
+    };
+
 
     @Override
     public void showResult(RolewiseAccess rolewiseAccess) {
@@ -386,6 +466,9 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
                 findViewById(R.id.ll_invoice).setVisibility(View.VISIBLE);
                 findViewById(R.id.ll_invoices).setVisibility(View.GONE);
 
+            }
+            if(a.equals("Subscription")&& m.equals("Customer") && b==true){
+                hideUpdateSubscription=true;
             }
         }
     }

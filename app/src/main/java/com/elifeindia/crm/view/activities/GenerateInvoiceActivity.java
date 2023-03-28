@@ -1,5 +1,34 @@
 package com.elifeindia.crm.view.activities;
 
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.MyViewHolder.amount;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.activation_Date;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.bill_Type_ID;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.boxType_ID;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.box_Amount;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.cable_Box_ID;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.cafno;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.connection_Status_ID;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.expiry_Date;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.noofDays;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.noofMonth;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.stbno;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.strBillType;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.tax_Amount;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.vcno;
+import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.MyViewHolder.amountInternet;
+import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.activation_DateInternet;
+import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.bill_Type_IDInternet;
+import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.boxType_IDInternet;
+import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.box_AmountInternet;
+import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.connection_Status_IDInternet;
+import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.expiry_DateInternet;
+import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.internet_Box_ID;
+import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.ipno;
+import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.macadd;
+import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.noofDaysInternet;
+import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.noofMonthInternet;
+import static com.elifeindia.crm.view.activities.CustomersDetailsActivity.customerBalance;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,7 +65,6 @@ import com.elifeindia.crm.model.BoxBouquetList;
 import com.elifeindia.crm.model.BoxTypeModel;
 import com.elifeindia.crm.model.CableBoxWithSubscription;
 import com.elifeindia.crm.model.CustomerSubscribeList;
-import com.elifeindia.crm.model.EmployeeList;
 import com.elifeindia.crm.model.GetInvoiceModel;
 import com.elifeindia.crm.model.InsertPayment;
 import com.elifeindia.crm.model.InternetBoxWithSubscription;
@@ -59,34 +87,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.MyViewHolder.amountInternet;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.MyViewHolder.amount;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.activation_Date;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.bill_Type_ID;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.boxType_ID;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.box_Amount;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.cable_Box_ID;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.cafno;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.connection_Status_ID;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.expiry_Date;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.noofDays;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.noofMonth;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.stbno;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.strBillType;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.tax_Amount;
-import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsAdapter.vcno;
-import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.activation_DateInternet;
-import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.bill_Type_IDInternet;
-import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.boxType_IDInternet;
-import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.box_AmountInternet;
-import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.connection_Status_IDInternet;
-import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.expiry_DateInternet;
-import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.internet_Box_ID;
-import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.ipno;
-import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.macadd;
-import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.noofDaysInternet;
-import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.noofMonthInternet;
 
 public class GenerateInvoiceActivity extends AppCompatActivity implements GenerateInvoiceContract.View, AdapterCallbackTextView, AdapterCallback {
 
@@ -125,10 +125,11 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
     public static float ans, totalAmnt;
     Button btn_generate_invoice;
     public static boolean flag_view_hide = false;
-    public static TextView txt_final_amnt, txt_new_bal, txt_total_amount, txt_prev_bal, txt_subscription_amnt, txt_activation_date, txt_expiry_date;
+    public static TextView txt_final_amnt, txt_new_bal, txt_total_amount, txt_subscription_amnt, txt_activation_date, txt_expiry_date;
     public static EditText edt_no_of_days, edt_payingamount, edt_discount;
     String[] no_of_months = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
     List<BillTypeModel.BillTypeDTO> bill_type;
+    public static EditText txt_prev_bal;
     List<CableBoxWithSubscription.CableBoxwithSubscriptionDTO> cableBoxList;
     List<InternetBoxWithSubscription.InternetBoxwithSubscriptionDTO> internetBoxList;
 
@@ -177,7 +178,67 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
         } else {
             spn_triple_pay.setVisibility(View.VISIBLE);
+        }
 
+
+    txt_prev_bal.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String b = null;
+            String a = null;
+            try {
+                b = txt_prev_bal.getText().toString();
+                a = txt_subscription_amnt.getText().toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+
+            if(txt_prev_bal.getText().toString().equals("")){
+                edt_discount.setText("0");
+                edt_payingamount.setText("0");
+                txt_new_bal.setText(String.valueOf(txt_subscription_amnt.getText().toString()));
+                     }
+            else {
+                float v = 0;
+                try {
+                    v = Float.parseFloat(a) + Float.parseFloat(b);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                txt_total_amount.setText(String.format("%.2f", v));
+                edt_payingamount.setText("0");
+                edt_discount.setText("0");
+                txt_new_bal.setText(String.format("%.2f", v));
+
+            }
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    });
+
+        if (SharedPrefsData.getString(this, Constants.RoleType, Constants.PREF_NAME).equals("Admin") || SharedPrefsData.getString(this, Constants.RoleType, Constants.PREF_NAME).equals("Manager")) {
+            edt_discount.setVisibility(View.VISIBLE);
+            txt_new_bal.setEnabled(true);
+            txt_prev_bal.setEnabled(true);
+        } else {
+            edt_discount.setVisibility(View.GONE);
+            txt_new_bal.setEnabled(false);
+            txt_prev_bal.setEnabled(false);
         }
 
 
@@ -189,29 +250,53 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                
                 String b = edt_payingamount.getText().toString();
-                String a = String.valueOf(totalAmnt);
+                String a = String.valueOf(txt_total_amount.getText().toString().trim());
                 String c = edt_discount.getText().toString();
-
-                txt_final_amnt.setText(b);
-                if (c.equals(""))
-                    c = "0";
-
-                if (edt_payingamount.getText().toString().equals("")) {
-                    txt_new_bal.setText(String.valueOf(totalAmnt));
-                    txt_final_amnt.setText("0");
-
-                } else {
+                if(c.equals(""))
+                    c="0";
+                if(edt_payingamount.getText().toString().equals("")){
+                    txt_new_bal.setText(String.valueOf(txt_total_amount.getText().toString().trim()));
+                }else {
                     try {
-                        ans = (Float.parseFloat(a) - Float.parseFloat(b) + Float.parseFloat(c));
+                        ans =(Float.parseFloat(a) - Float.parseFloat(b) + Float.parseFloat(c));
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                     }
-                    txt_new_bal.setText(String.valueOf(ans));
+                    txt_new_bal.setText(String.format("%.2f",ans));
                     SharedPrefsData.putString(GenerateInvoiceActivity.this, Constants.CustomerBalance, String.valueOf(ans), Constants.PREF_NAME);
 
                 }
+
+//                String b = edt_payingamount.getText().toString();
+//                String a = String.valueOf(totalAmnt);
+//                String c = edt_discount.getText().toString();
+//
+//                txt_final_amnt.setText(b);
+//
+//                if (c.equals(""))
+//                    c = "0";
+//
+//                if (edt_payingamount.getText().toString().equals("")) {
+//                    try {
+//                        txt_new_bal.setText(String.valueOf(Float.parseFloat(a)-Float.parseFloat(b)+Float.parseFloat(c)));
+//                        txt_final_amnt.setText("0");
+//                    } catch (NumberFormatException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                } else {
+//                    try {
+//                   //     ans = (Float.parseFloat(b) - Float.parseFloat(c));
+//                        ans = (Float.parseFloat(a)-Float.parseFloat(b)+Float.parseFloat(c));
+//                    } catch (NumberFormatException e) {
+//                        e.printStackTrace();
+//                    }
+//                    txt_new_bal.setText(String.valueOf(ans));
+//                    SharedPrefsData.putString(GenerateInvoiceActivity.this, Constants.CustomerBalance, String.valueOf(ans), Constants.PREF_NAME);
+//
+//                }
             }
 
             @Override
@@ -228,21 +313,43 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
                 String b = edt_discount.getText().toString();
-                String a = SharedPrefsData.getString(GenerateInvoiceActivity.this, Constants.CustomerBalance, Constants.PREF_NAME);
+                String c =edt_payingamount.getText().toString();
+                String a = String.valueOf(totalAmnt);
 
 
-                if (edt_discount.getText().toString().equals("")) {
-                    //txt_new_bal.setText("");
-                } else {
+
+                if(edt_discount.getText().toString().equals("")){
+                  //  txt_new_bal.setText(SharedPrefsData.getString(GenerateInvoiceActivity.this, Constants.CableBoxAmount, Constants.PREF_NAME));
+                 //   txt_new_bal.setText(String.valueOf(totalAmnt-Float.valueOf(c)));
+                }else {
                     float ans = 0;
                     try {
-                        ans = (Float.parseFloat(a) - Float.parseFloat(b));
+                        ans = (Float.parseFloat(txt_total_amount.getText().toString()) - Float.parseFloat(c)-Float.parseFloat(b));
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                     }
-                    txt_new_bal.setText(String.valueOf(ans));
+                    txt_new_bal.setText(String.format("%.2f",(ans)));
                 }
+
+
+//                String b = edt_discount.getText().toString();
+//            //   String a = SharedPrefsData.getString(GenerateInvoiceActivity.this, Constants.CustomerBalance, Constants.PREF_NAME);
+//                String a = txt_new_bal.getText().toString();
+//
+//
+//                if (edt_discount.getText().toString().equals("")) {
+//                    //txt_new_bal.setText("");
+//                } else {
+//                    float ans = 0;
+//                    try {
+//                        ans = (Float.parseFloat(a) - Float.parseFloat(b));
+//                    } catch (NumberFormatException e) {
+//                        e.printStackTrace();
+//                    }
+//                    txt_new_bal.setText(String.valueOf(ans));
+//                }
             }
 
             @Override
@@ -255,11 +362,14 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             @Override
             public void onClick(View v) {
 
+                if(txt_prev_bal.getText().toString().equals("")) {
+                    Toast.makeText(GenerateInvoiceActivity.this, "previous  balance can not blank", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Gson gson = new Gson();
                 String jsonStr = null;
-
                 JsonParser parser = new JsonParser();
-
                 if (triplePlay.equals("Cable")) {
                     jsonStr = gson.toJson(cableBoxWithSubscription);
                     json = (JsonObject) parser.parse(jsonStr);
@@ -272,6 +382,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                     json.addProperty("amount", cableBoxAmnt);
                     json.addProperty("previous_Balance", txt_prev_bal.getText().toString());
                     json.addProperty("discount", edt_discount.getText().toString());
+
                     json.addProperty("inv_Amount", String.valueOf(Float.parseFloat(cableBoxAmnt) + Float.parseFloat(txt_prev_bal.getText().toString())));
                     json.addProperty("balance", txt_new_bal.getText().toString());
                     json.addProperty("user_Id", userId);
@@ -286,7 +397,6 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                     json.addProperty("transaction_No", "null");
 
                 } else if (triplePlay.equals("Internet")) {
-
                     jsonStr = gson.toJson(internetBoxWithSubscription);
 
                     //Toast.makeText(GenerateInvoiceActivity.this, "Internet box "+ jsonStr, Toast.LENGTH_SHORT).show();
@@ -295,7 +405,6 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                     JsonArray jsonArray = new JsonArray();
                     json.add("cableBoxwithSubscription", jsonArray);
                     json.remove("nameValuePairs");
-
                     json.addProperty("company_ID", companyID);
                     json.addProperty("invoice_Date", todayDateString());
                     json.addProperty("tax_Amount", tax_Amount);
@@ -390,7 +499,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
         Log.e("userId", userId);
         Log.e("empId", empId);
 
-        txt_prev_bal.setText(CustomerBalance);
+        txt_prev_bal.setText(String.valueOf(customerBalance));
 
 
         edt_no_of_days.addTextChangedListener(new TextWatcher() {
@@ -408,7 +517,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                 txt_expiry_date.setText(strExpiryDate);
 
                 //Me
-                Log.e("strExpiryDate", strExpiryDate);
+                Log.d("strExpiryDate", strExpiryDate);
 
             }
 
@@ -428,8 +537,14 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
     @Override
     public void showError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(GenerateInvoiceActivity.this,CustomerListActivity.class));
     }
 
     @Override
@@ -524,29 +639,21 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
         cableBoxWithSubscription = cableBoxWithSubscription1;
         cableBoxList = cableBoxWithSubscription.getCableBoxwithSubscription();
         cableBoxAmnt = cableBoxWithSubscription.geTotal_CableBox_amount();
-
         newBoxAmount = Float.parseFloat(cableBoxWithSubscription.geTotal_CableBox_amount());
-
-
         totalAmnt = Float.parseFloat(cableBoxAmnt) + Float.parseFloat(CustomerBalance);
         txt_subscription_amnt.setText(cableBoxWithSubscription.geTotal_CableBox_amount());
-
         cableBoxWithSubscription = cableBoxWithSubscription1;
-
-        txt_total_amount.setText("Rs. " + String.valueOf(totalAmnt));
+        txt_total_amount.setText("Rs. " + String.valueOf(Math.round(totalAmnt*100)/100));
         edt_payingamount.setText(String.valueOf(totalAmnt));
-
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rv_box_details.setLayoutManager(mLayoutManager);
-        cableBoxDetailsAdapter = new CableBoxDetailsAdapter(GenerateInvoiceActivity.this, cableBoxList, adapterCallback, adapterCall);
+        cableBoxDetailsAdapter = new CableBoxDetailsAdapter(GenerateInvoiceActivity.this, cableBoxList, adapterCallback, adapterCall, "B");
         rv_box_details.setAdapter(cableBoxDetailsAdapter);
     }
 
     @Override
     public void showInernetBoxList(InternetBoxWithSubscription internetBoxWithSubscription1) {
-
         internetBoxWithSubscription = internetBoxWithSubscription1;
-
         internetBoxList = internetBoxWithSubscription.getInternetBoxwithSubscription();
         internetBoxAmnt = internetBoxWithSubscription.getTotal_InternetBox_amount();
 
@@ -610,6 +717,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
     @Override
     public void showCableBox(UpdateBox boxTypeModel, TextView view, TextView view1) {
 
+        SharedPrefsData.putString(getApplicationContext(), "ExpiryDate", boxTypeModel.getExpiry_Date(), Constants.PREF_NAME);
 
         if (strApiCallType.equals("calculateExpiry")) {
             view1.setText(box_Amount);
@@ -629,6 +737,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             txt_total_amount.setText(String.valueOf(totalAmnt));
             edt_payingamount.setText(String.valueOf(totalAmnt));
             expiry_Date = boxTypeModel.getExpiry_Date().substring(0, 10);
+
             //activation_Date = boxTypeModel.getActivation_Date().substring(0 , 10);
 
             view.setText(ViewUtils.changeDateFormat(boxTypeModel.getExpiry_Date()));
@@ -694,6 +803,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
     @Override
     public void showInternetBox(UpdateBox boxTypeModel, TextView view, TextView view1) {
+        SharedPrefsData.putString(getApplicationContext(), "ExpiryDate", boxTypeModel.getExpiry_Date(), Constants.PREF_NAME);
 
         if (strApiCallType.equals("calculateExpiryInternet")) {
             view1.setText(box_AmountInternet);
@@ -705,13 +815,12 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             //txt_subscription_amnt.setText("Rs. " + box_AmountInternet);
             internetBoxList.get(box_position).getInternetBox().setBox_Amount(Double.parseDouble(String.valueOf(box_AmountInternet)));
             //amountInternet.setText(String.valueOf(box_AmountInternet));
-
+            Log.d("TAG", "showInternetBox: " + boxTypeModel.getExpiry_Date());
+            SharedPrefsData.putString(getApplicationContext(), "ExpiryDate", boxTypeModel.getExpiry_Date(), Constants.PREF_NAME);
             expiry_Date = boxTypeModel.getExpiry_Date().substring(0, 10);
             //activation_Date = boxTypeModel.getActivation_Date().substring(0 ,10);
             newInternetActDate = boxTypeModel.getActivation_Date().substring(0, 10);
-
             newInternetExpDate = boxTypeModel.getExpiry_Date().substring(0, 10);
-
             totalAmnt = (Float.parseFloat(CustomerBalance) + Float.parseFloat(txt_subscription_amnt.getText().toString()));
             txt_total_amount.setText(String.valueOf(totalAmnt));
             edt_payingamount.setText(String.valueOf(totalAmnt));
@@ -725,6 +834,8 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
         } else if (strApiCallType.equals("strActivationDateInternet")) {
             activation_DateInternet = boxTypeModel.getActivation_Date().substring(0, 10);
             expiry_DateInternet = boxTypeModel.getExpiry_Date().substring(0, 10);
+            SharedPrefsData.putString(getApplicationContext(), "ExpiryDate", boxTypeModel.getExpiry_Date(), Constants.PREF_NAME);
+
             view.setText(ViewUtils.changeDateFormat(boxTypeModel.getExpiry_Date()));
             //Me
             Log.e("activation_Date3", activation_DateInternet);
@@ -744,6 +855,8 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             txt_total_amount.setText(String.valueOf(totalAmnt));
             edt_payingamount.setText(String.valueOf(totalAmnt));
             activation_DateInternet = boxTypeModel.getActivation_Date().substring(0, 10);
+            SharedPrefsData.putString(getApplicationContext(), "ExpiryDate", boxTypeModel.getExpiry_Date(), Constants.PREF_NAME);
+
             expiry_DateInternet = boxTypeModel.getExpiry_Date().substring(0, 10);
 
             //Me
@@ -780,41 +893,31 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
     }
 
+
     @Override
     public void showInvoice(GetInvoiceModel getInvoiceModel) {
-
         startActivity(new Intent(this, BillShareActivity.class));
-
         getInvoiceModelInvoice = getInvoiceModel;
-
         SharedPrefsData.putString(this, Constants.AccNo, String.valueOf(getInvoiceModel.getAccount_No()), Constants.PREF_NAME);
-
         triplePlay = SharedPrefsData.getString(GenerateInvoiceActivity.this, Constants.TriplePlay, Constants.PREF_NAME);
-
-
         if (triplePlay.equals("Cable")) {
             SharedPrefsData.putString(this, Constants.TotalAmount, cableBoxWithSubscription.geTotal_CableBox_amount(), Constants.PREF_NAME);
         } else if (triplePlay.equals("Internet")) {
             SharedPrefsData.putString(this, Constants.TotalAmount, internetBoxWithSubscription.getTotal_InternetBox_amount(), Constants.PREF_NAME);
             //SharedPrefsData.putString(this, Constants.TotalAmount, String.valueOf(internetBoxList.get(box_position).getInternetBox().getBox_Amount()), Constants.PREF_NAME);
         }
-
-
         SharedPrefsData.putString(this, Constants.InvoiceNo, String.valueOf(getInvoiceModel.getInvoice_Number()), Constants.PREF_NAME);
 
         //getInvoiceModel.getArea_Customer_ID();
         //getInvoiceModel.getAreaName();
-
         SharedPrefsData.putString(this, Constants.CustomerBalance, String.valueOf(getInvoiceModel.getBalance()), Constants.PREF_NAME);
         getInvoiceModel.getCustomer_ID();
         getInvoiceModel.getDiscount();
         getInvoiceModel.getInv_Amount();
         getInvoiceModel.getInvoice_Date();
         SharedPrefsData.putString(this, Constants.InvoiceDate, getInvoiceModel.getInvoice_Date().toString(), Constants.PREF_NAME);
-
         //getInvoiceModel.getInvoice_ID();
         //SharedPrefsData.putString(this, Constants.InvoiceNo, getInvoiceModel.get().toString(), Constants.PREF_NAME);
-
         SharedPrefsData.putString(this, Constants.CustomerName, getInvoiceModel.getName().toString(), Constants.PREF_NAME);
         try {
             SharedPrefsData.putString(this, Constants.PrevBal, String.valueOf(getInvoiceModel.getPrevious_Balance()), Constants.PREF_NAME);
@@ -825,11 +928,8 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
         getInvoiceModel.getTitle();
         getInvoiceModel.getTriple_play_ID();
 
-        paidAmount = (getInvoiceModel.getPaymentMaster().get(0).getPaid_Amount());
-
 
     }
-
 
     @Override
     public void onClickCallback(final TextView view, final TextView view1, final TextView view3, final TextView view4, final LinearLayout ll, int position, String id) {
@@ -846,7 +946,6 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                 break;
             case "spn_no_of_months": {
                 spn_no_of_months.performClick();
-
                 AdapterView.OnItemSelectedListener onItemSelectedListener2 =
                         new AdapterView.OnItemSelectedListener() {
                             @Override
@@ -977,6 +1076,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                 presenter.updateInternetBox(this, view, view1, userId, customerID, internet_Box_ID, "null", boxType_IDInternet, ipno, macadd, bill_Type_IDInternet, connection_Status_IDInternet, activation_DateInternet, expiry_DateInternet, noofMonthInternet, noofDaysInternet, "0", "null", box_AmountInternet, todayDateString());
                 break;
             case "spn_no_of_monthsInternet": {
+
                 spn_no_of_months.performClick();
 
                 AdapterView.OnItemSelectedListener onItemSelectedListener2 =
@@ -990,12 +1090,11 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
                                 //SharedPrefsData.putString(GenerateInvoiceActivity.this, Constants.NoofMonths, noofMonthInternet, Constants.PREF_NAME);
 
-                                internetBoxList.get(box_position).getInternetBox().setNoofMonth(noofMonth_multiplyfactorInternet);
-
-                                Log.e("noofMonthInternet", noofMonthInternet);
-
+//                                internetBoxList.get(box_position).getInternetBox().setNoofMonth(noofMonth_multiplyfactorInternet);
+//
+//                                Log.e("noofMonthInternet", noofMonthInternet);
                                 view3.setText(noofMonthInternet);
-                                presenter.updateInternetBox(GenerateInvoiceActivity.this, view, view1, userId, customerID, internet_Box_ID, "null", boxType_IDInternet, ipno, macadd, bill_Type_IDInternet, connection_Status_IDInternet, activation_DateInternet, newInternetExpDate, noofMonthInternet, noofDaysInternet, "0", "null", String.valueOf(newBoxAmount), todayDateString());
+                                presenter.updateInternetBox(GenerateInvoiceActivity.this, view, view1, userId, customerID, internet_Box_ID, "null", boxType_IDInternet, ipno, macadd, bill_Type_IDInternet, connection_Status_IDInternet, activation_DateInternet, newInternetExpDate, noofMonthInternet, noofDaysInternet, "null", "null", String.valueOf(newBoxAmount), todayDateString());
 
                             }
 
@@ -1009,22 +1108,18 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             }
             case "spn_bill_typeInternet": {
                 spn_bill_type.performClick();
-
                 AdapterView.OnItemSelectedListener onItemSelectedListener2 =
                         new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view5, int position, long id) {
                                 bill_Type_IDInternet = bill_type.get(position).getBill_Type_ID().toString();
                                 strBillType = bill_type.get(position).getBill_Type().toString();
-
                                 view4.setText(strBillType);
-
                                 if (strBillType.equals("NoofDays")) {
                                     ll.setVisibility(View.VISIBLE);
-
                                 } else {
                                     ll.setVisibility(View.GONE);
-                                    presenter.updateInternetBox(GenerateInvoiceActivity.this, view, view1, userId, customerID, internet_Box_ID, "null", boxType_IDInternet, ipno, macadd, bill_Type_IDInternet, connection_Status_IDInternet, activation_DateInternet, newInternetExpDate, noofMonthInternet, noofDaysInternet, "0", "null", box_AmountInternet, todayDateString());
+                                    presenter.updateInternetBox(GenerateInvoiceActivity.this,  view, view1, userId, customerID, internet_Box_ID, "null", boxType_IDInternet, ipno, macadd, bill_Type_IDInternet, connection_Status_IDInternet, activation_DateInternet, newInternetExpDate, noofMonthInternet, noofDaysInternet, "0", "null", box_AmountInternet, todayDateString());
                                 }
 
                             }
@@ -1037,10 +1132,10 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                 break;
             }
             case "strBoxAmountInternet":
-                presenter.updateInternetBox(GenerateInvoiceActivity.this, view, view1, userId, customerID, internet_Box_ID, "null", boxType_IDInternet, ipno, macadd, bill_Type_IDInternet, connection_Status_IDInternet, activation_DateInternet, expiry_DateInternet, noofMonthInternet, noofDaysInternet, "0", "null", box_AmountInternet, todayDateString());
+                presenter.updateInternetBox(GenerateInvoiceActivity.this, view, view1,  userId, customerID, internet_Box_ID, "null", boxType_IDInternet, ipno, macadd, bill_Type_IDInternet, connection_Status_IDInternet, activation_DateInternet, expiry_DateInternet, noofMonthInternet, noofDaysInternet, "0", "null", box_AmountInternet, todayDateString());
                 break;
             case "strNoOfDaysInternet":
-                presenter.updateInternetBox(GenerateInvoiceActivity.this, view, view1, userId, customerID, internet_Box_ID, "null", boxType_IDInternet, ipno, macadd, bill_Type_IDInternet, connection_Status_IDInternet, activation_DateInternet, expiry_DateInternet, noofMonthInternet, noofDaysInternet, "0", "null", box_AmountInternet, todayDateString());
+                presenter.updateInternetBox(GenerateInvoiceActivity.this,  view, view1,userId, customerID, internet_Box_ID, "null", boxType_IDInternet, ipno, macadd, bill_Type_IDInternet, connection_Status_IDInternet, activation_DateInternet, expiry_DateInternet, noofMonthInternet, noofDaysInternet, "0", "null", box_AmountInternet, todayDateString());
                 break;
             case "calculateExpiryInternet":
 
@@ -1053,14 +1148,13 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                     e.printStackTrace();
                 }
                 if (countInternet == 1) {
-
                     countInternet = countInternet + 1;
                     calendar1.add(Calendar.DATE, 1);  // number of days to add
                     activation_DateInternet = sdf1.format(calendar1.getTime());
                     Log.e("activation_DateInternet", activation_DateInternet);
                 }
 
-                presenter.updateInternetBox(GenerateInvoiceActivity.this, view, view1, userId, customerID, internet_Box_ID, "null", boxType_IDInternet, ipno, macadd, bill_Type_IDInternet, connection_Status_IDInternet, activation_DateInternet, expiry_DateInternet, noofMonthInternet, noofDaysInternet, "0", "null", box_AmountInternet, todayDateString());
+                presenter.updateInternetBox(GenerateInvoiceActivity.this,   view, view1,userId, customerID, internet_Box_ID, "null", boxType_IDInternet, ipno, macadd, bill_Type_IDInternet, connection_Status_IDInternet, activation_DateInternet, expiry_DateInternet, noofMonthInternet, noofDaysInternet, "0", "null", box_AmountInternet, todayDateString());
                 break;
 
 
@@ -1115,7 +1209,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
                 rv_box_details.setLayoutManager(mLayoutManager);
-                cableBoxDetailsAdapter = new CableBoxDetailsAdapter(GenerateInvoiceActivity.this, cableBoxList, adapterCallback, adapterCall);
+                cableBoxDetailsAdapter = new CableBoxDetailsAdapter(GenerateInvoiceActivity.this, cableBoxList, adapterCallback, adapterCall, "B");
                 rv_box_details.setAdapter(cableBoxDetailsAdapter);
 
             } else if (triplePlay.equals("Internet")) {
@@ -1167,9 +1261,10 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rv_box_details.setLayoutManager(mLayoutManager);
-        cableBoxDetailsAdapter = new CableBoxDetailsAdapter(GenerateInvoiceActivity.this, cableBoxList, adapterCallback, adapterCall);
+        cableBoxDetailsAdapter = new CableBoxDetailsAdapter(GenerateInvoiceActivity.this, cableBoxList, adapterCallback, adapterCall, "B");
         rv_box_details.setAdapter(cableBoxDetailsAdapter);
 
 
     }
+
 }

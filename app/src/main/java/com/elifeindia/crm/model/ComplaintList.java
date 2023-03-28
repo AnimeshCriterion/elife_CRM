@@ -50,6 +50,12 @@ public class ComplaintList {
         @SerializedName("complaint_Code")
         @Expose
         private String complaintCode;
+        @SerializedName("company_ID")
+        @Expose
+        private Object companyID;
+        @SerializedName("address")
+        @Expose
+        private String address;
         @SerializedName("customer_ID")
         @Expose
         private Integer customerID;
@@ -74,6 +80,9 @@ public class ComplaintList {
         @SerializedName("assignTo")
         @Expose
         private String assignTo;
+        @SerializedName("assignToContact")
+        @Expose
+        private Object assignToContact;
         @SerializedName("complaint_Status_ID")
         @Expose
         private Integer complaintStatusID;
@@ -88,21 +97,16 @@ public class ComplaintList {
         private String openDate;
         @SerializedName("open_By")
         @Expose
-        private String openBy;
+        private Object openBy;
         @SerializedName("closed_Date")
         @Expose
         private String closedDate;
         @SerializedName("closed_By")
         @Expose
-        private String closedBy;
+        private Object closedBy;
         @SerializedName("name")
         @Expose
         private String name;
-
-        @SerializedName("address")
-        @Expose
-        private String address;
-
         @SerializedName("account_No")
         @Expose
         private String accountNo;
@@ -136,6 +140,15 @@ public class ComplaintList {
         @SerializedName("priority_Name")
         @Expose
         private String priorityName;
+        @SerializedName("created_By")
+        @Expose
+        private String createdBy;
+        @SerializedName("last_Update_By")
+        @Expose
+        private String lastUpdateBy;
+        @SerializedName("last_Update_Date")
+        @Expose
+        private String lastUpdateDate;
 
         public Integer getComplaintID() {
             return complaintID;
@@ -151,6 +164,22 @@ public class ComplaintList {
 
         public void setComplaintCode(String complaintCode) {
             this.complaintCode = complaintCode;
+        }
+
+        public Object getCompanyID() {
+            return companyID;
+        }
+
+        public void setCompanyID(Object companyID) {
+            this.companyID = companyID;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
         }
 
         public Integer getCustomerID() {
@@ -217,6 +246,14 @@ public class ComplaintList {
             this.assignTo = assignTo;
         }
 
+        public Object getAssignToContact() {
+            return assignToContact;
+        }
+
+        public void setAssignToContact(Object assignToContact) {
+            this.assignToContact = assignToContact;
+        }
+
         public Integer getComplaintStatusID() {
             return complaintStatusID;
         }
@@ -249,11 +286,11 @@ public class ComplaintList {
             this.openDate = openDate;
         }
 
-        public String getOpenBy() {
+        public Object getOpenBy() {
             return openBy;
         }
 
-        public void setOpenBy(String openBy) {
+        public void setOpenBy(Object openBy) {
             this.openBy = openBy;
         }
 
@@ -265,11 +302,11 @@ public class ComplaintList {
             this.closedDate = closedDate;
         }
 
-        public String getClosedBy() {
+        public Object getClosedBy() {
             return closedBy;
         }
 
-        public void setClosedBy(String closedBy) {
+        public void setClosedBy(Object closedBy) {
             this.closedBy = closedBy;
         }
 
@@ -279,14 +316,6 @@ public class ComplaintList {
 
         public void setName(String name) {
             this.name = name;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
         }
 
         public String getAccountNo() {
@@ -377,6 +406,70 @@ public class ComplaintList {
             this.priorityName = priorityName;
         }
 
-    }
+        public String getCreatedBy() {
+            return createdBy;
+        }
 
+        public void setCreatedBy(String createdBy) {
+            this.createdBy = createdBy;
+        }
+
+        @Override
+        public String toString() {
+            return "Complaint{" +
+                    "complaintID=" + complaintID +
+                    ", complaintCode='" + complaintCode + '\'' +
+                    ", companyID=" + companyID +
+                    ", address='" + address + '\'' +
+                    ", customerID=" + customerID +
+                    ", complaintDate='" + complaintDate + '\'' +
+                    ", complaintTypeID=" + complaintTypeID +
+                    ", description='" + description + '\'' +
+                    ", productID=" + productID +
+                    ", assignedDate='" + assignedDate + '\'' +
+                    ", employeeID=" + employeeID +
+                    ", assignTo='" + assignTo + '\'' +
+                    ", assignToContact=" + assignToContact +
+                    ", complaintStatusID=" + complaintStatusID +
+                    ", comment='" + comment + '\'' +
+                    ", priorityID=" + priorityID +
+                    ", openDate='" + openDate + '\'' +
+                    ", openBy=" + openBy +
+                    ", closedDate='" + closedDate + '\'' +
+                    ", closedBy=" + closedBy +
+                    ", name='" + name + '\'' +
+                    ", accountNo='" + accountNo + '\'' +
+                    ", subscriberID='" + subscriberID + '\'' +
+                    ", contactNo='" + contactNo + '\'' +
+                    ", areaCustomerID='" + areaCustomerID + '\'' +
+                    ", areaName='" + areaName + '\'' +
+                    ", openbyName='" + openbyName + '\'' +
+                    ", closebyName='" + closebyName + '\'' +
+                    ", complaintType='" + complaintType + '\'' +
+                    ", productName='" + productName + '\'' +
+                    ", complaintStatus='" + complaintStatus + '\'' +
+                    ", priorityName='" + priorityName + '\'' +
+                    ", createdBy='" + createdBy + '\'' +
+                    ", lastUpdateBy='" + lastUpdateBy + '\'' +
+                    ", lastUpdateDate='" + lastUpdateDate + '\'' +
+                    '}';
+        }
+
+        public String getLastUpdateBy() {
+            return lastUpdateBy;
+        }
+
+        public void setLastUpdateBy(String lastUpdateBy) {
+            this.lastUpdateBy = lastUpdateBy;
+        }
+
+        public String getLastUpdateDate() {
+            return lastUpdateDate;
+        }
+
+        public void setLastUpdateDate(String lastUpdateDate) {
+            this.lastUpdateDate = lastUpdateDate;
+        }
+
+    }
 }

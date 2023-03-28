@@ -1,5 +1,6 @@
 package com.elifeindia.crm.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -45,7 +46,7 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyviewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyviewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         try {
             holder.acno.setText("Ac No : "+paymentReciepts.get(position).getAccountNo());
@@ -64,6 +65,7 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
             holder.amount_to_pay.setText("T Amnt : "+paymentReciepts.get(position).getTotalAmount().toString());
             holder.balance.setText("B Amnt : "+paymentReciepts.get(position).getBalance().toString());
             holder.paidamount.setText("P Amnt : "+paymentReciepts.get(position).getPaidAmount().toString());
+            holder.addressTv.setText(paymentReciepts.get(position).getAddress());
 
             holder.txt_triplePlay.setText(paymentReciepts.get(position).getTriplePlay());
             paymentReciepts.get(position).getTriplePlayID();
@@ -103,6 +105,7 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
     public class MyviewHolder extends RecyclerView.ViewHolder {
         TextView txt_triplePlay, txt_cust_name, txt_paymode, paidamount, invoicenumber,  balance,  areaname, subid, acno, edate, address, subarea, nob_no, status, amount_to_pay, areaid, whatsup_no;
         CardView cv_customer;
+        TextView addressTv;
 
         public MyviewHolder(@NonNull View itemView) {
             super(itemView);
@@ -116,6 +119,7 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
             areaid = itemView.findViewById(R.id.areaid);
             subid = itemView.findViewById(R.id.subscriberid);
             acno = itemView.findViewById(R.id.accountnumber);
+            addressTv=itemView.findViewById(R.id.subarea);
             txt_cust_name = itemView.findViewById(R.id.customername);
             cv_customer = itemView.findViewById(R.id.cv_customer);
             amount_to_pay = itemView.findViewById(R.id.amount_to_pay);

@@ -55,8 +55,38 @@ public class PaymentReciept {
     @Expose
     private String triplePlay;
 
+
+    private  String address;
+
+    private  String contact_No;
+
+    public String getContact_No() {
+        return contact_No;
+    }
+
+    public void setContact_No(String contact_No) {
+        this.contact_No = contact_No;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     private String employee_Name;
     private String employee_Contact;
+    private  String discount;
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
 
     public String getEmployee_Name() {
         return employee_Name;

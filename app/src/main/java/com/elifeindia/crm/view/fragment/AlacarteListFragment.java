@@ -92,12 +92,16 @@ public class AlacarteListFragment extends Fragment implements AddOnFragmentContr
 
         }else {
 
-            txt_total_amount.setText(alacarteModela.getTotal_Alacarte());
+            try {
+                txt_total_amount.setText(alacarteModela.getTotal_Alacarte());
 
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-            rv_channel_list.setLayoutManager(mLayoutManager);
-            alacarteSubscriptionListAdapter = new AlacarteSubscriptionListAdapter(getActivity(), alacarteModelAlacarte, alacarteModelAlacarte, adapterCallback);
-            rv_channel_list.setAdapter(alacarteSubscriptionListAdapter);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+                rv_channel_list.setLayoutManager(mLayoutManager);
+                alacarteSubscriptionListAdapter = new AlacarteSubscriptionListAdapter(getActivity(), alacarteModelAlacarte, alacarteModelAlacarte, adapterCallback);
+                rv_channel_list.setAdapter(alacarteSubscriptionListAdapter);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return v;

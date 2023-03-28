@@ -57,8 +57,6 @@ public class BouquetSubscriptionListAdapter extends RecyclerView.Adapter<Bouquet
             @Override
             public void onClick(View view) {
                 holder.rb_insert_delete_channel.performClick();
-
-
             }
         });
 

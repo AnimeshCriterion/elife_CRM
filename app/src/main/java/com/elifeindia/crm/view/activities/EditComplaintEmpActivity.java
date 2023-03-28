@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +27,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.contract.activities.EditReportContract;
+import com.elifeindia.crm.model.ComplaintList;
 import com.elifeindia.crm.model.ComplaintStatusList;
 import com.elifeindia.crm.model.ComplaintTypeList;
 import com.elifeindia.crm.model.EmployeeList;
@@ -37,6 +39,8 @@ import com.elifeindia.crm.presenter.activities.EditReportPresenter;
 import com.elifeindia.crm.printersdk.ComplaintReceiptActivity;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
+import com.elifeindia.crm.utils.ViewUtils;
+import com.google.gson.Gson;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -49,12 +53,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.elifeindia.crm.adapters.ComplaintListAdapter.UpdatedDateData;
 import static com.elifeindia.crm.adapters.ComplaintListAdapter.complaintCode;
 import static com.elifeindia.crm.adapters.ComplaintListAdapter.complaintId;
+import static com.elifeindia.crm.adapters.ComplaintListAdapter.updateByData;
 
 public class EditComplaintEmpActivity extends AppCompatActivity implements EditReportContract.View {
     EditReportContract.Presenter presenter;
-    TextView complaint_date, complaint_assign_date, customer_name, custmer_location;
+    TextView complaint_date, complaint_assign_date, customer_name, custmer_location,updateBy,UpdatedDate;
     EditText edt_comment;
     Button addcompalintbtn;
 
@@ -67,10 +73,14 @@ public class EditComplaintEmpActivity extends AppCompatActivity implements EditR
 
     ProgressDialog progressDialog;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_report);
+
+
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,7 +209,6 @@ public class EditComplaintEmpActivity extends AppCompatActivity implements EditR
 
     @Override
     public void init() {
-
         spn_Product = findViewById(R.id.spn_Product);
         spn_priority = findViewById(R.id.spn_priority);
         spn_emp = findViewById(R.id.spn_assigned_to);
@@ -218,6 +227,7 @@ public class EditComplaintEmpActivity extends AppCompatActivity implements EditR
         spn_priority.setEnabled(false);
         spn_emp.setEnabled(false);
         complaint_assign_date.setEnabled(false);
+
 
         complaint_date.setOnClickListener(new View.OnClickListener() {
             @Override

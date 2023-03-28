@@ -1,5 +1,6 @@
 package com.elifeindia.crm.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ClipboardManager;
@@ -7,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,9 +31,9 @@ import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
 import com.elifeindia.crm.view.activities.ComplaintDetailsActivity;
-import com.elifeindia.crm.view.activities.CustomersDetailsActivity;
 import com.elifeindia.crm.view.activities.EditComplaintActivity;
 import com.elifeindia.crm.view.activities.EditComplaintEmpActivity;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -43,6 +45,7 @@ public class ComplaintListAdapter extends RecyclerView.Adapter<ComplaintListAdap
     AdapterCallback adapterCallback;
     public static String complaintId="", complaintCode="";
     public static Spinner spn_complaint_status;
+    public static  String closeBYName,updateByData="",UpdatedDateData="",openByname,createdBy,closedDate;
 
     public ComplaintListAdapter(Context context, List<ComplaintList.Complaint> complaintList, AdapterCallback adapterCallback) {
         this.context = context;
@@ -59,7 +62,7 @@ public class ComplaintListAdapter extends RecyclerView.Adapter<ComplaintListAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyviewHolder holder,  int position) {
+    public void onBindViewHolder(@NonNull final MyviewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         try {
 //            holder.acno.setText("Ac No : "+paymentReciepts.get(position).getSubscriberID());
@@ -68,6 +71,8 @@ public class ComplaintListAdapter extends RecyclerView.Adapter<ComplaintListAdap
             //paymentReciepts.get(position).getCustomerID();
 
             //holder.invoicenumber.setText("Inv No : "+paymentReciepts.get(position).getInvoiceNumber());
+
+
             holder.txt_name.setText(complaintList.get(position).getName());
             holder.txt_complaint.setText(complaintList.get(position).getComplaintType());
             String status = complaintList.get(position).getComplaintStatus();
@@ -136,31 +141,27 @@ public class ComplaintListAdapter extends RecyclerView.Adapter<ComplaintListAdap
         holder.cv_complaint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                updateByData=complaintList.get(position).getLastUpdateBy();
+                UpdatedDateData=complaintList.get(position).getLastUpdateDate();
                 SharedPrefsData.putString(context, Constants.CustomerName, complaintList.get(position).getName(), Constants.PREF_NAME);
                 SharedPrefsData.putString(context, Constants.CustomerAddress, complaintList.get(position).getAreaName(), Constants.PREF_NAME);
                 SharedPrefsData.putString(context, Constants.CustomerID, complaintList.get(position).getCustomerID().toString(), Constants.PREF_NAME);
                 SharedPrefsData.putString(context, Constants.AccNo, complaintList.get(position).getAccountNo().toString(), Constants.PREF_NAME);
                 SharedPrefsData.putString(context, Constants.ComplaintID, complaintList.get(position).getComplaintID().toString(), Constants.PREF_NAME);
                 SharedPrefsData.putString(context, Constants.PriorityID, complaintList.get(position).getPriorityID().toString(), Constants.PREF_NAME);
-
                 SharedPrefsData.putString(context, Constants.ProductID, complaintList.get(position).getProductID().toString(), Constants.PREF_NAME);
                 SharedPrefsData.putString(context, Constants.StatusID, complaintList.get(position).getComplaintStatusID().toString(), Constants.PREF_NAME);
                 SharedPrefsData.putString(context, Constants.ComplaintTypeID, complaintList.get(position).getComplaintTypeID().toString(), Constants.PREF_NAME);
                 SharedPrefsData.putString(context, Constants.AssignToID, complaintList.get(position).getEmployeeID().toString(), Constants.PREF_NAME);
                 SharedPrefsData.putString(context, Constants.Remark, complaintList.get(position).getComment()+" "+complaintList.get(position).getDescription(), Constants.PREF_NAME);
-
-
-
                 String Complaint_Status_ID = complaintList.get(position).getComplaintStatusID().toString();
                 SharedPrefsData.putString(context, Constants.Complaint_Status_ID, Complaint_Status_ID, Constants.PREF_NAME);
-
                 TextView  txt_name_letter, txt_name, txt_subid, txt_cid, txt_mob_no, txt_complaint, txt_created_date, txt_assignto;
                 final Dialog dialog = new Dialog(context);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_complaint);
                 Window window = dialog.getWindow();
-                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-                        WindowManager.LayoutParams.WRAP_CONTENT);
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
                 window.setGravity(Gravity.CENTER | Gravity.CENTER);
                 spn_complaint_status = dialog.findViewById(R.id.spn_status);
                 TextView txt_close = dialog.findViewById(R.id.txt_close);
@@ -173,15 +174,12 @@ public class ComplaintListAdapter extends RecyclerView.Adapter<ComplaintListAdap
                 txt_cid = dialog.findViewById(R.id.txt_cid);
                 txt_name = dialog.findViewById(R.id.txt_name);
                 txt_name_letter = dialog.findViewById(R.id.txt_name_letter);
-
                 ImageView copyNumber = dialog.findViewById(R.id.copy_number);
                 ImageView callNumber = dialog.findViewById(R.id.call_number);
-
                 txt_name.setText("NAME : "+complaintList.get(position).getName());
                 String custname = complaintList.get(position).getName();
                 String firstLetter = custname.substring(0, 1);
                 txt_name_letter.setText(firstLetter);
-
                 txt_complaint.setText("Complaint : "+complaintList.get(position).getComplaintType()+"\n"+"Remark : "+complaintList.get(position).getComment()+"\n"+complaintList.get(position).getDescription());
                 txt_subid.setText("Sub Id : "+complaintList.get(position).getSubscriberID());
                 txt_cid.setText("CID : "+complaintList.get(position).getAreaCustomerID());
@@ -195,95 +193,78 @@ public class ComplaintListAdapter extends RecyclerView.Adapter<ComplaintListAdap
                 }
                 txt_created_date.setText(cdate);
 
-                copyNumber.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String text = txt_mob_no.getText().toString();
-                        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                            clipboard.setText(text);
-                        } else {
-                            android.content.ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                            android.content.ClipData clip = android.content.ClipData.newPlainText("Number Copied", text);
-                            clipboard.setPrimaryClip(clip);
-                            Toast.makeText(context, text + " Copied", Toast.LENGTH_SHORT).show();
-                        }
+                copyNumber.setOnClickListener(v -> {
+                    String text = txt_mob_no.getText().toString();
+                    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                        android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                        clipboard.setText(text);
+                    } else {
+                        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                        android.content.ClipData clip = android.content.ClipData.newPlainText("Number Copied", text);
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(context, text + " Copied", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-                callNumber.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse("tel:" + txt_mob_no.getText().toString()));
-                        if (intent.resolveActivity(context.getPackageManager()) != null) {
-                            context.startActivity(intent);
-                        }
-                    }
-                });
-
-                txt_close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        //spn_complaint_status.performClick();
-                        //dialog.hide();
-
-//                        final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.ListRow));
-//
-//                        builder.setTitle("Close complaint confirmation!")
-//                                .setMessage("Are you sure you want to close this complaint")
-//                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog1, int which) {
-//                                        dialog.dismiss();
-//                                        adapterCallback.onClickCallback(holder.cv_complaint, position, complaintList.get(position).getComplaintID().toString());
-//
-//                                    }
-//                                })
-//                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        dialog.dismiss();
-//                                    }
-//                                })
-//
-//                                .show();
-
-                        dialog.dismiss();
-                        complaintId = complaintList.get(position).getComplaintID().toString();
-                        complaintCode = complaintList.get(position).getComplaintID().toString();
-
-                        Intent intent = new Intent(context, EditComplaintEmpActivity.class);
-
-                        intent.putExtra("DateClose", holder.txt_complaint_date.getText().toString());
-
+                callNumber.setOnClickListener(v -> {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + txt_mob_no.getText().toString()));
+                    if (intent.resolveActivity(context.getPackageManager()) != null) {
                         context.startActivity(intent);
-
-                        ComplaintDetailsActivity cd = new ComplaintDetailsActivity();
-                        cd.finish();
-
                     }
                 });
-                txt_edit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                        complaintId = complaintList.get(position).getComplaintID().toString();
-                        complaintCode = complaintList.get(position).getComplaintID().toString();
+                txt_close.setOnClickListener(view1 -> {
 
-                        Intent intent = new Intent(context, EditComplaintActivity.class);
+                    spn_complaint_status.performClick();
+                    dialog.hide();
 
-                        intent.putExtra("DateEdit", holder.txt_complaint_date.getText().toString());
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.ListRow));
 
-                        context.startActivity(intent);
+                    builder.setTitle("Close complaint confirmation!")
+                            .setMessage("Are you sure you want to close this complaint")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog1, int which) {
+                                    dialog.dismiss();
+                                    adapterCallback.onClickCallback(holder.cv_complaint, position, complaintList.get(position).getComplaintID().toString());
 
-                        /*context.startActivity(new Intent(context, EditComplaintActivity.class));*/
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog12, int which) {
+                                    dialog12.dismiss();
+                                }
+                            })
 
-                        ComplaintDetailsActivity cd = new ComplaintDetailsActivity();
-                        cd.finish();
+                            .show();
+                    dialog.dismiss();
+//                        complaintId = complaintList.get(position).getComplaintID().toString();
+//                        complaintCode = complaintList.get(position).getComplaintID().toString();
+//
+//                        Intent intent = new Intent(context, EditComplaintEmpActivity.class);
+//                        intent.putExtra("DateClose", holder.txt_complaint_date.getText().toString());
+//
+//                        context.startActivity(intent);
+//
+//                        ComplaintDetailsActivity cd = new ComplaintDetailsActivity();
+//                        cd.finish();
 
-                    }
+                });
+                txt_edit.setOnClickListener(view12 -> {
+                    dialog.dismiss();
+                    Gson gson = new Gson();
+                    String studentDataObjectAsAString = gson.toJson(complaintList.get(position));
+                    Log.d("TAG", "onClick: "+studentDataObjectAsAString);
+                    complaintId = complaintList.get(position).getComplaintID().toString();
+                    complaintCode = complaintList.get(position).getComplaintID().toString();
+                    Intent intent = new Intent(context, EditComplaintActivity.class);
+                    intent.putExtra("ComplainDetailsData", studentDataObjectAsAString);
+                    intent.putExtra("DateEdit", holder.txt_complaint_date.getText().toString());
+                    context.startActivity(intent);
+                    /*context.startActivity(new Intent(context, EditComplaintActivity.class));*/
+                    ComplaintDetailsActivity cd = new ComplaintDetailsActivity();
+                    cd.finish();
+
                 });
                 dialog.show();
 //                String address = custemersLists.get(position).getAddress().toString();

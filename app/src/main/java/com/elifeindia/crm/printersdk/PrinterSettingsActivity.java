@@ -29,12 +29,12 @@ import com.elifeindia.crm.presenter.activities.PaymentReceiptPresenter;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.view.activities.HomeActivity;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
+//import com.karumi.dexter.Dexter;
+//import com.karumi.dexter.PermissionToken;
+//import com.karumi.dexter.listener.PermissionDeniedResponse;
+//import com.karumi.dexter.listener.PermissionGrantedResponse;
+//import com.karumi.dexter.listener.PermissionRequest;
+//import com.karumi.dexter.listener.single.PermissionListener;
 import com.printer.command.EscCommand;
 import com.printer.command.LabelCommand;
 

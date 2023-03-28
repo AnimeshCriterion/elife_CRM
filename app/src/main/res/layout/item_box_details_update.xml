@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_marginTop="@dimen/_4sdp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:elevation="@dimen/_8sdp"
+        app:cardElevation="@dimen/_8sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_10sdp">
+
+        <LinearLayout
+            android:id="@+id/internetlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/cb_box_status"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_width="@dimen/_28sdp"
+                    android:layout_height="@dimen/_18sdp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_weight="0.3"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:text="CABLE BOX"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_edit_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_weight="0.5"
+                    android:gravity="right"
+                    android:paddingRight="@dimen/_15sdp"
+                    android:text="EDIT"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_11sdp"
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@color/border"
+                android:visibility="visible" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:text="VC No"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:paddingLeft="@dimen/_20sdp"
+                    android:text="STB No"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:paddingLeft="@dimen/_20sdp"
+                    android:text="CAF"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="Expiry"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold"></TextView>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="Amount"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_cable"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_gravity="center"
+                    android:id="@+id/vcnum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:text="2321"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="normal"/>
+
+                <EditText
+                    android:layout_gravity="center"
+                    android:id="@+id/stbno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:paddingLeft="@dimen/_20sdp"
+                    android:text="1212"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="normal"/>
+
+                <EditText
+                    android:id="@+id/cafnum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.2"
+                    android:paddingLeft="@dimen/_20sdp"
+                    android:text="1214"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:id="@+id/expirtydate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="22-03-20"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="normal"/>
+
+
+                <EditText
+                    android:layout_gravity="center"
+                    android:id="@+id/amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:text="50000.0"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@color/border"
+                android:visibility="visible" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/cable_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:text="Status"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:id="@+id/cable_lpdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="LP Date"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold"></TextView>
+
+
+                <TextView
+                    android:id="@+id/cable_lpamount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_20sdp"
+                    android:text="LP Amount"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold"></TextView>
+
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@color/border"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="05"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="Activation Date"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_12sdp">
+                </TextView>
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:src="@drawable/ic_threedots"/>
+
+                <TextView
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:drawableRight="@drawable/ic_calendar"
+                    android:layout_gravity="center"
+                    android:id="@+id/txt_activation_dateUpdateSubscription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:paddingLeft="@dimen/_7sdp"
+                    android:text=""
+                    android:textColor="@color/Black">
+
+                </TextView>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="05"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="No of Months"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_12sdp">
+                </TextView>
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:src="@drawable/ic_threedots"/>
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/spn_no_of_months"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:paddingLeft="@dimen/_7sdp"
+                    android:textColor="@color/Black">
+
+                </TextView>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="05"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="Bill Type"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_12sdp">
+                </TextView>
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:src="@drawable/ic_threedots"/>
+
+                <TextView
+                    android:id="@+id/spn_bill_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="5"
+                    android:paddingLeft="@dimen/_7sdp"
+                    android:textColor="@color/Black">
+
+                </TextView>
+
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_noofdays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="05"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="No of Days"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_12sdp">
+                </TextView>
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:src="@drawable/ic_threedots"/>
+
+                <EditText
+                    android:layout_gravity="center"
+                    android:id="@+id/spn_no_of_days"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:layout_weight="5"
+                    android:textSize="@dimen/_13sdp"
+                    android:paddingLeft="@dimen/_7sdp"
+                    android:textColor="@color/Black">
+
+                </EditText>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="05"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text="Expiry Date"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/_12sdp">
+                </TextView>
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:src="@drawable/ic_threedots"/>
+
+                <TextView
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:drawableEnd="@drawable/ic_calendar"
+                    android:layout_gravity="center"
+                    android:id="@+id/txt_expiry_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:paddingLeft="@dimen/_7sdp"
+                    android:textColor="@color/Black">
+
+                </TextView>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_subscription"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_butoon_border"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_baseline_live_tv_24"
+                        android:drawablePadding="@dimen/_13sdp"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingLeft="@dimen/_14sdp"
+                        android:text="Subscription Details"
+                        android:textColor="@color/darkblue"
+                        android:textSize="@dimen/_11sdp"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/rounded_butoon_border"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:paddingLeft="@dimen/_15sdp"
+                        android:text="Subscription"
+                        android:textColor="@color/darkblue"
+                        android:textSize="@dimen/_11sdp"/>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:text="MRP"
+                        android:textColor="@color/darkblue"
+                        android:textSize="@dimen/_11sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:text="GST"
+                        android:textColor="@color/darkblue"
+                        android:textSize="@dimen/_11sdp"/>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:text="Amount"
+                        android:textColor="@color/darkblue"
+                        android:textSize="@dimen/_11sdp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_boq"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_weight="0.2"
+                    android:background="@color/colorPrimaryDark"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:text="Bouquest / Package"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11sdp"
+                    android:visibility="visible" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_bouquet_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:background="@color/colorPrimaryDark"
+                    android:id="@+id/txt_ala"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_16sdp"
+                    android:gravity="center"
+                    android:layout_weight="0.2"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:text="Alacarte Channels"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11sdp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_alacarte_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

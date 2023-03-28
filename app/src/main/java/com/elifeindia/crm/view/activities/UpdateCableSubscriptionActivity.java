@@ -1,6 +1,7 @@
 package com.elifeindia.crm.view.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -56,74 +57,73 @@ public class UpdateCableSubscriptionActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
 
-                //Alacarte
-                cableBoxWithSubscription.getCableBoxwithSubscription().get(box_position).getBoxAlacareteList().getBoxAlacarete().clear();
+                try {
+                 cableBoxWithSubscription.getCableBoxwithSubscription().get(box_position).getBoxAlacareteList().getBoxAlacarete().clear();
+                    total_alacarte_amount = "0";
+                    float sum = Float.parseFloat(total_alacarte_amount);
+                    for(int i=0; i<alacarteModelAlacarte.size(); i++){
+                        CableBoxWithSubscription.CableBoxwithSubscriptionDTO.BoxAlacareteListDTO.BoxAlacareteDTO boxAlacareteDTO = new  CableBoxWithSubscription.CableBoxwithSubscriptionDTO.BoxAlacareteListDTO.BoxAlacareteDTO();
+                        if(alacarteModelAlacarte.get(i).isIs_select()){
+                            sum += Double.valueOf(alacarteModelAlacarte.get(i).getPrice());
+                            total_alacarte_amount = String.valueOf(sum);
 
-                total_alacarte_amount = "0";
-                float sum = Float.parseFloat(total_alacarte_amount);
+                            try {
+                                boxAlacareteDTO.setAlacarte_ID(alacarteModelAlacarte.get(i).getAlacarte_ID());
+                                boxAlacareteDTO.setCable_Box_ID(0);
+                                boxAlacareteDTO.setBox_Alacarte_ID(0);
+                                boxAlacareteDTO.setPrice(alacarteModelAlacarte.get(i).getPrice());
+                                boxAlacareteDTO.setTax_per(alacarteModelAlacarte.get(i).getTax());
+                                boxAlacareteDTO.setTax(Double.valueOf(alacarteModelAlacarte.get(i).getTax_Amount()));
+                                boxAlacareteDTO.setTotal_Price(Double.valueOf(alacarteModelAlacarte.get(i).getPrice()));
+                                boxAlacareteDTO.setAlacarte_Name(alacarteModelAlacarte.get(i).getAlacarte_Name());
 
-                for(int i=0; i<alacarteModelAlacarte.size(); i++){
-                    CableBoxWithSubscription.CableBoxwithSubscriptionDTO.BoxAlacareteListDTO.BoxAlacareteDTO boxAlacareteDTO = new  CableBoxWithSubscription.CableBoxwithSubscriptionDTO.BoxAlacareteListDTO.BoxAlacareteDTO();
-                    if(alacarteModelAlacarte.get(i).isIs_select()){
-
-                        sum += Double.valueOf(alacarteModelAlacarte.get(i).getPrice());
-                        total_alacarte_amount = String.valueOf(sum);
-
-                        try {
-
-                            boxAlacareteDTO.setAlacarte_ID(alacarteModelAlacarte.get(i).getAlacarte_ID());
-                            boxAlacareteDTO.setCable_Box_ID(0);
-                            boxAlacareteDTO.setBox_Alacarte_ID(0);
-                            boxAlacareteDTO.setPrice(alacarteModelAlacarte.get(i).getPrice());
-                            boxAlacareteDTO.setTax_per(alacarteModelAlacarte.get(i).getTax());
-                            boxAlacareteDTO.setTax(Double.valueOf(alacarteModelAlacarte.get(i).getTax_Amount()));
-                            boxAlacareteDTO.setTotal_Price(Double.valueOf(alacarteModelAlacarte.get(i).getPrice()));
-                            boxAlacareteDTO.setAlacarte_Name(alacarteModelAlacarte.get(i).getAlacarte_Name());
-
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                            cableBoxWithSubscription.getCableBoxwithSubscription().get(box_position).getBoxAlacareteList().getBoxAlacarete().add(boxAlacareteDTO);
                         }
-                        cableBoxWithSubscription.getCableBoxwithSubscription().get(box_position).getBoxAlacareteList().getBoxAlacarete().add(boxAlacareteDTO);
                     }
-                }
-                alacarteModela.setTotal_Alacarte(total_alacarte_amount);
+                    alacarteModela.setTotal_Alacarte(total_alacarte_amount);
 
-                //Bouquet
+                    //Bouquet
 
-                cableBoxWithSubscription.getCableBoxwithSubscription().get(box_position).getBoxBouquetList().getBoxBouquet().clear();
+                    cableBoxWithSubscription.getCableBoxwithSubscription().get(box_position).getBoxBouquetList().getBoxBouquet().clear();
 
-                total_Bouquet_amount = "0";
-                float sum1 = Float.parseFloat(total_Bouquet_amount);
+                    total_Bouquet_amount = "0";
+                    float sum1 = Float.parseFloat(total_Bouquet_amount);
 
-                for(int i=0; i<bouquetModelBouquet.size(); i++){
-                    CableBoxWithSubscription.CableBoxwithSubscriptionDTO.BoxBouquetListDTO.BoxBouquetDTO boxBouquetDTO = new  CableBoxWithSubscription.CableBoxwithSubscriptionDTO.BoxBouquetListDTO.BoxBouquetDTO();
+                    for(int i=0; i<bouquetModelBouquet.size(); i++){
+                        CableBoxWithSubscription.CableBoxwithSubscriptionDTO.BoxBouquetListDTO.BoxBouquetDTO boxBouquetDTO = new  CableBoxWithSubscription.CableBoxwithSubscriptionDTO.BoxBouquetListDTO.BoxBouquetDTO();
 
-                    if(bouquetModelBouquet.get(i).isIs_select()){
+                        if(bouquetModelBouquet.get(i).isIs_select()){
 
-                        sum1 += Double.valueOf(bouquetModelBouquet.get(i).getPrice());
-                        total_Bouquet_amount = String.valueOf(sum1);
+                            sum1 += Double.valueOf(bouquetModelBouquet.get(i).getPrice());
+                            total_Bouquet_amount = String.valueOf(sum1);
 
-                        try {
-                            boxBouquetDTO.setBouquet_ID(bouquetModelBouquet.get(i).getBouquet_ID());
-                            boxBouquetDTO.setCable_Box_ID(0);
-                            boxBouquetDTO.setBox_Bouquet_ID(0);
-                            boxBouquetDTO.setPrice(bouquetModelBouquet.get(i).getPrice());
-                            boxBouquetDTO.setTax_per(bouquetModelBouquet.get(i).getTax());
-                            boxBouquetDTO.setTax(Double.valueOf(bouquetModelBouquet.get(i).getTax_Amount()));
-                            boxBouquetDTO.setTotal_Price(Double.valueOf(bouquetModelBouquet.get(i).getPrice()));
-                            boxBouquetDTO.setBouquet_Name(bouquetModelBouquet.get(i).getBouquet_Name());
+                            try {
+                                boxBouquetDTO.setBouquet_ID(bouquetModelBouquet.get(i).getBouquet_ID());
+                                boxBouquetDTO.setCable_Box_ID(0);
+                                boxBouquetDTO.setBox_Bouquet_ID(0);
+                                boxBouquetDTO.setPrice(bouquetModelBouquet.get(i).getPrice());
+                                boxBouquetDTO.setTax_per(bouquetModelBouquet.get(i).getTax());
+                                boxBouquetDTO.setTax(Double.valueOf(bouquetModelBouquet.get(i).getTax_Amount()));
+                                boxBouquetDTO.setTotal_Price(Double.valueOf(bouquetModelBouquet.get(i).getPrice()));
+                                boxBouquetDTO.setBouquet_Name(bouquetModelBouquet.get(i).getBouquet_Name());
 
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                            cableBoxWithSubscription.getCableBoxwithSubscription().get(box_position).getBoxBouquetList().getBoxBouquet().add(boxBouquetDTO);
                         }
-                        cableBoxWithSubscription.getCableBoxwithSubscription().get(box_position).getBoxBouquetList().getBoxBouquet().add(boxBouquetDTO);
                     }
+
+                    bouquetModela.setTotal_Bouquet(total_Bouquet_amount);
+
+
+                    finish();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
                 }
-
-                bouquetModela.setTotal_Bouquet(total_Bouquet_amount);
-
-
-                finish();
             }
 
         });

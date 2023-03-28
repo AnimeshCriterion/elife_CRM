@@ -149,10 +149,11 @@ public class CustomerListPresenter implements CustomerListContract.Presenter {
     }
 
     @Override
-    public void loadCustomersDateWise(Context context, String Company_ID, String User_ID, String Employee_ID, String AreaId, String Date, String StatusId, String count, String pageNo, String Value,String field_value,String field_name) {
+    public void loadCustomersDateWise(Context context, String Company_ID, String User_ID, String Employee_ID, String AreaId, String Date, String StatusId, String count, String pageNo, String Value,String field_value,String field_name,String frmDate,String toDate) {
+
         if(NetCheck.isInternetConnection(context)){
             NetworkUtils.getUserApiInstance()
-                    .getCustemersListDateWise(Company_ID, User_ID, Employee_ID, AreaId, Date, StatusId, count, pageNo,Value,field_value,field_name)
+                    .getCustemersListDateWise(Company_ID, User_ID, Employee_ID, AreaId, Date, StatusId, count, pageNo,Value,field_value,field_name,frmDate,toDate)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<CustemersList>() {

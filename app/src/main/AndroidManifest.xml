@@ -8,18 +8,22 @@
     </queries>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 
     <uses-feature
         android:name="android.hardware.usb.host"
@@ -27,6 +31,7 @@
 
     <application
         android:name=".printersdk.App"
+        tools:node="merge"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/launcher_icon"
@@ -39,6 +44,18 @@
         android:usesCleartextTraffic="true"
         tools:replace="usesCleartextTraffic"
         tools:targetApi="n">
+        <activity
+            android:name=".view.activities.BalanceAdjustmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateSubscription.UpdateINternetSubscriptionActivityForUpdateSubscription"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateSubscription.UpdateSubscriptionPackageA"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateSubscription.UpdateSubscriptionAtivity"
+            android:exported="false" />
         <activity
             android:name=".view.activities.ResetPasswordActivity"
             android:exported="false" />
@@ -141,6 +158,10 @@
             android:name=".view.activities.HomeActivity"
             android:exported="true" />
         <activity
+            android:name=".Capture"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".view.activities.CustomerListActivity"
             android:exported="true"
             android:launchMode="singleTop" />
@@ -164,6 +185,16 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_path" />
+        </provider>
     </application>
 
 </manifest>

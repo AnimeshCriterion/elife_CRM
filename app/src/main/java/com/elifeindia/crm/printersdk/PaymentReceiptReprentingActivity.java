@@ -35,12 +35,6 @@ import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
 import com.elifeindia.crm.view.activities.CustomerListActivity;
 import com.elifeindia.crm.view.activities.MainActivity;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 import com.printer.command.EscCommand;
 import com.printer.command.LabelCommand;
 
@@ -67,7 +61,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
     TextView btn_send, txt_discount, balance_pay, paymentmode_text, txt_collected_by, txt_emp_mob_no;
     ImageView iv_all, iv_whatsappshare;
     TextView btn_done, btn_next, txt_bill_type_rep;
-    String invno, accNo, name, subId, dateTime, totalAmnt, empMobNo, collectedBy, payMode, remainBal, paidAmnt, footer;
+    String invno, accNo, name, subId, dateTime, totalAmnt, empMobNo, collectedBy, payMode, remainBal, paidAmnt, footer,discount;
     public static String invoiceNumber;
     File imagePath;
     private int id = 0;
@@ -77,6 +71,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
     private static final int PRINTER_COMMAND_ERROR = 0x008;
     private static final int CONN_MOST_DEVICES = 0x11;
     ListView lv_footer;
+    TextView mobileTv,addressTv;
 
     BluetoothAdapter mBluetoothAdapter;
     CalonThermalPrinter calOnPrinter = new CalonThermalPrinter();
@@ -98,6 +93,8 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         invoicenumber_pay = findViewById(R.id.invoicenumber_pay);
         billdate_pay = findViewById(R.id.billdate_pay);
         txt_rec_time = findViewById(R.id.txt_rec_time);
+        mobileTv=findViewById(R.id.customer_mobile);
+        addressTv=findViewById(R.id.customer_address);
         txt_prev_bal = findViewById(R.id.txt_prev_bal);
         paidamount_pay = findViewById(R.id.paidamount_pay);
         txt_discount = findViewById(R.id.txt_discount);
@@ -130,24 +127,24 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                 startActivity(intent);
             }
         });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Dexter.withContext(this)
-                    .withPermission(WRITE_EXTERNAL_STORAGE)
-                    .withListener(new PermissionListener() {
-                        @Override
-                        public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                        }
-
-                        @Override
-                        public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                        }
-
-                        @Override
-                        public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                        }
-                    })
-                    .check();
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            Dexter.withContext(this)
+//                    .withPermission(WRITE_EXTERNAL_STORAGE)
+//                    .withListener(new PermissionListener() {
+//                        @Override
+//                        public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+//                        }
+//
+//                        @Override
+//                        public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+//                        }
+//
+//                        @Override
+//                        public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+//                        }
+//                    })
+//                    .check();
+//        }
 
         iv_all.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -297,7 +294,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                                         "------------------------------" + "\n" +
                                         "Total Amt : " + totalAmnt + "\n" +
                                         "Paid Amt  : " + paidAmnt + "\n" +
-                                        "Discount  : 0\n" +
+                                        "Discount  :" +discount + "\n" +
                                         "Remaining : " + remainBal + "\n" +
 
                                         "-------------------------------" + "\n" +
@@ -355,7 +352,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                 "------------------------\n" +
                 "Total Amount: " + txt_prev_bal.getText().toString() + "\n" +
                 "Paid Amount: " + paidamount_pay.getText().toString() + "\n" +
-                "Discount: " + txt_discount.getText().toString() + "\n" +
+                "Discount: " +discount + "\n" +
                 "Remaining Amount: " + balance_pay.getText().toString() + "\n" +
                 "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
                 "Collected By: " + txt_collected_by.getText().toString() + "\n" +
@@ -513,10 +510,14 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         //dateTime = sdf1.format(date);
         totalAmnt = paymentReciept.getTotalAmount().toString();
         paidAmnt = paymentReciept.getPaidAmount().toString();
+        txt_discount.setText(paymentReciept.getDiscount());
+        discount=paymentReciept.getDiscount();
         remainBal = paymentReciept.getBalance().toString();
         payMode = paymentReciept.getPaymentType();
         collectedBy = paymentReciept.getEmployee_Name();
         empMobNo = paymentReciept.getEmployee_Contact();
+        mobileTv.setText(paymentReciept.getContact_No());
+        addressTv.setText(paymentReciept.getAddress());
 
         custmername_pay.setText(name);
         txt_accountno.setText(accNo);

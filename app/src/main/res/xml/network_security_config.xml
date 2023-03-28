@@ -3,5 +3,6 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">newcrmapitest.elifeindia.in</domain>
         <domain includeSubdomains="true">crmprodtestapi.elifeindia.in</domain>
+        <domain includeSubdomains="true">ecableapi.elifeindia.in</domain>
     </domain-config>
 </network-security-config>

@@ -121,6 +121,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
 
         cv_filter.setVisibility(View.GONE);
 
+
         all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +147,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
                 to_date.setVisibility(View.GONE);
                 from_date.setVisibility(View.GONE);
 
-                presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
+                presenter.loadPaymentList(getContext(),companyId,custId,"","",triplePlayId,value,empId,areaId);
 
 
             }
@@ -315,7 +316,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
         fromDate = todayDateString();
         toDate = todayDateString();
 
-        presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
+        presenter.loadPaymentList(getContext(),companyId,custId,"","",triplePlayId,value,empId,areaId);
 
 
 
@@ -359,7 +360,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
     }
 
     private void shareIt() {
-        Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getActivity()),
+        Uri uri = FileProvider.getUriForFile(requireActivity(),
                 BuildConfig.APPLICATION_ID + ".provider", imagePath);
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -379,7 +380,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
     }
 
     private void shareItOnWhatsApp() {
-        Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getActivity()),
+        Uri uri = FileProvider.getUriForFile(requireActivity(),
                 BuildConfig.APPLICATION_ID + ".provider", imagePath);
 
 //        Intent whatsappIntent = new Intent(Intent.ACTION_SEND);

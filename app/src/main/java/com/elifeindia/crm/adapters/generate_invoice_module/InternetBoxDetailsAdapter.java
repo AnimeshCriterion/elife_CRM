@@ -1,8 +1,10 @@
 package com.elifeindia.crm.adapters.generate_invoice_module;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +61,7 @@ public class InternetBoxDetailsAdapter extends RecyclerView.Adapter<InternetBoxD
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
         if (internetBoxes.get(position).getInternetBox().getStatus_Name().equals("Active")){
             holder.cb_box_status.setChecked(true);
@@ -91,8 +93,9 @@ public class InternetBoxDetailsAdapter extends RecyclerView.Adapter<InternetBoxD
         holder.macadress.setText(internetBoxes.get(position).getInternetBox().getMac().toString());
         String date;
 
-        date = ViewUtils.changeDateFormat(internetBoxes.get(position).getInternetBox().getExpiry_Date().toString());
+
         try {
+            date = ViewUtils.changeDateFormat(internetBoxes.get(position).getInternetBox().getExpiry_Date().toString());
             holder.expirtydate.setText(date);
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,6 +119,8 @@ public class InternetBoxDetailsAdapter extends RecyclerView.Adapter<InternetBoxD
         //Toast.makeText(context, "Activation Date "+activation_DateInternet, Toast.LENGTH_SHORT).show();
 
         expiry_DateInternet = internetBoxes.get(position).getInternetBox().getExpiry_Date().substring(0,10);
+
+        Log.d("TAG", "onBindViewHolder: "+internetBoxes.get(position).getInternetBox().getExpiry_Date());
 
         //Toast.makeText(context, "Expiry Date "+expiry_DateInternet, Toast.LENGTH_SHORT).show();
 
@@ -200,7 +205,6 @@ public class InternetBoxDetailsAdapter extends RecyclerView.Adapter<InternetBoxD
             holder.spn_no_of_months.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     noofMonthInternet = internetBoxes.get(position).getInternetBox().getNoofMonth().toString();
                     adapterCallback.onClickCallback(holder.txt_expiry_date, holder.amountInternet,holder.spn_no_of_months, holder.spn_bill_type, holder.ll_noofdays, position, "spn_no_of_monthsInternet");
 

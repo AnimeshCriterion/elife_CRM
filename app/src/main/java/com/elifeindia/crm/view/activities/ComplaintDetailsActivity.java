@@ -33,6 +33,7 @@ import com.elifeindia.crm.model.ComplaintStatusList;
 import com.elifeindia.crm.model.EmployeeList;
 import com.elifeindia.crm.model.InsertPayment;
 import com.elifeindia.crm.presenter.activities.ComplaintListPresenter;
+import com.elifeindia.crm.printersdk.ComplaintReceiptActivity;
 import com.elifeindia.crm.printersdk.Constant;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
@@ -71,6 +72,8 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
    // ProgressBar pb_searching;
     List<ComplaintStatusList.Complaintstatus> complaintstatuses;
     ArrayList<String> statusNames, statusIds;
+
+
 
 
 
@@ -437,11 +440,12 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
     @Override
     public void showResult(ComplaintList paymentRecieptList) {
 
+
 //        txt_total_collection.setText("Closed : "+paymentRecieptList.getTotal_Paid_amount());
         List<ComplaintList.Complaint> complaintList = paymentRecieptList.getComplaint();
+
         txt_total_balance.setText("Count : "+complaintList.size());
         SharedPrefsData.putString(this, Constants.ComplaintFlag, "activity", Constants.PREF_NAME);
-
         if(complaintList.size()==0){
             rv_payment_list.setVisibility(View.GONE);
             txt_not_found.setVisibility(View.VISIBLE);
@@ -589,7 +593,9 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
 
     @Override
     public void showOpencloseComplaint(InsertPayment insertPayment) {
-        presenter.loadComplaintList(ComplaintDetailsActivity.this, companyId, empId, custId, statusId,  fromDate, toDate, "");
+//        presenter.loadComplaintList(ComplaintDetailsActivity.this, companyId, empId, custId, statusId,  fromDate, toDate, "");
+//        presenter.loadComplaintList(ComplaintDetailsActivity.this, companyId, empId, custId, statusId,  fromDate, toDate, "");
+        presenter.loadComplaintList(ComplaintDetailsActivity.this, companyId, empId, "0", statusId,  null, null, "");
 
         Toast.makeText(this, "Complaint closed successfully", Toast.LENGTH_SHORT).show();
     }
@@ -632,8 +638,12 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
 
         //Toast.makeText(this, Complaint_Status_ID, Toast.LENGTH_SHORT).show();
 
-        presenter.loadOpencloseComplaint(ComplaintDetailsActivity.this, ComplaintID, "", "", todayDateString(), "5", "", empId, userId, todayDateString());
 
+        presenter.loadOpencloseComplaint(ComplaintDetailsActivity.this, ComplaintID, "", "", todayDateString(), "5", "", empId, userId, todayDateString());
+        Intent i =new  Intent(this, ComplaintReceiptActivity.class);
+        i.putExtra("activity_name", "UpdateComplaint");
+        startActivity(i);
+        finish();
 
 
     }
@@ -641,7 +651,8 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.loadComplaintList(ComplaintDetailsActivity.this, companyId, empId, "0", statusId,  fromDate, toDate, "");
+        //presenter.loadComplaintList(ComplaintDetailsActivity.this, companyId, empId, "0", statusId,  fromDate, toDate, "");
+        presenter.loadComplaintList(ComplaintDetailsActivity.this, companyId, empId, "0", statusId,  null, null, "");
 
     }
 
