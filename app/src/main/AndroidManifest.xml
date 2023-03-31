@@ -46,29 +46,29 @@
         tools:targetApi="n">
         <activity
             android:name=".view.activities.BalanceAdjustmentActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".UpdateSubscription.UpdateINternetSubscriptionActivityForUpdateSubscription"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".UpdateSubscription.UpdateSubscriptionPackageA"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".UpdateSubscription.UpdateSubscriptionAtivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".view.activities.ResetPasswordActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TestActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_test"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.activities.UpdateCustomerActivity" />
-        <activity android:name=".view.activities.InvoiceActivity" />
-        <activity android:name=".view.activities.InvoiceHistoryActivity" />
-        <activity android:name=".CustomerLoginActivity" />
-        <activity android:name=".view.activities.RegisterComplaintActivity2" />
+        <activity android:name=".view.activities.UpdateCustomerActivity" android:exported="true" />
+        <activity android:name=".view.activities.InvoiceActivity" android:exported="true"/>
+        <activity android:name=".view.activities.InvoiceHistoryActivity" android:exported="true"/>
+        <activity android:name=".CustomerLoginActivity"  android:exported="true"/>
+        <activity android:name=".view.activities.RegisterComplaintActivity2"  android:exported="true"/>
         <activity
             android:name=".printersdk.ComplaintReceiptActivity"
             android:noHistory="true" />
@@ -101,6 +101,7 @@
             android:name=".printersdk.BluetoothDeviceList"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/bluetooth_device_list"
+            android:exported="true"
             android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".view.activities.NotificationsActivity"
@@ -160,6 +161,7 @@
         <activity
             android:name=".Capture"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.activities.CustomerListActivity"
