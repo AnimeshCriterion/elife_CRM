@@ -335,7 +335,7 @@ public interface ApiService {
 
 
 
-    @POST("Values/Get_Internetexpiry")
+    @POST("Values/Update_InternetBox?")
     Observable<UpdateBox> getInternetExpiry(@Body InternetBoxUpdateSubscription internetBoxUpdateSubscription);
 
     @POST("Values/Update_InternetBox?")

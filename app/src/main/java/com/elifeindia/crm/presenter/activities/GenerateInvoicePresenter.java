@@ -251,7 +251,7 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
         internetBoxUpdateSubscription.setBoxID(0);
         internetBoxUpdateSubscription.setBoxTypeID(2);
         internetBoxUpdateSubscription.setIp(ip);
-        internetBoxUpdateSubscription.setBoxAmount(0.0);
+        internetBoxUpdateSubscription.setBoxAmount(Double.valueOf(box_Amount));
         internetBoxUpdateSubscription.setMac(mac);
         internetBoxUpdateSubscription.setBillTypeID(Integer.valueOf(bill_Type_ID));
         internetBoxUpdateSubscription.setConnectionStatusID(Integer.valueOf(connection_Status_ID));

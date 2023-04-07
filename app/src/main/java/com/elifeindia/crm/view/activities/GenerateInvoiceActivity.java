@@ -862,7 +862,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             view1.setText(box_AmountInternet);
 
             box_AmountInternet = boxTypeModel.getBox_Amount();
-            txt_subscription_amnt.setText("Rs. " + box_AmountInternet);
+            txt_subscription_amnt.setText("Rs. " + boxTypeModel.getBox_Amount());
             internetBoxList.get(box_position).getInternetBox().setBox_Amount(Double.parseDouble(box_AmountInternet));
             amountInternet.setText(box_AmountInternet);
 
@@ -1103,11 +1103,11 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                                 noofMonthInternet = spn_no_of_months.getSelectedItem().toString();
                                 noofMonth_multiplyfactorInternet = Integer.parseInt(noofMonthInternet);
 
-                                float anssd = Float.parseFloat(alacarteModela.getTotal_Alacarte()) + Float.parseFloat(bouquetModela.getTotal_Bouquet());
-
-                                Log.d("TAG", "onCreateAnimesh: "+noofMonthInternet);
-                                float data=Float.parseFloat(String.valueOf(noofMonthInternet))*anssd;
-                                txt_subscription_amnt.setText(String.valueOf(data));
+//                                float anssd = Float.parseFloat(alacarteModela.getTotal_Alacarte()) + Float.parseFloat(bouquetModela.getTotal_Bouquet());
+//
+//                                Log.d("TAG", "onCreateAnimesh: "+noofMonthInternet);
+//                                float data=Float.parseFloat(String.valueOf(noofMonthInternet))*anssd;
+//                                txt_subscription_amnt.setText(String.valueOf(data));
 
                                 //Toast.makeText(GenerateInvoiceActivity.this, "No of Month "+noofMonthInternet, Toast.LENGTH_SHORT).show();
 
