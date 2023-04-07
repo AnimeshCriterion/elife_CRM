@@ -326,7 +326,7 @@ public interface ApiService {
 
 
  
-    @POST("Values/Get_CableExpiry")
+    @POST("Values/Update_CableBox?")
     Observable<UpdateBox> updateCableBox(
             @Body CableBoxSubscription cableBoxSubscription);
 

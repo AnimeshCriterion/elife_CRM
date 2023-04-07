@@ -739,7 +739,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 //            float ans = Float.parseFloat(alacarteModela.getTotal_Alacarte()) + Float.parseFloat(bouquetModela.getTotal_Bouquet());
 //
 //
-//            txt_subscription_amnt.setText("Rs. " + (box_Amount+ans)*(Integer.parseInt(no_of_months.toString())));
+           //txt_subscription_amnt.setText("Rs. " + boxTypeModel.getBox_Amount().toString());
 //            //amount.setText(String.valueOf(box_Amount));
             totalAmnt = (Float.parseFloat(CustomerBalance) + Float.parseFloat(txt_subscription_amnt.getText().toString()));
 
@@ -785,7 +785,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
             Log.d("TAG", "onCreateAnimesh: "+noofMonth_multiplyfactorInternet);
 
-             txt_subscription_amnt.setText("Rs. " + Float.parseFloat(String.valueOf(box_Amount))*noofMonth_multiplyfactorInternet);
+             txt_subscription_amnt.setText("Rs. " + boxTypeModel.getBox_Amount());
 
            // txt_subscription_amnt.setText("Rs. " + anssd);
             cableBoxList.get(box_position).getCableBox().setBox_Amount(Double.parseDouble(box_Amount));
