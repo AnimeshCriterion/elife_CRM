@@ -75,19 +75,16 @@ public class CableSubscriptionAdapter extends RecyclerView.Adapter<CableSubscrip
             }
         });
         holder.cafnum.setText(cableBoxList.get(position).getCafno().toString());
-        holder.cafnum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String text = holder.cafnum.getText().toString();
-                if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                    android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                    clipboard.setText(text);
-                } else {
-                    android.content.ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                    android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
-                    clipboard.setPrimaryClip(clip);
-                    Toast.makeText(context, text+" Copied", Toast.LENGTH_SHORT).show();
-                }
+        holder.cafnum.setOnClickListener(view -> {
+            String text = holder.cafnum.getText().toString();
+            if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboard.setText(text);
+            } else {
+                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(context, text+" Copied", Toast.LENGTH_SHORT).show();
             }
         });
         holder.vcnum.setText(cableBoxList.get(position).getVcno().toString());

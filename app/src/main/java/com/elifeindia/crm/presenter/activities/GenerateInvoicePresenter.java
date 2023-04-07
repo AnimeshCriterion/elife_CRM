@@ -156,13 +156,13 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
         cableBoxSubscription.setExpiryDate(expiry_Date);
         cableBoxSubscription.setNoofMonth(Integer.valueOf(noofMonth));
         cableBoxSubscription.setNoofDays(0);
-        cableBoxSubscription.setBoxAmount(0.0);
+        cableBoxSubscription.setBoxAmount(Double.valueOf(box_Amount));
 //        cableBoxSubscription.setAlacarteAmount(Integer.valueOf(alacarte_Amount));
 //        cableBoxSubscription.setBouquetAmount(Integer.valueOf(bouquet_Amount));
 //        cableBoxSubscription.setTaxAmount(Integer.valueOf(tax_Amount));
         cableBoxSubscription.setBoxAmount(Double.valueOf(box_Amount));
         cableBoxSubscription.setDate(date);
-        cableBoxSubscription.setInvoiceID(0);
+        //cableBoxSubscription.setInvoiceID(0);
         NetworkUtils.getUserApiInstance()
                 .updateCableBox(cableBoxSubscription)
                 .subscribeOn(Schedulers.newThread())

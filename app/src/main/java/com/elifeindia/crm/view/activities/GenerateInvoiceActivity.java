@@ -171,6 +171,9 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
         presenter.getBillType("");
         presenter.loadCableBoxListApi(customerID);
 
+
+
+
         InvType = SharedPrefsData.getString(this, Constants.InvoiceType, Constants.PREF_NAME);
 
         if (InvType.equals("Collective")) {
@@ -499,6 +502,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
         Log.e("userId", userId);
         Log.e("empId", empId);
 
+
         txt_prev_bal.setText(String.valueOf(customerBalance));
 
 
@@ -717,6 +721,9 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
     @Override
     public void showCableBox(UpdateBox boxTypeModel, TextView view, TextView view1) {
 
+
+        Log.d("TAG", "showCableBoxANNU: "+strApiCallType.toString());
+
         SharedPrefsData.putString(getApplicationContext(), "ExpiryDate", boxTypeModel.getExpiry_Date(), Constants.PREF_NAME);
 
         if (strApiCallType.equals("calculateExpiry")) {
@@ -729,9 +736,11 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
             cableBoxAmnt = String.valueOf(box_Amount);
             cableBoxList.get(box_position).getCableBox().setBox_Amount(Double.parseDouble(String.valueOf(box_Amount)));
-
-            //txt_subscription_amnt.setText("Rs. " + box_Amount);
-            //amount.setText(String.valueOf(box_Amount));
+//            float ans = Float.parseFloat(alacarteModela.getTotal_Alacarte()) + Float.parseFloat(bouquetModela.getTotal_Bouquet());
+//
+//
+//            txt_subscription_amnt.setText("Rs. " + (box_Amount+ans)*(Integer.parseInt(no_of_months.toString())));
+//            //amount.setText(String.valueOf(box_Amount));
             totalAmnt = (Float.parseFloat(CustomerBalance) + Float.parseFloat(txt_subscription_amnt.getText().toString()));
 
             txt_total_amount.setText(String.valueOf(totalAmnt));
@@ -772,7 +781,13 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
             cableBoxAmnt = box_Amount;
 
-            txt_subscription_amnt.setText("Rs. " + box_Amount);
+            float anssd = Float.parseFloat(alacarteModela.getTotal_Alacarte()) + Float.parseFloat(bouquetModela.getTotal_Bouquet());
+
+            Log.d("TAG", "onCreateAnimesh: "+noofMonth_multiplyfactorInternet);
+
+             txt_subscription_amnt.setText("Rs. " + Float.parseFloat(String.valueOf(box_Amount))*noofMonth_multiplyfactorInternet);
+
+           // txt_subscription_amnt.setText("Rs. " + anssd);
             cableBoxList.get(box_position).getCableBox().setBox_Amount(Double.parseDouble(box_Amount));
 
             amount.setText(box_Amount);
@@ -936,6 +951,8 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
         box_position = position;
         strApiCallType = id;
+        Log.d("TAG", "showCableBoxANNU: "+strApiCallType.toString());
+
         if (boxType_IDInternet == null) {
             boxType_IDInternet = "null";
         }
@@ -1085,6 +1102,12 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                             public void onItemSelected(AdapterView<?> parent, View view5, int position, long id) {
                                 noofMonthInternet = spn_no_of_months.getSelectedItem().toString();
                                 noofMonth_multiplyfactorInternet = Integer.parseInt(noofMonthInternet);
+
+                                float anssd = Float.parseFloat(alacarteModela.getTotal_Alacarte()) + Float.parseFloat(bouquetModela.getTotal_Bouquet());
+
+                                Log.d("TAG", "onCreateAnimesh: "+noofMonthInternet);
+                                float data=Float.parseFloat(String.valueOf(noofMonthInternet))*anssd;
+                                txt_subscription_amnt.setText(String.valueOf(data));
 
                                 //Toast.makeText(GenerateInvoiceActivity.this, "No of Month "+noofMonthInternet, Toast.LENGTH_SHORT).show();
 
@@ -1253,6 +1276,87 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             e.printStackTrace();
         }
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        try {
+//            triplePlay = SharedPrefsData.getString(GenerateInvoiceActivity.this, Constants.TriplePlay, Constants.PREF_NAME);
+//
+//
+//            if (triplePlay.equals("Cable")) {
+//                // presenter.loadCableBoxListApi(SharedPrefsData.getString(GenerateInvoiceActivity.this,Constants.CustomerID,Constants.PREF_NAME));
+//
+//                cableBoxList = cableBoxWithSubscription.getCableBoxwithSubscription();
+//
+//                float ans = Float.parseFloat(alacarteModela.getTotal_Alacarte()) + Float.parseFloat(bouquetModela.getTotal_Bouquet());
+//                String newbox_Amount = String.valueOf(ans * noofMonth_multiplyfactor);
+//
+//                box_Amount = newbox_Amount;
+//                cableBoxAmnt = newbox_Amount;
+//
+//                newBoxAmount = ans;
+//
+//
+//                totalAmnt = Float.parseFloat(newbox_Amount) + Float.parseFloat(CustomerBalance);
+//                txt_subscription_amnt.setText(newbox_Amount);
+//                // cableBoxAmnt = String.valueOf(ans);
+//                txt_total_amount.setText(String.valueOf(totalAmnt));
+//                edt_payingamount.setText(String.valueOf(totalAmnt));
+//
+//                cableBoxList.get(box_position).getCableBox().setBox_Amount(Double.parseDouble(newbox_Amount));
+//                amount.setText(newbox_Amount);
+//
+//                cableBoxList.get(box_position).getCableBox().setActivation_Date(activation_Date);
+//
+//                //cableBoxList.get(box_position).getCableBox().setExpiry_Date(activation_Date);
+//
+//                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+//                rv_box_details.setLayoutManager(mLayoutManager);
+//                cableBoxDetailsAdapter = new CableBoxDetailsAdapter(GenerateInvoiceActivity.this, cableBoxList, adapterCallback, adapterCall, "B");
+//                rv_box_details.setAdapter(cableBoxDetailsAdapter);
+//
+//            } else if (triplePlay.equals("Internet")) {
+//                //presenter.loadInternetBoxListApi(SharedPrefsData.getString(GenerateInvoiceActivity.this, Constants.CustomerID, Constants.PREF_NAME));
+//
+//                internetBoxList = internetBoxWithSubscription.getInternetBoxwithSubscription();
+//
+//                ans = Float.parseFloat(String.valueOf(internetPackageModela.getTotal_Package()));
+//
+//                String newbox_AmountInternet = String.valueOf(ans * noofMonth_multiplyfactorInternet);
+//
+//                box_Amount = newbox_AmountInternet;
+//                cableBoxAmnt = newbox_AmountInternet;
+//
+//                newBoxAmount = ans;
+//                newTotalAmount = String.valueOf(ans);
+//
+//                totalAmnt = Float.parseFloat(newbox_AmountInternet) + Float.parseFloat(CustomerBalance);
+//                txt_subscription_amnt.setText(newbox_AmountInternet);
+//                //internetBoxAmnt = String.valueOf(newbox_AmountInternet);
+//                txt_total_amount.setText(String.valueOf(totalAmnt));
+//                edt_payingamount.setText(String.valueOf(totalAmnt));
+//
+//                internetBoxList.get(box_position).getInternetBox().setBox_Amount(Double.parseDouble(newbox_AmountInternet));
+//                amountInternet.setText(newbox_AmountInternet);
+//
+//                internetBoxList.get(box_position).getInternetBox().setActivation_Date(newInternetActDate);
+//
+//                internetBoxList.get(box_position).getInternetBox().setExpiry_Date(newInternetExpDate);
+//
+//                SharedPrefsData.putString(this, Constants.TotalAmount, String.valueOf(internetBoxList.get(box_position).getInternetBox().getBox_Amount()), Constants.PREF_NAME);
+//
+//                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+//                rv_box_details.setLayoutManager(mLayoutManager);
+//                internetBoxDetailsAdapter = new InternetBoxDetailsAdapter(GenerateInvoiceActivity.this, internetBoxList, adapterCallback, adapterCall);
+//                rv_box_details.setAdapter(internetBoxDetailsAdapter);
+//
+//            }
+//        } catch (Exception e) {
+//            triplePlay = "";
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     public void onClickCallback(View view, int position, String id) {

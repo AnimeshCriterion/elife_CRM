@@ -118,8 +118,6 @@ public class UpdateCableSubscriptionActivity extends AppCompatActivity{
                     }
 
                     bouquetModela.setTotal_Bouquet(total_Bouquet_amount);
-
-
                     finish();
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
