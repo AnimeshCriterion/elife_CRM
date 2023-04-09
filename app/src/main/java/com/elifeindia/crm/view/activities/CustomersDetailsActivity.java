@@ -278,6 +278,10 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.CustMob, customerData.getContactNo(), Constants.PREF_NAME);
         SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.CustomerBalance, customerData.getBalance(), Constants.PREF_NAME);
         balance.setText(customerData.getBalance());
+        if (SharedPrefsData.getString(getApplicationContext(), Constants.RoleId, Constants.PREF_NAME).equals("7")) {
+
+            balance.setVisibility(View.INVISIBLE);
+        }
         // SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.CustomerBalance, customerData.getBalance().toString(), Constants.PREF_NAME);
         subscriberid.setText(customerData.getSubscriberID());
         accountnumber.setText(customerData.getAccountNo().toString());

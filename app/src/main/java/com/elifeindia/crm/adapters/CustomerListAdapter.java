@@ -58,7 +58,13 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         String cname = custemersLists.get(position).getName().toString();
         SharedPrefsData.putString(context, Constants.CustomerName, cname, Constants.PREF_NAME);
         holder.txt_cust_name.setText(cname);
+
         holder.txt_balance.setText(custemersLists.get(position).getBalance().toString());
+
+        if (SharedPrefsData.getString(context, Constants.RoleId, Constants.PREF_NAME).equals("7")) {
+
+            holder.txt_balance.setVisibility(View.INVISIBLE);
+        }
         holder.imageActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

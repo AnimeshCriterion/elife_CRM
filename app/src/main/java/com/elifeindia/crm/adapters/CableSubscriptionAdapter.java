@@ -107,17 +107,28 @@ public class CableSubscriptionAdapter extends RecyclerView.Adapter<CableSubscrip
 
         holder.expirtydate.setText(date);
         holder.amount.setText(cableBoxList.get(position).getBoxAmount().toString());
+        if (SharedPrefsData.getString(context, Constants.RoleId, Constants.PREF_NAME).equals("7")) {
+
+            holder.amount.setVisibility(View.INVISIBLE);
+        }
+
         String boxId = cableBoxList.get(position).getCableBoxID().toString();
         SharedPrefsData.putString(context, Constants.CableBoxAmount, cableBoxList.get(position).getBoxAmount().toString(), Constants.PREF_NAME);
         SharedPrefsData.putString(context, Constants.CableBoxID, boxId, Constants.PREF_NAME);
         holder.ll_cable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String boxId = cableBoxList.get(position).getCableBoxID().toString();
-                SharedPrefsData.putString(context, Constants.CableBoxAmount, cableBoxList.get(position).getBoxAmount().toString(), Constants.PREF_NAME);
-                SharedPrefsData.putString(context, Constants.CableBoxID, boxId, Constants.PREF_NAME);
+                if (SharedPrefsData.getString(context, Constants.RoleId, Constants.PREF_NAME).equals("7")) {
 
-                context.startActivity(new Intent(context, CableSubscriptionActivity.class));
+                   Toast.makeText(context,"Not authorized",Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    String boxId = cableBoxList.get(position).getCableBoxID().toString();
+                    SharedPrefsData.putString(context, Constants.CableBoxAmount, cableBoxList.get(position).getBoxAmount().toString(), Constants.PREF_NAME);
+                    SharedPrefsData.putString(context, Constants.CableBoxID, boxId, Constants.PREF_NAME);
+                    context.startActivity(new Intent(context, CableSubscriptionActivity.class));
+                }
+
             }
         });
     }

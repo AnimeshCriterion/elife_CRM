@@ -568,11 +568,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/internetlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -629,7 +629,7 @@
                         android:text="IP"
                         android:textColor="@color/darkblue"
                         android:textSize="@dimen/_10sdp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -639,7 +639,7 @@
                         android:text="MAC"
                         android:textColor="@color/darkblue"
                         android:textSize="@dimen/_10sdp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
 
                     <TextView
@@ -650,7 +650,7 @@
                         android:text="Expiry"
                         android:textColor="@color/darkblue"
                         android:textSize="@dimen/_10sdp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
 
                     <TextView
@@ -661,19 +661,19 @@
                         android:text="Amount"
                         android:textColor="@color/darkblue"
                         android:textSize="@dimen/_10sdp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_internet_subscription"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@color/border"/>
+                    android:background="@color/border" />
 
             </LinearLayout>
 

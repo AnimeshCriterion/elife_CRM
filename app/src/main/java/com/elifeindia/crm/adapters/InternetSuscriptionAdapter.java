@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.elifeindia.crm.model.CustomersInternetBoxData;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
+import com.elifeindia.crm.view.activities.CableSubscriptionActivity;
 import com.elifeindia.crm.view.activities.InternetSubscriptionActivity;
 
 import java.util.List;
@@ -61,6 +63,11 @@ public class InternetSuscriptionAdapter extends RecyclerView.Adapter<InternetSus
         }
         holder.expirtydate.setText(date);
         holder.amount.setText(internetBoxes.get(position).getBoxAmount().toString());
+
+        if (SharedPrefsData.getString(context, Constants.RoleId, Constants.PREF_NAME).equals("7")) {
+
+            holder.amount.setVisibility(View.INVISIBLE);
+        }
         String boxId = internetBoxes.get(position).getInternetBoxID().toString();
         SharedPrefsData.putString(context, Constants.InternetBoxID, boxId, Constants.PREF_NAME);
         SharedPrefsData.putString(context, Constants.InternetBoxAmount, internetBoxes.get(position).getBoxAmount().toString(), Constants.PREF_NAME);
@@ -69,9 +76,17 @@ public class InternetSuscriptionAdapter extends RecyclerView.Adapter<InternetSus
         holder.ll_int.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String boxId = internetBoxes.get(position).getInternetBoxID().toString();
-                SharedPrefsData.putString(context, Constants.InternetBoxID, boxId, Constants.PREF_NAME);
-                context.startActivity(new Intent(context, InternetSubscriptionActivity.class));
+                if (SharedPrefsData.getString(context, Constants.RoleId, Constants.PREF_NAME).equals("7")) {
+
+                    Toast.makeText(context,"Not authorized",Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    String boxId = internetBoxes.get(position).getInternetBoxID().toString();
+                    SharedPrefsData.putString(context, Constants.InternetBoxID, boxId, Constants.PREF_NAME);
+                    context.startActivity(new Intent(context, InternetSubscriptionActivity.class));
+                }
+
+
             }
         });
     }
