@@ -278,7 +278,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.CustMob, customerData.getContactNo(), Constants.PREF_NAME);
         SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.CustomerBalance, customerData.getBalance(), Constants.PREF_NAME);
         balance.setText(customerData.getBalance());
-        if (SharedPrefsData.getString(getApplicationContext(), Constants.RoleId, Constants.PREF_NAME).equals("7")) {
+        if (SharedPrefsData.getString(getApplicationContext(), Constants.RoleType, Constants.PREF_NAME).equals("Technician")) {
 
             balance.setVisibility(View.INVISIBLE);
         }
