@@ -48,6 +48,7 @@ import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDet
 import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.internet_Box_ID;
 import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.macadd;
 import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.noofMonthInternet;
+import static com.elifeindia.crm.view.activities.UpdateInternetSubscriptionActivity.total_pkg_amount;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -557,7 +558,7 @@ public class UpdateSubscriptionAtivity extends AppCompatActivity implements Gene
         internetBoxWithSubscriptionUpdate = internetBoxWithSubscription1;
         internetBoxList = internetBoxWithSubscriptionUpdate.getInternetBoxwithSubscription();
         internetBoxAmnt = internetBoxWithSubscriptionUpdate.getTotal_InternetBox_amount();
-
+        total_pkg_amount =internetBoxAmnt;
         newBoxAmountUpdate = Float.parseFloat(internetBoxWithSubscriptionUpdate.getTotal_InternetBox_amount());
 
         newTotalAmountUpdate = String.valueOf(internetBoxList.get(box_positionUpdate).getInternetBox().getBox_Amount());
@@ -1001,7 +1002,7 @@ public class UpdateSubscriptionAtivity extends AppCompatActivity implements Gene
                                     ll.setVisibility(View.VISIBLE);
                                 } else {
                                     ll.setVisibility(View.GONE);
-                                    presenter.updateInternetBox(UpdateSubscriptionAtivity.this, view, view1, userId, String.valueOf(customerID), internet_Box_IDUpdate, "null", boxType_IDInternetUpdate, ipnoUpdateInternet, macadd, bill_Type_IDInternetUpdate, connection_Status_IDInternetUpdate, activation_DateInternetUpdate, newInternetExpDateUpdate, noofMonthInternetUpdate, noofDaysInternetUpdate, "0", "null", box_AmountInternetUpdate, todayDateString());
+                                    presenter.updateInternetBox(UpdateSubscriptionAtivity.this, view, view1, userId, String.valueOf(customerID), internet_Box_IDUpdate, "null", boxType_IDInternetUpdate, ipnoUpdateInternet, macadd, bill_Type_IDInternetUpdate, connection_Status_IDInternetUpdate, activation_DateInternetUpdate, newInternetExpDateUpdate, noofMonthInternetUpdate, noofDaysInternetUpdate, "0", "null", total_pkg_amount, todayDateString());
                                 }
 
                             }

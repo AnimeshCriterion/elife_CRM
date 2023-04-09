@@ -28,6 +28,7 @@ import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDet
 import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.noofDaysInternet;
 import static com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter.noofMonthInternet;
 import static com.elifeindia.crm.view.activities.CustomersDetailsActivity.customerBalance;
+import static com.elifeindia.crm.view.activities.UpdateInternetSubscriptionActivity.total_pkg_amount;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -660,10 +661,14 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
         internetBoxWithSubscription = internetBoxWithSubscription1;
         internetBoxList = internetBoxWithSubscription.getInternetBoxwithSubscription();
         internetBoxAmnt = internetBoxWithSubscription.getTotal_InternetBox_amount();
+       total_pkg_amount =internetBoxAmnt;
+        Log.d("TAG", "showInernetBoxList1: "+internetBoxAmnt.toString());
 
         newBoxAmount = Float.parseFloat(internetBoxWithSubscription.getTotal_InternetBox_amount());
+        Log.d("TAG", "showInernetBoxList2: "+internetBoxAmnt.toString());
 
         newTotalAmount = String.valueOf(internetBoxList.get(box_position).getInternetBox().getBox_Amount());
+        Log.d("TAG", "showInernetBoxList3: "+internetBoxAmnt.toString());
 
         totalAmnt = Float.parseFloat(internetBoxAmnt) + Float.parseFloat(CustomerBalance);
         txt_subscription_amnt.setText(internetBoxWithSubscription.getTotal_InternetBox_amount());
@@ -1142,7 +1147,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                                     ll.setVisibility(View.VISIBLE);
                                 } else {
                                     ll.setVisibility(View.GONE);
-                                    presenter.updateInternetBox(GenerateInvoiceActivity.this,  view, view1, userId, customerID, internet_Box_ID, "null", boxType_IDInternet, ipno, macadd, bill_Type_IDInternet, connection_Status_IDInternet, activation_DateInternet, newInternetExpDate, noofMonthInternet, noofDaysInternet, "0", "null", box_AmountInternet, todayDateString());
+                                    presenter.updateInternetBox(GenerateInvoiceActivity.this,  view, view1, userId, customerID, internet_Box_ID, "null", boxType_IDInternet, ipno, macadd, bill_Type_IDInternet, connection_Status_IDInternet, activation_DateInternet, newInternetExpDate, noofMonthInternet, noofDaysInternet, "0", "null", total_pkg_amount, todayDateString());
                                 }
 
                             }

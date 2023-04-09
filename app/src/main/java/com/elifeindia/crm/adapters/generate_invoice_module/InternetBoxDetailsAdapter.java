@@ -120,7 +120,7 @@ public class InternetBoxDetailsAdapter extends RecyclerView.Adapter<InternetBoxD
 
         expiry_DateInternet = internetBoxes.get(position).getInternetBox().getExpiry_Date().substring(0,10);
 
-        Log.d("TAG", "onBindViewHolder: "+internetBoxes.get(position).getInternetBox().getExpiry_Date());
+        Log.d("TAG", "onBindViewHolder: "+ internetBoxes.get(position).getInternetBox().getBox_Amount().toString());
 
         //Toast.makeText(context, "Expiry Date "+expiry_DateInternet, Toast.LENGTH_SHORT).show();
 
@@ -244,6 +244,7 @@ public class InternetBoxDetailsAdapter extends RecyclerView.Adapter<InternetBoxD
 
         RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
         holder.rv_bouquet_list.setLayoutManager(mLayoutManager1);
+      //  total_pkg_amount=internetBoxes.get(position).get
         internetPkgListAdapter = new InternetPkgListAdapter(context, internetBoxes.get(position).getBoxpackageList().getBoxpackage(),adapterCallback);
         holder.rv_bouquet_list.setAdapter(internetPkgListAdapter);
 

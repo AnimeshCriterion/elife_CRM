@@ -231,6 +231,8 @@ public class InternetCableBoxAdapterUpdate extends RecyclerView.Adapter<Internet
                             try {
 
                                 activation_DateInternetUpdate = sdf2.format(mcurrentDate.getTime());
+                                box_AmountInternetUpdate = internetBoxes.get(position).getInternetBox().getBox_Amount().toString();
+
                                 adapterCallback.onClickCallback(holder.txt_expiry_date, holder.amountInternetupdate, holder.spn_no_of_months, holder.spn_bill_type, holder.ll_noofdays, position, "strActivationDateInternet");
                             } catch (Exception e) {
                                 e.printStackTrace();

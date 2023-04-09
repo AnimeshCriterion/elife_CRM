@@ -27,7 +27,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.Retrofit.RetrofitClient;
+import com.elifeindia.crm.UpdateCustomerPojo;
+import com.elifeindia.crm.model.CustomerData;
 import com.elifeindia.crm.model.CustomerStatusResponse;
+import com.elifeindia.crm.networking.NetCheck;
+import com.elifeindia.crm.networking.NetworkUtils;
 import com.elifeindia.crm.networking.RetrofitAdapter;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
@@ -42,6 +46,9 @@ import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class UpdateCustomerActivity extends AppCompatActivity {
 
@@ -175,55 +182,131 @@ public class UpdateCustomerActivity extends AppCompatActivity {
         update_details_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UpdateCustomerPojo updateCustomerPojo=new UpdateCustomerPojo();
+//                final ProgressDialog progressBar;
+//                progressBar = new ProgressDialog(getApplicationContext());
+//                progressBar.setCancelable(false);//you can cancel it by pressing back button
+//                progressBar.setMessage("Please wait...");
+//                progressBar.show();
 
-                progressDialog.setMessage("Please Wait");
-                progressDialog.show();
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, RetrofitAdapter.UPDATE_CUSTOMER,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                //Toast.makeText(c, response, Toast.LENGTH_LONG).show();
-                                Toast.makeText(UpdateCustomerActivity.this, "Details Updated", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(UpdateCustomerActivity.this, CustomersDetailsActivity.class));
-                                finish();
-                                progressDialog.hide();
+//                params.put("customer_ID", CustID);
+//                params.put("company_ID", CompanyId);
+//                params.put("account_No", acc_number.getText().toString());
+//                params.put("subscriber_ID", subscriber_id.getText().toString());
+//                params.put("name", cust_name.getText().toString());
+//                params.put("soDoWo","NA");
+//                params.put("address", "");
+//                params.put("contact_No", cust_number.getText().toString());
+//                params.put("whatsup_No", cust_whtsap_number.getText().toString());
+//                params.put("emailId", "NA");
+//                params.put("aadhar_No", "NA");
+//                params.put("gsT_Number", "NA");
+//                params.put("area_Customer_ID", "1201-1");
+//                params.put("user_ID", UserId);
+//                params.put("is_Auto_Renew", String.valueOf(renewParam));
+//                params.put("connection_Status_ID", String.valueOf(connection_statusId));
+//                params.put("date", currentDateTime);
+//
+                updateCustomerPojo.setCustomerID(CustID);
+                updateCustomerPojo.setAreaCustomerID("1201-1");
+                updateCustomerPojo.setAadharNo("NA");
+                updateCustomerPojo.setGsTNumber("NA");
+                updateCustomerPojo.setAddress( "");
+                updateCustomerPojo.setCompanyID(CompanyId);
+                updateCustomerPojo.setDate(currentDateTime);
+                updateCustomerPojo.setContactNo( cust_number.getText().toString());
+                updateCustomerPojo.setEmailId("NA");
+                updateCustomerPojo.setConnectionStatusID(String.valueOf(connection_statusId));
+                updateCustomerPojo.setIsAutoRenew( String.valueOf(renewParam));
+                updateCustomerPojo.setUserID(UserId);
+                updateCustomerPojo.setAccountNo(acc_number.getText().toString());
+                updateCustomerPojo.setName(cust_name.getText().toString());
+                updateCustomerPojo.setWhatsupNo(cust_whtsap_number.getText().toString());
+                updateCustomerPojo.setSoDoWo("NA");
+                updateCustomerPojo.setSubscriberID(subscriber_id.getText().toString());
 
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(UpdateCustomerActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-                                progressDialog.hide();
-                            }
-                        }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<>();
-                        params.put("customer_ID", CustID);
-                        params.put("company_ID", CompanyId);
-                        params.put("account_No", acc_number.getText().toString());
-                        params.put("subscriber_ID", subscriber_id.getText().toString());
-                        params.put("name", cust_name.getText().toString());
-                        params.put("soDoWo", sodowo.getText().toString());
-                        params.put("address", cust_address.getText().toString());
-                        params.put("contact_No", cust_number.getText().toString());
-                        params.put("whatsup_No", cust_whtsap_number.getText().toString());
-                        params.put("emailId", cust_email_id.getText().toString());
-                        params.put("aadhar_No", cust_aadhar_number.getText().toString());
-                        params.put("gsT_Number", cust_gst_number.getText().toString());
-                        params.put("area_Customer_ID", "1201-1");
-                        params.put("user_ID", UserId);
-                        params.put("is_Auto_Renew", String.valueOf(renewParam));
-                        params.put("connection_Status_ID", String.valueOf(connection_statusId));
-                        params.put("date", currentDateTime);
-                        Log.d("TAG", "getParams: " + params.toString());
-                        return params;
-                    }
-                };
 
-                RequestQueue requestQueue = Volley.newRequestQueue(UpdateCustomerActivity.this);
-                requestQueue.add(stringRequest);
+                if(NetCheck.isInternetConnection(getApplicationContext())){
+                    NetworkUtils.getUserApiInstance()
+                            .updateCustomer(updateCustomerPojo)
+                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Subscriber() {
+                                @Override
+                                public void onCompleted() {
+                                   // progressBar.dismiss();
+                                    Toast.makeText(UpdateCustomerActivity.this, "Details Updated", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(UpdateCustomerActivity.this, CustomersDetailsActivity.class));
+                                   finish();
+                                }
+                                @Override
+                                public void onError(Throwable e) {
+                                    Toast.makeText(UpdateCustomerActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+
+                                  //  mView.showError(e.toString());
+                                }
+
+                                @Override
+                                public void onNext(Object o) {
+
+                                }
+
+
+                            });
+                }else{
+                  //  progressBar.dismiss();
+                   // mView.showError("Connection Error");
+                }
+
+//                progressDialog.setMessage("Please Wait");
+//                progressDialog.show();
+//                StringRequest stringRequest = new StringRequest(Request.Method.POST, RetrofitAdapter.UPDATE_CUSTOMER,
+//                        new Response.Listener<String>() {
+//                            @Override
+//                            public void onResponse(String response) {
+//                                //Toast.makeText(c, response, Toast.LENGTH_LONG).show();
+//                                Log.d("TAG", "onResponse: "+response);
+//                                Toast.makeText(UpdateCustomerActivity.this, "Details Updated"+response.toString(), Toast.LENGTH_SHORT).show();
+//                                startActivity(new Intent(UpdateCustomerActivity.this, CustomersDetailsActivity.class));
+//                                finish();
+//                                progressDialog.hide();
+//
+//                            }
+//                        },
+//                        new Response.ErrorListener() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//                                Toast.makeText(UpdateCustomerActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+//                                progressDialog.hide();
+//                            }
+//                        }) {
+//                    @Override
+//                    protected Map<String, String> getParams() throws AuthFailureError {
+//                        Map<String, String> params = new HashMap<>();
+//                        params.put("customer_ID", CustID);
+//                        params.put("company_ID", CompanyId);
+//                        params.put("account_No", acc_number.getText().toString());
+//                        params.put("subscriber_ID", subscriber_id.getText().toString());
+//                        params.put("name", cust_name.getText().toString());
+//                        params.put("soDoWo","NA");
+//                        params.put("address", "");
+//                        params.put("contact_No", cust_number.getText().toString());
+//                        params.put("whatsup_No", cust_whtsap_number.getText().toString());
+//                        params.put("emailId", "NA");
+//                        params.put("aadhar_No", "NA");
+//                        params.put("gsT_Number", "NA");
+//                        params.put("area_Customer_ID", "1201-1");
+//                        params.put("user_ID", UserId);
+//                        params.put("is_Auto_Renew", String.valueOf(renewParam));
+//                        params.put("connection_Status_ID", String.valueOf(connection_statusId));
+//                        params.put("date", currentDateTime);
+//                        Log.d("TAG", "getParams: " + params.toString());
+//                        Log.d("TAG", "getParams: "+params.toString());
+//                        return params;
+//                    }
+//                };
+//                RequestQueue requestQueue = Volley.newRequestQueue(UpdateCustomerActivity.this);
+//                requestQueue.add(stringRequest);
 
             }
         });

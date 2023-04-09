@@ -1,5 +1,6 @@
 package com.elifeindia.crm.networking;
 
+import com.elifeindia.crm.UpdateCustomerPojo;
 import com.elifeindia.crm.UpdateSubscription.UpdateINternetSubscriptionActivityForUpdateSubscription;
 import com.elifeindia.crm.model.AlacarteModel;
 import com.elifeindia.crm.model.AreaResponse;
@@ -115,6 +116,8 @@ public interface ApiService {
 
     @GET("Values/GetaymentReciept?")
     Observable<PaymentReciept> getPaymentReciept(@Query("Payment_Id") String Payment_Id);
+ @POST("Values/Update_Customer")
+    Observable<PaymentReciept> updateCustomer(@Body UpdateCustomerPojo updateCustomerPojo);
 
 //    @Headers("Content-Type: application/json")
 //    @POST("Values/InsertPayment?")
@@ -326,7 +329,7 @@ public interface ApiService {
 
 
  
-    @POST("Values/Update_CableBox?")
+    @POST("Values/Get_CableExpiry?")
     Observable<UpdateBox> updateCableBox(
             @Body CableBoxSubscription cableBoxSubscription);
 
@@ -338,7 +341,7 @@ public interface ApiService {
     @POST("Values/Update_InternetBox?")
     Observable<UpdateBox> getInternetExpiry(@Body InternetBoxUpdateSubscription internetBoxUpdateSubscription);
 
-    @POST("Values/Update_InternetBox?")
+    @POST("Values/Get_Internetexpiry")
     Observable<UpdateBox> updateInternetBoxSubscription(@Body InternetBoxUpdateSubscription internetBoxUpdateSubscription);
 
 

@@ -215,7 +215,7 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
         cableBoxSubscription.setDate(date);
         cableBoxSubscription.setInvoiceID(0);
         NetworkUtils.getUserApiInstance()
-                .updateCableBoxUpdateSubscription(cableBoxSubscription)
+                .updateCableBox(cableBoxSubscription)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<UpdateBox>() {
