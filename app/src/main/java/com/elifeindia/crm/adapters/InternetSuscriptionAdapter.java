@@ -64,7 +64,7 @@ public class InternetSuscriptionAdapter extends RecyclerView.Adapter<InternetSus
         holder.expirtydate.setText(date);
         holder.amount.setText(internetBoxes.get(position).getBoxAmount().toString());
 
-        if (SharedPrefsData.getString(context, Constants.RoleId, Constants.PREF_NAME).equals("7")) {
+        if (SharedPrefsData.getString(context, Constants.RoleType, Constants.PREF_NAME).equals("Technician")) {
 
             holder.amount.setVisibility(View.INVISIBLE);
         }
@@ -76,7 +76,7 @@ public class InternetSuscriptionAdapter extends RecyclerView.Adapter<InternetSus
         holder.ll_int.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (SharedPrefsData.getString(context, Constants.RoleId, Constants.PREF_NAME).equals("7")) {
+                if (SharedPrefsData.getString(context, Constants.RoleType, Constants.PREF_NAME).equals("Technician")) {
 
                     Toast.makeText(context,"Not authorized",Toast.LENGTH_SHORT).show();
                 }else

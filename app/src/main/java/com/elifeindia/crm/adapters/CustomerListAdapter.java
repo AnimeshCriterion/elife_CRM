@@ -61,7 +61,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
         holder.txt_balance.setText(custemersLists.get(position).getBalance().toString());
 
-        if (SharedPrefsData.getString(context, Constants.RoleId, Constants.PREF_NAME).equals("7")) {
+        if (SharedPrefsData.getString(context, Constants.RoleType, Constants.PREF_NAME).equals("Technician")) {
 
             holder.txt_balance.setVisibility(View.INVISIBLE);
         }
