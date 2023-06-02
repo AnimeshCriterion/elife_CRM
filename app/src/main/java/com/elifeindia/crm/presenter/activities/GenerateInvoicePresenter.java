@@ -327,7 +327,8 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
 
                     @Override
                     public void onNext(UpdateBox boxBouquetList) {
-                    //    mView.showInternetBox(boxBouquetList);
+                        mView.showInternetBox(boxBouquetList, null, null);
+
                     }
                 });
     }
