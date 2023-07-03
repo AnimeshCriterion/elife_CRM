@@ -10,6 +10,7 @@ import com.elifeindia.crm.model.CustemersCableBoxData;
 import com.elifeindia.crm.model.CustemersList;
 import com.elifeindia.crm.model.CustomerData;
 import com.elifeindia.crm.model.CustomersInternetBoxData;
+import com.elifeindia.crm.model.GetInvoiceModel;
 import com.elifeindia.crm.networking.NetCheck;
 import com.elifeindia.crm.networking.NetworkUtils;
 
@@ -50,11 +51,13 @@ public class CustomerDetailsPresenter implements CustomerDetailsContract.Present
                         }
                         @Override
                         public void onError(Throwable e) {
+                            progressBar.dismiss();
                             mView.showError(e.toString());
                         }
 
                         @Override
                         public void onNext(CustomerData custemersList) {
+                            progressBar.dismiss();
                             mView.showResult(custemersList);
                         }
                     });
@@ -105,6 +108,29 @@ public class CustomerDetailsPresenter implements CustomerDetailsContract.Present
                     @Override
                     public void onNext(CustomersInternetBoxData custemersCableBoxData) {
                         mView.showInernetBoxList(custemersCableBoxData);
+                    }
+                });
+    }
+
+    @Override
+    public void getInvoice(Context context, String invId) {
+        NetworkUtils.getUserApiInstance()
+                .getInvoice(invId)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<GetInvoiceModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(e.toString());
+                    }
+
+                    @Override
+                    public void onNext(GetInvoiceModel getInvoiceModel) {
+                        mView.showInvoice(getInvoiceModel);
                     }
                 });
     }

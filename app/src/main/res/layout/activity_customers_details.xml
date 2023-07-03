@@ -338,6 +338,8 @@
                             <TextView
                                 android:id="@+id/address"
                                 android:layout_width="0dp"
+                                android:paddingEnd="@dimen/_12sdp"
+                                android:drawableEnd="@drawable/map"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:layout_weight="0.5"

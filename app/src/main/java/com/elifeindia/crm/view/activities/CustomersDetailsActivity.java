@@ -27,6 +27,7 @@ import com.elifeindia.crm.contract.activities.CustomerDetailsContract;
 import com.elifeindia.crm.model.CustemersCableBoxData;
 import com.elifeindia.crm.model.CustomerData;
 import com.elifeindia.crm.model.CustomersInternetBoxData;
+import com.elifeindia.crm.model.GetInvoiceModel;
 import com.elifeindia.crm.presenter.activities.CustomerDetailsPresenter;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
@@ -34,9 +35,13 @@ import com.elifeindia.crm.utils.ViewUtils;
 
 import java.util.List;
 
+import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.cableBoxWithSubscription;
+import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.getInvoiceModelInvoice;
+import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.internetBoxWithSubscription;
 import static com.elifeindia.crm.view.activities.HomeActivity.hideCollectPayment;
 import static com.elifeindia.crm.view.activities.HomeActivity.hideInvoice;
 import static com.elifeindia.crm.view.activities.HomeActivity.hideReport;
+import static com.elifeindia.crm.view.fragment.CollectPaymentFragment.triplePlay;
 
 public class CustomersDetailsActivity extends AppCompatActivity implements CustomerDetailsContract.View, View.OnClickListener {
 
@@ -50,6 +55,8 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
     LinearLayout cablelayout, internetlayout, ll_pay, ll_bill_share, ll_invoice, ll_report;
 
     public  static String customerBalance;
+
+    String InvoiceID;
 
     String sodowo, city, email, areaName, subArea, renew, custId, userId, companyId;
 
@@ -79,6 +86,23 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         tool_bar_text = findViewById(R.id.tool_bar_text);
 
         editCustDetails = findViewById(R.id.edit_cust_details);
+
+
+        address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("TAG", "onClick: "+"checkkk");
+                String address1 = address.getText().toString();
+
+                Uri gmmIntentUri = Uri.parse("geo:0,0?q="+address1);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+
+//                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(mapIntent);
+//                }
+            }
+        });
 
         editCustDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,16 +256,18 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         ll_bill_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(CustomersDetailsActivity.this, R.style.ListRow));
-
-                builder.setTitle("Stay Connected With Us")
-                        .setMessage("This functionality is coming soon")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        }).show();
+                Log.d("TAG", "InvoiceID: "+InvoiceID.toString());
+                presenter.getInvoice(CustomersDetailsActivity.this, InvoiceID);
+//                final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(CustomersDetailsActivity.this, R.style.ListRow));
+//
+//                builder.setTitle("Stay Connected With Us")
+//                        .setMessage("This functionality is coming soon")
+//                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//
+//                            }
+//                        }).show();
                 // startActivity(new Intent(CustomersDetailsActivity.this, BillShareActivity.class));
             }
         });
@@ -270,6 +296,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
     @Override
     public void showResult(CustomerData customerData) {
         customerBalance= String.valueOf(customerData.getBalance());
+        InvoiceID= String.valueOf(customerData.getInvoiceID());
         address.setText(customerData.getAddress());
         areaid.setText(customerData.getAreaCustomerID().toString());
         txt_mob_no.setText(customerData.getContactNo());
@@ -294,7 +321,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         }
 
         try {
-            city = customerData.getCity().toString();
+           city = customerData.getCity().toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -375,6 +402,41 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
 
         }
 
+    }
+
+    @Override
+    public void showInvoice(GetInvoiceModel getInvoiceModel) {
+        startActivity(new Intent(this, BillShareActivity.class));
+        getInvoiceModelInvoice = getInvoiceModel;
+        SharedPrefsData.putString(this, Constants.AccNo, String.valueOf(getInvoiceModel.getAccount_No()), Constants.PREF_NAME);
+        triplePlay = SharedPrefsData.getString(CustomersDetailsActivity.this, Constants.TriplePlay, Constants.PREF_NAME);
+        if (triplePlay.equals("Cable")) {
+            SharedPrefsData.putString(this, Constants.TotalAmount, cableBoxWithSubscription.geTotal_CableBox_amount(), Constants.PREF_NAME);
+        } else if (triplePlay.equals("Internet")) {
+            SharedPrefsData.putString(this, Constants.TotalAmount, internetBoxWithSubscription.getTotal_InternetBox_amount(), Constants.PREF_NAME);
+            //SharedPrefsData.putString(this, Constants.TotalAmount, String.valueOf(internetBoxList.get(box_position).getInternetBox().getBox_Amount()), Constants.PREF_NAME);
+        }
+        SharedPrefsData.putString(this, Constants.InvoiceNo, String.valueOf(getInvoiceModel.getInvoice_Number()), Constants.PREF_NAME);
+
+        //getInvoiceModel.getArea_Customer_ID();
+        //getInvoiceModel.getAreaName();
+        SharedPrefsData.putString(this, Constants.CustomerBalance, String.valueOf(getInvoiceModel.getBalance()), Constants.PREF_NAME);
+        getInvoiceModel.getCustomer_ID();
+        getInvoiceModel.getDiscount();
+        getInvoiceModel.getInv_Amount();
+        getInvoiceModel.getInvoice_Date();
+        SharedPrefsData.putString(this, Constants.InvoiceDate, getInvoiceModel.getInvoice_Date().toString(), Constants.PREF_NAME);
+        //getInvoiceModel.getInvoice_ID();
+        //SharedPrefsData.putString(this, Constants.InvoiceNo, getInvoiceModel.get().toString(), Constants.PREF_NAME);
+        SharedPrefsData.putString(this, Constants.CustomerName, getInvoiceModel.getName().toString(), Constants.PREF_NAME);
+        try {
+            SharedPrefsData.putString(this, Constants.PrevBal, String.valueOf(getInvoiceModel.getPrevious_Balance()), Constants.PREF_NAME);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        SharedPrefsData.putString(this, Constants.SubId, getInvoiceModel.getSubscriber_ID().toString(), Constants.PREF_NAME);
+        getInvoiceModel.getTitle();
+        getInvoiceModel.getTriple_play_ID();
     }
 
     @Override

@@ -28,6 +28,9 @@
     <uses-feature
         android:name="android.hardware.usb.host"
         android:required="true" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
 
     <application
         android:name=".printersdk.App"
@@ -71,12 +74,12 @@
         <activity android:name=".view.activities.RegisterComplaintActivity2"  android:exported="true"/>
         <activity
             android:name=".printersdk.ComplaintReceiptActivity"
+            android:exported="true"
             android:noHistory="true" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
-            android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">
             <meta-data
@@ -191,7 +194,6 @@
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
-            android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"

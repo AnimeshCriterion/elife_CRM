@@ -7,6 +7,7 @@ import com.elifeindia.crm.model.CustemersCableBoxData;
 import com.elifeindia.crm.model.CustemersList;
 import com.elifeindia.crm.model.CustomerData;
 import com.elifeindia.crm.model.CustomersInternetBoxData;
+import com.elifeindia.crm.model.GetInvoiceModel;
 
 public interface CustomerDetailsContract {
     interface View {
@@ -15,6 +16,8 @@ public interface CustomerDetailsContract {
         void showResult(CustomerData customerData);
         void showCableBoxList(CustemersCableBoxData custemersCableBoxData);
         void showInernetBoxList(CustomersInternetBoxData customersInternetBoxData);
+
+        void showInvoice(GetInvoiceModel getInvoiceModel);
     }
 
     interface Presenter {
@@ -22,6 +25,7 @@ public interface CustomerDetailsContract {
         void loadApi(Context context, String Customer_ID);
         void loadCableBoxListApi(String Customer_ID);
         void loadInternetBoxListApi(String Customer_ID);
+        void getInvoice(Context context, String invId);
     }
 
 

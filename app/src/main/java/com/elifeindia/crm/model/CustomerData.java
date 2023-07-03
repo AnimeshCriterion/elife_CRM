@@ -88,7 +88,7 @@ public class CustomerData {
     private Object triplePlayID;
     @SerializedName("invoice_ID")
     @Expose
-    private Object invoiceID;
+    private String invoiceID;
 
     public Integer getCustomerID() {
         return customerID;
@@ -306,11 +306,11 @@ public class CustomerData {
         this.triplePlayID = triplePlayID;
     }
 
-    public Object getInvoiceID() {
+    public String getInvoiceID() {
         return invoiceID;
     }
 
-    public void setInvoiceID(Object invoiceID) {
+    public void setInvoiceID(String invoiceID) {
         this.invoiceID = invoiceID;
     }
 
