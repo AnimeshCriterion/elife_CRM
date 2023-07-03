@@ -34,7 +34,7 @@
 
     <application
         android:name=".printersdk.App"
-        tools:node="merge"
+        tools:node="replace"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/launcher_icon"
@@ -198,16 +198,7 @@
             android:authorities="${applicationId}.provider"
             android:grantUriPermissions="true">
             <meta-data
-                android:name="android.support.FILE_PROVIDER_PATH
-
-
-
-
-
-
-
-
-                S"
+                android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_path" />
         </provider>
     </application>
