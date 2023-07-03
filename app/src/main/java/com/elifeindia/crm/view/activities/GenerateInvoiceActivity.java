@@ -447,6 +447,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                Log.d("TAG", "onClickAnimesh: "+json.toString());
                                 presenter.insertInvoice(GenerateInvoiceActivity.this, json);
 
                             }
@@ -824,6 +825,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
     @Override
     public void showInternetBox(UpdateBox boxTypeModel, TextView view, TextView view1) {
         SharedPrefsData.putString(getApplicationContext(), "ExpiryDate", boxTypeModel.getExpiry_Date(), Constants.PREF_NAME);
+        expiry_DateInternet = boxTypeModel.getExpiry_Date().substring(0, 10);
 
         if (strApiCallType.equals("calculateExpiryInternet")) {
             view1.setText(box_AmountInternet);
@@ -870,18 +872,17 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             txt_subscription_amnt.setText("Rs. " + boxTypeModel.getBox_Amount());
             internetBoxList.get(box_position).getInternetBox().setBox_Amount(Double.parseDouble(box_AmountInternet));
             amountInternet.setText(box_AmountInternet);
-
             totalAmnt = (Float.parseFloat(CustomerBalance) + Float.parseFloat(box_AmountInternet));
             txt_total_amount.setText(String.valueOf(totalAmnt));
             edt_payingamount.setText(String.valueOf(totalAmnt));
             activation_DateInternet = boxTypeModel.getActivation_Date().substring(0, 10);
             SharedPrefsData.putString(getApplicationContext(), "ExpiryDate", boxTypeModel.getExpiry_Date(), Constants.PREF_NAME);
 
-            expiry_DateInternet = boxTypeModel.getExpiry_Date().substring(0, 10);
 
             //Me
             Log.e("activation_DateInterne4", activation_DateInternet);
-            Log.e("expiry_DateInternet4", expiry_DateInternet);
+            Log.e("expiry_DateInternet4Ani", expiry_DateInternet);
+            Log.e("expiry_DateInternet4Ani", boxTypeModel.getExpiry_Date().substring(0, 10).toString());
 
         }
 

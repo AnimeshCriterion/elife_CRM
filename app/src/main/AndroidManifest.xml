@@ -45,7 +45,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:replace="usesCleartextTraffic"
+        tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
             android:name=".view.activities.BalanceAdjustmentActivity"
@@ -177,7 +177,9 @@
             android:name=".view.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"
+                    android:exported="true"
+                    />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -196,7 +198,16 @@
             android:authorities="${applicationId}.provider"
             android:grantUriPermissions="true">
             <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:name="android.support.FILE_PROVIDER_PATH
+
+
+
+
+
+
+
+
+                S"
                 android:resource="@xml/provider_path" />
         </provider>
     </application>
