@@ -406,18 +406,20 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
 
     @Override
     public void showInvoice(GetInvoiceModel getInvoiceModel) {
-        startActivity(new Intent(this, BillShareActivity.class));
+        Log.d("TAG", "showInvoice1: ");
         getInvoiceModelInvoice = getInvoiceModel;
-        SharedPrefsData.putString(this, Constants.AccNo, String.valueOf(getInvoiceModel.getAccount_No()), Constants.PREF_NAME);
-        triplePlay = SharedPrefsData.getString(CustomersDetailsActivity.this, Constants.TriplePlay, Constants.PREF_NAME);
-        if (triplePlay.equals("Cable")) {
-            SharedPrefsData.putString(this, Constants.TotalAmount, cableBoxWithSubscription.geTotal_CableBox_amount(), Constants.PREF_NAME);
-        } else if (triplePlay.equals("Internet")) {
-            SharedPrefsData.putString(this, Constants.TotalAmount, internetBoxWithSubscription.getTotal_InternetBox_amount(), Constants.PREF_NAME);
-            //SharedPrefsData.putString(this, Constants.TotalAmount, String.valueOf(internetBoxList.get(box_position).getInternetBox().getBox_Amount()), Constants.PREF_NAME);
-        }
-        SharedPrefsData.putString(this, Constants.InvoiceNo, String.valueOf(getInvoiceModel.getInvoice_Number()), Constants.PREF_NAME);
+//        SharedPrefsData.putString(this, Constants.AccNo, String.valueOf(getInvoiceModel.getAccount_No()), Constants.PREF_NAME);
+//        triplePlay = SharedPrefsData.getString(CustomersDetailsActivity.this, Constants.TriplePlay, Constants.PREF_NAME);
+//        if (triplePlay.equals("Cable")) {
+//            SharedPrefsData.putString(this, Constants.TotalAmount, cableBoxWithSubscription.geTotal_CableBox_amount(), Constants.PREF_NAME);
+//        } else if (triplePlay.equals("Internet")) {
+//            SharedPrefsData.putString(this, Constants.TotalAmount, internetBoxWithSubscription.getTotal_InternetBox_amount(), Constants.PREF_NAME);
+//            //SharedPrefsData.putString(this, Constants.TotalAmount, String.valueOf(internetBoxList.get(box_position).getInternetBox().getBox_Amount()), Constants.PREF_NAME);
+//        }
+//        SharedPrefsData.putString(this, Constants.InvoiceNo, String.valueOf(getInvoiceModel.getInvoice_Number()), Constants.PREF_NAME);
+//
 
+        Log.d("TAG", "showInvoice2: ");
         //getInvoiceModel.getArea_Customer_ID();
         //getInvoiceModel.getAreaName();
         SharedPrefsData.putString(this, Constants.CustomerBalance, String.valueOf(getInvoiceModel.getBalance()), Constants.PREF_NAME);
@@ -433,10 +435,13 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
             SharedPrefsData.putString(this, Constants.PrevBal, String.valueOf(getInvoiceModel.getPrevious_Balance()), Constants.PREF_NAME);
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d("TAG", "showInvoice3: "+e.toString());
         }
         SharedPrefsData.putString(this, Constants.SubId, getInvoiceModel.getSubscriber_ID().toString(), Constants.PREF_NAME);
         getInvoiceModel.getTitle();
         getInvoiceModel.getTriple_play_ID();
+        startActivity(new Intent(this, BillShareActivity.class));
+
     }
 
     @Override

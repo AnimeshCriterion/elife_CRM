@@ -134,7 +134,7 @@ public class BillShareActivity extends AppCompatActivity {
 
         try {
             if (!getInvoiceModelInvoice.getPaymentMaster().isEmpty() || getInvoiceModelInvoice.getPaymentMaster() != null) {
-                payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getPaymentType());
+               payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getPaymentType());
                 txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getPaid_Amount());
                 discountTextView.setText(String.valueOf(getInvoiceModelInvoice.getDiscount()));
                 paidAmount = getInvoiceModelInvoice.getPaymentMaster().get(0).getPaid_Amount();
