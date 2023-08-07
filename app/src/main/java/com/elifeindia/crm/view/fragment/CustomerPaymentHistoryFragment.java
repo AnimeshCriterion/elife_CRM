@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elifeindia.crm.BuildConfig;
+import com.elifeindia.crm.OnClickForPaymentReceiptNew;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.adapters.PaymentListAdapter;
 import com.elifeindia.crm.contract.activities.PaymentListContract;
@@ -61,7 +62,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
 
-public class CustomerPaymentHistoryFragment extends Fragment  implements PaymentListContract.View {
+public class CustomerPaymentHistoryFragment extends Fragment  implements PaymentListContract.View , OnClickForPaymentReceiptNew {
 
     PaymentListContract.Presenter presenter;
     ViewUtils viewUtils; LinearLayout root;
@@ -435,7 +436,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
             rv_payment_list.setVisibility(View.VISIBLE);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
             rv_payment_list.setLayoutManager(mLayoutManager);
-            paymentListAdapter = new PaymentListAdapter(getActivity(), paymentReciepts);
+            paymentListAdapter = new PaymentListAdapter(getActivity(), paymentReciepts,this);
             rv_payment_list.setAdapter(paymentListAdapter);
 
         }
@@ -569,4 +570,8 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
 
     }
 
+    @Override
+    public void onClickCollection(PaymentRecieptList.PaymentReciept obj) {
+
+    }
 }

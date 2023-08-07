@@ -1,5 +1,7 @@
 package com.elifeindia.crm.view.fragment;
 
+import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.getInvoiceModelInvoice;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -43,17 +45,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elifeindia.crm.BuildConfig;
+import com.elifeindia.crm.OnClickForPaymentReceiptNew;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.TestActivity;
 import com.elifeindia.crm.adapters.PaymentListAdapter;
+import com.elifeindia.crm.contract.activities.CustomerDetailsContract;
 import com.elifeindia.crm.contract.activities.PaymentListContract;
 import com.elifeindia.crm.model.AreaResponse;
+import com.elifeindia.crm.model.CustemersCableBoxData;
+import com.elifeindia.crm.model.CustomerData;
+import com.elifeindia.crm.model.CustomersInternetBoxData;
 import com.elifeindia.crm.model.EmployeeList;
+import com.elifeindia.crm.model.GetInvoiceModel;
 import com.elifeindia.crm.model.PaymentRecieptList;
 import com.elifeindia.crm.presenter.activities.PaymentListPresenter;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
+import com.elifeindia.crm.view.activities.BillShareActivity;
+import com.elifeindia.crm.view.activities.CustomersDetailsActivity;
 import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -91,10 +101,12 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.TimeZone;
 
-public class PaymentDetailsFragment extends Fragment implements PaymentListContract.View {
+public class PaymentDetailsFragment extends Fragment implements PaymentListContract.View, OnClickForPaymentReceiptNew,CustomerDetailsContract.View {
 
     private static final int ACTIVITY_VIEW_ATTACHMENT = 101;
     PaymentListContract.Presenter presenter;
+    CustomerDetailsContract.Presenter custommerPresenter;
+
     ViewUtils viewUtils;
     RecyclerView rv_payment_list;
     PaymentListAdapter paymentListAdapter;
@@ -129,6 +141,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     }
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_payment_details, container, false);
@@ -441,6 +454,61 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     }
 
     @Override
+    public void showResult(CustomerData customerData) {
+
+    }
+
+    @Override
+    public void showCableBoxList(CustemersCableBoxData custemersCableBoxData) {
+
+    }
+
+    @Override
+    public void showInernetBoxList(CustomersInternetBoxData customersInternetBoxData) {
+
+    }
+
+    @Override
+    public void showInvoice(GetInvoiceModel getInvoiceModel) {
+        Log.d("TAG", "showInvoice1: ");
+        getInvoiceModelInvoice = getInvoiceModel;
+//        SharedPrefsData.putString(this, Constants.AccNo, String.valueOf(getInvoiceModel.getAccount_No()), Constants.PREF_NAME);
+//        triplePlay = SharedPrefsData.getString(CustomersDetailsActivity.this, Constants.TriplePlay, Constants.PREF_NAME);
+//        if (triplePlay.equals("Cable")) {
+//            SharedPrefsData.putString(this, Constants.TotalAmount, cableBoxWithSubscription.geTotal_CableBox_amount(), Constants.PREF_NAME);
+//        } else if (triplePlay.equals("Internet")) {
+//            SharedPrefsData.putString(this, Constants.TotalAmount, internetBoxWithSubscription.getTotal_InternetBox_amount(), Constants.PREF_NAME);
+//            //SharedPrefsData.putString(this, Constants.TotalAmount, String.valueOf(internetBoxList.get(box_position).getInternetBox().getBox_Amount()), Constants.PREF_NAME);
+//        }
+//        SharedPrefsData.putString(this, Constants.InvoiceNo, String.valueOf(getInvoiceModel.getInvoice_Number()), Constants.PREF_NAME);
+//
+
+        Log.d("TAG", "showInvoice2: ");
+        //getInvoiceModel.getArea_Customer_ID();
+        //getInvoiceModel.getAreaName();
+        SharedPrefsData.putString(getActivity(), Constants.CustomerBalance, String.valueOf(getInvoiceModel.getBalance()), Constants.PREF_NAME);
+        getInvoiceModel.getCustomer_ID();
+        getInvoiceModel.getDiscount();
+        getInvoiceModel.getInv_Amount();
+        getInvoiceModel.getInvoice_Date();
+        SharedPrefsData.putString(getActivity(), Constants.InvoiceDate, getInvoiceModel.getInvoice_Date().toString(), Constants.PREF_NAME);
+        //getInvoiceModel.getInvoice_ID();
+        //SharedPrefsData.putString(this, Constants.InvoiceNo, getInvoiceModel.get().toString(), Constants.PREF_NAME);
+        SharedPrefsData.putString(getActivity(), Constants.CustomerName, getInvoiceModel.getName().toString(), Constants.PREF_NAME);
+        try {
+            SharedPrefsData.putString(getActivity(), Constants.PrevBal, String.valueOf(getInvoiceModel.getPrevious_Balance()), Constants.PREF_NAME);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("TAG", "showInvoice3: "+e.toString());
+        }
+        SharedPrefsData.putString(getActivity(), Constants.SubId, getInvoiceModel.getSubscriber_ID().toString(), Constants.PREF_NAME);
+        getInvoiceModel.getTitle();
+        getInvoiceModel.getTriple_play_ID();
+        startActivity(new Intent(getActivity(), BillShareActivity.class));
+
+    }
+
+    @Override
     public void showResult(PaymentRecieptList paymentRecieptList) {
         progressBar.dismiss();
         txt_total_balance.setText("Payments\n" + paymentRecieptList.getPaymentReciept().size());
@@ -459,7 +527,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
             rv_payment_list.setVisibility(View.VISIBLE);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
             rv_payment_list.setLayoutManager(mLayoutManager);
-            paymentListAdapter = new PaymentListAdapter(getActivity(), paymentReciepts);
+            paymentListAdapter = new PaymentListAdapter(getActivity(), paymentReciepts,this);
             rv_payment_list.setAdapter(paymentListAdapter);
 
         }
@@ -899,4 +967,9 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     }
 
 
+    @Override
+    public void onClickCollection(PaymentRecieptList.PaymentReciept obj) {
+        Log.d(TAG, "onClickCollection: "+obj.getInvoiceNumber().toString());
+        custommerPresenter.getInvoice(getActivity(), String.valueOf(1402910));
+    }
 }

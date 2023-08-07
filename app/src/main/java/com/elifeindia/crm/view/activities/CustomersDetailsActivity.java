@@ -297,6 +297,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
     public void showResult(CustomerData customerData) {
         customerBalance= String.valueOf(customerData.getBalance());
         InvoiceID= String.valueOf(customerData.getInvoiceID());
+        Toast.makeText(getApplicationContext(),"INVID"+InvoiceID.toString(),Toast.LENGTH_LONG).show();
         address.setText(customerData.getAddress());
         areaid.setText(customerData.getAreaCustomerID().toString());
         txt_mob_no.setText(customerData.getContactNo());

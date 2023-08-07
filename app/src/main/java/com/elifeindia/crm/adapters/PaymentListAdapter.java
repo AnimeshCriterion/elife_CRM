@@ -13,30 +13,27 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.elifeindia.crm.OnClickForPaymentReceiptNew;
 import com.elifeindia.crm.R;
-import com.elifeindia.crm.model.CustemersList;
-import com.elifeindia.crm.model.PaymentRecieptList;
-import com.elifeindia.crm.printersdk.PaymentReceiptReprentingActivity;
-import com.elifeindia.crm.sharedpref.Constants;
-import com.elifeindia.crm.sharedpref.SharedPrefsData;
-import com.elifeindia.crm.utils.ViewUtils;
-import com.elifeindia.crm.view.activities.CollectionDetailsActivity;
-import com.elifeindia.crm.view.activities.CustomersDetailsActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.elifeindia.crm.model.PaymentRecieptList;
+
+import com.elifeindia.crm.utils.ViewUtils;
+
 import java.util.List;
-import java.util.Locale;
+
 
 
 public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.MyviewHolder>{
 
     Context context;
+    OnClickForPaymentReceiptNew onClickForPaymentReceiptNew;
     List<PaymentRecieptList.PaymentReciept> paymentReciepts;
 
-    public PaymentListAdapter(Context context, List<PaymentRecieptList.PaymentReciept> paymentReciepts) {
+    public PaymentListAdapter(Context context, List<PaymentRecieptList.PaymentReciept> paymentReciepts,OnClickForPaymentReceiptNew onClickForPaymentReceiptNew) {
         this.context = context;
         this.paymentReciepts = paymentReciepts;
+        this.onClickForPaymentReceiptNew=onClickForPaymentReceiptNew;
     }
 
     @NonNull
@@ -78,23 +75,25 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
         holder.cv_customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String pId = paymentReciepts.get(position).getPayment_Id();
-                Toast.makeText(context,"CheckID"+paymentReciepts.get(position).getInvoiceNumber().toString(),Toast.LENGTH_LONG).show();
+//                String pId = paymentReciepts.get(position).getPayment_Id();
+//                Toast.makeText(context,"CheckID"+paymentReciepts.get(position).getInvoiceNumber().toString(),Toast.LENGTH_LONG).show();
+//
+//                SharedPrefsData.putString(context, Constants.PaymentId, pId, Constants.PREF_NAME);
+//
+//                Intent intent = new Intent(context, PaymentReceiptReprentingActivity.class);
+//
+//                intent.putExtra("BillType", holder.txt_triplePlay.getText().toString());
+//
+//                intent.putExtra("WhatsappNo", paymentReciepts.get(position).getWhatsappNo());
+//
+//                intent.putExtra("ContactNo", paymentReciepts.get(position).getContactNo());
+//
+//                //String address = paymentReciepts.get(position).getAddress().toString();
+//               // SharedPrefsData.putString(context, Constants.CustomerAddress, address, Constants.PREF_NAME);
+//               // SharedPrefsData.putString(context, Constants.CustomerID, paymentReciepts.get(position).getCustomerID().toString(), Constants.PREF_NAME);
+//                context.startActivity(intent);
 
-                SharedPrefsData.putString(context, Constants.PaymentId, pId, Constants.PREF_NAME);
-
-                Intent intent = new Intent(context, PaymentReceiptReprentingActivity.class);
-
-                intent.putExtra("BillType", holder.txt_triplePlay.getText().toString());
-
-                intent.putExtra("WhatsappNo", paymentReciepts.get(position).getWhatsappNo());
-
-                intent.putExtra("ContactNo", paymentReciepts.get(position).getContactNo());
-
-                //String address = paymentReciepts.get(position).getAddress().toString();
-               // SharedPrefsData.putString(context, Constants.CustomerAddress, address, Constants.PREF_NAME);
-               // SharedPrefsData.putString(context, Constants.CustomerID, paymentReciepts.get(position).getCustomerID().toString(), Constants.PREF_NAME);
-                context.startActivity(intent);
+                onClickForPaymentReceiptNew.onClickCollection(paymentReciepts.get(position));
             }
         });
     }
