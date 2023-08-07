@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -78,6 +79,7 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
             @Override
             public void onClick(View view) {
                 String pId = paymentReciepts.get(position).getPayment_Id();
+                Toast.makeText(context,"CheckID"+paymentReciepts.get(position).getInvoiceNumber().toString(),Toast.LENGTH_LONG).show();
 
                 SharedPrefsData.putString(context, Constants.PaymentId, pId, Constants.PREF_NAME);
 

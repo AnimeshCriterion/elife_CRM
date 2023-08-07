@@ -500,7 +500,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
 
     @Override
     public void showReceipt(PaymentReciept paymentReciept) {
-
+        Log.d("TAG", "showReceiptAnimesh: "+paymentReciept.toString());
         name = paymentReciept.getName();
         accNo = paymentReciept.getAccountNo().toString();
         subId = paymentReciept.getSubscriberID();
