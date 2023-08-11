@@ -58,6 +58,7 @@ import com.elifeindia.crm.model.CustomersInternetBoxData;
 import com.elifeindia.crm.model.EmployeeList;
 import com.elifeindia.crm.model.GetInvoiceModel;
 import com.elifeindia.crm.model.PaymentRecieptList;
+import com.elifeindia.crm.presenter.activities.CustomerDetailsPresenter;
 import com.elifeindia.crm.presenter.activities.PaymentListPresenter;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
@@ -361,7 +362,9 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
         viewUtils = new ViewUtils();
         presenter = new PaymentListPresenter(this);
+        custommerPresenter = new CustomerDetailsPresenter(this);
         presenter.start();
+        custommerPresenter.start();
         progressBar = new ProgressDialog(getContext());
         progressBar.setCancelable(false);//you can cancel it by pressing back button
         progressBar.setMessage("Please wait...");
@@ -969,7 +972,6 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
     @Override
     public void onClickCollection(PaymentRecieptList.PaymentReciept obj) {
-        Log.d(TAG, "onClickCollection: "+obj.getInvoiceNumber().toString());
-        custommerPresenter.getInvoice(getActivity(), String.valueOf(1402910));
+       custommerPresenter.getInvoice(getContext(), String.valueOf(530588));
     }
 }

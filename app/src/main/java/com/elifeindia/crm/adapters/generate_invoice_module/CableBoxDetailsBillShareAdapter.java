@@ -138,13 +138,13 @@ public class CableBoxDetailsBillShareAdapter extends RecyclerView.Adapter<CableB
 
             holder.vcno_text.setText("VcNo");
             holder.stbno_text.setText("STB No");
-            holder.stbno.setText(cableBoxList.get(position).getCableBox().getStbno().toString());
-            holder.cafnum.setText(cableBoxList.get(position).getCableBox().getCafno().toString());
+            holder.stbno.setText(cableBoxList.get(position).getCableBox().getStbno()!=null?cableBoxList.get(position).getCableBox().getStbno().toString():"");
+            holder.cafnum.setText(cableBoxList.get(position).getCableBox().getCafno()!=null?cableBoxList.get(position).getCableBox().getCafno().toString():"");
             holder.vcnum.setText(cableBoxList.get(position).getCableBox().getVcno().toString());
             String date = null;
             date = ViewUtils.changeDateFormat(cableBoxList.get(position).getCableBox().getExpiry_Date().toString());
-          //  holder.expirtydate.setText(date);
-            holder.expirtydate.setText(ViewUtils.changeDateFormat(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)));
+            holder.expirtydate.setText(date);
+            //holder.expirtydate.setText(ViewUtils.changeDateFormat(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)));
             // holder.txt_expiry_date.setText(date);
 
 
@@ -164,9 +164,9 @@ public class CableBoxDetailsBillShareAdapter extends RecyclerView.Adapter<CableB
             //      cable_Box_ID = cableBoxList.get(position).getCableBox().getCable_Box_ID().toString();
             //      box_ID = cableBoxList.get(position).getCableBox().getBox_ID().toString();
             //      boxType_ID = String.valueOf(cableBoxList.get(position).getCableBox().getBoxType_ID());
-            vcno = cableBoxList.get(position).getCableBox().getVcno().toString();
-            stbno = cableBoxList.get(position).getCableBox().getStbno().toString();
-            cafno = cableBoxList.get(position).getCableBox().getCafno().toString();
+            vcno = cableBoxList.get(position).getCableBox().getVcno()!=null?cableBoxList.get(position).getCableBox().getVcno().toString():"";
+            stbno = cableBoxList.get(position).getCableBox().getStbno()!=null?cableBoxList.get(position).getCableBox().getStbno().toString():"";
+            cafno = cableBoxList.get(position).getCableBox().getCafno()!=null?cableBoxList.get(position).getCableBox().getCafno().toString():"";
             //    bill_Type_ID = String.valueOf(cableBoxList.get(position).getCableBox().getBill_Type_ID());
 
             strBillType = cableBoxList.get(position).getCableBox().getBill_Type().toString();

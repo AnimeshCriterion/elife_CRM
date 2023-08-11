@@ -755,9 +755,9 @@ public class GetInvoiceModel {
             private Object customer_ID;
             private Object box_ID;
             private int boxType_ID;
-            private String vcno;
-            private String stbno;
-            private String cafno;
+            private String vcno="";
+            private String stbno="";
+            private String cafno="";
             private String iPtv;
             private int bill_Type_ID;
             private int noofMonth;
