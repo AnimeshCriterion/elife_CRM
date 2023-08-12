@@ -89,6 +89,16 @@ private  String address;
 
         private  String payment_Id;
 
+        public String getInvoice_ID() {
+            return invoice_ID;
+        }
+
+        public void setInvoice_ID(String invoice_ID) {
+            this.invoice_ID = invoice_ID;
+        }
+
+        private  String invoice_ID;
+
         public String getPayment_Id() {
             return payment_Id;
         }

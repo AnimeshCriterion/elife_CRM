@@ -38,6 +38,7 @@ import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
 import com.elifeindia.crm.printersdk.PaymentReceiptActivity;
+import com.elifeindia.crm.view.activities.BillShareActivity;
 import com.elifeindia.crm.view.activities.CustomersDetailsActivity;
 
 import java.io.File;
@@ -218,7 +219,6 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-
                             String customer_ID = SharedPrefsData.getString(getActivity(), Constants.CustomerID, Constants.PREF_NAME);
                             String company_ID = SharedPrefsData.getString(getActivity(), Constants.CompanyID, Constants.PREF_NAME);
                             String user_ID = SharedPrefsData.getString(getActivity(), Constants.UserId, Constants.PREF_NAME);
@@ -361,7 +361,9 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
         String paymentId = insertPayment.id;
         SharedPrefsData.putString(getActivity(), Constants.PaymentId, paymentId, Constants.PREF_NAME);
         viewUtils.toast(getActivity(), "Payment inserted successfully");
-        Intent intent=new Intent(getActivity(), PaymentReceiptActivity.class);
+
+       // custommerPresenter.getInvoice(getContext(), String.valueOf(obj.getInvoice_ID()));
+        Intent intent=new Intent(getActivity(), BillShareActivity.class);
         intent.putExtra("paymentId",paymentId);
         startActivity(intent);
 

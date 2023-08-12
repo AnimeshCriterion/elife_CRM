@@ -498,7 +498,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         //getInvoiceModel.getInvoice_ID();
         //SharedPrefsData.putString(this, Constants.InvoiceNo, getInvoiceModel.get().toString(), Constants.PREF_NAME);
         SharedPrefsData.putString(getActivity(), Constants.CustomerName, getInvoiceModel.getName().toString(), Constants.PREF_NAME);
-        try {
+         try {
             SharedPrefsData.putString(getActivity(), Constants.PrevBal, String.valueOf(getInvoiceModel.getPrevious_Balance()), Constants.PREF_NAME);
         } catch (Exception e) {
             e.printStackTrace();
@@ -972,6 +972,8 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
     @Override
     public void onClickCollection(PaymentRecieptList.PaymentReciept obj) {
-       custommerPresenter.getInvoice(getContext(), String.valueOf(530588));
+        SharedPrefsData.putInt(getActivity(), "PaymentID", Integer.parseInt(obj.getPayment_Id()), Constants.PREF_NAME);
+
+        custommerPresenter.getInvoice(getContext(), String.valueOf(obj.getInvoice_ID()));
     }
 }

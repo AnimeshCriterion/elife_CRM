@@ -78,7 +78,7 @@ import java.util.Set;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class BillShareActivity extends AppCompatActivity {
+public class BillShareActivity extends AppCompatActivity   {
 
     TextView txt_total, btn_next, btn_done, btn_send, txt_header, txt_cust_name, txt_accountno, invoicenumber, txt_mob_no, txt_invoice_date, txt_sub_id,
             txt_prev_bal, txt_total_amount, txt_paid_amnt, txt_balance, payment_Mode, collectBy, employeeNumber;
@@ -132,12 +132,22 @@ public class BillShareActivity extends AppCompatActivity {
         //  payment_Mode.setText(SharedPrefsData.getString(BillShareActivity.this, Constants.PaymentMode, Constants.PREF_NAME));
 
 
+
+
         try {
             if (!getInvoiceModelInvoice.getPaymentMaster().isEmpty() || getInvoiceModelInvoice.getPaymentMaster() != null) {
-               payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getPaymentType());
-                txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getPaid_Amount());
+
+                for(int i=0;i<getInvoiceModelInvoice.getPaymentMaster().size();i++) {
+                    if (getInvoiceModelInvoice.getPaymentMaster().get(i).getPayment_Id() == SharedPrefsData.getInt(BillShareActivity.this, "PaymentID", Constants.PREF_NAME)) {
+
+                        txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount());
+                        paidAmount = getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount();
+                        payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaymentType());
+
+                    }
+
+                }
                 discountTextView.setText(String.valueOf(getInvoiceModelInvoice.getDiscount()));
-                paidAmount = getInvoiceModelInvoice.getPaymentMaster().get(0).getPaid_Amount();
                 collectBy.setText(SharedPrefsData.getString(BillShareActivity.this, Constants.EmployeeName, Constants.PREF_NAME));
                 //  collectBy.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getEmployee_Name());
 
