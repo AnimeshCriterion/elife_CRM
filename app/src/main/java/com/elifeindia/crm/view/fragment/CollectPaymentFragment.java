@@ -1,5 +1,7 @@
 package com.elifeindia.crm.view.fragment;
 
+import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.getInvoiceModelInvoice;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,11 +31,18 @@ import androidx.fragment.app.Fragment;
 import com.elifeindia.crm.BuildConfig;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.contract.activities.CollectPaymentContract;
+import com.elifeindia.crm.contract.activities.CustomerDetailsContract;
+import com.elifeindia.crm.model.CustemersCableBoxData;
+import com.elifeindia.crm.model.CustomerData;
 import com.elifeindia.crm.model.CustomerInvoice;
 import com.elifeindia.crm.model.CustomerSubscribeList;
+import com.elifeindia.crm.model.CustomersInternetBoxData;
+import com.elifeindia.crm.model.GetInvoiceModel;
 import com.elifeindia.crm.model.InsertPayment;
 import com.elifeindia.crm.model.PaymentTypeList;
 import com.elifeindia.crm.presenter.activities.CollectPaymentPresenter;
+import com.elifeindia.crm.presenter.activities.CustomerDetailsPresenter;
+import com.elifeindia.crm.printersdk.PaymentReceiptReprentingActivity;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
@@ -53,10 +62,11 @@ import java.util.Locale;
 import java.util.Objects;
 
 
-public class CollectPaymentFragment extends Fragment implements CollectPaymentContract.View{
+public class CollectPaymentFragment extends Fragment implements CollectPaymentContract.View,CustomerDetailsContract.View {
     CollectPaymentContract.Presenter presenter;
     ViewUtils viewUtils; LinearLayout ll_pay_for;
     String invoiceId, pTypeId, tripleId;
+    CustomerDetailsContract.Presenter custommerPresenter;
     public static String triplePlay;
     Spinner spn_paymentmode, spn_triple_pay;
     ArrayAdapter<String> adapter_state_adj1, adapter_state_adj2;
@@ -94,6 +104,9 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
         discount_editext = v.findViewById(R.id.discount_editext);
         tool_bar = v.findViewById(R.id.tool_bar);
         tool_bar.setVisibility(View.GONE);
+
+        custommerPresenter = new CustomerDetailsPresenter(this);
+        custommerPresenter.start();
 
         InvType = SharedPrefsData.getString(getActivity(), Constants.InvoiceType, Constants.PREF_NAME);
 
@@ -268,6 +281,71 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
     }
 
     @Override
+    public void showResult(CustomerData customerData) {
+
+    }
+
+    @Override
+    public void showCableBoxList(CustemersCableBoxData custemersCableBoxData) {
+
+    }
+
+    @Override
+    public void showInernetBoxList(CustomersInternetBoxData customersInternetBoxData) {
+
+    }
+
+    @Override
+    public void showInvoice(GetInvoiceModel getInvoiceModel) {
+        Log.d("TAG", "showInvoice1: ");
+        getInvoiceModelInvoice = getInvoiceModel;
+//        SharedPrefsData.putString(this, Constants.AccNo, String.valueOf(getInvoiceModel.getAccount_No()), Constants.PREF_NAME);
+//        triplePlay = SharedPrefsData.getString(CustomersDetailsActivity.this, Constants.TriplePlay, Constants.PREF_NAME);
+//        if (triplePlay.equals("Cable")) {
+//            SharedPrefsData.putString(this, Constants.TotalAmount, cableBoxWithSubscription.geTotal_CableBox_amount(), Constants.PREF_NAME);
+//        } else if (triplePlay.equals("Internet")) {
+//            SharedPrefsData.putString(this, Constants.TotalAmount, internetBoxWithSubscription.getTotal_InternetBox_amount(), Constants.PREF_NAME);
+//            //SharedPrefsData.putString(this, Constants.TotalAmount, String.valueOf(internetBoxList.get(box_position).getInternetBox().getBox_Amount()), Constants.PREF_NAME);
+//        }
+//        SharedPrefsData.putString(this, Constants.InvoiceNo, String.valueOf(getInvoiceModel.getInvoice_Number()), Constants.PREF_NAME);
+//
+
+        Log.d("TAG", "showInvoice2: ");
+        //getInvoiceModel.getArea_Customer_ID();
+        //getInvoiceModel.getAreaName();
+        SharedPrefsData.putString(getActivity(), Constants.CustomerBalance, String.valueOf(getInvoiceModel.getBalance()), Constants.PREF_NAME);
+        getInvoiceModel.getCustomer_ID();
+        getInvoiceModel.getDiscount();
+        getInvoiceModel.getInv_Amount();
+        getInvoiceModel.getInvoice_Date();
+        SharedPrefsData.putString(getActivity(), Constants.InvoiceDate, getInvoiceModel.getInvoice_Date().toString(), Constants.PREF_NAME);
+        //getInvoiceModel.getInvoice_ID();
+        //SharedPrefsData.putString(this, Constants.InvoiceNo, getInvoiceModel.get().toString(), Constants.PREF_NAME);
+        SharedPrefsData.putString(getActivity(), Constants.CustomerName, getInvoiceModel.getName().toString(), Constants.PREF_NAME);
+        try {
+            SharedPrefsData.putString(getActivity(), Constants.PrevBal, String.valueOf(getInvoiceModel.getPrevious_Balance()), Constants.PREF_NAME);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("TAG", "showInvoice3: "+e.toString());
+        }
+//        SharedPrefsData.putString(getActivity(), Constants.SubId, getInvoiceModel.getSubscriber_ID().toString(), Constants.PREF_NAME);
+//        getInvoiceModel.getTitle();
+//        getInvoiceModel.getTriple_play_ID();
+//        startActivity(new Intent(getActivity(), BillShareActivity.class));
+
+
+        Intent intent = new Intent(getContext(), PaymentReceiptReprentingActivity.class);
+//        intent.putExtra("BillType",dataSend.getPaymentType().toString());
+//        intent.putExtra("WhatsappNo",dataSend.getWhatsappNo());
+//        intent.putExtra("ContactNo", dataSend.getContactNo());
+        //String address = paymentReciepts.get(position).getAddress().toString();
+        // SharedPrefsData.putString(context, Constants.CustomerAddress, address, Constants.PREF_NAME);
+        // SharedPrefsData.putString(context, Constants.CustomerID, paymentReciepts.get(position).getCustomerID().toString(), Constants.PREF_NAME);
+        startActivity(intent);
+
+    }
+
+    @Override
     public void showCustomerSubscribeList(CustomerSubscribeList customerSubscribeList) {
         final List<CustomerSubscribeList.CusSubscribeType> cusSubscribeTypeList = customerSubscribeList.getCusSubscribeType();
 
@@ -361,11 +439,10 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
         String paymentId = insertPayment.id;
         SharedPrefsData.putString(getActivity(), Constants.PaymentId, paymentId, Constants.PREF_NAME);
         viewUtils.toast(getActivity(), "Payment inserted successfully");
-
-       // custommerPresenter.getInvoice(getContext(), String.valueOf(obj.getInvoice_ID()));
-        Intent intent=new Intent(getActivity(), BillShareActivity.class);
-        intent.putExtra("paymentId",paymentId);
-        startActivity(intent);
+       custommerPresenter.getInvoice(getContext(), String.valueOf(invoiceId));
+//        Intent intent=new Intent(getActivity(), BillShareActivity.class);
+//        intent.putExtra("paymentId",paymentId);
+//        startActivity(intent);
 
     }
 }

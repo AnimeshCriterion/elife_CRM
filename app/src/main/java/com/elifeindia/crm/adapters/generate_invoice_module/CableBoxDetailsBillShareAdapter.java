@@ -230,7 +230,10 @@ public class CableBoxDetailsBillShareAdapter extends RecyclerView.Adapter<CableB
             String date = null;
             date = ViewUtils.changeDateFormat(internetBoxList.get(position).getInternetBox().getExpiry_Date().toString());
             //holder.expirtydate.setText(date);
-            holder.expirtydate.setText(ViewUtils.changeDateFormat(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)));
+            if(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)!=null){
+                holder.expirtydate.setText(ViewUtils.changeDateFormat(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)));
+
+            }
 
             ip = internetBoxList.get(position).getInternetBox().getIp();
 

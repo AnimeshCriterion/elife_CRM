@@ -571,7 +571,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
     }
 
     @Override
-    public void onClickCollection(PaymentRecieptList.PaymentReciept obj) {
+    public void onClickCollection(PaymentRecieptList.PaymentReciept obj,String data) {
 
     }
 }

@@ -51,7 +51,7 @@ public class PaymentRecieptList {
     public void setStatus(Object status) {
         this.status = status;
     }
-    public class PaymentReciept {
+    public static class PaymentReciept {
 
         @SerializedName("customer_ID")
         @Expose

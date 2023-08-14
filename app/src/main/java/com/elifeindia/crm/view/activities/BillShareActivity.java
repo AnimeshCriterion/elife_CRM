@@ -138,8 +138,7 @@ public class BillShareActivity extends AppCompatActivity   {
             if (!getInvoiceModelInvoice.getPaymentMaster().isEmpty() || getInvoiceModelInvoice.getPaymentMaster() != null) {
 
                 for(int i=0;i<getInvoiceModelInvoice.getPaymentMaster().size();i++) {
-                    if (getInvoiceModelInvoice.getPaymentMaster().get(i).getPayment_Id() == SharedPrefsData.getInt(BillShareActivity.this, "PaymentID", Constants.PREF_NAME)) {
-
+                    if (getInvoiceModelInvoice.getPaymentMaster().get(i).getPayment_Id() == SharedPrefsData.getInt(BillShareActivity.this, Constants.PaymentId, Constants.PREF_NAME)) {
                         txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount());
                         paidAmount = getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount();
                         payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaymentType());

@@ -1,4 +1,5 @@
-package com.elifeindia.crm.printersdk;
+package com.elifeindia.crm.view.activities;
+
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
@@ -36,6 +37,11 @@ import com.elifeindia.crm.model.GetInvoiceModel;
 import com.elifeindia.crm.model.HeaderModel;
 import com.elifeindia.crm.model.PaymentReciept;
 import com.elifeindia.crm.presenter.activities.PaymentReceiptPresenter;
+import com.elifeindia.crm.printersdk.BluetoothDeviceList;
+import com.elifeindia.crm.printersdk.Constant;
+import com.elifeindia.crm.printersdk.DeviceConnFactoryManager;
+import com.elifeindia.crm.printersdk.PrinterCommand;
+import com.elifeindia.crm.printersdk.ThreadPool;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
@@ -66,7 +72,7 @@ import static com.elifeindia.crm.adapters.generate_invoice_module.InternetPkgLis
 import static com.elifeindia.crm.printersdk.Constant.MESSAGE_UPDATE_PARAMETER;
 import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.getInvoiceModelInvoice;
 
-public class PaymentReceiptReprentingActivity extends AppCompatActivity implements PaymentReceiptContract.View {
+public class BillShareForCollectionAndCollect extends AppCompatActivity implements PaymentReceiptContract.View {
     PaymentReceiptContract.Presenter presenter;
     TextView txt_subid, txt_accountno, txt_header, custmername_pay, billdate_pay, invoicenumber_pay, txt_rec_time, txt_prev_bal, paidamount_pay;
     TextView btn_send, txt_discount, balance_pay, paymentmode_text, txt_collected_by, txt_emp_mob_no;
@@ -128,8 +134,8 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         btn_next = findViewById(R.id.btn_next);
         lv_footer = findViewById(R.id.lv_footer);
 
-        WhatsupNo = SharedPrefsData.getString(PaymentReceiptReprentingActivity.this, Constants.WhatsupNo, Constants.PREF_NAME);
-        CustMob = SharedPrefsData.getString(PaymentReceiptReprentingActivity.this, Constants.CustMob, Constants.PREF_NAME);
+        WhatsupNo = SharedPrefsData.getString(BillShareForCollectionAndCollect.this, Constants.WhatsupNo, Constants.PREF_NAME);
+        CustMob = SharedPrefsData.getString(BillShareForCollectionAndCollect.this, Constants.CustMob, Constants.PREF_NAME);
         InvType = getIntent().getStringExtra("BillType");
         WhatsappNo = getIntent().getStringExtra("WhatsappNo");
         ContactNo = getIntent().getStringExtra("ContactNo");
@@ -138,7 +144,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(PaymentReceiptReprentingActivity.this, CustomerListActivity.class);
+                Intent i = new Intent(BillShareForCollectionAndCollect.this, CustomerListActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 i.putExtra("activity", "PaymentReceipt");
                 startActivity(i);
@@ -240,7 +246,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         findViewById(R.id.btn_conn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(PaymentReceiptReprentingActivity.this, BluetoothDeviceList.class), Constant.BLUETOOTH_REQUEST_CODE);
+                startActivityForResult(new Intent(BillShareForCollectionAndCollect.this, BluetoothDeviceList.class), Constant.BLUETOOTH_REQUEST_CODE);
             }
         });
 
@@ -260,14 +266,14 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
             TotalInternetRecords = "";
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
             rv_box_details.setLayoutManager(mLayoutManager);
-            cableBoxDetailsBillShareAdapter = new CableBoxDetailsBillShareAdapter(PaymentReceiptReprentingActivity.this, cableBoxwithSubscriptionDTOS, internetBoxwithSubscriptionDTOS);
+            cableBoxDetailsBillShareAdapter = new CableBoxDetailsBillShareAdapter(BillShareForCollectionAndCollect.this, cableBoxwithSubscriptionDTOS, internetBoxwithSubscriptionDTOS);
             rv_box_details.setAdapter(cableBoxDetailsBillShareAdapter);
         } else {
             TotalAlacarteRecords = "";
             TotalBouquetsRecords = "";
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
             rv_box_details.setLayoutManager(mLayoutManager);
-            cableBoxDetailsBillShareAdapter = new CableBoxDetailsBillShareAdapter(PaymentReceiptReprentingActivity.this, internetBoxwithSubscriptionDTOS);
+            cableBoxDetailsBillShareAdapter = new CableBoxDetailsBillShareAdapter(BillShareForCollectionAndCollect.this, internetBoxwithSubscriptionDTOS);
             rv_box_details.setAdapter(cableBoxDetailsBillShareAdapter);
         }
     }
@@ -363,13 +369,13 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                     } catch (Exception ex) {
                         ex.getMessage();
                         boolean b1 = calOnPrinter.printData(receipt);
-                        Toast.makeText(PaymentReceiptReprentingActivity.this, ex.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BillShareForCollectionAndCollect.this, ex.toString(), Toast.LENGTH_SHORT).show();
 
                     }
 
                 }
             } else {
-                Toast.makeText(PaymentReceiptReprentingActivity.this, "Please Pair Device", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BillShareForCollectionAndCollect.this, "Please Pair Device", Toast.LENGTH_SHORT).show();
             }
         } catch (NullPointerException ex1) {
             ex1.getMessage();
@@ -390,25 +396,25 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
 
         String message =
                 "*Payment Receipt*\n" +
-                "*Customer Details*\n" +
-                "Name: " + custmername_pay.getText().toString() + "\n" +
-                "Account Number: " + txt_accountno.getText().toString() + "\n" +
-                "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
-                "Bill Date: " + billdate_pay.getText().toString() + "\n" +
-                "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
-                "\n" +
-                "*Payment Details*\n" +
-                "------------------------\n" +
-                "Total Amount: " + txt_prev_bal.getText().toString() + "\n" +
-                "Paid Amount: " + paidamount_pay.getText().toString() + "\n" +
-                "Discount: " +discount + "\n" +
-                "Remaining Amount: " + balance_pay.getText().toString() + "\n" +
-                "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
-                "Collected By: " + txt_collected_by.getText().toString() + "\n" +
-                "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
+                        "*Customer Details*\n" +
+                        "Name: " + custmername_pay.getText().toString() + "\n" +
+                        "Account Number: " + txt_accountno.getText().toString() + "\n" +
+                        "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
+                        "Bill Date: " + billdate_pay.getText().toString() + "\n" +
+                        "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
+                        "\n" +
+                        "*Payment Details*\n" +
+                        "------------------------\n" +
+                        "Total Amount: " + txt_prev_bal.getText().toString() + "\n" +
+                        "Paid Amount: " + paidamount_pay.getText().toString() + "\n" +
+                        "Discount: " +discount + "\n" +
+                        "Remaining Amount: " + balance_pay.getText().toString() + "\n" +
+                        "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
+                        "Collected By: " + txt_collected_by.getText().toString() + "\n" +
+                        "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
 
-                "------------------------\n" +
-                "" + txt_header.getText().toString().trim();
+                        "------------------------\n" +
+                        "" + txt_header.getText().toString().trim();
 
 
         String url = "https://api.whatsapp.com/send?phone=" + customerPhoneNumber + "&text=" + message;
@@ -739,15 +745,15 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                     if (DeviceConnFactoryManager.getDeviceConnFactoryManagers()[id] != null || !DeviceConnFactoryManager.getDeviceConnFactoryManagers()[id].getConnState()) {
                         DeviceConnFactoryManager.getDeviceConnFactoryManagers()[id].closePort(id);
 
-                        Toast.makeText(PaymentReceiptReprentingActivity.this, getString(R.string.str_disconnect_success), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BillShareForCollectionAndCollect.this, getString(R.string.str_disconnect_success), Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case PRINTER_COMMAND_ERROR:
 
-                    Toast.makeText(PaymentReceiptReprentingActivity.this, getString(R.string.str_choice_printer_command), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BillShareForCollectionAndCollect.this, getString(R.string.str_choice_printer_command), Toast.LENGTH_SHORT).show();
                     break;
                 case CONN_PRINTER:
-                    Toast.makeText(PaymentReceiptReprentingActivity.this, getString(R.string.str_cann_printer), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BillShareForCollectionAndCollect.this, getString(R.string.str_cann_printer), Toast.LENGTH_SHORT).show();
 
                     break;
                 case MESSAGE_UPDATE_PARAMETER:
@@ -878,7 +884,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
     private void
     closeport() {
         if (DeviceConnFactoryManager.getDeviceConnFactoryManagers()[id] != null && DeviceConnFactoryManager.getDeviceConnFactoryManagers()[id].mPort != null) {
-            DeviceConnFactoryManager.getDeviceConnFactoryManagers()[id].reader.cancel();
+           // DeviceConnFactoryManager.getDeviceConnFactoryManagers()[id].reader.cancel();
             DeviceConnFactoryManager.getDeviceConnFactoryManagers()[id].mPort.closePort();
             DeviceConnFactoryManager.getDeviceConnFactoryManagers()[id].mPort = null;
         }

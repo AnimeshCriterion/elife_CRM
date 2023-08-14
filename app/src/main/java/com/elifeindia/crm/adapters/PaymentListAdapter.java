@@ -18,6 +18,9 @@ import com.elifeindia.crm.R;
 
 import com.elifeindia.crm.model.PaymentRecieptList;
 
+import com.elifeindia.crm.printersdk.PaymentReceiptReprentingActivity;
+import com.elifeindia.crm.sharedpref.Constants;
+import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
 
 import java.util.List;
@@ -75,25 +78,12 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
         holder.cv_customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String pId = paymentReciepts.get(position).getPayment_Id();
-//                Toast.makeText(context,"CheckID"+paymentReciepts.get(position).getInvoiceNumber().toString(),Toast.LENGTH_LONG).show();
-//
-//                SharedPrefsData.putString(context, Constants.PaymentId, pId, Constants.PREF_NAME);
-//
-//                Intent intent = new Intent(context, PaymentReceiptReprentingActivity.class);
-//
-//                intent.putExtra("BillType", holder.txt_triplePlay.getText().toString());
-//
-//                intent.putExtra("WhatsappNo", paymentReciepts.get(position).getWhatsappNo());
-//
-//                intent.putExtra("ContactNo", paymentReciepts.get(position).getContactNo());
-//
-//                //String address = paymentReciepts.get(position).getAddress().toString();
-//               // SharedPrefsData.putString(context, Constants.CustomerAddress, address, Constants.PREF_NAME);
-//               // SharedPrefsData.putString(context, Constants.CustomerID, paymentReciepts.get(position).getCustomerID().toString(), Constants.PREF_NAME);
-//                context.startActivity(intent);
+                String pId = paymentReciepts.get(position).getPayment_Id();
+                Toast.makeText(context,"CheckID"+paymentReciepts.get(position).getInvoiceNumber().toString(),Toast.LENGTH_LONG).show();
 
-                onClickForPaymentReceiptNew.onClickCollection(paymentReciepts.get(position));
+
+
+               onClickForPaymentReceiptNew.onClickCollection(paymentReciepts.get(position),holder.txt_triplePlay.getText().toString());
             }
         });
     }

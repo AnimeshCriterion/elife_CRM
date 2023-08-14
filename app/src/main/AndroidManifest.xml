@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -22,9 +21,13 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
     <uses-feature
         android:name="android.hardware.usb.host"
         android:required="true" />
@@ -34,7 +37,6 @@
 
     <application
         android:name=".printersdk.App"
-        tools:node="replace"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/launcher_icon"
@@ -45,8 +47,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        tools:node="merge"
         tools:replace="android:allowBackup"
         tools:targetApi="n">
+        <activity
+            android:name=".view.activities.BillShareForCollectionAndCollect"
+            android:exported="false" />
         <activity
             android:name=".view.activities.BalanceAdjustmentActivity"
             android:exported="true" />
@@ -67,11 +73,21 @@
             android:exported="true"
             android:label="@string/title_activity_test"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.activities.UpdateCustomerActivity" android:exported="true" />
-        <activity android:name=".view.activities.InvoiceActivity" android:exported="true"/>
-        <activity android:name=".view.activities.InvoiceHistoryActivity" android:exported="true"/>
-        <activity android:name=".CustomerLoginActivity"  android:exported="true"/>
-        <activity android:name=".view.activities.RegisterComplaintActivity2"  android:exported="true"/>
+        <activity
+            android:name=".view.activities.UpdateCustomerActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.InvoiceActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.InvoiceHistoryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CustomerLoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activities.RegisterComplaintActivity2"
+            android:exported="true" />
         <activity
             android:name=".printersdk.ComplaintReceiptActivity"
             android:exported="true"
@@ -103,8 +119,8 @@
         <activity
             android:name=".printersdk.BluetoothDeviceList"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/bluetooth_device_list"
             android:exported="true"
+            android:label="@string/bluetooth_device_list"
             android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".view.activities.NotificationsActivity"
@@ -163,8 +179,8 @@
             android:exported="true" />
         <activity
             android:name=".Capture"
-            android:screenOrientation="portrait"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.activities.CustomerListActivity"
@@ -177,9 +193,9 @@
             android:name=".view.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"
-                    android:exported="true"
-                    />
+                <action
+                    android:name="android.intent.action.MAIN"
+                    android:exported="true" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

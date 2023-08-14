@@ -756,22 +756,6 @@
             android:background="@drawable/rounded_button_darkblue"
             android:text="Send SMS"
             android:textColor="@color/White" />
-        <TextView
-            android:textStyle="bold"
-            android:fontFamily="@font/abeezee_regular"
-            android:gravity="center"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:id="@+id/btn_next"
-            android:layout_width="0dp"
-            android:layout_weight="5"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
-            android:background="@drawable/rounded_button_darkblue"
-            android:text="Next Payment"
-            android:textColor="@color/White" />
 
 
     </LinearLayout>

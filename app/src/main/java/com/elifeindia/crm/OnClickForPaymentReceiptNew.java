@@ -4,5 +4,5 @@ import com.elifeindia.crm.model.PaymentRecieptList;
 
  public   interface OnClickForPaymentReceiptNew {
 
-      void onClickCollection(PaymentRecieptList.PaymentReciept obj);
+      void onClickCollection(PaymentRecieptList.PaymentReciept obj,String data);
 }

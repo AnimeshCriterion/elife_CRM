@@ -60,6 +60,7 @@ import com.elifeindia.crm.model.GetInvoiceModel;
 import com.elifeindia.crm.model.PaymentRecieptList;
 import com.elifeindia.crm.presenter.activities.CustomerDetailsPresenter;
 import com.elifeindia.crm.presenter.activities.PaymentListPresenter;
+import com.elifeindia.crm.printersdk.PaymentReceiptReprentingActivity;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
@@ -107,7 +108,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     private static final int ACTIVITY_VIEW_ATTACHMENT = 101;
     PaymentListContract.Presenter presenter;
     CustomerDetailsContract.Presenter custommerPresenter;
-
+    PaymentRecieptList.PaymentReciept dataSend;
     ViewUtils viewUtils;
     RecyclerView rv_payment_list;
     PaymentListAdapter paymentListAdapter;
@@ -172,7 +173,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
         today.setBackgroundResource(R.color.colorPrimaryDark);
         today.setTextColor(getResources().getColor(R.color.white));
-
+        dataSend= new  PaymentRecieptList.PaymentReciept();
         companyId = SharedPrefsData.getString(getActivity(), Constants.CompanyID, Constants.PREF_NAME);
         roleType = SharedPrefsData.getString(getActivity(), Constants.RoleType, Constants.PREF_NAME);
         empName = SharedPrefsData.getString(getActivity(), Constants.EmployeeName, Constants.PREF_NAME);
@@ -365,6 +366,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         custommerPresenter = new CustomerDetailsPresenter(this);
         presenter.start();
         custommerPresenter.start();
+
         progressBar = new ProgressDialog(getContext());
         progressBar.setCancelable(false);//you can cancel it by pressing back button
         progressBar.setMessage("Please wait...");
@@ -507,7 +509,18 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         SharedPrefsData.putString(getActivity(), Constants.SubId, getInvoiceModel.getSubscriber_ID().toString(), Constants.PREF_NAME);
         getInvoiceModel.getTitle();
         getInvoiceModel.getTriple_play_ID();
-        startActivity(new Intent(getActivity(), BillShareActivity.class));
+      //  startActivity(new Intent(getActivity(), BillShareActivity.class));
+        SharedPrefsData.putString(context, Constants.PaymentId, dataSend.getPayment_Id(), Constants.PREF_NAME);
+
+
+        Intent intent = new Intent(context, PaymentReceiptReprentingActivity.class);
+        intent.putExtra("BillType",dataSend.getPaymentType().toString());
+        intent.putExtra("WhatsappNo",dataSend.getWhatsappNo());
+        intent.putExtra("ContactNo", dataSend.getContactNo());
+        //String address = paymentReciepts.get(position).getAddress().toString();
+        // SharedPrefsData.putString(context, Constants.CustomerAddress, address, Constants.PREF_NAME);
+        // SharedPrefsData.putString(context, Constants.CustomerID, paymentReciepts.get(position).getCustomerID().toString(), Constants.PREF_NAME);
+        context.startActivity(intent);
 
     }
 
@@ -971,9 +984,13 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
 
     @Override
-    public void onClickCollection(PaymentRecieptList.PaymentReciept obj) {
-        SharedPrefsData.putInt(getActivity(), "PaymentID", Integer.parseInt(obj.getPayment_Id()), Constants.PREF_NAME);
-
+    public void onClickCollection(PaymentRecieptList.PaymentReciept obj,String data) {
+        dataSend=obj;
+        SharedPrefsData.putInt(getActivity(), Constants.PaymentId, Integer.parseInt(obj.getPayment_Id()), Constants.PREF_NAME);
         custommerPresenter.getInvoice(getContext(), String.valueOf(obj.getInvoice_ID()));
+
     }
+
+
+
 }
