@@ -65,6 +65,7 @@ import static com.elifeindia.crm.adapters.generate_invoice_module.BouquetListBil
 import static com.elifeindia.crm.adapters.generate_invoice_module.InternetPkgListAdapter.TotalInternetRecords;
 import static com.elifeindia.crm.printersdk.Constant.MESSAGE_UPDATE_PARAMETER;
 import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.getInvoiceModelInvoice;
+import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.txt_activation_date;
 
 public class PaymentReceiptReprentingActivity extends AppCompatActivity implements PaymentReceiptContract.View {
     PaymentReceiptContract.Presenter presenter;
@@ -327,26 +328,32 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                                 txt_header.getText().toString() + "\n" +
 
                                         "-------------------------------" + "\n" +
-                                        "            Receipt        " + "\n" +
+                                        "           Payment Receipt        " + "\n" +
                                         "-------------------------------" + "\n" +
+                                        "Customer Details       \n" +
+                                        "Name            : " + name + "\n" +
+                                        "Account Number  : " + accNo + "\n" +
+                                        "Subscriber ID   : " + subId + "\n" +
+                                        "Bill Date       : " + billdate_pay.getText().toString() + "\n" +
+                                        "Customer No     : " + CustMob + "\n" +
+                                        "Receipt Number  : " + invoicenumber_pay.getText().toString() + "\n" +
 
-                                        "Name      : " + name + "\n" +
-                                        "Ac No     : " + accNo + "\n" +
-                                        "Sub Id    : " + subId + "\n" +
-                                        "Bill Date : " + billdate_pay.getText().toString() + "\n" +
-                                        "Bill Type : " + InvType + "\n" +
-                                        "Cust No   : " + CustMob + "\n" +
-                                        "Rpt No    : " + invoicenumber_pay.getText().toString() + "\n" +
-
+                                        "Subscription Details       \n" +
                                         "------------------------------" + "\n" +
-                                        "Total Amt : " + totalAmnt + "\n" +
-                                        "Paid Amt  : " + paidAmnt + "\n" +
-                                        "Discount  :" +discount + "\n" +
-                                        "Remaining : " + remainBal + "\n" +
+                                        "Activation Date : " +txt_activation_date.getText().toString() + "\n" +
+                                        "Bill Type       : " + InvType + "\n" +
+                                        "No of Months    :" +discount + "\n" +
+                                        "Inactive Date   : " + remainBal + "\n" +
 
+
+                                        "Payment Details       \n" +
                                         "-------------------------------" + "\n" +
-                                        "Pay Mode  : " + payMode + "\n" +
-                                        "Collected : " + collectedBy + "\n" +
+                                        "Total Amount    : " + totalAmnt + "\n" +
+                                        "Paid Amount     : " + paidAmnt + "\n" +
+                                        "Discount        :" +discount + "\n" +
+                                        "Remaining       : " + remainBal + "\n" +
+                                        "Payment  mode   : " + payMode + "\n" +
+                                        "Collected by    : " + collectedBy + "\n" +
                                         "Emp No    : " + empMobNo + "\n" +
 
                                         "-------------------------------" + "\n" +
@@ -503,7 +510,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
             try {
                 fos = new FileOutputStream(imagePath);
                 Toast.makeText(this, imagePath.toString(), Toast.LENGTH_SHORT).show();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+              //  bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                 fos.flush();
                 fos.close();
             } catch (FileNotFoundException e) {
@@ -626,10 +633,10 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
     @Override
     public void onBackPressed() {
         finish();
-//        Intent i = new Intent(PaymentReceiptReprentingActivity.this, CustomerListActivity.class);
-//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        i.putExtra("activity", "PaymentReceipt");
-//        startActivity(i);
+        Intent i = new Intent(PaymentReceiptReprentingActivity.this, CustomerListActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        i.putExtra("activity", "PaymentReceipt");
+        startActivity(i);
     }
 
     void sendReceiptImage() {

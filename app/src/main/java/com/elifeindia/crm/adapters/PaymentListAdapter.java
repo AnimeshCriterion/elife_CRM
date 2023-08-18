@@ -79,7 +79,7 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
             @Override
             public void onClick(View view) {
                 String pId = paymentReciepts.get(position).getPayment_Id();
-                Toast.makeText(context,"CheckID"+paymentReciepts.get(position).getInvoiceNumber().toString(),Toast.LENGTH_LONG).show();
+             //   Toast.makeText(context,"CheckID"+paymentReciepts.get(position).getInvoiceNumber().toString(),Toast.LENGTH_LONG).show();
 
 
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_weight="1"
     android:orientation="vertical">
 
@@ -25,19 +25,20 @@
             android:src="@drawable/back_arrow" />
 
         <TextView
-            android:textStyle="bold"
-            android:fontFamily="@font/abeezee_regular"
             android:id="@+id/tool_bar_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_toRightOf="@id/iv_back"
+            android:fontFamily="@font/abeezee_regular"
             android:text="Payment Receipt"
             android:textColor="@color/white"
-            android:textSize="@dimen/_18sdp" />
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,15 +65,15 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:padding="@dimen/_10sdp"
                         android:id="@+id/txt_header"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:fontFamily="@font/abeezee_regular"
                         android:gravity="center"
-                        android:textAlignment="center"
+                        android:padding="@dimen/_10sdp"
                         android:text="HEADER"
+                        android:textAlignment="center"
                         android:textColor="@color/darkblue"
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="bold">
@@ -97,21 +98,22 @@
                             android:layout_weight="0.3"
                             android:fontFamily="@font/abeezee_regular"
                             android:paddingLeft="@dimen/_10sdp"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_15sdp"
                             android:text="Name                  "
-                            android:textColor="@color/Black"/>
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
 
                         <TextView
-                            android:textStyle="bold"
                             android:id="@+id/custmername_pay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
                             android:fontFamily="@font/abeezee_regular"
                             android:textColor="@color/Black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -124,20 +126,20 @@
                             android:layout_weight="0.3"
                             android:fontFamily="@font/abeezee_regular"
                             android:paddingLeft="@dimen/_10sdp"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_15sdp"
                             android:text="Mobile                  "
-                            android:textColor="@color/Black"/>
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
 
                         <TextView
-                            android:textStyle="bold"
                             android:id="@+id/customer_mobile"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
                             android:fontFamily="@font/abeezee_regular"
                             android:textColor="@color/Black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -152,20 +154,20 @@
                             android:layout_weight="0.3"
                             android:fontFamily="@font/abeezee_regular"
                             android:paddingLeft="@dimen/_10sdp"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_15sdp"
                             android:text="Address                  "
-                            android:textColor="@color/Black"/>
+                            android:textColor="@color/Black"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
 
                         <TextView
-                            android:textStyle="bold"
                             android:id="@+id/customer_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
                             android:fontFamily="@font/abeezee_regular"
                             android:textColor="@color/Black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -182,18 +184,18 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Account No"
                             android:textColor="@color/Black"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
 
                         <TextView
-                            android:textStyle="bold"
                             android:id="@+id/txt_accountno"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
                             android:fontFamily="@font/abeezee_regular"
                             android:textColor="@color/Black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -210,18 +212,18 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Subscriber Id"
                             android:textColor="@color/Black"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
 
                         <TextView
-                            android:textStyle="bold"
                             android:id="@+id/txt_subid"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
                             android:fontFamily="@font/abeezee_regular"
                             android:textColor="@color/Black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -238,17 +240,17 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Bill Date "
                             android:textColor="@color/Black"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/billdate_pay"
-                            android:textStyle="bold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
                             android:textColor="@color/Black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -265,25 +267,26 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Receipt No."
                             android:textColor="@color/Black"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
 
                         <TextView
-                            android:textStyle="bold"
                             android:id="@+id/invoicenumber_pay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
                             android:fontFamily="@font/abeezee_regular"
                             android:textColor="@color/Black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -293,26 +296,26 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Bill Type"
                             android:textColor="@color/Black"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
 
                         <TextView
-                            android:textStyle="bold"
                             android:id="@+id/txt_bill_type_rep"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
                             android:fontFamily="@font/abeezee_regular"
                             android:textColor="@color/Black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -322,18 +325,18 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Record time"
                             android:textColor="@color/Black"
-                            android:textSize="@dimen/_12sdp"/>
+                            android:textSize="@dimen/_12sdp" />
 
                         <TextView
 
+                            android:id="@+id/txt_rec_time"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
                             android:fontFamily="@font/abeezee_regular"
                             android:text="21-Jan-20 7:30 PM"
                             android:textColor="@color/Black"
-                            android:id="@+id/txt_rec_time"
-                            android:textSize="@dimen/_12sdp"/>
+                            android:textSize="@dimen/_12sdp" />
                     </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -378,8 +381,8 @@
                                     android:paddingLeft="@dimen/_10sdp"
                                     android:text="Total Amount"
                                     android:textColor="@color/Black"
-                                    android:textStyle="bold"
-                                    android:textSize="@dimen/_15sdp"/>
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold" />
 
                                 <View
                                     android:layout_width="match_parent"
@@ -400,8 +403,8 @@
 
                                     android:text="Paid Amount"
                                     android:textColor="@color/Black"
-                                    android:textStyle="bold"
-                                    android:textSize="@dimen/_15sdp"/>
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold" />
 
                                 <View
                                     android:layout_width="match_parent"
@@ -421,8 +424,8 @@
                                     android:paddingLeft="@dimen/_10sdp"
                                     android:text="Discount"
                                     android:textColor="@color/Black"
-                                    android:textStyle="bold"
-                                    android:textSize="@dimen/_15sdp"/>
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
 
@@ -443,7 +446,7 @@
 
 
                                 <TextView
-                                    android:textStyle="bold"
+                                    android:id="@+id/txt_prev_bal"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_5sdp"
@@ -451,9 +454,9 @@
                                     android:layout_weight="0.5"
                                     android:fontFamily="@font/abeezee_regular"
                                     android:paddingLeft="@dimen/_7sdp"
-                                    android:id="@+id/txt_prev_bal"
                                     android:textColor="@color/Black"
-                                    android:textSize="@dimen/_15sdp"/>
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold" />
 
                                 <View
                                     android:layout_width="match_parent"
@@ -461,7 +464,6 @@
                                     android:background="@color/darkblue" />
 
                                 <TextView
-                                    android:textStyle="bold"
                                     android:id="@+id/paidamount_pay"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -471,7 +473,8 @@
                                     android:fontFamily="@font/abeezee_regular"
                                     android:paddingLeft="@dimen/_7sdp"
                                     android:textColor="@color/Black"
-                                    android:textSize="@dimen/_15sdp"/>
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold" />
 
                                 <View
                                     android:layout_width="match_parent"
@@ -479,7 +482,6 @@
                                     android:background="@color/darkblue" />
 
                                 <TextView
-                                    android:text="0"
                                     android:id="@+id/txt_discount"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -488,9 +490,10 @@
                                     android:layout_weight="0.5"
                                     android:fontFamily="@font/abeezee_regular"
                                     android:paddingLeft="@dimen/_7sdp"
+                                    android:text="0"
                                     android:textColor="@color/Black"
-                                    android:textStyle="bold"
-                                    android:textSize="@dimen/_15sdp"/>
+                                    android:textSize="@dimen/_15sdp"
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -515,8 +518,8 @@
                             android:paddingBottom="@dimen/_5sdp"
                             android:text="Remaining Amount"
                             android:textColor="@color/Black"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
 
                         <View
                             android:layout_width="@dimen/_1sdp"
@@ -527,7 +530,6 @@
 
 
                         <TextView
-                            android:textStyle="bold"
                             android:id="@+id/balance_pay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -538,7 +540,8 @@
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingBottom="@dimen/_5sdp"
                             android:textColor="@color/Black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <View
@@ -556,32 +559,32 @@
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_gravity="center"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_weight="0.4"
                             android:fontFamily="@font/abeezee_regular"
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Payment Mode"
                             android:textColor="@color/Black"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_threedots"/>
+                            android:src="@drawable/ic_threedots" />
 
                         <TextView
-                            android:layout_gravity="center"
                             android:id="@+id/paymentmode_text"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/_20sdp"
                             android:layout_weight="0.7"
                             android:fontFamily="@font/abeezee_regular"
-                            android:layout_marginStart="@dimen/_20sdp"
-                            android:textStyle="bold"
                             android:textColor="@color/Black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <View
@@ -605,22 +608,24 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Collected By"
                             android:textColor="@color/Black"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_threedots"/>
+                            android:src="@drawable/ic_threedots" />
+
                         <TextView
-                            android:textStyle="bold"
-                            android:layout_marginStart="@dimen/_20sdp"
+                            android:id="@+id/txt_collected_by"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_20sdp"
                             android:layout_weight="0.7"
                             android:fontFamily="@font/abeezee_regular"
-                            android:id="@+id/txt_collected_by"
                             android:textColor="@color/Black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -638,22 +643,24 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Mobile Number"
                             android:textColor="@color/Black"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_threedots"/>
+                            android:src="@drawable/ic_threedots" />
+
                         <TextView
-                            android:layout_marginStart="@dimen/_20sdp"
+                            android:id="@+id/txt_emp_mob_no"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_20sdp"
                             android:layout_weight="0.7"
                             android:fontFamily="@font/abeezee_regular"
-                            android:id="@+id/txt_emp_mob_no"
-                            android:textStyle="bold"
                             android:textColor="@color/Black"
-                            android:textSize="@dimen/_15sdp"/>
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <View
@@ -665,16 +672,17 @@
 
                     <TextView
                         android:id="@+id/txt_footer"
-                        android:padding="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/abeezee_regular"
                         android:gravity="center"
-                        android:textAlignment="center"
+                        android:padding="@dimen/_10sdp"
                         android:text="Thank You"
+                        android:textAlignment="center"
                         android:textColor="@color/darkblue"
                         android:textSize="@dimen/_16sdp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
+
                     <View
                         android:layout_width="@dimen/_300sdp"
                         android:layout_height="@dimen/_1sdp"
@@ -690,7 +698,7 @@
                         android:gravity="center"
                         android:textAlignment="center"
                         android:textColor="@color/darkblue"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -705,17 +713,17 @@
                 android:text="Share Receipt "
                 android:textColor="@color/blue"
                 android:textSize="@dimen/_14sdp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
-            android:visibility="gone"
             android:id="@+id/btn_conn"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_35sdp"
@@ -724,57 +732,62 @@
             android:layout_marginBottom="@dimen/_8sdp"
             android:background="@drawable/rounded_button_darkblue"
             android:text="Connect"
-            android:textColor="@color/White" />
+            android:textColor="@color/White"
+            android:visibility="gone" />
+
         <TextView
-            android:fontFamily="@font/abeezee_regular"
-            android:textStyle="bold"
-            android:layout_marginStart="@dimen/_15sdp"
             android:id="@+id/btn_done"
             android:layout_width="0dp"
-            android:layout_weight="5"
             android:layout_height="@dimen/_35sdp"
-            android:gravity="center"
             android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_weight="5"
             android:background="@drawable/rounded_button_darkblue"
-            android:text="Print"
-            android:textColor="@color/White" />
-        <TextView
-            android:layout_marginEnd="@dimen/_15sdp"
             android:fontFamily="@font/abeezee_regular"
-            android:textStyle="bold"
-            android:layout_marginStart="@dimen/_15sdp"
+            android:gravity="center"
+            android:text="Print"
+            android:textColor="@color/White"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/btn_send"
             android:layout_width="0dp"
-            android:layout_weight="5"
             android:layout_height="@dimen/_35sdp"
-            android:gravity="center"
             android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_weight="5"
             android:background="@drawable/rounded_button_darkblue"
-            android:text="Send SMS"
-            android:textColor="@color/White" />
-        <TextView
-            android:textStyle="bold"
             android:fontFamily="@font/abeezee_regular"
             android:gravity="center"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
+            android:text="Send SMS"
+            android:textColor="@color/White"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/btn_next"
             android:layout_width="0dp"
-            android:layout_weight="5"
             android:layout_height="@dimen/_35sdp"
             android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_weight="5"
             android:background="@drawable/rounded_button_darkblue"
+            android:fontFamily="@font/abeezee_regular"
+            android:gravity="center"
             android:text="Next Payment"
-            android:textColor="@color/White" />
+            android:textColor="@color/White"
+            android:textStyle="bold" />
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
