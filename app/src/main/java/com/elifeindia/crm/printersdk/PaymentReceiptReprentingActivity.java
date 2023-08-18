@@ -85,6 +85,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
     private static final int CONN_MOST_DEVICES = 0x11;
     ListView lv_footer;
     TextView mobileTv,addressTv;
+    String activationdate,billtype,noOfMonths,expiryDate;
 
 
     CableBoxDetailsBillShareAdapter cableBoxDetailsBillShareAdapter;
@@ -263,7 +264,15 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
             rv_box_details.setLayoutManager(mLayoutManager);
             cableBoxDetailsBillShareAdapter = new CableBoxDetailsBillShareAdapter(PaymentReceiptReprentingActivity.this, cableBoxwithSubscriptionDTOS, internetBoxwithSubscriptionDTOS);
             rv_box_details.setAdapter(cableBoxDetailsBillShareAdapter);
+            activationdate=getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date().toString();
+            billtype=getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getBill_Type().toString();
+            noOfMonths= String.valueOf(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getNoofMonth());
+            expiryDate=getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date().toString();
         } else {
+            activationdate=getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date().toString();
+            billtype=getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getBill_Type().toString();
+            noOfMonths= String.valueOf(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getNoofMonth());
+            expiryDate=getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date().toString();
             TotalAlacarteRecords = "";
             TotalBouquetsRecords = "";
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -328,32 +337,26 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                                 txt_header.getText().toString() + "\n" +
 
                                         "-------------------------------" + "\n" +
-                                        "           Payment Receipt        " + "\n" +
+                                        "            Receipt        " + "\n" +
                                         "-------------------------------" + "\n" +
-                                        "Customer Details       \n" +
-                                        "Name            : " + name + "\n" +
-                                        "Account Number  : " + accNo + "\n" +
-                                        "Subscriber ID   : " + subId + "\n" +
-                                        "Bill Date       : " + billdate_pay.getText().toString() + "\n" +
-                                        "Customer No     : " + CustMob + "\n" +
-                                        "Receipt Number  : " + invoicenumber_pay.getText().toString() + "\n" +
 
-                                        "Subscription Details       \n" +
+                                        "Name      : " + name + "\n" +
+                                        "Ac No     : " + accNo + "\n" +
+                                        "Sub Id    : " + subId + "\n" +
+                                        "Bill Date : " + billdate_pay.getText().toString() + "\n" +
+                                        "Bill Type : " + InvType + "\n" +
+                                        "Cust No   : " + CustMob + "\n" +
+                                        "Rpt No    : " + invoicenumber_pay.getText().toString() + "\n" +
+
                                         "------------------------------" + "\n" +
-                                        "Activation Date : " +txt_activation_date.getText().toString() + "\n" +
-                                        "Bill Type       : " + InvType + "\n" +
-                                        "No of Months    :" +discount + "\n" +
-                                        "Inactive Date   : " + remainBal + "\n" +
+                                        "Total Amt : " + totalAmnt + "\n" +
+                                        "Paid Amt  : " + paidAmnt + "\n" +
+                                        "Discount  :" +discount + "\n" +
+                                        "Remaining : " + remainBal + "\n" +
 
-
-                                        "Payment Details       \n" +
                                         "-------------------------------" + "\n" +
-                                        "Total Amount    : " + totalAmnt + "\n" +
-                                        "Paid Amount     : " + paidAmnt + "\n" +
-                                        "Discount        :" +discount + "\n" +
-                                        "Remaining       : " + remainBal + "\n" +
-                                        "Payment  mode   : " + payMode + "\n" +
-                                        "Collected by    : " + collectedBy + "\n" +
+                                        "Pay Mode  : " + payMode + "\n" +
+                                        "Collected : " + collectedBy + "\n" +
                                         "Emp No    : " + empMobNo + "\n" +
 
                                         "-------------------------------" + "\n" +
@@ -387,8 +390,8 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
 
 
     private void shareItOnWhatsApp() {
-        /*Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
-                BuildConfig.APPLICATION_ID + ".provider", imagePath);*/
+        Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
+                BuildConfig.APPLICATION_ID + ".provider", imagePath);
 
 
         String customerPhoneNumber = WhatsappNo;
@@ -397,14 +400,25 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
 
         String message =
                 "*Payment Receipt*\n" +
+
                 "*Customer Details*\n" +
                 "Name: " + custmername_pay.getText().toString() + "\n" +
                 "Account Number: " + txt_accountno.getText().toString() + "\n" +
                 "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
                 "Bill Date: " + billdate_pay.getText().toString() + "\n" +
                 "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
-                "\n" +
-                "*Payment Details*\n" +
+                         "\n" +
+                        "\n" +
+                "*Subscription Details*\n" +
+                "------------------------\n" +
+                "Activation Date : " + activationdate + "\n" +
+                "Bill Type: " + billtype + "\n" +
+                "No of Months : " +noOfMonths + "\n" +
+                "Inactive Date: " +expiryDate + "\n" +
+                        "\n" +
+                        "\n" +
+
+                "*Payment Details*\n"+
                 "------------------------\n" +
                 "Total Amount: " + txt_prev_bal.getText().toString() + "\n" +
                 "Paid Amount: " + paidamount_pay.getText().toString() + "\n" +
@@ -414,11 +428,14 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                 "Collected By: " + txt_collected_by.getText().toString() + "\n" +
                 "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
 
+
                 "------------------------\n" +
                 "" + txt_header.getText().toString().trim();
 
-
+        Log.d("TAG", "shareItOnWhatsApp1: "+message.toString());
         String url = "https://api.whatsapp.com/send?phone=" + customerPhoneNumber + "&text=" + message;
+        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+        sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
         sendIntent.setData(Uri.parse(url));
 
         if (sendIntent.resolveActivity(getPackageManager()) == null) {
