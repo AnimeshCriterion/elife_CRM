@@ -1,43 +1,30 @@
 package com.elifeindia.crm.adapters.generate_invoice_module;
 
+import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.newTotalAmount;
+
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elifeindia.crm.R;
-import com.elifeindia.crm.adapters.AdapterCallback;
-import com.elifeindia.crm.adapters.AdapterCallbackTextView;
-import com.elifeindia.crm.model.CableBoxWithSubscription;
 import com.elifeindia.crm.model.GetInvoiceModel;
-import com.elifeindia.crm.model.InternetBoxWithSubscription;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
-import com.elifeindia.crm.view.activities.BillShareActivity;
 import com.elifeindia.crm.view.activities.UpdateCableSubscriptionActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-
-import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.newTotalAmount;
 
 public class CableBoxDetailsBillShareAdapter extends RecyclerView.Adapter<CableBoxDetailsBillShareAdapter.MyViewHolder> {
     public static String cable_Box_ID, box_ID = "", boxType_ID, vcno, stbno, cafno,ip,mac,strBillType, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date, noofMonth, noofDays, alacarte_Amount, bouquet_Amount, tax_Amount, box_Amount;
@@ -229,7 +216,7 @@ public class CableBoxDetailsBillShareAdapter extends RecyclerView.Adapter<CableB
 
             String date = null;
             date = ViewUtils.changeDateFormat(internetBoxList.get(position).getInternetBox().getExpiry_Date().toString());
-            //holder.expirtydate.setText(date);
+            holder.expirtydate.setText(date);
             if(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)!=null){
                 holder.expirtydate.setText(ViewUtils.changeDateFormat(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)));
 
@@ -239,11 +226,11 @@ public class CableBoxDetailsBillShareAdapter extends RecyclerView.Adapter<CableB
 
             mac = internetBoxList.get(position).getInternetBox().getMac();
 
-            //double newAmount = internetBoxList.get(position).getInternetBox().getBox_Amount();
+            double newAmount = internetBoxList.get(position).getInternetBox().getBox_Amount();
 
             //holder.amount.setText(String.valueOf(newAmount * Double.parseDouble(noofMonth)));
 
-            holder.amount.setText(String.valueOf(newTotalAmount));
+            holder.amount.setText(String.valueOf(newAmount));
 
             RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
             holder.rv_bouquet_list.setLayoutManager(mLayoutManager2);

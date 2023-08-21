@@ -404,7 +404,7 @@ public class GetInvoiceModel {
             private String activation_Date;
             private String expiry_Date;
             private Double package_Amount;
-            private Double box_Amount;
+            private Double box_Amount=0.0;
             private Integer connection_Status_ID;
             private String bill_Type;
             private String status_Name;

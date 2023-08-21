@@ -1,5 +1,8 @@
 package com.elifeindia.crm.view.fragment;
 
+import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.getInvoiceModelInvoice;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -33,11 +36,18 @@ import com.elifeindia.crm.BuildConfig;
 import com.elifeindia.crm.OnClickForPaymentReceiptNew;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.adapters.PaymentListAdapter;
+import com.elifeindia.crm.contract.activities.CustomerDetailsContract;
 import com.elifeindia.crm.contract.activities.PaymentListContract;
 import com.elifeindia.crm.model.AreaResponse;
+import com.elifeindia.crm.model.CustemersCableBoxData;
+import com.elifeindia.crm.model.CustomerData;
+import com.elifeindia.crm.model.CustomersInternetBoxData;
 import com.elifeindia.crm.model.EmployeeList;
+import com.elifeindia.crm.model.GetInvoiceModel;
 import com.elifeindia.crm.model.PaymentRecieptList;
+import com.elifeindia.crm.presenter.activities.CustomerDetailsPresenter;
 import com.elifeindia.crm.presenter.activities.PaymentListPresenter;
+import com.elifeindia.crm.printersdk.PaymentReceiptReprentingActivity;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
@@ -62,19 +72,21 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
 
-public class CustomerPaymentHistoryFragment extends Fragment  implements PaymentListContract.View , OnClickForPaymentReceiptNew {
+public class CustomerPaymentHistoryFragment extends Fragment  implements PaymentListContract.View , OnClickForPaymentReceiptNew , CustomerDetailsContract.View{
 
     PaymentListContract.Presenter presenter;
     ViewUtils viewUtils; LinearLayout root;
     RecyclerView rv_payment_list;
     PaymentListAdapter paymentListAdapter;
     ExpandableLayout expandableLayout;
+    PaymentRecieptList.PaymentReciept dataSend;
     CardView cv_filter;
     String areaId = "", dateTime, companyId, empId="0", custId="0", fromDate, toDate, roleType, triplePlayId="0", value="";
     Spinner spn_emp;    File imagePath;
     EditText paymentsearch_edit;
     ArrayAdapter<String> adapter_state_adj1;
     ImageView iv_calendar;
+    CustomerDetailsContract.Presenter custommerPresenter;
     TextView all, today, yesterday, thismonth, datepicker, from_date, to_date, txt_total_balance, txt_total_collection;
     FragmentManager mFragmentManager;
     private HashSet<Integer> mSelectedWeekdays;
@@ -84,6 +96,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
     }
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -119,7 +132,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
         custId = SharedPrefsData.getString(getActivity(), Constants.CustomerID, Constants.PREF_NAME);
         roleType = SharedPrefsData.getString(getActivity(), Constants.RoleType, Constants.PREF_NAME);
         //empId = SharedPrefsData.getString(getActivity(), Constants.EmpId, Constants.PREF_NAME);
-
+        dataSend= new  PaymentRecieptList.PaymentReciept();
         cv_filter.setVisibility(View.GONE);
 
 
@@ -280,6 +293,8 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
         viewUtils = new ViewUtils();
         presenter = new PaymentListPresenter(this);
         presenter.start();
+        custommerPresenter = new CustomerDetailsPresenter(this);
+        custommerPresenter.start();
 
         paymentsearch_edit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -419,6 +434,71 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
     public void showError(String message) {
         viewUtils.toast(getActivity(), message);
 
+    }
+
+    @Override
+    public void showResult(CustomerData customerData) {
+
+    }
+
+    @Override
+    public void showCableBoxList(CustemersCableBoxData custemersCableBoxData) {
+
+    }
+
+    @Override
+    public void showInernetBoxList(CustomersInternetBoxData customersInternetBoxData) {
+
+    }
+
+    @Override
+    public void showInvoice(GetInvoiceModel getInvoiceModel) {
+        Log.d("TAG", "showInvoice1: ");
+        getInvoiceModelInvoice = getInvoiceModel;
+//        SharedPrefsData.putString(this, Constants.AccNo, String.valueOf(getInvoiceModel.getAccount_No()), Constants.PREF_NAME);
+//        triplePlay = SharedPrefsData.getString(CustomersDetailsActivity.this, Constants.TriplePlay, Constants.PREF_NAME);
+//        if (triplePlay.equals("Cable")) {
+//            SharedPrefsData.putString(this, Constants.TotalAmount, cableBoxWithSubscription.geTotal_CableBox_amount(), Constants.PREF_NAME);
+//        } else if (triplePlay.equals("Internet")) {
+//            SharedPrefsData.putString(this, Constants.TotalAmount, internetBoxWithSubscription.getTotal_InternetBox_amount(), Constants.PREF_NAME);
+//            //SharedPrefsData.putString(this, Constants.TotalAmount, String.valueOf(internetBoxList.get(box_position).getInternetBox().getBox_Amount()), Constants.PREF_NAME);
+//        }
+//        SharedPrefsData.putString(this, Constants.InvoiceNo, String.valueOf(getInvoiceModel.getInvoice_Number()), Constants.PREF_NAME);
+//
+
+        Log.d("TAG", "showInvoice2: ");
+        //getInvoiceModel.getArea_Customer_ID();
+        //getInvoiceModel.getAreaName();
+        SharedPrefsData.putString(getActivity(), Constants.CustomerBalance, String.valueOf(getInvoiceModel.getBalance()), Constants.PREF_NAME);
+        getInvoiceModel.getCustomer_ID();
+        getInvoiceModel.getDiscount();
+        getInvoiceModel.getInv_Amount();
+        getInvoiceModel.getInvoice_Date();
+        SharedPrefsData.putString(getActivity(), Constants.InvoiceDate, getInvoiceModel.getInvoice_Date().toString(), Constants.PREF_NAME);
+        //getInvoiceModel.getInvoice_ID();
+        //SharedPrefsData.putString(this, Constants.InvoiceNo, getInvoiceModel.get().toString(), Constants.PREF_NAME);
+        SharedPrefsData.putString(getActivity(), Constants.CustomerName, getInvoiceModel.getName().toString(), Constants.PREF_NAME);
+        try {
+            SharedPrefsData.putString(getActivity(), Constants.PrevBal, String.valueOf(getInvoiceModel.getPrevious_Balance()), Constants.PREF_NAME);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("TAG", "showInvoice3: "+e.toString());
+        }
+        SharedPrefsData.putString(getActivity(), Constants.SubId, getInvoiceModel.getSubscriber_ID().toString(), Constants.PREF_NAME);
+        getInvoiceModel.getTitle();
+        getInvoiceModel.getTriple_play_ID();
+        //  startActivity(new Intent(getActivity(), BillShareActivity.class));
+        SharedPrefsData.putString(getContext(), Constants.PaymentId, dataSend.getPayment_Id(), Constants.PREF_NAME);
+
+
+        Intent intent = new Intent(getContext(), PaymentReceiptReprentingActivity.class);
+        intent.putExtra("BillType",dataSend.getPaymentType().toString());
+        intent.putExtra("WhatsappNo",dataSend.getWhatsappNo());
+        intent.putExtra("ContactNo", dataSend.getContactNo());
+        //String address = paymentReciepts.get(position).getAddress().toString();
+        // SharedPrefsData.putString(context, Constants.CustomerAddress, address, Constants.PREF_NAME);
+        // SharedPrefsData.putString(context, Constants.CustomerID, paymentReciepts.get(position).getCustomerID().toString(), Constants.PREF_NAME);
+        startActivity(intent);
     }
 
     @Override
@@ -572,6 +652,10 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
 
     @Override
     public void onClickCollection(PaymentRecieptList.PaymentReciept obj,String data) {
+
+        dataSend=obj;
+        SharedPrefsData.putInt(getActivity(), Constants.PaymentId, Integer.parseInt(obj.getPayment_Id()), Constants.PREF_NAME);
+        custommerPresenter.getInvoice(getContext(), String.valueOf(obj.getInvoice_ID()));
 
     }
 }
