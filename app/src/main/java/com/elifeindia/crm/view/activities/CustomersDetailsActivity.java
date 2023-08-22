@@ -444,7 +444,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         SharedPrefsData.putString(this, Constants.SubId, getInvoiceModel.getSubscriber_ID().toString(), Constants.PREF_NAME);
         getInvoiceModel.getTitle();
         getInvoiceModel.getTriple_play_ID();
-        startActivity(new Intent(this, BillShareActivity.class));
+        startActivity(new Intent(this, BillShareForCollectionAndCollect.class));
 
     }
 
