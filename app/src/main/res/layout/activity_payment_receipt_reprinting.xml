@@ -41,6 +41,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:id="@+id/svprint"
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
@@ -51,9 +52,10 @@
 
 
             <LinearLayout
-                android:id="@+id/root"
+                android:id="@+id/root11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@drawable/rounded_butoon"
                 android:orientation="vertical">

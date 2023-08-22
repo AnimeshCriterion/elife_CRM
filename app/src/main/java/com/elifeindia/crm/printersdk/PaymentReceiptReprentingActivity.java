@@ -5,23 +5,29 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -187,10 +193,19 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
             public void onClick(View view) {
                 Bitmap receiptBitmap;
                 receiptBitmap = takeScreenshot();
+//                View rootView = getWindow().getDecorView().getRootView();
+//               Bitmap screenshot = captureView(rootView);
+                Toast.makeText(getApplicationContext(),"CHeck"+receiptBitmap.toString(),Toast.LENGTH_LONG).show();
                 saveBitmap(receiptBitmap);
                 shareIt();
+//                View rootView = getWindow().getDecorView().getRootView();
+//                Bitmap screenshot = captureView(rootView);
+//                File screenshotFile = saveScreenshot(screenshot);
+//                shareScreenshot(screenshotFile);
+
             }
         });
+
 
         iv_whatsappshare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -396,7 +411,36 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         }
 
     }
+    private Bitmap captureView(View view) {
+        view.setDrawingCacheEnabled(true);
+        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+        view.setDrawingCacheEnabled(false);
+        return bitmap;
+    }
 
+    private void shareScreenshot(File screenshotFile) {
+
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/*");
+        Uri screenshotUri = Uri.fromFile(screenshotFile);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
+        startActivity(Intent.createChooser(shareIntent, "Share screenshot using"));
+    }
+
+    private File saveScreenshot(Bitmap bitmap) {
+        File screenshotFile = new File(getExternalFilesDir(null), "screenshot.png");
+        try {
+            FileOutputStream outputStream = new FileOutputStream(screenshotFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return screenshotFile;
+
+}
 
 
     private void shareItOnWhatsApp() {
@@ -519,10 +563,23 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
     }
 
     public Bitmap takeScreenshot() {
-        LinearLayout rootView = findViewById(R.id.root);
+        ScrollView rootView = findViewById(R.id.svprint);
         rootView.setDrawingCacheEnabled(true);
-        return rootView.getDrawingCache();
+        return getBitmapFromView(rootView, rootView.getChildAt(0).getHeight(), rootView.getChildAt(0).getWidth());
     }
+
+    private Bitmap getBitmapFromView(View view, int height, int width) {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable != null)
+            bgDrawable.draw(canvas);
+        else
+            canvas.drawColor(Color.WHITE);
+        view.draw(canvas);
+        return bitmap;
+    }
+
 
     public void saveBitmap(Bitmap bitmap) {
         File folder = new File(getExternalFilesDir(null) +
@@ -537,7 +594,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
             try {
                 fos = new FileOutputStream(imagePath);
                 Toast.makeText(this, imagePath.toString(), Toast.LENGTH_SHORT).show();
-              //  bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                 fos.flush();
                 fos.close();
             } catch (FileNotFoundException e) {
@@ -552,19 +609,24 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
     }
 
     private void shareIt() {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
                 BuildConfig.APPLICATION_ID + ".provider", imagePath);
+Uri data=Uri.parse(imagePath.toString());
 
-        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/*");
         String shareBody = "Payment Receipt";
-        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Payment Receipt");
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
-        sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Payment Receipt");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        sharingIntent.putExtra(Intent.EXTRA_STREAM,uri);
         try {
             Intent intent = new Intent(Intent.createChooser(sharingIntent, "Share via"));
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             startActivity(intent);
+         //   startActivity(sharingIntent);
 
         } catch (Exception e) {
             e.printStackTrace();
