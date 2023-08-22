@@ -30,11 +30,16 @@ import com.elifeindia.crm.BuildConfig;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsBillShareAdapter;
 import com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter;
+import com.elifeindia.crm.contract.activities.CustomerDetailsContract;
 import com.elifeindia.crm.contract.activities.PaymentReceiptContract;
+import com.elifeindia.crm.model.CustemersCableBoxData;
+import com.elifeindia.crm.model.CustomerData;
+import com.elifeindia.crm.model.CustomersInternetBoxData;
 import com.elifeindia.crm.model.FooterModel;
 import com.elifeindia.crm.model.GetInvoiceModel;
 import com.elifeindia.crm.model.HeaderModel;
 import com.elifeindia.crm.model.PaymentReciept;
+import com.elifeindia.crm.presenter.activities.CustomerDetailsPresenter;
 import com.elifeindia.crm.presenter.activities.PaymentReceiptPresenter;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
@@ -67,8 +72,9 @@ import static com.elifeindia.crm.printersdk.Constant.MESSAGE_UPDATE_PARAMETER;
 import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.getInvoiceModelInvoice;
 import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.txt_activation_date;
 
-public class PaymentReceiptReprentingActivity extends AppCompatActivity implements PaymentReceiptContract.View {
+public class PaymentReceiptReprentingActivity extends AppCompatActivity implements PaymentReceiptContract.View, CustomerDetailsContract.View  {
     PaymentReceiptContract.Presenter presenter;
+    CustomerDetailsContract.Presenter custommerPresenter;
     TextView txt_subid, txt_accountno, txt_header, custmername_pay, billdate_pay, invoicenumber_pay, txt_rec_time, txt_prev_bal, paidamount_pay;
     TextView btn_send, txt_discount, balance_pay, paymentmode_text, txt_collected_by, txt_emp_mob_no;
     ImageView iv_all, iv_whatsappshare;
@@ -130,10 +136,10 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         btn_next = findViewById(R.id.btn_next);
         lv_footer = findViewById(R.id.lv_footer);
 
-        WhatsupNo = SharedPrefsData.getString(PaymentReceiptReprentingActivity.this, Constants.WhatsupNo, Constants.PREF_NAME);
+//        WhatsappNo = SharedPrefsData.getString(PaymentReceiptReprentingActivity.this, Constants.WhatsupNo, Constants.PREF_NAME);
         CustMob = SharedPrefsData.getString(PaymentReceiptReprentingActivity.this, Constants.CustMob, Constants.PREF_NAME);
         InvType = getIntent().getStringExtra("BillType");
-        WhatsappNo = getIntent().getStringExtra("WhatsappNo");
+        //WhatsappNo = getIntent().getStringExtra("WhatsappNo");
         ContactNo = getIntent().getStringExtra("ContactNo");
 
 
@@ -197,9 +203,13 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         });
 
         presenter = new PaymentReceiptPresenter(this);
+        custommerPresenter = new CustomerDetailsPresenter(this);
         presenter.start();
+        custommerPresenter.start();
         String pId = SharedPrefsData.getString(this, Constants.PaymentId, Constants.PREF_NAME);
+        String customerID = SharedPrefsData.getString(this, Constants.CustomerID, Constants.PREF_NAME);
         presenter.loadPaymentReceipt(this, pId);
+        custommerPresenter.loadApi(this, customerID);
 
         String compId = SharedPrefsData.getString(this, Constants.CompanyID, Constants.PREF_NAME);
 
@@ -411,10 +421,10 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                         "\n" +
                 "*Subscription Details*\n" +
                 "------------------------\n" +
-                "Activation Date : " + activationdate + "\n" +
+                "Activation Date : " +  ViewUtils.changeDateTimeFormat(activationdate) + "\n" +
                 "Bill Type: " + billtype + "\n" +
                 "No of Months : " +noOfMonths + "\n" +
-                "Inactive Date: " +expiryDate + "\n" +
+                "Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate)+ "\n" +
                         "\n" +
                         "\n" +
 
@@ -432,7 +442,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                 "------------------------\n" +
                 "" + txt_header.getText().toString().trim();
 
-        Log.d("TAG", "shareItOnWhatsApp1: "+message.toString());
+        Log.d("TAG", "shareItOnWhatsApp1: "+customerPhoneNumber.toString());
         String url = "https://api.whatsapp.com/send?phone=" + customerPhoneNumber + "&text=" + message;
         sendIntent.putExtra(Intent.EXTRA_TEXT, message);
         sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
@@ -568,6 +578,26 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
 
     @Override
     public void showError(String message) {
+    }
+
+    @Override
+    public void showResult(CustomerData customerData) {
+        WhatsappNo=customerData.getWhatsupNo();
+    }
+
+    @Override
+    public void showCableBoxList(CustemersCableBoxData custemersCableBoxData) {
+
+    }
+
+    @Override
+    public void showInernetBoxList(CustomersInternetBoxData customersInternetBoxData) {
+
+    }
+
+    @Override
+    public void showInvoice(GetInvoiceModel getInvoiceModel) {
+
     }
 
 

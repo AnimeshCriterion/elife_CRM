@@ -73,6 +73,7 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
     EditText edt_payingamount, discount_editext;
     TextView customer_name, custmer_address, subs_amount, total_amount, balance_amount, today_date;
     float ans = 0;
+    String customerWhatsappNo;
     String balance="", InvType;
     RelativeLayout tool_bar;
     private  LinearLayout discount;
@@ -335,10 +336,10 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
 
 
         Intent intent = new Intent(getContext(), PaymentReceiptReprentingActivity.class);
-//        intent.putExtra("BillType",dataSend.getPaymentType().toString());
-//        intent.putExtra("WhatsappNo",dataSend.getWhatsappNo());
+//        intent.putExtra("BillType",getInvoiceModel.getPaymentType().toString());
+        intent.putExtra("WhatsappNo",requireActivity().getIntent().getStringExtra("WhatsappNo"));
 //        intent.putExtra("ContactNo", dataSend.getContactNo());
-        //String address = paymentReciepts.get(position).getAddress().toString();
+//        String address = paymentReciepts.get(position).getAddress().toString();
         // SharedPrefsData.putString(context, Constants.CustomerAddress, address, Constants.PREF_NAME);
         // SharedPrefsData.putString(context, Constants.CustomerID, paymentReciepts.get(position).getCustomerID().toString(), Constants.PREF_NAME);
         startActivity(intent);
@@ -418,7 +419,8 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
 
     @Override
     public void showCustomerInvoice(CustomerInvoice customerInvoice) {
-
+        Log.d("TAG", "showCustomerInvoice: "+customerInvoice.getCustomerID());
+        SharedPrefsData.putString(getContext(), Constants.CustomerID,customerInvoice.getCustomerID().toString(), Constants.PREF_NAME);
         if(customerInvoice.getInvoiceID() != null){
             balance = customerInvoice.getBalance().toString();
             invoiceId = customerInvoice.getInvoiceID().toString();
