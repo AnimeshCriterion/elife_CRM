@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -53,6 +55,8 @@ import com.elifeindia.crm.utils.ViewUtils;
 import com.elifeindia.crm.view.activities.BillShareActivity;
 import com.elifeindia.crm.view.activities.CustomerListActivity;
 import com.elifeindia.crm.view.activities.MainActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.printer.command.EscCommand;
 import com.printer.command.LabelCommand;
 
@@ -81,7 +85,7 @@ import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.txt_act
 
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class PaymentReceiptReprentingActivity extends AppCompatActivity implements PaymentReceiptContract.View, CustomerDetailsContract.View  {
+public class PaymentReceiptReprentingActivity extends AppCompatActivity implements PaymentReceiptContract.View, CustomerDetailsContract.View {
     PaymentReceiptContract.Presenter presenter;
     CustomerDetailsContract.Presenter custommerPresenter;
     TextView txt_subid, txt_accountno, txt_header, custmername_pay, billdate_pay, invoicenumber_pay, txt_rec_time, txt_prev_bal, paidamount_pay;
@@ -89,7 +93,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
     ImageView iv_all, iv_whatsappshare;
     RecyclerView rv_box_details;
     TextView btn_done, btn_next, txt_bill_type_rep;
-    String invno, accNo, name, subId, dateTime, totalAmnt, empMobNo, collectedBy, payMode, remainBal, paidAmnt, footer,discount;
+    String invno, accNo, name, subId, dateTime, totalAmnt, empMobNo, collectedBy, payMode, remainBal, paidAmnt, footer, discount;
     public static String invoiceNumber;
     File imagePath;
     private int id = 0;
@@ -99,8 +103,8 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
     private static final int PRINTER_COMMAND_ERROR = 0x008;
     private static final int CONN_MOST_DEVICES = 0x11;
     ListView lv_footer;
-    TextView mobileTv,addressTv;
-    String activationdate,billtype,noOfMonths,expiryDate;
+    TextView mobileTv, addressTv;
+    String activationdate, billtype, noOfMonths, expiryDate;
 
 
     CableBoxDetailsBillShareAdapter cableBoxDetailsBillShareAdapter;
@@ -126,8 +130,8 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         invoicenumber_pay = findViewById(R.id.invoicenumber_pay);
         billdate_pay = findViewById(R.id.billdate_pay);
         txt_rec_time = findViewById(R.id.txt_rec_time);
-        mobileTv=findViewById(R.id.customer_mobile);
-        addressTv=findViewById(R.id.customer_address);
+        mobileTv = findViewById(R.id.customer_mobile);
+        addressTv = findViewById(R.id.customer_address);
         txt_prev_bal = findViewById(R.id.txt_prev_bal);
         rv_box_details = findViewById(R.id.rv_box_details);
         paidamount_pay = findViewById(R.id.paidamount_pay);
@@ -152,15 +156,14 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         ContactNo = getIntent().getStringExtra("ContactNo");
 
 
-
         try {
             if (!getInvoiceModelInvoice.getPaymentMaster().isEmpty() || getInvoiceModelInvoice.getPaymentMaster() != null) {
 
-                for(int i=0;i<getInvoiceModelInvoice.getPaymentMaster().size();i++) {
+                for (int i = 0; i < getInvoiceModelInvoice.getPaymentMaster().size(); i++) {
                     if (getInvoiceModelInvoice.getPaymentMaster().get(i).getPayment_Id() == SharedPrefsData.getInt(PaymentReceiptReprentingActivity.this, Constants.PaymentId, Constants.PREF_NAME)) {
 //                        txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount());
                         paidAmnt = getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount();
-                       // payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaymentType());
+                        // payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaymentType());
 
                     }
 
@@ -219,14 +222,9 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
             public void onClick(View view) {
                 Bitmap receiptBitmap;
                 receiptBitmap = takeScreenshot();
-//                View rootView = getWindow().getDecorView().getRootView();
-//               Bitmap screenshot = captureView(rootView);
                 saveBitmap(receiptBitmap);
                 shareIt();
-//                View rootView = getWindow().getDecorView().getRootView();
-//                Bitmap screenshot = captureView(rootView);
-//                File screenshotFile = saveScreenshot(screenshot);
-//                shareScreenshot(screenshotFile);
+
 
             }
         });
@@ -238,7 +236,40 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                 Bitmap receiptBitmap;
                 receiptBitmap = takeScreenshot();
                 saveBitmap(receiptBitmap);
-                shareItOnWhatsApp();
+//                shareItOnWhatsApp();
+
+                Log.d("TAG", "onClick2: "+isAppInstalled("com.whatsapp"));
+                Log.d("TAG", "onClick1: "+isBusinessAppInstalled("com.whatsapp.w4b"));
+                if (isBusinessAppInstalled("com.whatsapp.w4b") && isAppInstalled("com.whatsapp")) {
+                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(PaymentReceiptReprentingActivity.this);
+                    bottomSheetDialog.setContentView(R.layout.bottom_sheet_layout);
+                    LinearLayout option1 = bottomSheetDialog.findViewById(R.id.option1);
+                    LinearLayout option2 = bottomSheetDialog.findViewById(R.id.option2);
+                    bottomSheetDialog.show();
+                    // Handle clicks on bottom sheet options
+                    option1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Handle Option 1 click
+                            shareItOnWhatsApp("com.whatsapp");
+                        }
+                    });
+
+                    option2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Handle Option 2 click
+                            shareItOnWhatsApp("com.whatsapp.w4b");
+                        }
+                    });
+
+
+                } else if (isAppInstalled("com.whatsapp.w4b")) {
+                    shareItOnWhatsApp("com.whatsapp.w4b");
+                } else {
+                    shareItOnWhatsApp("com.whatsapp");
+                }
+
             }
         });
 
@@ -325,15 +356,15 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
             rv_box_details.setLayoutManager(mLayoutManager);
             cableBoxDetailsBillShareAdapter = new CableBoxDetailsBillShareAdapter(PaymentReceiptReprentingActivity.this, cableBoxwithSubscriptionDTOS, internetBoxwithSubscriptionDTOS);
             rv_box_details.setAdapter(cableBoxDetailsBillShareAdapter);
-            activationdate=getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date().toString();
-            billtype=getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getBill_Type().toString();
-            noOfMonths= String.valueOf(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getNoofMonth());
-            expiryDate=getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date().toString();
+            activationdate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date().toString();
+            billtype = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getBill_Type().toString();
+            noOfMonths = String.valueOf(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getNoofMonth());
+            expiryDate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date().toString();
         } else {
-            activationdate=getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date().toString();
-            billtype=getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getBill_Type().toString();
-            noOfMonths= String.valueOf(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getNoofMonth());
-            expiryDate=getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date().toString();
+            activationdate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date().toString();
+            billtype = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getBill_Type().toString();
+            noOfMonths = String.valueOf(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getNoofMonth());
+            expiryDate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date().toString();
             TotalAlacarteRecords = "";
             TotalBouquetsRecords = "";
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -412,7 +443,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                                         "------------------------------" + "\n" +
                                         "Total Amt : " + totalAmnt + "\n" +
                                         "Paid Amt  : " + paidAmnt + "\n" +
-                                        "Discount  :" +discount + "\n" +
+                                        "Discount  :" + discount + "\n" +
                                         "Remaining : " + remainBal + "\n" +
 
                                         "-------------------------------" + "\n" +
@@ -447,6 +478,25 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         }
 
     }
+
+    private boolean isAppInstalled(String packageName) {
+        PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+    private boolean isBusinessAppInstalled(String packageName) {
+        PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
     private Bitmap captureView(View view) {
         view.setDrawingCacheEnabled(true);
         Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
@@ -476,183 +526,128 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         }
         return screenshotFile;
 
-}
+    }
 
 
-//    private void shareItOnWhatsApp() {
-//        Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
-//                BuildConfig.APPLICATION_ID + ".provider", imagePath);
-//
-//
-//        String customerPhoneNumber = WhatsappNo;
-//        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-//        sendIntent.setPackage("com.whatsapp");
-//
-//        String message =
-//                "*Payment Receipt*\n" +
-//
-//                "*Customer Details*\n" +
-//                "Name: " + custmername_pay.getText().toString() + "\n" +
-//                "Account Number: " + txt_accountno.getText().toString() + "\n" +
-//                "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
-//                "Bill Date: " + billdate_pay.getText().toString() + "\n" +
-//                "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
-//                         "\n" +
-//                        "\n" +
-//                "*Subscription Details*\n" +
-//                "------------------------\n" +
-//                "Activation Date : " +  ViewUtils.changeDateTimeFormat(activationdate) + "\n" +
-//                "Bill Type: " + billtype + "\n" +
-//                "No of Months : " +noOfMonths + "\n" +
-//                "Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate)+ "\n" +
-//                        "\n" +
-//                        "\n" +
-//
-//                "*Payment Details*\n"+
-//                "------------------------\n" +
-//                "Total Amount: " + txt_prev_bal.getText().toString() + "\n" +
-//                "Paid Amount: " + paidamount_pay.getText().toString() + "\n" +
-//                "Discount: " +discount + "\n" +
-//                "Remaining Amount: " + balance_pay.getText().toString() + "\n" +
-//                "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
-//                "Collected By: " + txt_collected_by.getText().toString() + "\n" +
-//                "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
-//
-//
-//                "------------------------\n" +
-//                "" + txt_header.getText().toString().trim();
-//
-////        Log.d("TAG", "shareItOnWhatsApp1: "+customerPhoneNumber.toString());
-//         String url = "https://api.whatsapp.com/send?phone=" + customerPhoneNumber + "&text=" + message;
-//        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
-//        sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
-//       sendIntent.setData(Uri.parse(url));
-//
-//        if (sendIntent.resolveActivity(getPackageManager()) == null) {
-//            Toast.makeText(this, "Please Install Whatsapp", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        startActivity(sendIntent);
-//
-//
-//
-//        /*String custWhatsAppNo = SharedPrefsData.getString(PaymentReceiptReprentingActivity.this, Constants.WhatsupNo, Constants.PREF_NAME);
-//
-//        String smsNumber = "91" + custWhatsAppNo; // E164 format without '+' sign
-//        Intent sendIntent = new Intent(Intent.ACTION_SEND);
-//        sendIntent.setType("text/plain");
-//        sendIntent.putExtra(Intent.EXTRA_TEXT,
-//                "*Payment Receipt*\n" +
-//                        "*Customer Details*\n" +
-//                        "Name: " + custmername_pay.getText().toString() + "\n" +
-//                        "Account Number: " + txt_accountno.getText().toString() + "\n" +
-//                        "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
-//                        "Bill Date: " + billdate_pay.getText().toString() + "\n" +
-//                        "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
-//                        "\n" +
-//                        "*Payment Details*\n" +
-//                        "------------------------\n" +
-//                        "Total Amount: " + txt_prev_bal.getText().toString() + "\n" +
-//                        "Paid Amount: " + paidamount_pay.getText().toString() + "\n" +
-//                        "Discount: " + txt_discount.getText().toString() + "\n" +
-//                        "Remaining Amount: " + balance_pay.getText().toString() + "\n" +
-//                        "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
-//                        "Collected By: " + txt_collected_by.getText().toString() + "\n" +
-//                        "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
-//
-//                        "------------------------\n" +
-//                        "" + txt_header.getText().toString().trim()
-//        );
-//
-//        sendIntent.putExtra("jid", smsNumber + "@s.whatsapp.net"); //phone number without "+" prefix
-//        sendIntent.setPackage("com.whatsapp");
-//        if (sendIntent.resolveActivity(getPackageManager()) == null) {
-//            Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        startActivity(sendIntent);*/
-//
-//
-////        Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-////        whatsappIntent.setType("image/*");
-////        whatsappIntent.setPackage("com.whatsapp");
-////        whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
-////        try {
-////            startActivity(whatsappIntent);
-////        } catch (android.content.ActivityNotFoundException ex) {
-////            Toast.makeText(this, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
-////        }
-//
-//        /*String smsNumber = "918999567375"; // E164 format without '+' sign
-//        Intent sendIntent = new Intent(Intent.ACTION_SEND);
-//        sendIntent.setType("image/*");
-//        sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
-//        sendIntent.putExtra(Intent.EXTRA_TEXT, "Payment Receipt");
-//        sendIntent.putExtra("jid", smsNumber + "@s.whatsapp.net"); //phone number without "+" prefix
-//        sendIntent.setPackage("com.whatsapp");
-//        if (sendIntent.resolveActivity(getPackageManager()) == null) {
-//            Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        startActivity(sendIntent);*/
-//    }
-
-    private void shareItOnWhatsApp(){
+    private void shareItOnWhatsApp(String packageName) {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
                 BuildConfig.APPLICATION_ID + ".provider", imagePath);
-        Uri data=Uri.parse(imagePath.toString());
+        String customerPhoneNumber = WhatsappNo;
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        sendIntent.setPackage(packageName);
+
         String message =
                 "*Payment Receipt*\n" +
 
-                "*Customer Details*\n" +
-                "Name: " + custmername_pay.getText().toString() + "\n" +
-                "Account Number: " + txt_accountno.getText().toString() + "\n" +
-                "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
-                "Bill Date: " + billdate_pay.getText().toString() + "\n" +
-                "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
-                         "\n" +
-                        "\n" +
-                "*Subscription Details*\n" +
-                "------------------------\n" +
-                "Activation Date : " +  ViewUtils.changeDateTimeFormat(activationdate) + "\n" +
-                "Bill Type: " + billtype + "\n" +
-                "No of Months : " +noOfMonths + "\n" +
-                "Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate)+ "\n" +
+                        "*Customer Details*\n" +
+                        "Name: " + custmername_pay.getText().toString() + "\n" +
+                        "Account Number: " + txt_accountno.getText().toString() + "\n" +
+                        "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
+                        "Bill Date: " + billdate_pay.getText().toString() + "\n" +
+                        "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
                         "\n" +
                         "\n" +
+                        "*Subscription Details*\n" +
+                        "------------------------\n" +
+                        "Activation Date : " + ViewUtils.changeDateTimeFormat(activationdate) + "\n" +
+                        "Bill Type: " + billtype + "\n" +
+                        "No of Months : " + noOfMonths + "\n" +
+                        "Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate) + "\n" +
+                        "\n" +
+                        "\n" +
 
-                "*Payment Details*\n"+
-                "------------------------\n" +
-                "Total Amount: " + txt_prev_bal.getText().toString() + "\n" +
-                "Paid Amount: " + paidamount_pay.getText().toString() + "\n" +
-                "Discount: " +discount + "\n" +
-                "Remaining Amount: " + balance_pay.getText().toString() + "\n" +
-                "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
-                "Collected By: " + txt_collected_by.getText().toString() + "\n" +
-                "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
+                        "*Payment Details*\n" +
+                        "------------------------\n" +
+                        "Total Amount: " + txt_prev_bal.getText().toString() + "\n" +
+                        "Paid Amount: " + paidamount_pay.getText().toString() + "\n" +
+                        "Discount: " + discount + "\n" +
+                        "Remaining Amount: " + balance_pay.getText().toString() + "\n" +
+                        "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
+                        "Collected By: " + txt_collected_by.getText().toString() + "\n" +
+                        "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
 
 
-                "------------------------\n" +
-                "" + txt_header.getText().toString().trim();
+                        "------------------------\n" +
+                        "" + txt_header.getText().toString().trim();
 
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("image/*");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Payment Receipt");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, message);
-        sharingIntent.putExtra(Intent.EXTRA_STREAM,uri);
-        try {
-            Intent intent = new Intent(Intent.createChooser(sharingIntent, "Share via"));
-            intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-            startActivity(intent);
-            //   startActivity(sharingIntent);
+//        Log.d("TAG", "shareItOnWhatsApp1: "+customerPhoneNumber.toString());
+        String url = "https://api.whatsapp.com/send?phone=" + customerPhoneNumber + "&text=" + message;
+        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+        sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        sendIntent.setData(Uri.parse(url));
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (sendIntent.resolveActivity(getPackageManager()) == null) {
+            Toast.makeText(this, "Please Install Whatsapp", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        startActivity(sendIntent);
+
+
+
+        /*String custWhatsAppNo = SharedPrefsData.getString(PaymentReceiptReprentingActivity.this, Constants.WhatsupNo, Constants.PREF_NAME);
+
+        String smsNumber = "91" + custWhatsAppNo; // E164 format without '+' sign
+        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+        sendIntent.setType("text/plain");
+        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                "*Payment Receipt*\n" +
+                        "*Customer Details*\n" +
+                        "Name: " + custmername_pay.getText().toString() + "\n" +
+                        "Account Number: " + txt_accountno.getText().toString() + "\n" +
+                        "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
+                        "Bill Date: " + billdate_pay.getText().toString() + "\n" +
+                        "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
+                        "\n" +
+                        "*Payment Details*\n" +
+                        "------------------------\n" +
+                        "Total Amount: " + txt_prev_bal.getText().toString() + "\n" +
+                        "Paid Amount: " + paidamount_pay.getText().toString() + "\n" +
+                        "Discount: " + txt_discount.getText().toString() + "\n" +
+                        "Remaining Amount: " + balance_pay.getText().toString() + "\n" +
+                        "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
+                        "Collected By: " + txt_collected_by.getText().toString() + "\n" +
+                        "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
+
+                        "------------------------\n" +
+                        "" + txt_header.getText().toString().trim()
+        );
+
+        sendIntent.putExtra("jid", smsNumber + "@s.whatsapp.net"); //phone number without "+" prefix
+        sendIntent.setPackage("com.whatsapp");
+        if (sendIntent.resolveActivity(getPackageManager()) == null) {
+            Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        startActivity(sendIntent);*/
+
+
+//        Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+//        whatsappIntent.setType("image/*");
+//        whatsappIntent.setPackage("com.whatsapp");
+//        whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
+//        try {
+//            startActivity(whatsappIntent);
+//        } catch (android.content.ActivityNotFoundException ex) {
+//            Toast.makeText(this, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
+//        }
+
+        /*String smsNumber = "918999567375"; // E164 format without '+' sign
+        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+        sendIntent.setType("image/*");
+        sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Payment Receipt");
+        sendIntent.putExtra("jid", smsNumber + "@s.whatsapp.net"); //phone number without "+" prefix
+        sendIntent.setPackage("com.whatsapp");
+        if (sendIntent.resolveActivity(getPackageManager()) == null) {
+            Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        startActivity(sendIntent);*/
     }
+
     public Bitmap takeScreenshot() {
         ScrollView rootView = findViewById(R.id.svprint);
         rootView.setDrawingCacheEnabled(true);
@@ -704,7 +699,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         StrictMode.setVmPolicy(builder.build());
         Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
                 BuildConfig.APPLICATION_ID + ".provider", imagePath);
-Uri data=Uri.parse(imagePath.toString());
+        Uri data = Uri.parse(imagePath.toString());
 
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -712,12 +707,12 @@ Uri data=Uri.parse(imagePath.toString());
         String shareBody = "Payment Receipt";
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Payment Receipt");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        sharingIntent.putExtra(Intent.EXTRA_STREAM,uri);
+        sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
         try {
             Intent intent = new Intent(Intent.createChooser(sharingIntent, "Share via"));
             intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             startActivity(intent);
-         //   startActivity(sharingIntent);
+            //   startActivity(sharingIntent);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -735,7 +730,7 @@ Uri data=Uri.parse(imagePath.toString());
 
     @Override
     public void showResult(CustomerData customerData) {
-        WhatsappNo=customerData.getWhatsupNo();
+        WhatsappNo = customerData.getWhatsupNo();
     }
 
     @Override
@@ -756,7 +751,7 @@ Uri data=Uri.parse(imagePath.toString());
 
     @Override
     public void showReceipt(PaymentReciept paymentReciept) {
-        Log.d("TAG", "showReceiptAnimesh: "+paymentReciept.toString());
+        Log.d("TAG", "showReceiptAnimesh: " + paymentReciept.toString());
         name = paymentReciept.getName();
         accNo = paymentReciept.getAccountNo().toString();
         subId = paymentReciept.getSubscriberID();
@@ -767,7 +762,7 @@ Uri data=Uri.parse(imagePath.toString());
         totalAmnt = paymentReciept.getTotalAmount().toString();
         paidAmnt = paymentReciept.getPaidAmount().toString();
         txt_discount.setText(paymentReciept.getDiscount());
-        discount=paymentReciept.getDiscount();
+        discount = paymentReciept.getDiscount();
         remainBal = paymentReciept.getBalance().toString();
         payMode = paymentReciept.getPaymentType();
         collectedBy = paymentReciept.getEmployee_Name();
