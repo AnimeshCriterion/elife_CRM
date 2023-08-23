@@ -1,6 +1,5 @@
 package com.elifeindia.crm.view.activities;
 
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static com.elifeindia.crm.adapters.generate_invoice_module.AlacarteListBillShareAdapter.TotalAlacarteRecords;
 import static com.elifeindia.crm.adapters.generate_invoice_module.BouquetListBillShareAdapter.TotalBouquetsRecords;
 import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsBillShareAdapter.activation_Date;
@@ -14,7 +13,6 @@ import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetail
 import static com.elifeindia.crm.adapters.generate_invoice_module.InternetPkgListAdapter.TotalInternetRecords;
 import static com.elifeindia.crm.printersdk.BluetoothDeviceList.REQUEST_ENABLE_BT;
 import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.getInvoiceModelInvoice;
-import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.paidAmount;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -34,11 +32,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
@@ -57,6 +55,7 @@ import com.elifeindia.crm.model.GetInvoiceModel;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 //import com.karumi.dexter.Dexter;
 //import com.karumi.dexter.PermissionToken;
 //import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -295,7 +294,40 @@ public class BillShareActivity extends AppCompatActivity   {
                 Bitmap receiptBitmap;
                 receiptBitmap = takeScreenshot();
                 saveBitmap(receiptBitmap);
-                openWhatsApp();
+
+                Log.d("TAG", "onClick2: "+isAppInstalled("com.whatsapp"));
+                Log.d("TAG", "onClick1: "+isBusinessAppInstalled("com.whatsapp.w4b"));
+                if (isBusinessAppInstalled("com.whatsapp.w4b") && isAppInstalled("com.whatsapp")) {
+                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(BillShareActivity.this);
+                    bottomSheetDialog.setContentView(R.layout.bottom_sheet_layout);
+                    LinearLayout option1 = bottomSheetDialog.findViewById(R.id.option1);
+                    LinearLayout option2 = bottomSheetDialog.findViewById(R.id.option2);
+                    bottomSheetDialog.show();
+                    // Handle clicks on bottom sheet options
+                    option1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Handle Option 1 click
+                            openWhatsApp("com.whatsapp.w4b");
+                        }
+                    });
+
+                    option2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Handle Option 2 click
+
+                            openWhatsApp("com.whatsapp.w4b");
+                        }
+                    });
+
+
+                } else if (isAppInstalled("com.whatsapp.w4b")) {
+                    openWhatsApp("com.whatsapp.w4b");
+                } else {
+                    openWhatsApp("com.whatsapp");
+                }
+
             }
         });
 
@@ -411,9 +443,26 @@ public class BillShareActivity extends AppCompatActivity   {
             e.printStackTrace();
         }
     }
+    private boolean isAppInstalled(String packageName) {
+        PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+    private boolean isBusinessAppInstalled(String packageName) {
+        PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
 
-
-    private void openWhatsApp() {
+    private void openWhatsApp(String s) {
         /*String smsNumber = CustWhatsappNo; // E164 format without '+' sign
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
         sendIntent.setType("text/plain");
@@ -448,7 +497,7 @@ public class BillShareActivity extends AppCompatActivity   {
 
         String customerPhoneNumber = CustWhatsappNo;
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        sendIntent.setPackage("com.whatsapp");
+        sendIntent.setPackage(s);
 
 
         String message = "*Payment Received*\n" +
