@@ -54,6 +54,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
     InternetSuscriptionAdapter internetSuscriptionAdapter;
     LinearLayout cablelayout, internetlayout, ll_pay, ll_bill_share, ll_invoice, ll_report;
 
+ public   static String customerWhatsappNo;
     public  static String customerBalance;
 
     String InvoiceID;
@@ -210,7 +211,8 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         ll_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CustomersDetailsActivity.this, CollectPaymentActivity2.class));
+               Intent intent=new Intent(CustomersDetailsActivity.this,CollectPaymentActivity2.class );
+                startActivity(intent);
             }
         });
 
@@ -256,18 +258,18 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         ll_bill_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("TAG", "InvoiceID: "+InvoiceID.toString());
-                presenter.getInvoice(CustomersDetailsActivity.this, InvoiceID);
-//                final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(CustomersDetailsActivity.this, R.style.ListRow));
-//
-//                builder.setTitle("Stay Connected With Us")
-//                        .setMessage("This functionality is coming soon")
-//                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//
-//                            }
-//                        }).show();
+//                Log.d("TAG", "InvoiceID: "+InvoiceID.toString());
+//                presenter.getInvoice(CustomersDetailsActivity.this, InvoiceID);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(CustomersDetailsActivity.this, R.style.ListRow));
+
+                builder.setTitle("Stay Connected With Us")
+                        .setMessage("This functionality is coming soon")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).show();
                 // startActivity(new Intent(CustomersDetailsActivity.this, BillShareActivity.class));
             }
         });
@@ -302,6 +304,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         areaid.setText(customerData.getAreaCustomerID().toString());
         txt_mob_no.setText(customerData.getContactNo());
         txt_whatsapp_no.setText(customerData.getWhatsupNo());
+        customerWhatsappNo=customerData.getWhatsupNo();
         SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.WhatsupNo, customerData.getWhatsupNo(), Constants.PREF_NAME);
         SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.CustMob, customerData.getContactNo(), Constants.PREF_NAME);
         SharedPrefsData.putString(CustomersDetailsActivity.this, Constants.CustomerBalance, customerData.getBalance(), Constants.PREF_NAME);

@@ -5,23 +5,29 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,11 +36,16 @@ import com.elifeindia.crm.BuildConfig;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsBillShareAdapter;
 import com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter;
+import com.elifeindia.crm.contract.activities.CustomerDetailsContract;
 import com.elifeindia.crm.contract.activities.PaymentReceiptContract;
+import com.elifeindia.crm.model.CustemersCableBoxData;
+import com.elifeindia.crm.model.CustomerData;
+import com.elifeindia.crm.model.CustomersInternetBoxData;
 import com.elifeindia.crm.model.FooterModel;
 import com.elifeindia.crm.model.GetInvoiceModel;
 import com.elifeindia.crm.model.HeaderModel;
 import com.elifeindia.crm.model.PaymentReciept;
+import com.elifeindia.crm.presenter.activities.CustomerDetailsPresenter;
 import com.elifeindia.crm.presenter.activities.PaymentReceiptPresenter;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
@@ -67,8 +78,9 @@ import static com.elifeindia.crm.printersdk.Constant.MESSAGE_UPDATE_PARAMETER;
 import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.getInvoiceModelInvoice;
 import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.txt_activation_date;
 
-public class PaymentReceiptReprentingActivity extends AppCompatActivity implements PaymentReceiptContract.View {
+public class PaymentReceiptReprentingActivity extends AppCompatActivity implements PaymentReceiptContract.View, CustomerDetailsContract.View  {
     PaymentReceiptContract.Presenter presenter;
+    CustomerDetailsContract.Presenter custommerPresenter;
     TextView txt_subid, txt_accountno, txt_header, custmername_pay, billdate_pay, invoicenumber_pay, txt_rec_time, txt_prev_bal, paidamount_pay;
     TextView btn_send, txt_discount, balance_pay, paymentmode_text, txt_collected_by, txt_emp_mob_no;
     ImageView iv_all, iv_whatsappshare;
@@ -130,10 +142,10 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         btn_next = findViewById(R.id.btn_next);
         lv_footer = findViewById(R.id.lv_footer);
 
-        WhatsupNo = SharedPrefsData.getString(PaymentReceiptReprentingActivity.this, Constants.WhatsupNo, Constants.PREF_NAME);
+//        WhatsappNo = SharedPrefsData.getString(PaymentReceiptReprentingActivity.this, Constants.WhatsupNo, Constants.PREF_NAME);
         CustMob = SharedPrefsData.getString(PaymentReceiptReprentingActivity.this, Constants.CustMob, Constants.PREF_NAME);
         InvType = getIntent().getStringExtra("BillType");
-        WhatsappNo = getIntent().getStringExtra("WhatsappNo");
+        //WhatsappNo = getIntent().getStringExtra("WhatsappNo");
         ContactNo = getIntent().getStringExtra("ContactNo");
 
 
@@ -181,10 +193,19 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
             public void onClick(View view) {
                 Bitmap receiptBitmap;
                 receiptBitmap = takeScreenshot();
+//                View rootView = getWindow().getDecorView().getRootView();
+//               Bitmap screenshot = captureView(rootView);
+                Toast.makeText(getApplicationContext(),"CHeck"+receiptBitmap.toString(),Toast.LENGTH_LONG).show();
                 saveBitmap(receiptBitmap);
                 shareIt();
+//                View rootView = getWindow().getDecorView().getRootView();
+//                Bitmap screenshot = captureView(rootView);
+//                File screenshotFile = saveScreenshot(screenshot);
+//                shareScreenshot(screenshotFile);
+
             }
         });
+
 
         iv_whatsappshare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,9 +218,13 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         });
 
         presenter = new PaymentReceiptPresenter(this);
+        custommerPresenter = new CustomerDetailsPresenter(this);
         presenter.start();
+        custommerPresenter.start();
         String pId = SharedPrefsData.getString(this, Constants.PaymentId, Constants.PREF_NAME);
+        String customerID = SharedPrefsData.getString(this, Constants.CustomerID, Constants.PREF_NAME);
         presenter.loadPaymentReceipt(this, pId);
+        custommerPresenter.loadApi(this, customerID);
 
         String compId = SharedPrefsData.getString(this, Constants.CompanyID, Constants.PREF_NAME);
 
@@ -386,7 +411,36 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         }
 
     }
+    private Bitmap captureView(View view) {
+        view.setDrawingCacheEnabled(true);
+        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+        view.setDrawingCacheEnabled(false);
+        return bitmap;
+    }
 
+    private void shareScreenshot(File screenshotFile) {
+
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/*");
+        Uri screenshotUri = Uri.fromFile(screenshotFile);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
+        startActivity(Intent.createChooser(shareIntent, "Share screenshot using"));
+    }
+
+    private File saveScreenshot(Bitmap bitmap) {
+        File screenshotFile = new File(getExternalFilesDir(null), "screenshot.png");
+        try {
+            FileOutputStream outputStream = new FileOutputStream(screenshotFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return screenshotFile;
+
+}
 
 
     private void shareItOnWhatsApp() {
@@ -411,10 +465,10 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                         "\n" +
                 "*Subscription Details*\n" +
                 "------------------------\n" +
-                "Activation Date : " + activationdate + "\n" +
+                "Activation Date : " +  ViewUtils.changeDateTimeFormat(activationdate) + "\n" +
                 "Bill Type: " + billtype + "\n" +
                 "No of Months : " +noOfMonths + "\n" +
-                "Inactive Date: " +expiryDate + "\n" +
+                "Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate)+ "\n" +
                         "\n" +
                         "\n" +
 
@@ -432,7 +486,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                 "------------------------\n" +
                 "" + txt_header.getText().toString().trim();
 
-        Log.d("TAG", "shareItOnWhatsApp1: "+message.toString());
+        Log.d("TAG", "shareItOnWhatsApp1: "+customerPhoneNumber.toString());
         String url = "https://api.whatsapp.com/send?phone=" + customerPhoneNumber + "&text=" + message;
         sendIntent.putExtra(Intent.EXTRA_TEXT, message);
         sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
@@ -509,10 +563,23 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
     }
 
     public Bitmap takeScreenshot() {
-        LinearLayout rootView = findViewById(R.id.root);
+        ScrollView rootView = findViewById(R.id.svprint);
         rootView.setDrawingCacheEnabled(true);
-        return rootView.getDrawingCache();
+        return getBitmapFromView(rootView, rootView.getChildAt(0).getHeight(), rootView.getChildAt(0).getWidth());
     }
+
+    private Bitmap getBitmapFromView(View view, int height, int width) {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable != null)
+            bgDrawable.draw(canvas);
+        else
+            canvas.drawColor(Color.WHITE);
+        view.draw(canvas);
+        return bitmap;
+    }
+
 
     public void saveBitmap(Bitmap bitmap) {
         File folder = new File(getExternalFilesDir(null) +
@@ -527,7 +594,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
             try {
                 fos = new FileOutputStream(imagePath);
                 Toast.makeText(this, imagePath.toString(), Toast.LENGTH_SHORT).show();
-              //  bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                 fos.flush();
                 fos.close();
             } catch (FileNotFoundException e) {
@@ -542,19 +609,24 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
     }
 
     private void shareIt() {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
                 BuildConfig.APPLICATION_ID + ".provider", imagePath);
+Uri data=Uri.parse(imagePath.toString());
 
-        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/*");
         String shareBody = "Payment Receipt";
-        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Payment Receipt");
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
-        sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Payment Receipt");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        sharingIntent.putExtra(Intent.EXTRA_STREAM,uri);
         try {
             Intent intent = new Intent(Intent.createChooser(sharingIntent, "Share via"));
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             startActivity(intent);
+         //   startActivity(sharingIntent);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -568,6 +640,26 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
 
     @Override
     public void showError(String message) {
+    }
+
+    @Override
+    public void showResult(CustomerData customerData) {
+        WhatsappNo=customerData.getWhatsupNo();
+    }
+
+    @Override
+    public void showCableBoxList(CustemersCableBoxData custemersCableBoxData) {
+
+    }
+
+    @Override
+    public void showInernetBoxList(CustomersInternetBoxData customersInternetBoxData) {
+
+    }
+
+    @Override
+    public void showInvoice(GetInvoiceModel getInvoiceModel) {
+
     }
 
 

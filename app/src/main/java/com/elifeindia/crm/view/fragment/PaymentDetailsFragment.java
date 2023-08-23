@@ -985,6 +985,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
     @Override
     public void onClickCollection(PaymentRecieptList.PaymentReciept obj,String data) {
+        SharedPrefsData.putString(getContext(), Constants.CustomerID,obj.getCustomerID().toString(), Constants.PREF_NAME);
         dataSend=obj;
         SharedPrefsData.putInt(getActivity(), Constants.PaymentId, Integer.parseInt(obj.getPayment_Id()), Constants.PREF_NAME);
         custommerPresenter.getInvoice(getContext(), String.valueOf(obj.getInvoice_ID()));
