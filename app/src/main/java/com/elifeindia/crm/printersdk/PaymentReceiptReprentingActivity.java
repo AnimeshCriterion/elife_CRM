@@ -479,15 +479,131 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
 }
 
 
-    private void shareItOnWhatsApp() {
+//    private void shareItOnWhatsApp() {
+//        Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
+//                BuildConfig.APPLICATION_ID + ".provider", imagePath);
+//
+//
+//        String customerPhoneNumber = WhatsappNo;
+//        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+//        sendIntent.setPackage("com.whatsapp");
+//
+//        String message =
+//                "*Payment Receipt*\n" +
+//
+//                "*Customer Details*\n" +
+//                "Name: " + custmername_pay.getText().toString() + "\n" +
+//                "Account Number: " + txt_accountno.getText().toString() + "\n" +
+//                "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
+//                "Bill Date: " + billdate_pay.getText().toString() + "\n" +
+//                "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
+//                         "\n" +
+//                        "\n" +
+//                "*Subscription Details*\n" +
+//                "------------------------\n" +
+//                "Activation Date : " +  ViewUtils.changeDateTimeFormat(activationdate) + "\n" +
+//                "Bill Type: " + billtype + "\n" +
+//                "No of Months : " +noOfMonths + "\n" +
+//                "Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate)+ "\n" +
+//                        "\n" +
+//                        "\n" +
+//
+//                "*Payment Details*\n"+
+//                "------------------------\n" +
+//                "Total Amount: " + txt_prev_bal.getText().toString() + "\n" +
+//                "Paid Amount: " + paidamount_pay.getText().toString() + "\n" +
+//                "Discount: " +discount + "\n" +
+//                "Remaining Amount: " + balance_pay.getText().toString() + "\n" +
+//                "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
+//                "Collected By: " + txt_collected_by.getText().toString() + "\n" +
+//                "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
+//
+//
+//                "------------------------\n" +
+//                "" + txt_header.getText().toString().trim();
+//
+////        Log.d("TAG", "shareItOnWhatsApp1: "+customerPhoneNumber.toString());
+//         String url = "https://api.whatsapp.com/send?phone=" + customerPhoneNumber + "&text=" + message;
+//        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+//        sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
+//       sendIntent.setData(Uri.parse(url));
+//
+//        if (sendIntent.resolveActivity(getPackageManager()) == null) {
+//            Toast.makeText(this, "Please Install Whatsapp", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        startActivity(sendIntent);
+//
+//
+//
+//        /*String custWhatsAppNo = SharedPrefsData.getString(PaymentReceiptReprentingActivity.this, Constants.WhatsupNo, Constants.PREF_NAME);
+//
+//        String smsNumber = "91" + custWhatsAppNo; // E164 format without '+' sign
+//        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+//        sendIntent.setType("text/plain");
+//        sendIntent.putExtra(Intent.EXTRA_TEXT,
+//                "*Payment Receipt*\n" +
+//                        "*Customer Details*\n" +
+//                        "Name: " + custmername_pay.getText().toString() + "\n" +
+//                        "Account Number: " + txt_accountno.getText().toString() + "\n" +
+//                        "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
+//                        "Bill Date: " + billdate_pay.getText().toString() + "\n" +
+//                        "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
+//                        "\n" +
+//                        "*Payment Details*\n" +
+//                        "------------------------\n" +
+//                        "Total Amount: " + txt_prev_bal.getText().toString() + "\n" +
+//                        "Paid Amount: " + paidamount_pay.getText().toString() + "\n" +
+//                        "Discount: " + txt_discount.getText().toString() + "\n" +
+//                        "Remaining Amount: " + balance_pay.getText().toString() + "\n" +
+//                        "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
+//                        "Collected By: " + txt_collected_by.getText().toString() + "\n" +
+//                        "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
+//
+//                        "------------------------\n" +
+//                        "" + txt_header.getText().toString().trim()
+//        );
+//
+//        sendIntent.putExtra("jid", smsNumber + "@s.whatsapp.net"); //phone number without "+" prefix
+//        sendIntent.setPackage("com.whatsapp");
+//        if (sendIntent.resolveActivity(getPackageManager()) == null) {
+//            Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        startActivity(sendIntent);*/
+//
+//
+////        Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+////        whatsappIntent.setType("image/*");
+////        whatsappIntent.setPackage("com.whatsapp");
+////        whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
+////        try {
+////            startActivity(whatsappIntent);
+////        } catch (android.content.ActivityNotFoundException ex) {
+////            Toast.makeText(this, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
+////        }
+//
+//        /*String smsNumber = "918999567375"; // E164 format without '+' sign
+//        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+//        sendIntent.setType("image/*");
+//        sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
+//        sendIntent.putExtra(Intent.EXTRA_TEXT, "Payment Receipt");
+//        sendIntent.putExtra("jid", smsNumber + "@s.whatsapp.net"); //phone number without "+" prefix
+//        sendIntent.setPackage("com.whatsapp");
+//        if (sendIntent.resolveActivity(getPackageManager()) == null) {
+//            Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        startActivity(sendIntent);*/
+//    }
+
+    private void shareItOnWhatsApp(){
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
                 BuildConfig.APPLICATION_ID + ".provider", imagePath);
-
-
-        String customerPhoneNumber = WhatsappNo;
-        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        sendIntent.setPackage("com.whatsapp");
-
+        Uri data=Uri.parse(imagePath.toString());
         String message =
                 "*Payment Receipt*\n" +
 
@@ -522,82 +638,21 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                 "------------------------\n" +
                 "" + txt_header.getText().toString().trim();
 
-        Log.d("TAG", "shareItOnWhatsApp1: "+customerPhoneNumber.toString());
-        String url = "https://api.whatsapp.com/send?phone=" + customerPhoneNumber + "&text=" + message;
-        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
-        sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        sendIntent.setData(Uri.parse(url));
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("image/*");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Payment Receipt");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, message);
+        sharingIntent.putExtra(Intent.EXTRA_STREAM,uri);
+        try {
+            Intent intent = new Intent(Intent.createChooser(sharingIntent, "Share via"));
+            intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            startActivity(intent);
+            //   startActivity(sharingIntent);
 
-        if (sendIntent.resolveActivity(getPackageManager()) == null) {
-            Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show();
-            return;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        startActivity(sendIntent);
-
-
-
-        /*String custWhatsAppNo = SharedPrefsData.getString(PaymentReceiptReprentingActivity.this, Constants.WhatsupNo, Constants.PREF_NAME);
-
-        String smsNumber = "91" + custWhatsAppNo; // E164 format without '+' sign
-        Intent sendIntent = new Intent(Intent.ACTION_SEND);
-        sendIntent.setType("text/plain");
-        sendIntent.putExtra(Intent.EXTRA_TEXT,
-                "*Payment Receipt*\n" +
-                        "*Customer Details*\n" +
-                        "Name: " + custmername_pay.getText().toString() + "\n" +
-                        "Account Number: " + txt_accountno.getText().toString() + "\n" +
-                        "Subscriber ID: " + txt_subid.getText().toString() + "\n" +
-                        "Bill Date: " + billdate_pay.getText().toString() + "\n" +
-                        "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
-                        "\n" +
-                        "*Payment Details*\n" +
-                        "------------------------\n" +
-                        "Total Amount: " + txt_prev_bal.getText().toString() + "\n" +
-                        "Paid Amount: " + paidamount_pay.getText().toString() + "\n" +
-                        "Discount: " + txt_discount.getText().toString() + "\n" +
-                        "Remaining Amount: " + balance_pay.getText().toString() + "\n" +
-                        "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
-                        "Collected By: " + txt_collected_by.getText().toString() + "\n" +
-                        "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
-
-                        "------------------------\n" +
-                        "" + txt_header.getText().toString().trim()
-        );
-
-        sendIntent.putExtra("jid", smsNumber + "@s.whatsapp.net"); //phone number without "+" prefix
-        sendIntent.setPackage("com.whatsapp");
-        if (sendIntent.resolveActivity(getPackageManager()) == null) {
-            Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        startActivity(sendIntent);*/
-
-
-//        Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-//        whatsappIntent.setType("image/*");
-//        whatsappIntent.setPackage("com.whatsapp");
-//        whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share");
-//        try {
-//            startActivity(whatsappIntent);
-//        } catch (android.content.ActivityNotFoundException ex) {
-//            Toast.makeText(this, "Whatsapp have not been installed.", Toast.LENGTH_SHORT).show();
-//        }
-
-        /*String smsNumber = "918999567375"; // E164 format without '+' sign
-        Intent sendIntent = new Intent(Intent.ACTION_SEND);
-        sendIntent.setType("image/*");
-        sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Payment Receipt");
-        sendIntent.putExtra("jid", smsNumber + "@s.whatsapp.net"); //phone number without "+" prefix
-        sendIntent.setPackage("com.whatsapp");
-        if (sendIntent.resolveActivity(getPackageManager()) == null) {
-            Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        startActivity(sendIntent);*/
     }
-
     public Bitmap takeScreenshot() {
         ScrollView rootView = findViewById(R.id.svprint);
         rootView.setDrawingCacheEnabled(true);
