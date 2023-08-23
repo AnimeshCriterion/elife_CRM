@@ -75,8 +75,11 @@ import static com.elifeindia.crm.adapters.generate_invoice_module.AlacarteListBi
 import static com.elifeindia.crm.adapters.generate_invoice_module.BouquetListBillShareAdapter.TotalBouquetsRecords;
 import static com.elifeindia.crm.adapters.generate_invoice_module.InternetPkgListAdapter.TotalInternetRecords;
 import static com.elifeindia.crm.printersdk.Constant.MESSAGE_UPDATE_PARAMETER;
+import static com.elifeindia.crm.view.activities.BillShareActivity.BLUETOOTH_PERMISSIONS_S;
 import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.getInvoiceModelInvoice;
 import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.txt_activation_date;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class PaymentReceiptReprentingActivity extends AppCompatActivity implements PaymentReceiptContract.View, CustomerDetailsContract.View  {
     PaymentReceiptContract.Presenter presenter;
@@ -149,6 +152,29 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         ContactNo = getIntent().getStringExtra("ContactNo");
 
 
+
+        try {
+            if (!getInvoiceModelInvoice.getPaymentMaster().isEmpty() || getInvoiceModelInvoice.getPaymentMaster() != null) {
+
+                for(int i=0;i<getInvoiceModelInvoice.getPaymentMaster().size();i++) {
+                    if (getInvoiceModelInvoice.getPaymentMaster().get(i).getPayment_Id() == SharedPrefsData.getInt(PaymentReceiptReprentingActivity.this, Constants.PaymentId, Constants.PREF_NAME)) {
+//                        txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount());
+                        paidAmnt = getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount();
+                       // payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaymentType());
+
+                    }
+
+                }
+//                discountTextView.setText(String.valueOf(getInvoiceModelInvoice.getDiscount()));
+//                collectBy.setText(SharedPrefsData.getString(BillShareActivity.this, Constants.EmployeeName, Constants.PREF_NAME));
+                //  collectBy.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getEmployee_Name());
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -195,7 +221,6 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                 receiptBitmap = takeScreenshot();
 //                View rootView = getWindow().getDecorView().getRootView();
 //               Bitmap screenshot = captureView(rootView);
-                Toast.makeText(getApplicationContext(),"CHeck"+receiptBitmap.toString(),Toast.LENGTH_LONG).show();
                 saveBitmap(receiptBitmap);
                 shareIt();
 //                View rootView = getWindow().getDecorView().getRootView();
@@ -235,6 +260,17 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    if (!EasyPermissions.hasPermissions(PaymentReceiptReprentingActivity.this, BLUETOOTH_PERMISSIONS_S)) {
+                        EasyPermissions.requestPermissions(PaymentReceiptReprentingActivity.this, "message", 5, BLUETOOTH_PERMISSIONS_S);
+                    } else {
+                        findBTprint();
+                    }
+                } else {
+                    findBTprint();
+                }
 
                 findBTprint();
 
