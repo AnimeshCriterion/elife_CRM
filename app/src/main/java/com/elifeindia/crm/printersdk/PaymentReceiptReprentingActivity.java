@@ -331,20 +331,10 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
 
         });
 
-        findViewById(R.id.btn_conn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(PaymentReceiptReprentingActivity.this, BluetoothDeviceList.class), Constant.BLUETOOTH_REQUEST_CODE);
-            }
-        });
+        findViewById(R.id.btn_conn).setOnClickListener(view -> startActivityForResult(new Intent(PaymentReceiptReprentingActivity.this, BluetoothDeviceList.class), Constant.BLUETOOTH_REQUEST_CODE));
 
 
-        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        findViewById(R.id.iv_back).setOnClickListener(view -> onBackPressed());
 
 
         List<GetInvoiceModel.CableBoxwithSubscriptionDTO> cableBoxwithSubscriptionDTOS = getInvoiceModelInvoice.getCableBoxwithSubscription();

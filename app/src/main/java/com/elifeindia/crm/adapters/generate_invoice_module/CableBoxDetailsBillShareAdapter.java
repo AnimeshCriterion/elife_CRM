@@ -201,10 +201,20 @@ public class CableBoxDetailsBillShareAdapter extends RecyclerView.Adapter<CableB
             holder.cafno_text.setVisibility(View.GONE);
             holder.cafnum.setVisibility(View.GONE);
 
-            activation_Date = internetBoxList.get(position).getInternetBox().getActivation_Date().substring(0, 10);
-            holder.txt_activation_date.setText(ViewUtils.changeDateFormat(activation_Date));
+            if(internetBoxList.get(position).getInternetBox().getActivation_Date()!=null){
+                activation_Date = internetBoxList.get(position).getInternetBox().getActivation_Date().substring(0, 10);
 
-            expiry_Date = internetBoxList.get(position).getInternetBox().getExpiry_Date().substring(0, 10);
+            }else{
+                activation_Date="";
+            }
+
+            holder.txt_activation_date.setText(ViewUtils.changeDateFormat(activation_Date));
+if(internetBoxList.get(position).getInternetBox().getExpiry_Date()!=null){
+    expiry_Date = internetBoxList.get(position).getInternetBox().getExpiry_Date().substring(0, 10);
+
+}else{
+    expiry_Date="";
+}
 
             strBillType = internetBoxList.get(position).getInternetBox().getBill_Type().toString();
             holder.spn_bill_type.setText(strBillType);
@@ -215,7 +225,12 @@ public class CableBoxDetailsBillShareAdapter extends RecyclerView.Adapter<CableB
             //holder.spn_no_of_months.setText(SharedPrefsData.getString(context, Constants.NoofMonths, Constants.PREF_NAME));
 
             String date = null;
-            date = ViewUtils.changeDateFormat(internetBoxList.get(position).getInternetBox().getExpiry_Date().toString());
+            if(internetBoxList.get(position).getInternetBox().getExpiry_Date()!=null){
+                date = ViewUtils.changeDateFormat(internetBoxList.get(position).getInternetBox().getExpiry_Date().toString());
+
+            }else{
+                date="";
+            }
             holder.expirtydate.setText(date);
             if(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)!=null){
                 holder.expirtydate.setText(ViewUtils.changeDateFormat(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)));
