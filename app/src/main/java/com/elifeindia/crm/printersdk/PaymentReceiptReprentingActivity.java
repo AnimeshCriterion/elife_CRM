@@ -303,7 +303,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
                     findBTprint();
                 }
 
-                findBTprint();
+                //findBTprint();
 
                 /*if ( DeviceConnFactoryManager.getDeviceConnFactoryManagers()[id] == null ||
                         !DeviceConnFactoryManager.getDeviceConnFactoryManagers()[id].getConnState() )
@@ -356,15 +356,27 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
             rv_box_details.setLayoutManager(mLayoutManager);
             cableBoxDetailsBillShareAdapter = new CableBoxDetailsBillShareAdapter(PaymentReceiptReprentingActivity.this, cableBoxwithSubscriptionDTOS, internetBoxwithSubscriptionDTOS);
             rv_box_details.setAdapter(cableBoxDetailsBillShareAdapter);
-            activationdate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date().toString();
+            if(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date()!=null){
+                activationdate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date().toString();
+            }
             billtype = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getBill_Type().toString();
             noOfMonths = String.valueOf(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getNoofMonth());
-            expiryDate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date().toString();
+            if(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date()!=null){
+                expiryDate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date().toString();
+            }
+
         } else {
-            activationdate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date().toString();
+            if(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date()!=null){
+                activationdate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date().toString();
+
+            }
             billtype = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getBill_Type().toString();
             noOfMonths = String.valueOf(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getNoofMonth());
-            expiryDate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date().toString();
+            if(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date()!=null){
+                expiryDate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date().toString();
+
+            }
+
             TotalAlacarteRecords = "";
             TotalBouquetsRecords = "";
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
