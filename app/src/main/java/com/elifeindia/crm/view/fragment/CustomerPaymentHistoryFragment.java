@@ -495,6 +495,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
         intent.putExtra("BillType",dataSend.getPaymentType().toString());
         intent.putExtra("WhatsappNo",dataSend.getWhatsappNo());
         intent.putExtra("ContactNo", dataSend.getContactNo());
+        intent.putExtra("activity", "payment history");
         //String address = paymentReciepts.get(position).getAddress().toString();
         // SharedPrefsData.putString(context, Constants.CustomerAddress, address, Constants.PREF_NAME);
         // SharedPrefsData.putString(context, Constants.CustomerID, paymentReciepts.get(position).getCustomerID().toString(), Constants.PREF_NAME);

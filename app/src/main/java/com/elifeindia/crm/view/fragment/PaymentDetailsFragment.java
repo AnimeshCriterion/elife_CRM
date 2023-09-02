@@ -517,6 +517,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         intent.putExtra("BillType",dataSend.getPaymentType().toString());
         intent.putExtra("WhatsappNo",dataSend.getWhatsappNo());
         intent.putExtra("ContactNo", dataSend.getContactNo());
+            intent.putExtra("activity", "payment details");
         //String address = paymentReciepts.get(position).getAddress().toString();
         // SharedPrefsData.putString(context, Constants.CustomerAddress, address, Constants.PREF_NAME);
         // SharedPrefsData.putString(context, Constants.CustomerID, paymentReciepts.get(position).getCustomerID().toString(), Constants.PREF_NAME);

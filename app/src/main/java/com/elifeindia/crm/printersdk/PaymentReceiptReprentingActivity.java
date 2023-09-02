@@ -53,6 +53,8 @@ import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
 import com.elifeindia.crm.view.activities.BillShareActivity;
+import com.elifeindia.crm.view.activities.CollectPaymentActivity2;
+import com.elifeindia.crm.view.activities.CollectionDetailsActivity;
 import com.elifeindia.crm.view.activities.CustomerListActivity;
 import com.elifeindia.crm.view.activities.MainActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -829,11 +831,30 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
 
     @Override
     public void onBackPressed() {
-        finish();
-        Intent i = new Intent(PaymentReceiptReprentingActivity.this, CustomerListActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        i.putExtra("activity", "PaymentReceipt");
-        startActivity(i);
+        Intent intentData= getIntent();
+        Log.d("TAG", "onBackPressed: "+intentData.getStringExtra("activity"));
+        if(Objects.equals(intentData.getStringExtra("activity"), "payment details")){
+            finish();
+            Intent i = new Intent(PaymentReceiptReprentingActivity.this, CollectionDetailsActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            //i.putExtra("activity", "PaymentReceipt");
+            startActivity(i);
+        }else if(Objects.equals(intentData.getStringExtra("activity"), "CollectPayment")){
+            finish();
+            Intent i = new Intent(PaymentReceiptReprentingActivity.this, CollectPaymentActivity2.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            //i.putExtra("activity", "PaymentReceipt");
+            startActivity(i);
+        }else if(Objects.equals(intentData.getStringExtra("activity"), "payment history")){
+            finish();
+            Intent i = new Intent(PaymentReceiptReprentingActivity.this, CollectPaymentActivity2.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            //i.putExtra("activity", "PaymentReceipt");
+            startActivity(i);
+        }else{
+            finish();
+        }
+
     }
 
     void sendReceiptImage() {
