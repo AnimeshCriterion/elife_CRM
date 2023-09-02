@@ -839,15 +839,21 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             //i.putExtra("activity", "PaymentReceipt");
             startActivity(i);
-        }else if(Objects.equals(intentData.getStringExtra("activity"), "CollectPayment")){
+        }else if(Objects.equals(intentData.getStringExtra("activity"), "CollectPayment1")){
             finish();
-            Intent i = new Intent(PaymentReceiptReprentingActivity.this, CollectPaymentActivity2.class);
+            Intent i = new Intent(PaymentReceiptReprentingActivity.this, CustomerListActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             //i.putExtra("activity", "PaymentReceipt");
             startActivity(i);
         }else if(Objects.equals(intentData.getStringExtra("activity"), "payment history")){
             finish();
             Intent i = new Intent(PaymentReceiptReprentingActivity.this, CollectPaymentActivity2.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            //i.putExtra("activity", "PaymentReceipt");
+            startActivity(i);
+        }else if(Objects.equals(intentData.getStringExtra("activity"), "CollectPayment1")){
+            finish();
+            Intent i = new Intent(PaymentReceiptReprentingActivity.this, CustomerListActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             //i.putExtra("activity", "PaymentReceipt");
             startActivity(i);

@@ -338,7 +338,7 @@ public class CollectPaymentFragment extends Fragment implements CollectPaymentCo
         Intent intent = new Intent(getContext(), PaymentReceiptReprentingActivity.class);
 //        intent.putExtra("BillType",getInvoiceModel.getPaymentType().toString());
         intent.putExtra("WhatsappNo",requireActivity().getIntent().getStringExtra("WhatsappNo"));
-        intent.putExtra("activity",requireActivity().getIntent().getStringExtra("CollectPayment"));
+        intent.putExtra("activity","CollectPayment1");
 //        intent.putExtra("ContactNo", dataSend.getContactNo());
 //        String address = paymentReciepts.get(position).getAddress().toString();
         // SharedPrefsData.putString(context, Constants.CustomerAddress, address, Constants.PREF_NAME);
