@@ -155,7 +155,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         CustMob = SharedPrefsData.getString(PaymentReceiptReprentingActivity.this, Constants.CustMob, Constants.PREF_NAME);
         InvType = getIntent().getStringExtra("BillType");
         //WhatsappNo = getIntent().getStringExtra("WhatsappNo");
-        ContactNo = getIntent().getStringExtra("ContactNo");
+       // ContactNo = getIntent().getStringExtra("ContactNo");
 
 
         try {
@@ -735,6 +735,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
     @Override
     public void showResult(CustomerData customerData) {
         WhatsappNo = customerData.getWhatsupNo();
+        ContactNo = customerData.getContactNo();
     }
 
     @Override

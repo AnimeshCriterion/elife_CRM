@@ -393,8 +393,6 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                 fos.flush();
                 fos.close();
-            } catch (FileNotFoundException e) {
-                Log.e("GREC", e.getMessage(), e);
             } catch (IOException e) {
                 Log.e("GREC", e.getMessage(), e);
             }
@@ -419,7 +417,6 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
             Intent intent = new Intent(Intent.createChooser(sharingIntent, "Share via"));
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(intent);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
