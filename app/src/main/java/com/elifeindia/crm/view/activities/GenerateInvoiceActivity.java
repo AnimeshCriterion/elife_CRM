@@ -917,8 +917,8 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
     @Override
     public void showInvoice(GetInvoiceModel getInvoiceModel) {
-        startActivity(new Intent(this, BillShareActivity.class));
         getInvoiceModelInvoice = getInvoiceModel;
+
         SharedPrefsData.putString(this, Constants.AccNo, String.valueOf(getInvoiceModel.getAccount_No()), Constants.PREF_NAME);
         triplePlay = SharedPrefsData.getString(GenerateInvoiceActivity.this, Constants.TriplePlay, Constants.PREF_NAME);
         if (triplePlay.equals("Cable")) {
@@ -949,6 +949,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
         getInvoiceModel.getTitle();
         getInvoiceModel.getTriple_play_ID();
 
+        startActivity(new Intent(this, BillShareActivity.class));
 
     }
 

@@ -128,7 +128,7 @@ public class BillShareActivity extends AppCompatActivity   {
         payment_Mode = findViewById(R.id.payment_Mode);
         collectBy = findViewById(R.id.collectBy);
         employeeNumber = findViewById(R.id.employeeNumber);
-        //  payment_Mode.setText(SharedPrefsData.getString(BillShareActivity.this, Constants.PaymentMode, Constants.PREF_NAME));
+          payment_Mode.setText(SharedPrefsData.getString(BillShareActivity.this, Constants.PaymentMode, Constants.PREF_NAME));
 
 
 
@@ -138,9 +138,10 @@ public class BillShareActivity extends AppCompatActivity   {
 
                 for(int i=0;i<getInvoiceModelInvoice.getPaymentMaster().size();i++) {
                     if (getInvoiceModelInvoice.getPaymentMaster().get(i).getPayment_Id() == SharedPrefsData.getInt(BillShareActivity.this, Constants.PaymentId, Constants.PREF_NAME)) {
-                        txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount());
+                        txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount().toString());
                         paidAmount = getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount();
                         payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaymentType());
+                        Log.d("TAG", "onCreatePaymentAnimesh: "+paidAmount);
 
                     }
 
