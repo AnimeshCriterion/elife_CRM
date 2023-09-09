@@ -270,7 +270,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
 
                             }
                         }).show();
-                // startActivity(new Intent(CustomersDetailsActivity.this, BillShareActivity.class));
+                 startActivity(new Intent(CustomersDetailsActivity.this, BillShareActivity.class));
             }
         });
 
