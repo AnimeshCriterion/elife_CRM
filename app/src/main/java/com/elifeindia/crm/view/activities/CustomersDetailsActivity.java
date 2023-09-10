@@ -259,18 +259,19 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
             @Override
             public void onClick(View view) {
 //                Log.d("TAG", "InvoiceID: "+InvoiceID.toString());
-//                presenter.getInvoice(CustomersDetailsActivity.this, InvoiceID);
+               presenter.getInvoice(CustomersDetailsActivity.this, InvoiceID);
                 final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(CustomersDetailsActivity.this, R.style.ListRow));
 
-                builder.setTitle("Stay Connected With Us")
-                        .setMessage("This functionality is coming soon")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+//                builder.setTitle("Stay Connected With Us")
+//                        .setMessage("This functionality is coming soon")
+//                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//
+//                            }
+//                        }).show();
 
-                            }
-                        }).show();
-                 startActivity(new Intent(CustomersDetailsActivity.this, BillShareActivity.class));
+               // presenter.getInvoice();
             }
         });
 
@@ -412,6 +413,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
     public void showInvoice(GetInvoiceModel getInvoiceModel) {
         Log.d("TAG", "showInvoice1: ");
         getInvoiceModelInvoice = getInvoiceModel;
+
 //        SharedPrefsData.putString(this, Constants.AccNo, String.valueOf(getInvoiceModel.getAccount_No()), Constants.PREF_NAME);
 //        triplePlay = SharedPrefsData.getString(CustomersDetailsActivity.this, Constants.TriplePlay, Constants.PREF_NAME);
 //        if (triplePlay.equals("Cable")) {
@@ -444,7 +446,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         SharedPrefsData.putString(this, Constants.SubId, getInvoiceModel.getSubscriber_ID().toString(), Constants.PREF_NAME);
         getInvoiceModel.getTitle();
         getInvoiceModel.getTriple_play_ID();
-        startActivity(new Intent(this, BillShareForCollectionAndCollect.class));
+     //   startActivity(new Intent(this, BillShareForCollectionAndCollect.class));
 
     }
 

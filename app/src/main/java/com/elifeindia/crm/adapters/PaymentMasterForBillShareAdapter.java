@@ -1,5 +1,7 @@
 package com.elifeindia.crm.adapters;
 
+import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.getInvoiceModelInvoice;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +42,7 @@ public class PaymentMasterForBillShareAdapter extends RecyclerView.Adapter<Payme
         try {
             holder.payMode.setText(paymentReciepts.get(position).getPaymentType());
             holder.paidAmount.setText(paymentReciepts.get(position).getPaid_Amount());
-            holder.date.setText(paymentReciepts.get(position).getPayment_Date());
+            holder.date.setText(ViewUtils.changeDateFormat(paymentReciepts.get(position).getPayment_Date()));
             holder.collectedBy.setText(paymentReciepts.get(position).getEmployee_Name());
 
 

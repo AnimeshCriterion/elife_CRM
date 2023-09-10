@@ -396,16 +396,15 @@
 
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
+            <LinearLayout xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
+                android:orientation="horizontal"
                 android:layout_height="match_parent">
 
 
                 <TextView
                     android:id="@+id/payMode"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Pay Mode"
@@ -417,8 +416,8 @@
 
                 <TextView
                     android:id="@+id/paidamountTV"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Paid Amount"
                     android:textAlignment="center"
@@ -430,7 +429,7 @@
 
                 <TextView
                     android:id="@+id/cbytvfg"
-                    android:layout_width="0dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Date"
@@ -443,8 +442,8 @@
 
                 <TextView
                     android:id="@+id/trsnNotv"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Collected By"
                     android:textAlignment="center"
@@ -455,14 +454,13 @@
                     app:layout_constraintTop_toTopOf="@+id/cbytvfg" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/paymentMasterRecylerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/paymentmasterlayout" />
 
