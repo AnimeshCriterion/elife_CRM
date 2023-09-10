@@ -94,6 +94,9 @@ public class BillShareActivity extends AppCompatActivity   {
     AdapterCallbackTextView adapterCallback;
     AdapterCallback adapterCall;
 
+    String activationdate, billtype, noOfMonths, expiryDate;
+
+
     String BillType = "", newBalance = "", prevBalance, subsAmount, receipt = "", invDate, CustName, CustMob, CustWhatsappNo, invno = "", accNo = "", name = "", subId = "", dateTime = "", totalAmnt = "", empMobNo = "", collectedBy = "", payMode = "", remainBal = "", footer = "";
     public String paidAmount = "";
     TextView discountTextView;
@@ -132,28 +135,37 @@ public class BillShareActivity extends AppCompatActivity   {
 
 
 
+          try {
+              txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getPaid_Amount().toString());
+              paidAmount = getInvoiceModelInvoice.getPaymentMaster().get(0).getPaid_Amount();
+              payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getPaymentType());
+              collectBy.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getEmployee_Name().toString());
+          }catch (Exception e){
+              Toast.makeText(getApplicationContext(),"Result"+e.toString(),Toast.LENGTH_SHORT).show();
 
-        try {
-            if (!getInvoiceModelInvoice.getPaymentMaster().isEmpty() || getInvoiceModelInvoice.getPaymentMaster() != null) {
+          }
 
-                for(int i=0;i<getInvoiceModelInvoice.getPaymentMaster().size();i++) {
-                    if (getInvoiceModelInvoice.getPaymentMaster().get(i).getPayment_Id() == SharedPrefsData.getInt(BillShareActivity.this, Constants.PaymentId, Constants.PREF_NAME)) {
-                        txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount().toString());
-                        paidAmount = getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount();
-                        payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaymentType());
-                        Log.d("TAG", "onCreatePaymentAnimesh: "+paidAmount);
-
-                    }
-
-                }
-                discountTextView.setText(String.valueOf(getInvoiceModelInvoice.getDiscount()));
-                collectBy.setText(SharedPrefsData.getString(BillShareActivity.this, Constants.EmployeeName, Constants.PREF_NAME));
-                //  collectBy.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getEmployee_Name());
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            if (!getInvoiceModelInvoice.getPaymentMaster().isEmpty() || getInvoiceModelInvoice.getPaymentMaster() != null) {
+//
+//                for(int i=0;i<getInvoiceModelInvoice.getPaymentMaster().size();i++) {
+//                    if (getInvoiceModelInvoice.getPaymentMaster().get(i).getPayment_Id() == SharedPrefsData.getInt(BillShareActivity.this, Constants.PaymentId, Constants.PREF_NAME)) {
+//                        txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount().toString());
+//                        paidAmount = getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount();
+//                        payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaymentType());
+//                        Log.d("TAG", "onCreatePaymentAnimesh: "+paidAmount);
+//
+//                    }
+//
+//                }
+//                discountTextView.setText(String.valueOf(getInvoiceModelInvoice.getDiscount()));
+//                collectBy.setText(SharedPrefsData.getString(BillShareActivity.this, Constants.EmployeeName, Constants.PREF_NAME));
+//                //  collectBy.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getEmployee_Name());
+//
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         // employeeNumber.setText(SharedPrefsData.getString(BillShareActivity.this, Constants.EmployeeMob, Constants.PREF_NAME));
         //  CustMob = SharedPrefsData.getString(this, Constants.CustMob, Constants.PREF_NAME);
         CustMob = getInvoiceModelInvoice.getContact_No();
@@ -166,7 +178,7 @@ public class BillShareActivity extends AppCompatActivity   {
         //    invno = SharedPrefsData.getString(this, Constants.InvoiceNo, Constants.PREF_NAME);
         invno = getInvoiceModelInvoice.getInvoice_Number();
         // invDate = ViewUtils.changeDateFormat(SharedPrefsData.getString(this, Constants.InvoiceDate, Constants.PREF_NAME));
-        invDate = ViewUtils.changeDateFormat(getInvoiceModelInvoice.getInvoice_Date());
+      //  invDate = ViewUtils.changeDateFormat(getInvoiceModelInvoice.getInvoice_Date());
         //   subId = SharedPrefsData.getString(this, Constants.SubId, Constants.PREF_NAME);
         subId = getInvoiceModelInvoice.getSubscriber_ID();
         // subsAmount = SharedPrefsData.getString(this, Constants.TotalAmount, Constants.PREF_NAME);
@@ -364,7 +376,25 @@ public class BillShareActivity extends AppCompatActivity   {
             rv_box_details.setLayoutManager(mLayoutManager);
             cableBoxDetailsBillShareAdapter = new CableBoxDetailsBillShareAdapter(BillShareActivity.this, cableBoxwithSubscriptionDTOS, internetBoxwithSubscriptionDTOS);
             rv_box_details.setAdapter(cableBoxDetailsBillShareAdapter);
+            if(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date()!=null){
+                activationdate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date().toString();
+            }
+            billtype = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getBill_Type().toString();
+            noOfMonths = String.valueOf(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getNoofMonth());
+            if(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date()!=null){
+                expiryDate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date().toString();
+            }
         } else {
+            if(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date()!=null){
+                activationdate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date().toString();
+
+            }
+            billtype = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getBill_Type().toString();
+            noOfMonths = String.valueOf(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getNoofMonth());
+            if(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date()!=null){
+                expiryDate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date().toString();
+
+            }
 
             TotalAlacarteRecords = "";
             TotalBouquetsRecords = "";
@@ -431,7 +461,7 @@ public class BillShareActivity extends AppCompatActivity   {
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/*");
-        String shareBody = "Hey check out eLife CRM Payment Receipt";
+        String shareBody = "Invoice";
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Payment Receipt");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
@@ -509,15 +539,26 @@ public class BillShareActivity extends AppCompatActivity   {
                 "Bill Type: " + BillType + "\n" +
                 "Mobile No: " + CustMob + "\n" +
                 "\n" +
+                "*Subscription Details*\n" +
+                "------------------------\n" +
+                "Activation Date : " + ViewUtils.changeDateTimeFormat(activationdate) + "\n" +
+                "Bill Type: " + billtype + "\n" +
+                "No of Months : " + noOfMonths + "\n" +
+                "Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate) + "\n" +
+                "\n" +
+                "\n" +
                 "*Payment Details*\n" +
                 "------------------------\n" +
                 "Total Amount: " + String.valueOf(Float.parseFloat(subsAmount) + Float.parseFloat(prevBalance)) + "\n" +
                 "Paid Amount: " + paidAmount + "\n" +
                 "Discount:" + String.valueOf(getInvoiceModelInvoice.getDiscount()) + "\n" +
                 "Remaining Amount: " + newBalance + "\n" +
-                "------------------------\n" +
-                "*" + txt_header.getText().toString().trim()
-                + "*\n" +
+                "-------------------------------\n" +
+                "*" + txt_header.getText().toString().trim()+
+                "-------------------------------\n" +
+                "*THANK YOU*\n" +
+                "-------------------------------\n \n" +
+                 "*\n" +
                 footer;
 
 
