@@ -72,9 +72,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/abeezee_regular"
+                    android:textColor="@color/darkblue"
                     android:gravity="center"
                     android:text="CRM NETWORKS"
-                    android:textColor="@color/darkblue"
+
                     android:textSize="@dimen/_16sdp"
                     android:textStyle="bold">
 
@@ -405,24 +406,30 @@
 
                 <TextView
                     android:id="@+id/payMode"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Pay Mode"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:textColor="@color/darkblue"
+                    android:gravity="center"
                     android:textAlignment="center"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+
                     app:layout_constraintEnd_toStartOf="@+id/paidamountTV"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/paidamountTV"
-                    android:layout_width="0dp"
+                    android:layout_width="100dp"
                     android:layout_height="0dp"
                     android:padding="5dp"
                     android:text="Paid Amount"
-                    android:textAlignment="center"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+
+                    android:fontFamily="@font/abeezee_regular"
+                    android:textColor="@color/darkblue"
+                    android:gravity="center"
+
                     app:layout_constraintBottom_toBottomOf="@+id/payMode"
                     app:layout_constraintEnd_toStartOf="@+id/cbytvfg"
                     app:layout_constraintStart_toEndOf="@+id/payMode"
@@ -430,12 +437,15 @@
 
                 <TextView
                     android:id="@+id/cbytvfg"
-                    android:layout_width="0dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Date"
                     android:textAlignment="center"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:textColor="@color/darkblue"
+                    android:gravity="center"
+
                     app:layout_constraintBottom_toBottomOf="@+id/paidamountTV"
                     app:layout_constraintEnd_toStartOf="@+id/trsnNotv"
                     app:layout_constraintStart_toEndOf="@+id/paidamountTV"
@@ -443,12 +453,13 @@
 
                 <TextView
                     android:id="@+id/trsnNotv"
-                    android:layout_width="0dp"
+                    android:layout_width="100dp"
                     android:layout_height="0dp"
                     android:padding="5dp"
                     android:text="Collected By"
-                    android:textAlignment="center"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:textColor="@color/darkblue"
+                    android:gravity="center"
                     app:layout_constraintBottom_toBottomOf="@+id/cbytvfg"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/cbytvfg"
@@ -460,9 +471,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/paymentMasterRecylerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-
+                android:minHeight="@dimen/_200sdp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/paymentmasterlayout" />
 

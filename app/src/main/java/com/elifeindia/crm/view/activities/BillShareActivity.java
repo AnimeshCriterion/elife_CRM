@@ -166,7 +166,7 @@ public class BillShareActivity extends AppCompatActivity   {
         //    invno = SharedPrefsData.getString(this, Constants.InvoiceNo, Constants.PREF_NAME);
         invno = getInvoiceModelInvoice.getInvoice_Number();
         // invDate = ViewUtils.changeDateFormat(SharedPrefsData.getString(this, Constants.InvoiceDate, Constants.PREF_NAME));
-        invDate = ViewUtils.changeDateFormat(getInvoiceModelInvoice.getInvoice_Date());
+//        invDate = ViewUtils.changeDateFormat(getInvoiceModelInvoice.getInvoice_Date());
         //   subId = SharedPrefsData.getString(this, Constants.SubId, Constants.PREF_NAME);
         subId = getInvoiceModelInvoice.getSubscriber_ID();
         // subsAmount = SharedPrefsData.getString(this, Constants.TotalAmount, Constants.PREF_NAME);

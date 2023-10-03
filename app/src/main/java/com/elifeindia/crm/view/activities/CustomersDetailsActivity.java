@@ -259,18 +259,18 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
             @Override
             public void onClick(View view) {
 //                Log.d("TAG", "InvoiceID: "+InvoiceID.toString());
-//                presenter.getInvoice(CustomersDetailsActivity.this, InvoiceID);
-                final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(CustomersDetailsActivity.this, R.style.ListRow));
-
-                builder.setTitle("Stay Connected With Us")
-                        .setMessage("This functionality is coming soon")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        }).show();
-                 startActivity(new Intent(CustomersDetailsActivity.this, BillShareActivity.class));
+             presenter.getInvoice(CustomersDetailsActivity.this, InvoiceID);
+//                final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(CustomersDetailsActivity.this, R.style.ListRow));
+//
+//                builder.setTitle("Stay Connected With Us")
+//                        .setMessage("This functionality is coming soon")
+//                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//
+//                            }
+//                        }).show();
+            //     startActivity(new Intent(CustomersDetailsActivity.this, BillShareForCollectionAndCollect.class));
             }
         });
 
