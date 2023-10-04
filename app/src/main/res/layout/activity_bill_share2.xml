@@ -276,7 +276,7 @@
                         android:layout_weight="0.3"
                         android:fontFamily="@font/abeezee_regular"
                         android:paddingLeft="@dimen/_10sdp"
-                        android:text="Date "
+                        android:text="Bill Date "
                         android:textColor="@color/Black"
                         android:textSize="@dimen/_15sdp"
                         android:textStyle="bold" />
@@ -358,6 +358,43 @@
 
                     <TextView
                         android:id="@+id/txt_balance_new"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:textColor="@color/Black"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:text="Status"
+                        android:textColor="@color/Black"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_threedots" />
+
+                    <TextView
+                        android:id="@+id/txt_statusinvoice_new"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2"

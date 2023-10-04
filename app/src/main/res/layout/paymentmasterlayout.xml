@@ -62,6 +62,7 @@
         android:padding="5dp"
         android:text="Collected By"
         android:minLines="2"
+
         android:fontFamily="@font/abeezee_regular"
         android:textColor="@color/Black"
         android:gravity="center"

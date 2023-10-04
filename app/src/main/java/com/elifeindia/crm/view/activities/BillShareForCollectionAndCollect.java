@@ -82,7 +82,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class BillShareForCollectionAndCollect extends AppCompatActivity   {
 
     TextView txt_total, btn_next, btn_done, btn_send, txt_header, txt_cust_name, txt_accountno, invoicenumber, txt_mob_no, txt_invoice_date, txt_sub_id,
-            txt_prev_bal, txt_total_amount, txt_paid_amnt, txt_balance, payment_Mode, collectBy, employeeNumber,txt_balance_new;
+            txt_prev_bal, txt_total_amount, txt_paid_amnt, txt_balance, payment_Mode, collectBy, employeeNumber,txt_balance_new,txt_statusinvoice_new;
     RecyclerView rv_box_details;
     BluetoothAdapter mBluetoothAdapter;
     CalonThermalPrinter calOnPrinter = new CalonThermalPrinter();
@@ -116,6 +116,7 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
         invoicenumber = findViewById(R.id.invoicenumber);
         txt_mob_no = findViewById(R.id.txt_mob_no);
         txt_invoice_date = findViewById(R.id.txt_invoice_date);
+        txt_statusinvoice_new = findViewById(R.id.txt_statusinvoice_new);
         txt_sub_id = findViewById(R.id.txt_sub_id);
         PaymentMasterRecylerViewRecyclerView=findViewById(R.id.paymentMasterRecylerView);
         txt_total_amount = findViewById(R.id.txt_total_amount);
@@ -154,6 +155,8 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
 
                 }
                 discountTextView.setText(String.valueOf(getInvoiceModelInvoice.getDiscount()));
+                txt_invoice_date.setText(ViewUtils.changeDateTimeFormat(String.valueOf(getInvoiceModelInvoice.getInvoice_Date())));
+                txt_statusinvoice_new.setText(String.valueOf(getInvoiceModelInvoice.getStatus()));
                 collectBy.setText(SharedPrefsData.getString(BillShareForCollectionAndCollect.this, Constants.EmployeeName, Constants.PREF_NAME));
                 //  collectBy.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getEmployee_Name());
 
@@ -312,7 +315,7 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
         txt_accountno.setText(accNo);
         invoicenumber.setText(invno);
         txt_mob_no.setText(CustMob);
-        txt_invoice_date.setText(todayDateString());
+     //   txt_invoice_date.setText(todayDateString());
         txt_sub_id.setText(subId);
         txt_total_amount.setText(subsAmount);
         txt_balance.setText(getInvoiceModelInvoice.getBalance() + "");
