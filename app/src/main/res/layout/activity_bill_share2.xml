@@ -192,6 +192,8 @@
 
                 </LinearLayout>
 
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -331,6 +333,41 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:text="Balance"
+                        android:textColor="@color/Black"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_threedots" />
+
+                    <TextView
+                        android:id="@+id/txt_balance_new"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:textColor="@color/Black"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -401,6 +438,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
+                android:background="@drawable/rounded_butoon"
                 android:layout_height="match_parent">
 
 
@@ -413,8 +451,9 @@
                     android:fontFamily="@font/abeezee_regular"
                     android:textColor="@color/darkblue"
                     android:gravity="center"
+                    android:textStyle="bold"
                     android:textAlignment="center"
-
+                    android:background="@drawable/roundpayment"
                     app:layout_constraintEnd_toStartOf="@+id/paidamountTV"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -423,7 +462,9 @@
                     android:id="@+id/paidamountTV"
                     android:layout_width="100dp"
                     android:layout_height="0dp"
+                    android:textStyle="bold"
                     android:padding="5dp"
+                    android:background="@drawable/roundpayment"
                     android:text="Paid Amount"
 
                     android:fontFamily="@font/abeezee_regular"
@@ -440,7 +481,9 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
+                    android:textStyle="bold"
                     android:text="Date"
+                    android:background="@drawable/roundpayment"
                     android:textAlignment="center"
                     android:fontFamily="@font/abeezee_regular"
                     android:textColor="@color/darkblue"
@@ -456,6 +499,8 @@
                     android:layout_width="100dp"
                     android:layout_height="0dp"
                     android:padding="5dp"
+                    android:textStyle="bold"
+
                     android:text="Collected By"
                     android:fontFamily="@font/abeezee_regular"
                     android:textColor="@color/darkblue"

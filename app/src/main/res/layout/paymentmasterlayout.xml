@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
+    android:background="@drawable/rounded_butoon"
     android:layout_height="wrap_content">
 
 
@@ -14,6 +14,8 @@
         android:fontFamily="@font/abeezee_regular"
         android:gravity="center"
         android:padding="5dp"
+        android:minLines="2"
+        android:background="@drawable/roundpayment"
         android:text="Pay Mode"
         android:textColor="@color/Black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,6 +28,8 @@
         android:layout_width="100dp"
         android:layout_height="0dp"
         android:padding="5dp"
+        android:minLines="2"
+        android:background="@drawable/roundpayment"
         android:text="Paid Amount"
         android:fontFamily="@font/abeezee_regular"
         android:textColor="@color/Black"
@@ -41,6 +45,8 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:text="Date"
+        android:minLines="2"
+        android:background="@drawable/roundpayment"
         android:fontFamily="@font/abeezee_regular"
         android:textColor="@color/Black"
         android:gravity="center"
@@ -55,6 +61,7 @@
         android:layout_height="0dp"
         android:padding="5dp"
         android:text="Collected By"
+        android:minLines="2"
         android:fontFamily="@font/abeezee_regular"
         android:textColor="@color/Black"
         android:gravity="center"

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_4sdp"
-    android:orientation="vertical">
+    android:layout_marginTop="@dimen/_4sdp">
 
     <LinearLayout
         android:id="@+id/internetlayout"
@@ -95,13 +94,13 @@
                         android:paddingLeft="@dimen/_10sdp"
                         android:text="VcNo"
                         android:textColor="@color/Black"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_15sdp"/>
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
+                        android:background="@color/darkblue" />
 
                     <TextView
                         android:id="@+id/stbno_text"
@@ -114,13 +113,13 @@
                         android:paddingLeft="@dimen/_10sdp"
                         android:text="STB No"
                         android:textColor="@color/Black"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_15sdp"/>
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
+                        android:background="@color/darkblue" />
 
                     <TextView
                         android:id="@+id/cafno_text"
@@ -128,20 +127,19 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginBottom="@dimen/_7sdp"
-                        android:paddingLeft="@dimen/_10sdp"
                         android:layout_weight="0.5"
                         android:fontFamily="@font/abeezee_regular"
+                        android:paddingLeft="@dimen/_10sdp"
                         android:text="CAF No"
                         android:textColor="@color/Black"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_15sdp"/>
-
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
 
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
+                        android:background="@color/darkblue" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -153,13 +151,13 @@
                         android:paddingLeft="@dimen/_10sdp"
                         android:text="Activation Date"
                         android:textColor="@color/Black"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_15sdp"/>
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
+                        android:background="@color/darkblue" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -171,15 +169,14 @@
                         android:paddingLeft="@dimen/_10sdp"
                         android:text="Bill Type"
                         android:textColor="@color/Black"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_15sdp"/>
-
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
 
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
+                        android:background="@color/darkblue" />
 
 
                     <TextView
@@ -192,13 +189,13 @@
                         android:paddingLeft="@dimen/_10sdp"
                         android:text="No of Months"
                         android:textColor="@color/Black"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_15sdp"/>
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
+                        android:background="@color/darkblue" />
 
 
                     <TextView
@@ -211,13 +208,13 @@
                         android:paddingLeft="@dimen/_10sdp"
                         android:text="Expiry Date"
                         android:textColor="@color/Black"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_15sdp"/>
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
+                        android:background="@color/darkblue" />
 
 
                     <TextView
@@ -230,8 +227,8 @@
                         android:paddingLeft="@dimen/_10sdp"
                         android:text="Sub Amount"
                         android:textColor="@color/Black"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_15sdp"/>
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
@@ -240,7 +237,7 @@
                 <View
                     android:layout_width="@dimen/_1sdp"
                     android:layout_height="match_parent"
-                    android:background="@color/darkblue"/>
+                    android:background="@color/darkblue" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -249,25 +246,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:textStyle="bold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_7sdp"
-                        android:layout_weight="0.5"
-                        android:fontFamily="@font/abeezee_regular"
-                        android:paddingLeft="@dimen/_7sdp"
                         android:id="@+id/vcnum"
-                        android:textColor="@color/Black"
-                        android:textSize="@dimen/_15sdp"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
-
-                    <TextView
-                        android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
@@ -275,17 +254,17 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/abeezee_regular"
                         android:paddingLeft="@dimen/_7sdp"
+                        android:textColor="@color/Black"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/darkblue" />
+
+                    <TextView
                         android:id="@+id/stbno"
-                        android:textColor="@color/Black"
-                        android:textSize="@dimen/_15sdp"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
-
-                    <TextView
-                        android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
@@ -293,18 +272,17 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/abeezee_regular"
                         android:paddingLeft="@dimen/_7sdp"
+                        android:textColor="@color/Black"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/darkblue" />
+
+                    <TextView
                         android:id="@+id/cafnum"
-                        android:textColor="@color/Black"
-                        android:textSize="@dimen/_15sdp"/>
-
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
-
-                    <TextView
-                        android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
@@ -312,17 +290,18 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/abeezee_regular"
                         android:paddingLeft="@dimen/_7sdp"
+                        android:textColor="@color/Black"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/darkblue" />
+
+                    <TextView
                         android:id="@+id/txt_activation_date"
-                        android:textColor="@color/Black"
-                        android:textSize="@dimen/_15sdp"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
-
-                    <TextView
-                        android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
@@ -330,19 +309,17 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/abeezee_regular"
                         android:paddingLeft="@dimen/_7sdp"
+                        android:textColor="@color/Black"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/darkblue" />
+
+                    <TextView
                         android:id="@+id/spn_bill_type"
-                        android:textColor="@color/Black"
-                        android:textSize="@dimen/_15sdp"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
-
-
-
-                    <TextView
-                        android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
@@ -350,17 +327,18 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/abeezee_regular"
                         android:paddingLeft="@dimen/_7sdp"
+                        android:textColor="@color/Black"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/darkblue" />
+
+
+                    <TextView
                         android:id="@+id/spn_no_of_months"
-                        android:textColor="@color/Black"
-                        android:textSize="@dimen/_15sdp"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
-
-                    <TextView
-                        android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
@@ -368,17 +346,17 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/abeezee_regular"
                         android:paddingLeft="@dimen/_7sdp"
+                        android:textColor="@color/Black"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/darkblue" />
+
+                    <TextView
                         android:id="@+id/expirtydate"
-                        android:textColor="@color/Black"
-                        android:textSize="@dimen/_15sdp"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/darkblue"/>
-
-                    <TextView
-                        android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
@@ -386,12 +364,29 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/abeezee_regular"
                         android:paddingLeft="@dimen/_7sdp"
-                        android:id="@+id/amount"
                         android:textColor="@color/Black"
-                        android:textSize="@dimen/_15sdp"/>
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="@color/darkblue" />
+
+                    <TextView
+                        android:id="@+id/amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_7sdp"
+                        android:layout_weight="0.5"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:paddingLeft="@dimen/_7sdp"
+                        android:textColor="@color/Black"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
-
 
 
             </LinearLayout>
@@ -428,7 +423,6 @@
 
 
             </LinearLayout>
-
 
 
             <LinearLayout

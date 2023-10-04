@@ -82,7 +82,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class BillShareForCollectionAndCollect extends AppCompatActivity   {
 
     TextView txt_total, btn_next, btn_done, btn_send, txt_header, txt_cust_name, txt_accountno, invoicenumber, txt_mob_no, txt_invoice_date, txt_sub_id,
-            txt_prev_bal, txt_total_amount, txt_paid_amnt, txt_balance, payment_Mode, collectBy, employeeNumber;
+            txt_prev_bal, txt_total_amount, txt_paid_amnt, txt_balance, payment_Mode, collectBy, employeeNumber,txt_balance_new;
     RecyclerView rv_box_details;
     BluetoothAdapter mBluetoothAdapter;
     CalonThermalPrinter calOnPrinter = new CalonThermalPrinter();
@@ -122,6 +122,7 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
         txt_prev_bal = findViewById(R.id.txt_prev_bal);
         txt_paid_amnt = findViewById(R.id.txt_paid_amnt);
         txt_balance = findViewById(R.id.txt_balance);
+        txt_balance_new = findViewById(R.id.txt_balance_new);
         rv_box_details = findViewById(R.id.rv_box_details);
         discountTextView = findViewById(R.id.discount);
         btn_send = findViewById(R.id.btn_send);
@@ -315,6 +316,7 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
         txt_sub_id.setText(subId);
         txt_total_amount.setText(subsAmount);
         txt_balance.setText(getInvoiceModelInvoice.getBalance() + "");
+        txt_balance_new.setText(getInvoiceModelInvoice.getBalance() + "");
         try {
             txt_prev_bal.setText(prevBalance);
             String strTotal = String.valueOf(Float.parseFloat(subsAmount) + Float.parseFloat(prevBalance));

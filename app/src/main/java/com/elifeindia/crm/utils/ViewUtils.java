@@ -71,6 +71,25 @@ public class ViewUtils {
     }
 
 
+    public static String changeDateTimeFormatForPayment(String inputDate){
+        String outputDateStr = "";
+        if(inputDate!=null){
+            String Date = inputDate.substring(0,10);
+            String Time = inputDate.substring(11,16);
+
+            SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+            SimpleDateFormat EEEddMMMyyyy = new SimpleDateFormat("dd MMM yyyy", Locale.US);
+
+            outputDateStr = parseDate(Date, ymdFormat, EEEddMMMyyyy);
+        }
+
+
+
+        return outputDateStr;
+    }
+
+
+
     public static Date parseDateTime(String dateString) {
         if (dateString == null) return null;
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
