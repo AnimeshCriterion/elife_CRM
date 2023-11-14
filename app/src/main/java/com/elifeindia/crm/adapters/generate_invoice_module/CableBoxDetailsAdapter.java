@@ -95,7 +95,7 @@ public class CableBoxDetailsAdapter extends RecyclerView.Adapter<CableBoxDetails
             @Override
             public void onClick(View view) {
 
-                box_Amount = String.valueOf(cableBoxList.get(position).getCableBox().getBox_Amount());
+            //    box_Amount = String.valueOf(cableBoxList.get(position).getCableBox().getBox_Amount());
 
                 if (holder.cb_box_status.isChecked()) {
                     adapterCallback.onClickCallback(holder.txt_expiry_date, holder.amount, holder.spn_no_of_months, holder.spn_bill_type, holder.ll_noofdays, position, "ADD");
@@ -167,6 +167,7 @@ public class CableBoxDetailsAdapter extends RecyclerView.Adapter<CableBoxDetails
             activation_Date = cableBoxList.get(position).getCableBox().getActivation_Date().substring(0, 10);
             expiry_Date = cableBoxList.get(position).getCableBox().getExpiry_Date().substring(0, 10);
             cable_Box_ID = cableBoxList.get(position).getCableBox().getCable_Box_ID().toString();
+           // packageId = cableBoxList.get(position).getCableBox().getCable_Box_ID().toString();
 //                                box_ID = cableBoxList.get(position).getCableBox().getBox_ID().toString();
             boxType_ID = cableBoxList.get(position).getCableBox().getBoxType_ID().toString();
             vcno = cableBoxList.get(position).getCableBox().getVcno().toString();
@@ -207,7 +208,7 @@ public class CableBoxDetailsAdapter extends RecyclerView.Adapter<CableBoxDetails
                             try {
 
                                 activation_Date = sdf2.format(mcurrentDate.getTime());
-                                box_Amount = cableBoxList.get(position).getCableBox().getBox_Amount().toString();
+                               // box_Amount = cableBoxList.get(position).getCableBox().getBox_Amount().toString();
                                 adapterCallback.onClickCallback(holder.txt_expiry_date, holder.amount, holder.spn_no_of_months, holder.spn_bill_type, holder.ll_noofdays, position, "strActivationDate");
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -280,7 +281,7 @@ public class CableBoxDetailsAdapter extends RecyclerView.Adapter<CableBoxDetails
                     try {
                         String boxId = cableBoxList.get(position).getCableBox().getCable_Box_ID().toString();
                         SharedPrefsData.putString(context, Constants.CableBoxID, boxId, Constants.PREF_NAME);
-                        context.startActivity(new Intent(context, UpdateSubscriptionPackageA.class));
+                        context.startActivity(new Intent(context, UpdateCableSubscriptionActivity.class));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

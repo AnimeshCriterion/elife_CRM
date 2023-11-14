@@ -775,10 +775,13 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
             //Me
             Log.e("activation_Date_2", activation_Date);
-            Log.e("expiry_Date", expiry_Date);
+            Log.e("expiry_Date", expiry_Date);}
+else if(strApiCallType.equals("spn_no_of_months")){
+            txt_subscription_amnt.setText("Rs. " + boxTypeModel.getBox_Amount());
 
+        }
 
-        } else {
+        else {
             view.setText(ViewUtils.changeDateFormat(boxTypeModel.getExpiry_Date()));
             view1.setText(box_Amount);
 
@@ -975,7 +978,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
         switch (id) {
             case "strActivationDate":
-                presenter.updateCableBox(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", box_Amount, todayDateString());
+                presenter.updateCableBoxSubscription(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(newBoxAmount), todayDateString());
                 break;
             case "spn_no_of_months": {
                 spn_no_of_months.performClick();
@@ -1000,7 +1003,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 //
 //                                Toast.makeText(GenerateInvoiceActivity.this, ""+Float.parseFloat(box_Amount)/Float.parseFloat(prevMonthValue), Toast.LENGTH_SHORT).show();
 
-                                presenter.updateCableBox(GenerateInvoiceActivity.this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(newBoxAmount), todayDateString());
+                                presenter.updateCableBoxSubscription(GenerateInvoiceActivity.this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(newBoxAmount), todayDateString());
                             }
 
                             @Override
@@ -1028,7 +1031,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
 
                                 } else {
                                     ll.setVisibility(View.GONE);
-                                    presenter.updateCableBox(GenerateInvoiceActivity.this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", box_Amount, todayDateString());
+                                    presenter.updateCableBoxSubscription(GenerateInvoiceActivity.this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(newBoxAmount), todayDateString());
 
                                 }
 
@@ -1042,10 +1045,10 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                 break;
             }
             case "strBoxAmount":
-                presenter.updateCableBox(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", box_Amount, todayDateString());
+                presenter.updateCableBoxSubscription(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(box_Amount), todayDateString());
                 break;
             case "strNoOfDays":
-                presenter.updateCableBox(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", box_Amount, todayDateString());
+                presenter.updateCableBoxSubscription(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(box_Amount), todayDateString());
                 break;
             case "calculateExpiry":
 
@@ -1065,7 +1068,7 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
                     Log.e("activation_Date", activation_Date);
                 }
 
-                presenter.updateCableBox(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date, noofMonth, noofDays, "null", "null", "null", box_Amount, todayDateString());
+                presenter.updateCableBoxSubscription(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date, noofMonth, noofDays, "null", "null", "null", String.valueOf(box_Amount), todayDateString());
 
 
                 break;

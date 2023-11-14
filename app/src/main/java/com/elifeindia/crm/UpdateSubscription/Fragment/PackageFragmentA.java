@@ -3,6 +3,7 @@ package com.elifeindia.crm.UpdateSubscription.Fragment;
 import static com.elifeindia.crm.UpdateSubscription.UpdateSubscriptionAtivity.bouquetModelBouquetUpdate;
 import static com.elifeindia.crm.UpdateSubscription.UpdateSubscriptionAtivity.bouquetModelaUpdateSubscription;
 import static com.elifeindia.crm.UpdateSubscription.UpdateSubscriptionAtivity.dataModel;
+import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsBillShareAdapter.cable_Box_ID;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -117,7 +118,7 @@ public class PackageFragmentA extends Fragment implements PackageListFragContrac
         SharedPrefsData.putBool(getActivity(), Constants.isLoadBouquet, false, Constants.PREF_NAME);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rv_channel_list.setLayoutManager(mLayoutManager);
-        bouquetSubscriptionListAdapter = new BouquetSubscriptionListAdapterUpdate(getActivity(), bouquetModelBouquetUpdate, bouquetModelBouquetUpdate, adapterCallback);
+        bouquetSubscriptionListAdapter = new BouquetSubscriptionListAdapterUpdate(getActivity(), bouquetModelBouquetUpdate, bouquetModelBouquetUpdate, adapterCallback,cable_Box_ID);
         rv_channel_list.setAdapter(bouquetSubscriptionListAdapter);
 
 

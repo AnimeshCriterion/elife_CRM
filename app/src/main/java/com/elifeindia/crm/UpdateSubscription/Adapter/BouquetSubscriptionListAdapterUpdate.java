@@ -3,6 +3,7 @@ package com.elifeindia.crm.UpdateSubscription.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -16,8 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.UpdateSubscription.AdapterCallbackForUpdate;
-import com.elifeindia.crm.adapters.AdapterCallback;
-import com.elifeindia.crm.adapters.BouquetSubscriptionListAdapter;
 import com.elifeindia.crm.model.BouquetModel;
 
 import java.util.ArrayList;
@@ -28,15 +27,17 @@ public class BouquetSubscriptionListAdapterUpdate  extends RecyclerView.Adapter<
     Context context;
     List<BouquetModel.BouquetDTO> bouquets;
     List<BouquetModel.BouquetDTO> temp;
+    String cable_Box_ID;
     AdapterCallbackForUpdate adapterCallback;
     public static String packageId, pkgName, pkgPrice, taxPer, taxAmnt;
 
 
-    public BouquetSubscriptionListAdapterUpdate(Context context, List<BouquetModel.BouquetDTO> bouquets, List<BouquetModel.BouquetDTO> temp, AdapterCallbackForUpdate adapterCallback) {
+    public BouquetSubscriptionListAdapterUpdate(Context context, List<BouquetModel.BouquetDTO> bouquets, List<BouquetModel.BouquetDTO> temp, AdapterCallbackForUpdate adapterCallback, String cable_Box_ID) {
         this.context = context;
         this.bouquets = bouquets;
         this.temp = temp;
         this.adapterCallback = adapterCallback;
+        this.cable_Box_ID = cable_Box_ID;
     }
 
     @NonNull
@@ -70,6 +71,7 @@ public class BouquetSubscriptionListAdapterUpdate  extends RecyclerView.Adapter<
                 pkgPrice = String.valueOf(bouquets.get(position).getPrice());
                 taxPer = String.valueOf(bouquets.get(position).getTax());
                 taxAmnt = String.valueOf(bouquets.get(position).getTax_Amount());
+                cable_Box_ID = String.valueOf(bouquets.get(position).getBouquet_ID());
 
                 if(bouquets.get(position).isIs_select()){
                     //remove
