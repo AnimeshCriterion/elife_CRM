@@ -309,7 +309,11 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
                 Bitmap receiptBitmap;
                 receiptBitmap = takeScreenshot();
                 saveBitmap(receiptBitmap);
-
+//                try {
+//                    openWhatsApp("com.whatsapp");
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
                 Log.d("TAG", "onClick2: "+isAppInstalled("com.whatsapp"));
                 Log.d("TAG", "onClick1: "+isBusinessAppInstalled("com.whatsapp.w4b"));
                 if (isBusinessAppInstalled("com.whatsapp.w4b") && isAppInstalled("com.whatsapp")) {
@@ -504,7 +508,7 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/*");
-        String shareBody = "Hey check out eLife CRM Payment Receipt";
+        String shareBody = "";
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Payment Receipt");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
@@ -553,9 +557,9 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
         startActivity(sendIntent);*/
 
 
-//        String customerPhoneNumber = CustWhatsappNo;
-//        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-//        sendIntent.setPackage("com.whatsapp");
+        String customerPhoneNumber = CustWhatsappNo;
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        sendIntent.setPackage(s);
 //
 //
 ////        String message = "*Payment Received*\n" +
@@ -576,103 +580,110 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
 ////                "*" + txt_header.getText().toString().trim()
 ////                + "*\n" +
 ////                footer;
-//      String  payMode = "";
-//        for(int i=0;i<paymentMaster.size();i++){
-//            paymentMaster.get(i).getPaymentType();
-//            payMode +=  paymentMaster.get(i).getPaid_Amount()+"\n";
-//        }
+      String  payMode = "";
+        if(!paymentMaster.isEmpty()){
+           // paymentMaster.get(0).getPaymentType();
+            payMode =  paymentMaster.get(0).getPaid_Amount()+"\n";
+        }
+
+        String  date = "";
+        if(!paymentMaster.isEmpty()){
+            // paymentMaster.get(0).getPaymentType();
+            date =  paymentMaster.get(0).getPayment_Date()+"\n";
+        }
+        String  collectedBy = "";
+        if(!paymentMaster.isEmpty()){
+            // paymentMaster.get(0).getPaymentType();
+            collectedBy =  paymentMaster.get(0).getEmployee_Name()+"\n";
+        }
 //
-//        String  date = "";
-//        for(int i=0;i<paymentMaster.size();i++){
-//            paymentMaster.get(i).getPaymentType();
-//            date +=  paymentMaster.get(i).getPayment_Date()+"\n";
-//        }
-//        String  collectedBy = "";
-//        for(int i=0;i<paymentMaster.size();i++){
-//            paymentMaster.get(i).getPaymentType();
-//            collectedBy +=  paymentMaster.get(i).getEmployee_Name()+"\n";
-//        }
-//
-//        String message =
-//                "*Invoice Details*\n" +
-//
-//                        "*Customer Details*\n" +
-//                        "Name: " +CustName + "\n" +
-//                        "Account Number: " + accNo + "\n" +
-//                        "Subscriber ID: " + subId + "\n" +
-//                     //   "Bill Date: " + billdate_pay.getText().toString() + "\n" +
+        String message =
+                "*Invoice Details*\n" +
+
+                        "*Customer Details*\n" +
+                        "Name: " +CustName + "\n" +
+                        "Account Number: " + accNo + "\n" +
+                        "Subscriber ID: " + subId + "\n" +
+                        "Mobile No: " + getInvoiceModelInvoice.getContact_No() + "\n" +
+                        "Invoice Date: " +  invDate.toString() + "\n" +
+                        "Status:" + getInvoiceModelInvoice.getStatus().toString() + "\n" +
+                        "Balance:" + getInvoiceModelInvoice.getBalance() + "\n" +
+
+                     //   "Bill Date: " + billdate_pay.getText().toString() + "\n" +
 //                        "Bill Type: " + BillType + "\n" +
-//                      //  "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
-//                        "\n" +
-//                        "\n" +
-//                        "*Subscription Details*\n" +
-//                        "------------------------\n" +
-//                        "Activation Date : " + ViewUtils.changeDateTimeFormat(activationdate) + "\n" +
-//                        "Bill Type: " + billtype + "\n" +
-//                        "No of Months : " + noOfMonths + "\n" +
-//                        "Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate) + "\n" +
-//                        "\n" +
-//                        "\n" +
-//
-//                        "*Payment Details*\n" +
-//                        "------------------------\n" +
-//                        "| Paid Amount |   Date  |  Collected By   | " +"\n"+
-//                        "|" +payMode +"|" +ViewUtils.changeDateFormat(date)+"|"+collectedBy+ " | "+
-//
-//
-//
-//
-//
-////                        String.valueOf(Float.parseFloat(subsAmount) + Float.parseFloat(prevBalance)) + "\n" +
-////                        "Paid Amount: " + paidAmount + "\n" +
-////                        "Discount: " + String.valueOf(getInvoiceModelInvoice.getDiscount()) + "\n" +
-////                        "Remaining Amount: " + newBalance + "\n" +
-//////                        "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
-//////                        "Collected By: " + txt_collected_by.getText().toString() + "\n" +
-//////                        "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
-//
-//                        "------------------------\n" +
-//                        "" + txt_header.getText().toString().trim();
-//
-//
-//        String url = "https://api.whatsapp.com/send?phone=" + customerPhoneNumber + "&text=" + message;
-//        sendIntent.setData(Uri.parse(url));
-//
-//        if (sendIntent.resolveActivity(getPackageManager()) == null) {
-//            Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        startActivity(sendIntent);
+                      //  "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
+                        "\n" +
+                        "\n" +
+                        "*Subscription Details*\n" +
+                        "------------------------\n" +
+                        "Activation Date : " + ViewUtils.changeDateTimeFormat(activationdate) + "\n" +
+                        "Bill Type: " + billtype + "\n" +
+                        "No of Months: " + noOfMonths + "\n" +
+                        "Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate) + "\n" +
+                        "\n" +
+                        "\n" +
+
+                        "*Payment Details*\n" +
+                        "------------------------\n" +
+                        "Paid Amount:"+payMode+
+                        "Payment Date:"+ViewUtils.changeDateTimeFormat(date)+"\n"+
+                        "Collected By:"+collectedBy+"\n"+
+                        //"Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate) + "\n" +
 
 
-        NestedScrollView rootView = getWindow().getDecorView().findViewById(R.id.svprint);
-        rootView.setDrawingCacheEnabled(true);
 
 
-        // Measure the total height of the NestedScrollView
-        int totalHeight = rootView.getChildAt(0).getHeight();
 
-// Create a Bitmap with the measured height
-        Bitmap screenshot = Bitmap.createBitmap(rootView.getWidth(), totalHeight, Bitmap.Config.ARGB_8888);
+//                        String.valueOf(Float.parseFloat(subsAmount) + Float.parseFloat(prevBalance)) + "\n" +
+//                        "Paid Amount: " + paidAmount + "\n" +
+//                        "Discount: " + String.valueOf(getInvoiceModelInvoice.getDiscount()) + "\n" +
+//                        "Remaining Amount: " + newBalance + "\n" +
+////                        "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
+////                        "Collected By: " + txt_collected_by.getText().toString() + "\n" +
+////                        "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
 
-// Create a Canvas and draw the content of NestedScrollView onto the Bitmap
-        Canvas canvas = new Canvas(screenshot);
-        rootView.draw(canvas);
+                        "------------------------\n" +
+                        "" + txt_header.getText().toString().trim();
 
-        File imageFile = new File(getExternalCacheDir(), "screenshot.jpg");
-        FileOutputStream fos = new FileOutputStream(imageFile);
-        screenshot.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-        fos.flush();
-        fos.close();
-        Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
-                BuildConfig.APPLICATION_ID + ".provider", imageFile);
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.setPackage(s   );
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri); // or Uri.fromFile(pdfFile) for PDF
-        shareIntent.setType("image/jpeg"); // or "application/pdf" for PDF
-        startActivity(shareIntent);
+
+        String url = "https://api.whatsapp.com/send?phone=" + customerPhoneNumber + "&text=" + message;
+        sendIntent.setData(Uri.parse(url));
+
+        if (sendIntent.resolveActivity(getPackageManager()) == null) {
+            Toast.makeText(this, "Error/n", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        startActivity(sendIntent);
+
+//
+//        NestedScrollView rootView = getWindow().getDecorView().findViewById(R.id.svprint);
+//        rootView.setDrawingCacheEnabled(true);
+//
+//
+//        // Measure the total height of the NestedScrollView
+//        int totalHeight = rootView.getChildAt(0).getHeight();
+//
+//// Create a Bitmap with the measured height
+//        Bitmap screenshot = Bitmap.createBitmap(rootView.getWidth(), totalHeight, Bitmap.Config.ARGB_8888);
+//
+//// Create a Canvas and draw the content of NestedScrollView onto the Bitmap
+//        Canvas canvas = new Canvas(screenshot);
+//        rootView.draw(canvas);
+//
+//        File imageFile = new File(getExternalCacheDir(), "screenshot.jpg");
+//        FileOutputStream fos = new FileOutputStream(imageFile);
+//        screenshot.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+//        fos.flush();
+//        fos.close();
+//        Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
+//                BuildConfig.APPLICATION_ID + ".provider", imageFile);
+//        Intent shareIntent = new Intent();
+//        shareIntent.setAction(Intent.ACTION_SEND);
+//        shareIntent.setPackage(s   );
+//        shareIntent.putExtra(Intent.EXTRA_STREAM, uri); // or Uri.fromFile(pdfFile) for PDF
+//        shareIntent.setType("image/jpeg"); // or "application/pdf" for PDF
+//        startActivity(shareIntent);
 
 
     }

@@ -649,7 +649,13 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
         totalAmnt = Float.parseFloat(cableBoxAmnt) + Float.parseFloat(CustomerBalance);
         txt_subscription_amnt.setText(cableBoxWithSubscription.geTotal_CableBox_amount());
         cableBoxWithSubscription = cableBoxWithSubscription1;
-        txt_total_amount.setText("Rs. " + String.valueOf(Math.round(totalAmnt*100)/100));
+       // txt_total_amount.setText("Rs. " + String.valueOf(Math.round(totalAmnt*100)/100));
+
+
+
+        txt_total_amount.setText("Rs. " + String.valueOf(totalAmnt));
+
+
         edt_payingamount.setText(String.valueOf(totalAmnt));
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rv_box_details.setLayoutManager(mLayoutManager);
@@ -727,9 +733,10 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
     @Override
     public void showCableBox(UpdateBox boxTypeModel, TextView view, TextView view1) {
 
-
+        box_Amount=boxTypeModel.getBox_Amount().toString();
         Log.d("TAG", "showCableBoxANNU: "+strApiCallType.toString());
-
+       // activation_Date = boxTypeModel.getActivation_Date().substring(0, 10);
+        expiry_Date = boxTypeModel.getExpiry_Date().substring(0, 10);
         SharedPrefsData.putString(getApplicationContext(), "ExpiryDate", boxTypeModel.getExpiry_Date(), Constants.PREF_NAME);
 
         if (strApiCallType.equals("calculateExpiry")) {
@@ -748,7 +755,6 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
            //txt_subscription_amnt.setText("Rs. " + boxTypeModel.getBox_Amount().toString());
 //            //amount.setText(String.valueOf(box_Amount));
             totalAmnt = (Float.parseFloat(CustomerBalance) + Float.parseFloat(txt_subscription_amnt.getText().toString()));
-
             txt_total_amount.setText(String.valueOf(totalAmnt));
             edt_payingamount.setText(String.valueOf(totalAmnt));
             expiry_Date = boxTypeModel.getExpiry_Date().substring(0, 10);
@@ -777,16 +783,35 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             Log.e("activation_Date_2", activation_Date);
             Log.e("expiry_Date", expiry_Date);}
 else if(strApiCallType.equals("spn_no_of_months")){
+            view.setText(ViewUtils.changeDateFormat(expiry_Date));
+            view1.setText(box_Amount);
             txt_subscription_amnt.setText("Rs. " + boxTypeModel.getBox_Amount());
+            activation_Date = boxTypeModel.getActivation_Date().substring(0, 10);
+            expiry_Date = boxTypeModel.getExpiry_Date().substring(0, 10);
+            txt_subscription_amnt.setText("Rs. " + boxTypeModel.getBox_Amount());
+
+            // txt_subscription_amnt.setText("Rs. " + anssd);
+            cableBoxList.get(box_position).getCableBox().setBox_Amount(Double.parseDouble(box_Amount));
+
+            amount.setText(box_Amount);
+            Log.d("TAG", "showCableBox1: "+box_Amount.toString());
+
+            totalAmnt = (Float.parseFloat(CustomerBalance) + Float.parseFloat(box_Amount));
+            Log.d("TAG", "showCableBox2: "+String.valueOf(totalAmnt).toString());
+
+            txt_total_amount.setText(String.valueOf(totalAmnt));
+            Log.d("TAG", "showCableBox3: "+txt_total_amount.getText().toString().toString());
+            edt_payingamount.setText(String.valueOf(totalAmnt));
 
         }
 
         else {
-            view.setText(ViewUtils.changeDateFormat(boxTypeModel.getExpiry_Date()));
+
+            view.setText(ViewUtils.changeDateFormat(expiry_Date));
             view1.setText(box_Amount);
 
-
-            String box_Amount = boxTypeModel.getBox_Amount();
+            box_Amount = boxTypeModel.getBox_Amount();
+          //  String box_Amount = boxTypeModel.getBox_Amount();
 
             cableBoxAmnt = box_Amount;
 
@@ -801,7 +826,6 @@ else if(strApiCallType.equals("spn_no_of_months")){
 
             amount.setText(box_Amount);
             totalAmnt = (Float.parseFloat(CustomerBalance) + Float.parseFloat(box_Amount));
-
             txt_total_amount.setText(String.valueOf(totalAmnt));
             edt_payingamount.setText(String.valueOf(totalAmnt));
 
@@ -960,8 +984,11 @@ else if(strApiCallType.equals("spn_no_of_months")){
 
 
         Log.d("TAG", "showInvoice: 12");
-        startActivity(new Intent(this, BillShareActivity.class));
-        Log.d("TAG", "showInvoice:3456");
+        Intent intent=new Intent(GenerateInvoiceActivity.this,BillShareActivity.class);
+        intent.putExtra("paidAmt",edt_payingamount.getText().toString());
+        startActivity(intent);
+//        startActivity(new Intent(this, BillShareActivity.class));
+//        Log.d("TAG", "showInvoice:3456");
 
     }
 
@@ -978,7 +1005,7 @@ else if(strApiCallType.equals("spn_no_of_months")){
 
         switch (id) {
             case "strActivationDate":
-                presenter.updateCableBoxSubscription(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(newBoxAmount), todayDateString());
+                presenter.updateCableBox(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(newBoxAmount), todayDateString());
                 break;
             case "spn_no_of_months": {
                 spn_no_of_months.performClick();
@@ -1003,7 +1030,7 @@ else if(strApiCallType.equals("spn_no_of_months")){
 //
 //                                Toast.makeText(GenerateInvoiceActivity.this, ""+Float.parseFloat(box_Amount)/Float.parseFloat(prevMonthValue), Toast.LENGTH_SHORT).show();
 
-                                presenter.updateCableBoxSubscription(GenerateInvoiceActivity.this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(newBoxAmount), todayDateString());
+                                presenter.updateCableBox(GenerateInvoiceActivity.this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(newBoxAmount), todayDateString());
                             }
 
                             @Override
@@ -1031,7 +1058,7 @@ else if(strApiCallType.equals("spn_no_of_months")){
 
                                 } else {
                                     ll.setVisibility(View.GONE);
-                                    presenter.updateCableBoxSubscription(GenerateInvoiceActivity.this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(newBoxAmount), todayDateString());
+                                    presenter.updateCableBox(GenerateInvoiceActivity.this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(newBoxAmount), todayDateString());
 
                                 }
 
@@ -1045,10 +1072,10 @@ else if(strApiCallType.equals("spn_no_of_months")){
                 break;
             }
             case "strBoxAmount":
-                presenter.updateCableBoxSubscription(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(box_Amount), todayDateString());
+                presenter.updateCableBox(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(box_Amount), todayDateString());
                 break;
             case "strNoOfDays":
-                presenter.updateCableBoxSubscription(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(box_Amount), todayDateString());
+                presenter.updateCableBox(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(box_Amount), todayDateString());
                 break;
             case "calculateExpiry":
 
@@ -1068,7 +1095,7 @@ else if(strApiCallType.equals("spn_no_of_months")){
                     Log.e("activation_Date", activation_Date);
                 }
 
-                presenter.updateCableBoxSubscription(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date, noofMonth, noofDays, "null", "null", "null", String.valueOf(box_Amount), todayDateString());
+                presenter.updateCableBox(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date, noofMonth, noofDays, "null", "null", "null", String.valueOf(box_Amount), todayDateString());
 
 
                 break;
@@ -1227,7 +1254,7 @@ else if(strApiCallType.equals("spn_no_of_months")){
 
                 cableBoxList = cableBoxWithSubscription.getCableBoxwithSubscription();
 
-                float ans = Float.parseFloat(alacarteModela.getTotal_Alacarte()) + Float.parseFloat(bouquetModela.getTotal_Bouquet());
+                 ans = Float.parseFloat(alacarteModela.getTotal_Alacarte()) + Float.parseFloat(bouquetModela.getTotal_Bouquet());
                 String newbox_Amount = String.valueOf(ans * noofMonth_multiplyfactor);
 
                 box_Amount = newbox_Amount;
@@ -1264,7 +1291,7 @@ else if(strApiCallType.equals("spn_no_of_months")){
                 String newbox_AmountInternet = String.valueOf(ans * noofMonth_multiplyfactorInternet);
 
                 box_Amount = newbox_AmountInternet;
-                cableBoxAmnt = newbox_AmountInternet;
+                //cableBoxAmnt = newbox_AmountInternet;
 
                 newBoxAmount = ans;
                 newTotalAmount = String.valueOf(ans);

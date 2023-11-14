@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -70,6 +71,8 @@ public class CableBoxDetailsAdapter extends RecyclerView.Adapter<CableBoxDetails
     public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
         holder.cable_status.setText("Status : " + cableBoxList.get(position).getCableBox().getStatus_Name());
+        holder.amount.setText(cableBoxList.get(position).getCableBox().getBox_Amount().toString());
+       // Toast.makeText(context.getApplicationContext(), "hhh"+cableBoxList.get(position).getCableBox().getBox_Amount().toString(),Toast.LENGTH_SHORT).show();
         try {
 
             holder.cable_lpamount.setText("LP Amount : " + cableBoxList.get(position).getCableBox().getPaid_Amount());
@@ -122,7 +125,7 @@ public class CableBoxDetailsAdapter extends RecyclerView.Adapter<CableBoxDetails
 
         holder.expirtydate.setText(date);
 
-        holder.amount.setText(cableBoxList.get(position).getCableBox().getBox_Amount().toString());
+
         if (cableBoxList.get(position).getBoxAlacareteList().getBoxAlacarete().size() == 0 && cableBoxList.get(position).getBoxBouquetList().getBoxBouquet().size() == 0) {
 
             holder.amount.setEnabled(true);

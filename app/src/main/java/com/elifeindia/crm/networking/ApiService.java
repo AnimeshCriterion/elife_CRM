@@ -328,12 +328,13 @@ public interface ApiService {
             @Query("Customer_ID") String Customer_ID);
 
 
- 
-    @POST("Values/Get_CableExpiry?")
+
+    @POST("Values/Update_CableBox?")
     Observable<UpdateBox> updateCableBox(
             @Body CableBoxSubscription cableBoxSubscription);
 
- @POST("Values/Update_CableBox?")
+
+ @POST("Values/Get_CableExpiry?")
  Observable<UpdateBox> updateCableBoxUpdateSubscription(@Body CableBoxSubscription cableBoxSubscription);
 
 

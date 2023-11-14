@@ -134,12 +134,16 @@ public class BillShareActivity extends AppCompatActivity   {
 
 
         try {
+
+
+            txt_paid_amnt.setText(getIntent().getExtras().getString("paidAmt"));
+            paidAmount=getIntent().getExtras().getString("paidAmt");
             if (!getInvoiceModelInvoice.getPaymentMaster().isEmpty() || getInvoiceModelInvoice.getPaymentMaster() != null) {
 
                 for(int i=0;i<getInvoiceModelInvoice.getPaymentMaster().size();i++) {
                     if (getInvoiceModelInvoice.getPaymentMaster().get(i).getPayment_Id() == SharedPrefsData.getInt(BillShareActivity.this, Constants.PaymentId, Constants.PREF_NAME)) {
-                        txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount().toString());
-                        paidAmount = getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount();
+                       // txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount().toString());
+                     //   paidAmount = getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount();
                         payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaymentType());
                         Log.d("TAG", "onCreatePaymentAnimesh: "+paidAmount);
 
@@ -254,7 +258,7 @@ public class BillShareActivity extends AppCompatActivity   {
                 // startActivity(new Intent(PaymentReceiptActivity.this, MainActivity.class));
 
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + CustMob));
-                intent.putExtra("sms_body", "Dear " + CustName + ",\n\nWe have received the amount of Rs " + paidAmount + "/- for " + BillType + " Bill and the balance is Rs " + newBalance + "/-" + "\n\n" + txt_header.getText().toString());
+                intent.putExtra("sms_body", "Dear " + CustName + ",\n\nWe have received the amount of Rs " + getIntent().getExtras().getString("paidAmt") + "/- for " + BillType + " Bill and the balance is Rs " + newBalance + "/-" + "\n\n" + txt_header.getText().toString());
                 startActivity(intent);
             }
         });
@@ -431,7 +435,7 @@ public class BillShareActivity extends AppCompatActivity   {
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/*");
-        String shareBody = "Hey check out eLife CRM Payment Receipt";
+        String shareBody = "";
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Payment Receipt");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
