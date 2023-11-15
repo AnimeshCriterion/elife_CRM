@@ -589,7 +589,7 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
         String  date = "";
         if(!paymentMaster.isEmpty()){
             // paymentMaster.get(0).getPaymentType();
-            date =  paymentMaster.get(0).getPayment_Date()+"\n";
+            date =  ViewUtils.changeDateTimeFormat(paymentMaster.get(0).getPayment_Date())+"\n";
         }
         String  collectedBy = "";
         if(!paymentMaster.isEmpty()){
@@ -626,7 +626,7 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
                         "*Payment Details*\n" +
                         "------------------------\n" +
                         "Paid Amount:"+payMode+
-                        "Payment Date:"+ViewUtils.changeDateTimeFormat(date)+"\n"+
+                        "Payment Date:"+date+"\n"+
                         "Collected By:"+collectedBy+"\n"+
                         //"Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate) + "\n" +
 
