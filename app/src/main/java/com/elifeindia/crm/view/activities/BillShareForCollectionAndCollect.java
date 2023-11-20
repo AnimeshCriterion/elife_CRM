@@ -1,6 +1,5 @@
 package com.elifeindia.crm.view.activities;
 
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static com.elifeindia.crm.adapters.generate_invoice_module.AlacarteListBillShareAdapter.TotalAlacarteRecords;
 import static com.elifeindia.crm.adapters.generate_invoice_module.BouquetListBillShareAdapter.TotalBouquetsRecords;
 import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsBillShareAdapter.activation_Date;
@@ -14,7 +13,6 @@ import static com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetail
 import static com.elifeindia.crm.adapters.generate_invoice_module.InternetPkgListAdapter.TotalInternetRecords;
 import static com.elifeindia.crm.printersdk.BluetoothDeviceList.REQUEST_ENABLE_BT;
 import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.getInvoiceModelInvoice;
-import static com.elifeindia.crm.view.activities.GenerateInvoiceActivity.paidAmount;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -30,15 +28,16 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
@@ -58,6 +57,7 @@ import com.elifeindia.crm.model.GetInvoiceModel;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 //import com.karumi.dexter.Dexter;
 //import com.karumi.dexter.PermissionToken;
 //import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -66,7 +66,6 @@ import com.elifeindia.crm.utils.ViewUtils;
 //import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -101,6 +100,8 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
     String BillType = "", newBalance = "", prevBalance, subsAmount, receipt = "", invDate, CustName, CustMob, CustWhatsappNo, invno = "", accNo = "", name = "", subId = "", dateTime = "", totalAmnt = "", empMobNo = "", collectedBy = "", payMode = "", remainBal = "", footer = "";
     public String paidAmount = "";
     TextView discountTextView;
+    List<GetInvoiceModel.PaymentMasterDTO> paymentMaster;
+    String activationdate, billtype, noOfMonths, expiryDate;
     RecyclerView PaymentMasterRecylerViewRecyclerView;
     public static final String[] BLUETOOTH_PERMISSIONS_S = {Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT};
 
@@ -146,6 +147,7 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
             if (!getInvoiceModelInvoice.getPaymentMaster().isEmpty() || getInvoiceModelInvoice.getPaymentMaster() != null) {
 
                 for(int i=0;i<getInvoiceModelInvoice.getPaymentMaster().size();i++) {
+
 //                    if (getInvoiceModelInvoice.getPaymentMaster().get(i).getPayment_Id() == SharedPrefsData.getInt(BillShareForCollectionAndCollect.this, Constants.PaymentId, Constants.PREF_NAME)) {
 //                        txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount());
 //                        paidAmount = getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount();
@@ -299,14 +301,72 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
             }
         });
 
+
+
         iv_whatsappshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bitmap receiptBitmap;
                 receiptBitmap = takeScreenshot();
                 saveBitmap(receiptBitmap);
-                openWhatsApp();
+//                try {
+//                    openWhatsApp("com.whatsapp");
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+                Log.d("TAG", "onClick2: "+isAppInstalled("com.whatsapp"));
+                Log.d("TAG", "onClick1: "+isBusinessAppInstalled("com.whatsapp.w4b"));
+                if (isBusinessAppInstalled("com.whatsapp.w4b") && isAppInstalled("com.whatsapp")) {
+                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(BillShareForCollectionAndCollect.this);
+                    bottomSheetDialog.setContentView(R.layout.bottom_sheet_layout);
+                    LinearLayout option1 = bottomSheetDialog.findViewById(R.id.option1);
+                    LinearLayout option2 = bottomSheetDialog.findViewById(R.id.option2);
+                    bottomSheetDialog.show();
+                    // Handle clicks on bottom sheet options
+                    option1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Handle Option 1 click
+                            try {
+                                openWhatsApp("com.whatsapp");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                        }
+                    });
+
+                    option2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Handle Option 2 click
+                            try {
+                                openWhatsApp("com.whatsapp.w4b");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                        }
+                    });
+
+
+                } else if (isAppInstalled("com.whatsapp.w4b")) {
+                    try {
+                        openWhatsApp("com.whatsapp.w4b");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    try {
+                        openWhatsApp("com.whatsapp");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
             }
+
+
         });
 
 
@@ -336,7 +396,7 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
 
         List<GetInvoiceModel.CableBoxwithSubscriptionDTO> cableBoxwithSubscriptionDTOS = getInvoiceModelInvoice.getCableBoxwithSubscription();
         List<GetInvoiceModel.InternetBoxwithSubscriptionDTO> internetBoxwithSubscriptionDTOS = getInvoiceModelInvoice.getInternetBoxwithSubscription();
-        List<GetInvoiceModel.PaymentMasterDTO> paymentMaster = getInvoiceModelInvoice.getPaymentMaster();
+        paymentMaster = getInvoiceModelInvoice.getPaymentMaster();
         RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         PaymentMasterRecylerViewRecyclerView.setLayoutManager(mLayoutManager1);
         paymentMasterForBillShareAdapter= new PaymentMasterForBillShareAdapter(BillShareForCollectionAndCollect.this,paymentMaster);
@@ -349,8 +409,25 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
             rv_box_details.setLayoutManager(mLayoutManager);
             cableBoxDetailsBillShareAdapter = new CableBoxDetailsBillShareAdapter(BillShareForCollectionAndCollect.this, cableBoxwithSubscriptionDTOS, internetBoxwithSubscriptionDTOS);
             rv_box_details.setAdapter(cableBoxDetailsBillShareAdapter);
+            if(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date()!=null){
+                activationdate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date().toString();
+            }
+            billtype = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getBill_Type().toString();
+            noOfMonths = String.valueOf(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getNoofMonth());
+            if(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date()!=null){
+                expiryDate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date().toString();
+            }
         } else {
+            if(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date()!=null){
+                activationdate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date().toString();
 
+            }
+            billtype = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getBill_Type().toString();
+            noOfMonths = String.valueOf(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getNoofMonth());
+            if(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date()!=null){
+                expiryDate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date().toString();
+
+            }
             TotalAlacarteRecords = "";
             TotalBouquetsRecords = "";
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -380,7 +457,24 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
         view.draw(canvas);
         return bitmap;
     }
-
+    private boolean isAppInstalled(String packageName) {
+        PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+    private boolean isBusinessAppInstalled(String packageName) {
+        PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
 
     public void saveBitmap(Bitmap bitmap) {
         File folder = new File(getExternalFilesDir(null) +
@@ -414,7 +508,7 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/*");
-        String shareBody = "Hey check out eLife CRM Payment Receipt";
+        String shareBody = "";
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Payment Receipt");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);
@@ -428,7 +522,9 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
     }
 
 
-    private void openWhatsApp() {
+    private void openWhatsApp(String s) throws IOException {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         /*String smsNumber = CustWhatsappNo; // E164 format without '+' sign
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
         sendIntent.setType("text/plain");
@@ -463,27 +559,91 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
 
         String customerPhoneNumber = CustWhatsappNo;
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        sendIntent.setPackage("com.whatsapp");
+        sendIntent.setPackage(s);
+//
+//
+////        String message = "*Payment Received*\n" +
+////                "*Customer Details*\n" +
+////                "Name: " + CustName + "\n" +
+////                "Account No: " + accNo + "\n" +
+////                "Subscriber ID: " + subId + "\n" +
+////                "Bill Type: " + BillType + "\n" +
+////                "Mobile No: " + CustMob + "\n" +
+////                "\n" +
+////                "*Payment Details*\n" +
+////                "------------------------\n" +
+////                "Total Amount: " + String.valueOf(Float.parseFloat(subsAmount) + Float.parseFloat(prevBalance)) + "\n" +
+////                "Paid Amount: " + paidAmount + "\n" +
+////                "Discount:" + String.valueOf(getInvoiceModelInvoice.getDiscount()) + "\n" +
+////                "Remaining Amount: " + newBalance + "\n" +
+////                "------------------------\n" +
+////                "*" + txt_header.getText().toString().trim()
+////                + "*\n" +
+////                footer;
+      String  payMode = "";
+        if(!paymentMaster.isEmpty()){
+           // paymentMaster.get(0).getPaymentType();
+            payMode =  paymentMaster.get(0).getPaid_Amount()+"\n";
+        }
+
+        String  date = "";
+        if(!paymentMaster.isEmpty()){
+            // paymentMaster.get(0).getPaymentType();
+            date =  ViewUtils.changeDateTimeFormat(paymentMaster.get(0).getPayment_Date())+"\n";
+        }
+        String  collectedBy = "";
+        if(!paymentMaster.isEmpty()){
+            // paymentMaster.get(0).getPaymentType();
+            collectedBy =  paymentMaster.get(0).getEmployee_Name()+"\n";
+        }
+//
+        String message =
+                "*Invoice Details*\n" +
+
+                        "*Customer Details*\n" +
+                        "Name: " +CustName + "\n" +
+                        "Account Number: " + accNo + "\n" +
+                        "Subscriber ID: " + subId + "\n" +
+                        "Mobile No: " + getInvoiceModelInvoice.getContact_No() + "\n" +
+                        "Invoice Date: " +  invDate.toString() + "\n" +
+                        "Status:" + getInvoiceModelInvoice.getStatus().toString() + "\n" +
+                        "Balance:" + getInvoiceModelInvoice.getBalance() + "\n" +
+
+                     //   "Bill Date: " + billdate_pay.getText().toString() + "\n" +
+//                        "Bill Type: " + BillType + "\n" +
+                      //  "Receipt Number: " + invoicenumber_pay.getText().toString() + "\n" +
+                        "\n" +
+                        "\n" +
+                        "*Subscription Details*\n" +
+                        "------------------------\n" +
+                        "Activation Date : " + ViewUtils.changeDateTimeFormat(activationdate) + "\n" +
+                        "Bill Type: " + billtype + "\n" +
+                        "No of Months: " + noOfMonths + "\n" +
+                        "Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate) + "\n" +
+                        "\n" +
+                        "\n" +
+
+                        "*Payment Details*\n" +
+                        "------------------------\n" +
+                        "Paid Amount:"+payMode+
+                        "Payment Date:"+date+"\n"+
+                        "Collected By:"+collectedBy+"\n"+
+                        //"Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate) + "\n" +
 
 
-        String message = "*Payment Received*\n" +
-                "*Customer Details*\n" +
-                "Name: " + CustName + "\n" +
-                "Account No: " + accNo + "\n" +
-                "Subscriber ID: " + subId + "\n" +
-                "Bill Type: " + BillType + "\n" +
-                "Mobile No: " + CustMob + "\n" +
-                "\n" +
-                "*Payment Details*\n" +
-                "------------------------\n" +
-                "Total Amount: " + String.valueOf(Float.parseFloat(subsAmount) + Float.parseFloat(prevBalance)) + "\n" +
-                "Paid Amount: " + paidAmount + "\n" +
-                "Discount:" + String.valueOf(getInvoiceModelInvoice.getDiscount()) + "\n" +
-                "Remaining Amount: " + newBalance + "\n" +
-                "------------------------\n" +
-                "*" + txt_header.getText().toString().trim()
-                + "*\n" +
-                footer;
+
+
+
+//                        String.valueOf(Float.parseFloat(subsAmount) + Float.parseFloat(prevBalance)) + "\n" +
+//                        "Paid Amount: " + paidAmount + "\n" +
+//                        "Discount: " + String.valueOf(getInvoiceModelInvoice.getDiscount()) + "\n" +
+//                        "Remaining Amount: " + newBalance + "\n" +
+////                        "Payment Mode: " + paymentmode_text.getText().toString() + "\n" +
+////                        "Collected By: " + txt_collected_by.getText().toString() + "\n" +
+////                        "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
+
+                        "------------------------\n" +
+                        "" + txt_header.getText().toString().trim();
 
 
         String url = "https://api.whatsapp.com/send?phone=" + customerPhoneNumber + "&text=" + message;
@@ -495,6 +655,35 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
         }
 
         startActivity(sendIntent);
+
+//
+//        NestedScrollView rootView = getWindow().getDecorView().findViewById(R.id.svprint);
+//        rootView.setDrawingCacheEnabled(true);
+//
+//
+//        // Measure the total height of the NestedScrollView
+//        int totalHeight = rootView.getChildAt(0).getHeight();
+//
+//// Create a Bitmap with the measured height
+//        Bitmap screenshot = Bitmap.createBitmap(rootView.getWidth(), totalHeight, Bitmap.Config.ARGB_8888);
+//
+//// Create a Canvas and draw the content of NestedScrollView onto the Bitmap
+//        Canvas canvas = new Canvas(screenshot);
+//        rootView.draw(canvas);
+//
+//        File imageFile = new File(getExternalCacheDir(), "screenshot.jpg");
+//        FileOutputStream fos = new FileOutputStream(imageFile);
+//        screenshot.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+//        fos.flush();
+//        fos.close();
+//        Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
+//                BuildConfig.APPLICATION_ID + ".provider", imageFile);
+//        Intent shareIntent = new Intent();
+//        shareIntent.setAction(Intent.ACTION_SEND);
+//        shareIntent.setPackage(s   );
+//        shareIntent.putExtra(Intent.EXTRA_STREAM, uri); // or Uri.fromFile(pdfFile) for PDF
+//        shareIntent.setType("image/jpeg"); // or "application/pdf" for PDF
+//        startActivity(shareIntent);
 
 
     }

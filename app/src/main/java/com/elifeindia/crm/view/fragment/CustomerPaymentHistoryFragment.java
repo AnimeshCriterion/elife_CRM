@@ -381,7 +381,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/*");
-        String shareBody = "Hey check out eLife CRM Payment Receipt";
+        String shareBody = "";
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Payment Receipt");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         sharingIntent.putExtra(Intent.EXTRA_STREAM, uri);

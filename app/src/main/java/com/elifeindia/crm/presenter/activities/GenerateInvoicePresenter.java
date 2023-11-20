@@ -186,7 +186,7 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
     }
 
     @Override
-    public void updateCableBoxSubscription(Context context, String user_Id, String customer_Id, String cable_Box_ID, String box_ID, String boxType_ID, String vcno, String stbno, String cafno, String bill_Type_ID, String connection_Status_ID, String activation_Date, String expiry_Date, String noofMonth, String noofDays, String alacarte_Amount, String bouquet_Amount, String tax_Amount, String box_Amount, String date) {
+    public void updateCableBoxSubscription(Context context,  TextView view, TextView view1,String user_Id, String customer_Id, String cable_Box_ID, String box_ID, String boxType_ID, String vcno, String stbno, String cafno, String bill_Type_ID, String connection_Status_ID, String activation_Date, String expiry_Date, String noofMonth, String noofDays, String alacarte_Amount, String bouquet_Amount, String tax_Amount, String box_Amount, String date) {
         final ProgressDialog progressBar;
         progressBar = new ProgressDialog(context);
         progressBar.setCancelable(false);//you can cancel it by pressing back button
@@ -215,7 +215,7 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
         cableBoxSubscription.setDate(date);
         cableBoxSubscription.setInvoiceID(0);
         NetworkUtils.getUserApiInstance()
-                .updateCableBox(cableBoxSubscription)
+                .updateCableBoxUpdateSubscription(cableBoxSubscription)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<UpdateBox>() {
@@ -231,7 +231,7 @@ public class GenerateInvoicePresenter implements GenerateInvoiceContract.Present
 
                     @Override
                     public void onNext(UpdateBox boxBouquetList) {
-
+                        mView.showCableBox(boxBouquetList, view, view1);
                       //  mView.showCableBox(boxBouquetList, view, view1);
                     }
                 });

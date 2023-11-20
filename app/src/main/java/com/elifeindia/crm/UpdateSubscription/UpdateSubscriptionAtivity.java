@@ -287,7 +287,7 @@ public class UpdateSubscriptionAtivity extends AppCompatActivity implements Gene
                     } else if (cafnoupdateCable.isEmpty() || cafnoupdateCable == null) {
                         Toast.makeText(UpdateSubscriptionAtivity.this, "Please enter Caf Number", Toast.LENGTH_SHORT).show();
                     } else {
-                        presenter.updateCableBoxSubscription(UpdateSubscriptionAtivity.this, userId, String.valueOf(customerID), cable_Box_IDupdate, "null", boxType_IDupdatecable, vcnoupdateCable, stbnoupdateCable, cafnoupdateCable, bill_Type_IDupdate, connection_Status_IDupdate, activation_Dateupdate, expiry_Dateupdate, noofMonthupdate, noofDaysupdate,box_Amountupdate, box_Amountupdate, "null", box_Amountupdate, todayDateString());
+                        presenter.updateCableBoxSubscription(UpdateSubscriptionAtivity.this, null,null,userId, String.valueOf(customerID), cable_Box_IDupdate, "null", boxType_IDupdatecable, vcnoupdateCable, stbnoupdateCable, cafnoupdateCable, bill_Type_IDupdate, connection_Status_IDupdate, activation_Dateupdate, expiry_Dateupdate, noofMonthupdate, noofDaysupdate,box_Amountupdate, box_Amountupdate, "null", box_Amountupdate, todayDateString());
                         Toast.makeText(UpdateSubscriptionAtivity.this, "Cable Box Updated !", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
