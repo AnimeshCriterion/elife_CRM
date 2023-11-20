@@ -48,7 +48,7 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
     CustomerDetailsContract.Presenter presenter;
     ViewUtils viewUtils;
     TextView accountnumber, subscriberid, areaid, customername, address, txt_status,
-            txt_whatsapp_no, balance, txt_mob_no, editCustDetails,tool_bar_text;
+            txt_whatsapp_no, balance, txt_mob_no, editCustDetails,tool_bar_text,customerGroupText,networkText;
     RecyclerView rv_cable_subscription, rv_internet_subscription;
     CableSubscriptionAdapter cableSubscriptionAdapter;
     InternetSuscriptionAdapter internetSuscriptionAdapter;
@@ -73,6 +73,8 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
         txt_status = findViewById(R.id.txt_status);
         balance = findViewById(R.id.balance);
         ll_pay = findViewById(R.id.ll_pay);
+        customerGroupText=findViewById(R.id.customerGroup);
+        networkText=findViewById(R.id.networkname);
         rv_cable_subscription = findViewById(R.id.rv_cable_subscription);
         rv_internet_subscription = findViewById(R.id.rv_internet_subscription);
         cablelayout = findViewById(R.id.cablelayout);
@@ -302,6 +304,8 @@ public class CustomersDetailsActivity extends AppCompatActivity implements Custo
        // Toast.makeText(getApplicationContext(),"INVID"+InvoiceID.toString(),Toast.LENGTH_LONG).show();
         address.setText(customerData.getAddress());
         areaid.setText(customerData.getAreaCustomerID().toString());
+        customerGroupText.setText(customerData.getGroupName());
+        networkText.setText(customerData.getNetworkName());
         txt_mob_no.setText(customerData.getContactNo());
         txt_whatsapp_no.setText(customerData.getWhatsupNo());
         customerWhatsappNo=customerData.getWhatsupNo();

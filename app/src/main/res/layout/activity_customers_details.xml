@@ -350,6 +350,86 @@
                             </TextView>
                         </LinearLayout>
 
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_weight="0.2"
+                                android:fontFamily="@font/abeezee_regular"
+                                android:paddingLeft="@dimen/_11sdp"
+                                android:text="Customer Group"
+                                android:textColor="@color/darkblue"
+                                android:textSize="@dimen/_11sdp">
+
+                            </TextView>
+                            <ImageView
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_15sdp"
+                                android:src="@drawable/ic_threedots"/>
+
+
+                            <TextView
+                                android:id="@+id/customerGroup"
+                                android:layout_width="0dp"
+                                android:paddingEnd="@dimen/_12sdp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_weight="0.5"
+                                android:fontFamily="@font/abeezee_regular"
+                                android:textColor="@color/darkblue"
+                                android:textSize="@dimen/_11sdp">
+
+                            </TextView>
+                        </LinearLayout>
+
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_weight="0.2"
+                                android:fontFamily="@font/abeezee_regular"
+                                android:paddingLeft="@dimen/_11sdp"
+                                android:text="Network Name"
+                                android:textColor="@color/darkblue"
+                                android:textSize="@dimen/_11sdp">
+
+                            </TextView>
+                            <ImageView
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_15sdp"
+                                android:src="@drawable/ic_threedots"/>
+
+
+                            <TextView
+                                android:id="@+id/networkname"
+                                android:layout_width="0dp"
+                                android:paddingEnd="@dimen/_12sdp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_weight="0.5"
+                                android:fontFamily="@font/abeezee_regular"
+                                android:textColor="@color/darkblue"
+                                android:textSize="@dimen/_11sdp">
+
+                            </TextView>
+                        </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

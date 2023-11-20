@@ -1,7 +1,11 @@
 package com.elifeindia.crm.adapters;
 
+
+
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,6 +132,10 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
         holder.txt_cust_name.setText(custemersLists.get(position).getName());
 
+        if(custemersLists.get(position).getColorCode()!=null && !custemersLists.get(position).getColorCode().isEmpty() ){
+            holder.cv_customer.setCardBackgroundColor(Color.parseColor(custemersLists.get(position).getColorCode().toString()));
+        }
+
         holder.cv_customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,6 +159,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
     @Override
     public int getItemCount() {
+        Log.d("TAG", "getItemCountAnimehs: "+custemersLists.size());
         return custemersLists.size();
     }
 
@@ -158,6 +167,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         TextView customer_status, txt_cust_name, areaname, subid, acno, edate, address, subarea, nob_no, status, txt_balance, areaid, whatsup_no;
         CardView cv_customer;
         ImageView imageActionButton;
+     //   LinearLayout layout;
 
         public MyviewHolder(@NonNull View itemView) {
             super(itemView);
@@ -168,6 +178,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
             address = itemView.findViewById(R.id.address);
             edate = itemView.findViewById(R.id.edate);
             status = itemView.findViewById(R.id.status);
+         //   layout=itemView.findViewById(R.id.linearback);
             subid = itemView.findViewById(R.id.subid);
             acno = itemView.findViewById(R.id.acno);
             txt_cust_name = itemView.findViewById(R.id.txt_cust_name);

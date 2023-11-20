@@ -90,6 +90,43 @@ public class CustomerData {
     @Expose
     private String invoiceID;
 
+
+    @SerializedName("group_Name")
+    @Expose
+    private String groupName;
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getNetworkName() {
+        return networkName;
+    }
+
+    public void setNetworkName(String networkName) {
+        this.networkName = networkName;
+    }
+
+    public String getColorCode() {
+        return colorCode;
+    }
+
+    public void setColorCode(String colorCode) {
+        this.colorCode = colorCode;
+    }
+
+    @SerializedName("network_Name")
+    @Expose
+    private String networkName;
+
+    @SerializedName("color_Code")
+    @Expose
+    private String colorCode;
+
     public Integer getCustomerID() {
         return customerID;
     }
