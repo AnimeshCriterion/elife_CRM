@@ -134,21 +134,23 @@ public class BillShareActivity extends AppCompatActivity   {
 
 
         try {
+            Log.d("TAG", "onCreatePaymentID: "+ SharedPrefsData.getString(BillShareActivity.this, Constants.PaymentId, Constants.PREF_NAME));
             if (!getInvoiceModelInvoice.getPaymentMaster().isEmpty() || getInvoiceModelInvoice.getPaymentMaster() != null) {
 
-                for(int i=0;i<getInvoiceModelInvoice.getPaymentMaster().size();i++) {
-                    if (getInvoiceModelInvoice.getPaymentMaster().get(i).getPayment_Id() == SharedPrefsData.getInt(BillShareActivity.this, Constants.PaymentId, Constants.PREF_NAME)) {
-                        txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount().toString());
-                        paidAmount = getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount();
-                        payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaymentType());
-                        Log.d("TAG", "onCreatePaymentAnimesh: "+paidAmount);
-
-                    }
-
-                }
+//                for(int i=0;i<getInvoiceModelInvoice.getPaymentMaster().size();i++) {
+//                    if (getInvoiceModelInvoice.getPaymentMaster().get(i).getPayment_Id() == SharedPrefsData.getInt(BillShareActivity.this, Constants.PaymentId, Constants.PREF_NAME)) {
+//                        txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount().toString());
+//                        paidAmount = getInvoiceModelInvoice.getPaymentMaster().get(i).getPaid_Amount();
+//                        payment_Mode.setText(getInvoiceModelInvoice.getPaymentMaster().get(i).getPaymentType());
+//                        Log.d("TAG", "onCreatePaymentAnimesh: "+paidAmount);
+//
+//                    }
+//                    Log.d("TAG", "onCreatePaymentAnimesh111: "+paidAmount);
+//                }
                 discountTextView.setText(String.valueOf(getInvoiceModelInvoice.getDiscount()));
                 collectBy.setText(SharedPrefsData.getString(BillShareActivity.this, Constants.EmployeeName, Constants.PREF_NAME));
-                //  collectBy.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getEmployee_Name());
+                 collectBy.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getEmployee_Name());
+                txt_paid_amnt.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getPaid_Amount());
 
             }
         } catch (Exception e) {

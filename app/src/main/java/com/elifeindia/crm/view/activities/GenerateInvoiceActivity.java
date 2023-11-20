@@ -919,7 +919,6 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
     public void showInvoice(GetInvoiceModel getInvoiceModel) {
         Log.d("TAG", "showInvoice: 1223456");
 
-        try {
             getInvoiceModelInvoice = getInvoiceModel;
 
             SharedPrefsData.putString(this, Constants.AccNo, String.valueOf(getInvoiceModel.getAccount_No()), Constants.PREF_NAME);
@@ -951,14 +950,9 @@ public class GenerateInvoiceActivity extends AppCompatActivity implements Genera
             SharedPrefsData.putString(this, Constants.SubId, getInvoiceModel.getSubscriber_ID().toString(), Constants.PREF_NAME);
             getInvoiceModel.getTitle();
             getInvoiceModel.getTriple_play_ID();
-        }catch (Exception e){
-
-        }
-
-
         Log.d("TAG", "showInvoice: 12");
         startActivity(new Intent(this, BillShareActivity.class));
-        Log.d("TAG", "showInvoice:3456");
+        Log.d("TAG", "showInvoice:3456"+getInvoiceModelInvoice.getPaymentMaster().size());
 
     }
 
