@@ -40,6 +40,8 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
 
 
+
+
     @NonNull
     @Override
     public CustomerListAdapter.MyviewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -50,6 +52,9 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
     @Override
     public void onBindViewHolder(@NonNull MyviewHolder holder, final int position) {
 
+        if(custemersLists.get(position).getColorCode()!=null && !custemersLists.get(position).getColorCode().isEmpty() ){
+            holder.cv_customer.setCardBackgroundColor(Color.parseColor(custemersLists.get(position).getColorCode().toString()));
+        }
 
         String acno = custemersLists.get(position).getAccountNo().toString();
         String subbid = null;
@@ -75,7 +80,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
                 adapterInterface.onItemClicked(custemersLists.get(position),holder.imageActionButton);
             }
         });
-
+        holder.setIsRecyclable(false);
         holder.acno.setText("  A/C : "+ acno);
         try {
             holder.areaid.setText("A Id : "+ custemersLists.get(position).getAreaCustomerID().toString());
@@ -132,9 +137,6 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
         holder.txt_cust_name.setText(custemersLists.get(position).getName());
 
-        if(custemersLists.get(position).getColorCode()!=null && !custemersLists.get(position).getColorCode().isEmpty() ){
-            holder.cv_customer.setCardBackgroundColor(Color.parseColor(custemersLists.get(position).getColorCode().toString()));
-        }
 
         holder.cv_customer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,14 +144,10 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
                 String address = custemersLists.get(position).getAddress().toString();
                 SharedPrefsData.putString(context, Constants.CustomerAddress, address, Constants.PREF_NAME);
                 SharedPrefsData.putString(context, Constants.CustomerID, custemersLists.get(position).getCustomerID().toString(), Constants.PREF_NAME);
-
                 SharedPrefsData.putString(context, Constants.WhatsupNo, holder.whatsup_no.getText().toString(), Constants.PREF_NAME);
                 SharedPrefsData.putString(context, Constants.CustMob, holder.nob_no.getText().toString(), Constants.PREF_NAME);
-
                 Intent intent = new Intent(context, CustomersDetailsActivity.class);
-
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
                 context.startActivity(intent);
             }
         });
@@ -158,9 +156,19 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
     public int getItemCount() {
-        Log.d("TAG", "getItemCountAnimehs: "+custemersLists.size());
+        Log.d("TAG", "getItemCountAnime's: "+custemersLists.size());
         return custemersLists.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
     }
 
     public class MyviewHolder extends RecyclerView.ViewHolder {

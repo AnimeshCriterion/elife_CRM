@@ -393,10 +393,12 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         } else {
             txt_not_found.setVisibility(View.GONE);
             rv_customer_list.setVisibility(View.VISIBLE);
+            rv_customer_list.setItemViewCacheSize(custemersLists.size());
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
             rv_customer_list.setLayoutManager(mLayoutManager);
             customerListAdapter = new CustomerListAdapter(this, custemersLists,this);
             rv_customer_list.setAdapter(customerListAdapter);
+            customerListAdapter.notifyDataSetChanged();
         }
 
     }
@@ -450,6 +452,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
             rv_customer_list.setLayoutManager(mLayoutManager);
             customerListAdapter = new CustomerListAdapter(this, custemersLists,this);
             rv_customer_list.setAdapter(customerListAdapter);
+            customerListAdapter.notifyDataSetChanged();
         }
     }
 
@@ -637,6 +640,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
             rv_customer_list.setLayoutManager(mLayoutManager);
             customerListAdapter = new CustomerListAdapter(this, custemersLists,this);
             rv_customer_list.setAdapter(customerListAdapter);
+            customerListAdapter.notifyDataSetChanged();
         }
 
     }
