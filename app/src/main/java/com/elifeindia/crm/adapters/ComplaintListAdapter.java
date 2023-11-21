@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -71,8 +72,11 @@ public class ComplaintListAdapter extends RecyclerView.Adapter<ComplaintListAdap
             //paymentReciepts.get(position).getCustomerID();
 
             //holder.invoicenumber.setText("Inv No : "+paymentReciepts.get(position).getInvoiceNumber());
-
-
+            if(complaintList.get(position).getColorCode()!=null && !complaintList.get(position).getColorCode().isEmpty() ){
+                holder.cv_complaint.setCardBackgroundColor(Color.parseColor(complaintList.get(position).getColorCode().toString()));
+                holder.sideview.setBackgroundColor(Color.parseColor(complaintList.get(position).getColorCode().toString()));
+            }
+            holder.setIsRecyclable(false);
             holder.txt_name.setText(complaintList.get(position).getName());
             holder.txt_complaint.setText(complaintList.get(position).getComplaintType());
             String status = complaintList.get(position).getComplaintStatus();
@@ -283,6 +287,7 @@ public class ComplaintListAdapter extends RecyclerView.Adapter<ComplaintListAdap
     public static class MyviewHolder extends RecyclerView.ViewHolder {
         TextView txt_complaintId, txt_name, subid, txt_priority, txt_complaint_date, txt_complaint, txt_status, txt_assignto, txt_accountno, txt_area;
         CardView cv_complaint;
+        View sideview;
 
         public MyviewHolder(@NonNull View itemView) {
             super(itemView);
@@ -292,6 +297,7 @@ public class ComplaintListAdapter extends RecyclerView.Adapter<ComplaintListAdap
             subid = itemView.findViewById(R.id.subid);
             txt_complaint_date = itemView.findViewById(R.id.txt_complaint_date);
             txt_complaint = itemView.findViewById(R.id.txt_complaint);
+            sideview = itemView.findViewById(R.id.sideview);
             txt_status = itemView.findViewById(R.id.txt_status);
             txt_assignto =itemView.findViewById(R.id.txt_assignto);
             txt_accountno = itemView.findViewById(R.id.txt_accountno);

@@ -54,6 +54,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
         if(custemersLists.get(position).getColorCode()!=null && !custemersLists.get(position).getColorCode().isEmpty() ){
             holder.cv_customer.setCardBackgroundColor(Color.parseColor(custemersLists.get(position).getColorCode().toString()));
+            holder.sideview.setBackgroundColor(Color.parseColor(custemersLists.get(position).getColorCode().toString()));
         }
 
         String acno = custemersLists.get(position).getAccountNo().toString();
@@ -175,6 +176,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         TextView customer_status, txt_cust_name, areaname, subid, acno, edate, address, subarea, nob_no, status, txt_balance, areaid, whatsup_no;
         CardView cv_customer;
         ImageView imageActionButton;
+        View sideview;
      //   LinearLayout layout;
 
         public MyviewHolder(@NonNull View itemView) {
@@ -189,6 +191,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
          //   layout=itemView.findViewById(R.id.linearback);
             subid = itemView.findViewById(R.id.subid);
             acno = itemView.findViewById(R.id.acno);
+            sideview = itemView.findViewById(R.id.sideview);
             txt_cust_name = itemView.findViewById(R.id.txt_cust_name);
             cv_customer = itemView.findViewById(R.id.cv_customer);
             txt_balance = itemView.findViewById(R.id.txt_balance);

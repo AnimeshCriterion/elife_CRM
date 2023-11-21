@@ -150,6 +150,43 @@ public class ComplaintList {
         @Expose
         private String lastUpdateDate;
 
+
+        public String getGroupName() {
+            return groupName;
+        }
+
+        public void setGroupName(String groupName) {
+            this.groupName = groupName;
+        }
+
+
+        public String getNetworkName() {
+            return networkName;
+        }
+
+        public void setNetworkName(String networkName) {
+            this.networkName = networkName;
+        }
+
+        public String getColorCode() {
+            return colorCode;
+        }
+
+        public void setColorCode(String colorCode) {
+            this.colorCode = colorCode;
+        }
+
+        @SerializedName("group_Name")
+        @Expose
+        private String groupName;
+        @SerializedName("network_Name")
+        @Expose
+        private String networkName;
+
+        @SerializedName("color_Code")
+        @Expose
+        private String colorCode;
+
         public Integer getComplaintID() {
             return complaintID;
         }

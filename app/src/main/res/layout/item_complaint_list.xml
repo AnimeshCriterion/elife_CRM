@@ -36,6 +36,7 @@
                     android:layout_width="@dimen/_5sdp"
                     android:layout_height="match_parent"
                     android:layout_gravity="left"
+                    android:id="@+id/sideview"
                     android:background="@color/darkblue" />
 
             </LinearLayout>

@@ -37,6 +37,7 @@
 
                 <View
                     android:layout_width="@dimen/_5sdp"
+                    android:id="@+id/sideview"
                     android:layout_height="match_parent"
                     android:layout_gravity="left"
                     android:background="@color/darkblue" />
