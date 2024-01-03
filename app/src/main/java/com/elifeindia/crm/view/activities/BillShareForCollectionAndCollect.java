@@ -627,6 +627,7 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
                         "------------------------\n" +
                         "Paid Amount:"+payMode+
                         "Payment Date:"+date+"\n"+
+                        "Discount:"+getInvoiceModelInvoice.getDiscount().toString()+"\n"+
                         "Collected By:"+collectedBy+"\n"+
                         //"Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate) + "\n" +
 

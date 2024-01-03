@@ -150,11 +150,14 @@ public class BillShareActivity extends AppCompatActivity   {
                     }
 
                 }
-                discountTextView.setText(String.valueOf(getInvoiceModelInvoice.getDiscount()));
-                collectBy.setText(SharedPrefsData.getString(BillShareActivity.this, Constants.EmployeeName, Constants.PREF_NAME));
-                //  collectBy.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getEmployee_Name());
+
+               // collectBy.setText(SharedPrefsData.getString(BillShareActivity.this, Constants.EmployeeName, Constants.PREF_NAME));
+
 
             }
+        //    collectBy.setText(SharedPrefsData.getString(BillShareActivity.this, Constants.EmployeeName, Constants.PREF_NAME));
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -165,6 +168,8 @@ public class BillShareActivity extends AppCompatActivity   {
         //   CustWhatsappNo = getInvoiceModelInvoice.getContact_No();
         //   CustName = SharedPrefsData.getString(this, Constants.CustomerName, Constants.PREF_NAME);
         CustName = getInvoiceModelInvoice.getName();
+        discountTextView.setText(String.valueOf(getInvoiceModelInvoice.getDiscount()));
+        collectBy.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getEmployee_Name());
         // accNo = SharedPrefsData.getString(this, Constants.AccNo, Constants.PREF_NAME);
         accNo = String.valueOf(getInvoiceModelInvoice.getAccount_No());
         //    invno = SharedPrefsData.getString(this, Constants.InvoiceNo, Constants.PREF_NAME);
@@ -518,7 +523,7 @@ public class BillShareActivity extends AppCompatActivity   {
                 "Total Amount: " + String.valueOf(Float.parseFloat(subsAmount) + Float.parseFloat(prevBalance)) + "\n" +
                 "Paid Amount: " + paidAmount + "\n" +
                 "Discount:" + String.valueOf(getInvoiceModelInvoice.getDiscount()) + "\n" +
-                "Remaining Amount: " + newBalance + "\n" +
+                "Remaining Amount: " + getInvoiceModelInvoice.getBalance() + "\n" +
                 "------------------------\n" +
                 "*" + txt_header.getText().toString().trim()
                 + "*\n" +

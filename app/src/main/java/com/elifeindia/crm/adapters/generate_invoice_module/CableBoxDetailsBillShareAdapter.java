@@ -232,10 +232,10 @@ if(internetBoxList.get(position).getInternetBox().getExpiry_Date()!=null){
                 date="";
             }
             holder.expirtydate.setText(date);
-            if(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)!=null){
-                holder.expirtydate.setText(ViewUtils.changeDateFormat(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)));
-
-            }
+//            if(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)!=null){
+//                holder.expirtydate.setText(ViewUtils.changeDateFormat(SharedPrefsData.getString(context,"ExpiryDate",Constants.PREF_NAME)));
+//
+//            }
 
             ip = internetBoxList.get(position).getInternetBox().getIp();
 
