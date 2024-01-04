@@ -767,7 +767,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         //dateTime = sdf1.format(date);
         totalAmnt = paymentReciept.getTotalAmount().toString();
         paidAmnt = paymentReciept.getPaidAmount().toString();
-        txt_discount.setText(paymentReciept.getDiscount());
+        txt_discount.setText(paymentReciept.getDiscount().toString());
         discount = paymentReciept.getDiscount();
         remainBal = paymentReciept.getBalance().toString();
         payMode = paymentReciept.getPaymentType();
