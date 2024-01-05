@@ -169,7 +169,10 @@ public class BillShareActivity extends AppCompatActivity   {
         //   CustName = SharedPrefsData.getString(this, Constants.CustomerName, Constants.PREF_NAME);
         CustName = getInvoiceModelInvoice.getName();
         discountTextView.setText(String.valueOf(getInvoiceModelInvoice.getDiscount()));
-        collectBy.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getEmployee_Name());
+        if(getInvoiceModelInvoice.getPaymentMaster()!=null && !getInvoiceModelInvoice.getPaymentMaster().isEmpty()){
+            collectBy.setText(getInvoiceModelInvoice.getPaymentMaster().get(0).getEmployee_Name());
+        }
+
         // accNo = SharedPrefsData.getString(this, Constants.AccNo, Constants.PREF_NAME);
         accNo = String.valueOf(getInvoiceModelInvoice.getAccount_No());
         //    invno = SharedPrefsData.getString(this, Constants.InvoiceNo, Constants.PREF_NAME);
