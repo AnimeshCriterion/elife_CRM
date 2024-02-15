@@ -597,6 +597,7 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
             collectedBy =  paymentMaster.get(0).getEmployee_Name()+"\n";
         }
 //
+      //  Log.d("TAG", "openWhatsApp: "+getInvoiceModelInvoice!=null?getInvoiceModelInvoice.getDiscount().toString():"");
         String message =
                 "*Invoice Details*\n" +
 
@@ -627,7 +628,7 @@ public class BillShareForCollectionAndCollect extends AppCompatActivity   {
                         "------------------------\n" +
                         "Paid Amount:"+payMode+
                         "Payment Date:"+date+"\n"+
-                       // "Discount:"+getInvoiceModelInvoice.getDiscount().toString()!=null?getInvoiceModelInvoice.getDiscount().toString():0+"\n"+
+                     //   "Discount:"+getInvoiceModelInvoice.getDiscount().toString()!=null?getInvoiceModelInvoice.getDiscount().toString():0+"\n"+
                         "Collected By:"+collectedBy+"\n"+
                         //"Inactive Date: " + ViewUtils.changeDateTimeFormat(expiryDate) + "\n" +
 
