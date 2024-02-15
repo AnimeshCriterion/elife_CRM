@@ -22,7 +22,8 @@ public class RetrofitAdapter {
     private static Retrofit retrofit;
     private static Gson gson;
     //private static final String BASE_URL = "http://newcrmapitest.elifeindia.in/api/";
-    private static final String BASE_URL = "http://crmprodtestapi.elifeindia.in/api/";
+    //private static final String BASE_URL = "http://crmprodtestapi.elifeindia.in/api/";
+    private static final String BASE_URL = "http://livecrmtestapi.elifeindia.in/api/";
 
 
 

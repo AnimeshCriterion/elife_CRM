@@ -13,7 +13,8 @@ public   class RetrofitClientUpdateNew {
 
     //String API_BASE_URL ="http://107.23.122.121:1021/";
     //String API_BASE_URL ="http://3.220.157.39:4001/";
-    String API_BASE_URL = "http://crmprodtestapi.elifeindia.in/api/";
+   // String API_BASE_URL = "http://crmprodtestapi.elifeindia.in/api/";
+    String API_BASE_URL = "http://livecrmtestapi.elifeindia.in/api/";
   // String API_BASE_URL = "https://testapi.hapini.in";
     //String API_BASE_URL ="http://t-api.hapini.in";//(Dev)
 
