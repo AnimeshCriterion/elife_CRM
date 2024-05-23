@@ -35,11 +35,8 @@ public class TestActivity extends AppCompatActivity {
 
         // binding = ActivityTestBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_test);
-        findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //  createPdf();
-            }
+        findViewById(R.id.textView3).setOnClickListener(view -> {
+            //  createPdf();
         });
 
     }

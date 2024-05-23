@@ -336,7 +336,7 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
         int dialogTheme=0;
         TypedValue typedValue = new TypedValue();
         Log.d("mActivityReference:",ComplaintDetailsActivity.this.toString());
-        if (ComplaintDetailsActivity.this.getTheme().resolveAttribute(R.attr.materialCalendarTheme, typedValue, true)) {
+        if (ComplaintDetailsActivity.this.getTheme().resolveAttribute(com.google.android.material.R.attr.materialCalendarTheme, typedValue, true)) {
             dialogTheme=typedValue.data;
         }
 

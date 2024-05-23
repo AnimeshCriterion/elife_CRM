@@ -45,8 +45,9 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidnetworking.BuildConfig;
 import com.calon.thermalprinter.CalonThermalPrinter;
-import com.elifeindia.crm.BuildConfig;
+
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.adapters.AdapterCallback;
 import com.elifeindia.crm.adapters.AdapterCallbackTextView;

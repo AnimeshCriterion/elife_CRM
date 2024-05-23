@@ -44,7 +44,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.elifeindia.crm.BuildConfig;
+import com.androidnetworking.BuildConfig;
 import com.elifeindia.crm.OnClickForPaymentReceiptNew;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.TestActivity;
@@ -678,7 +678,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         int dialogTheme = 0;
         TypedValue typedValue = new TypedValue();
         Log.d("mActivityReference:", getActivity().toString());
-        if (getActivity().getTheme().resolveAttribute(R.attr.materialCalendarTheme, typedValue, true)) {
+        if (getActivity().getTheme().resolveAttribute(com.google.android.material.R.attr.materialCalendarTheme, typedValue, true)) {
             dialogTheme = typedValue.data;
         }
 

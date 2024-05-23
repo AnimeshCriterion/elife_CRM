@@ -345,7 +345,7 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
         int dialogTheme=0;
         TypedValue typedValue = new TypedValue();
         Log.d("mActivityReference:", CustomersComplaintHistoeyFragemnt.this.toString());
-        if (getActivity().getTheme().resolveAttribute(R.attr.materialCalendarTheme, typedValue, true)) {
+        if (getActivity().getTheme().resolveAttribute(com.google.android.material.R.attr.materialCalendarTheme, typedValue, true)) {
             dialogTheme=typedValue.data;
         }
 

@@ -33,8 +33,8 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidnetworking.BuildConfig;
 import com.calon.thermalprinter.CalonThermalPrinter;
-import com.elifeindia.crm.BuildConfig;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsBillShareAdapter;
 import com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter;

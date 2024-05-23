@@ -30,8 +30,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.androidnetworking.BuildConfig;
 import com.calon.thermalprinter.CalonThermalPrinter;
-import com.elifeindia.crm.BuildConfig;
+
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.contract.activities.PaymentReceiptContract;
 import com.elifeindia.crm.model.FooterModel;

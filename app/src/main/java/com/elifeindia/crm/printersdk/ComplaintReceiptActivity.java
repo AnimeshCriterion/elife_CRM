@@ -36,7 +36,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.elifeindia.crm.BuildConfig;
+
+import com.androidnetworking.BuildConfig;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.contract.activities.ComplaintReceiptContract;
 import com.elifeindia.crm.model.FooterModel;

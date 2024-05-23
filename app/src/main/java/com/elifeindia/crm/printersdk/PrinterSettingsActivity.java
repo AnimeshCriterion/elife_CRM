@@ -21,7 +21,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import com.elifeindia.crm.BuildConfig;
+
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.contract.activities.PaymentReceiptContract;
 import com.elifeindia.crm.model.PaymentReciept;

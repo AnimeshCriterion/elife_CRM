@@ -71,15 +71,17 @@
                         android:text="Account Number"
                         />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/acc_number"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
+                        android:layout_height="@dimen/_40sdp"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:fontFamily="@font/abeezee_regular"
                         android:imeOptions="actionNext"
                         android:inputType="number"
+                        android:background="#00000000"
                         android:maxLines="1"
+                        android:enabled="false"
                         android:textSize="@dimen/_12sdp" />
 
                 </LinearLayout>
@@ -99,13 +101,15 @@
                         android:textColor="@color/darkblue"
                         android:textSize="@dimen/_11sdp" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/subscriber_id"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
+                        android:layout_height="@dimen/_40sdp"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:fontFamily="@font/abeezee_regular"
                         android:imeOptions="actionNext"
+                        android:enabled="false"
+                        android:background="#00000000"
                         android:inputType="number"
                         android:maxLines="1"
                         android:textSize="@dimen/_12sdp" />
@@ -136,11 +140,13 @@
                     android:textColor="@color/darkblue"
                     android:textSize="@dimen/_11sdp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/cust_name"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
+                    android:enabled="false"
+                    android:background="#00000000"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
@@ -161,11 +167,13 @@
                     android:textColor="@color/darkblue"
                     android:textSize="@dimen/_11sdp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/sodowo"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
+                    android:enabled="false"
+                    android:background="#00000000"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
@@ -193,11 +201,13 @@
                     android:textColor="@color/darkblue"
                     android:textSize="@dimen/_11sdp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/cust_address"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
+                    android:enabled="true"
+                    android:background="#00000000"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
@@ -218,10 +228,12 @@
                     android:textColor="@color/darkblue"
                     android:textSize="@dimen/_11sdp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/cust_city"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:enabled="true"
+                    android:background="#00000000"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
@@ -257,6 +269,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:maxLength="12"
+                    android:enabled="true"
+                    android:background="#00000000"
                     android:inputType="number"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
@@ -285,6 +299,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:maxLength="12"
+                    android:enabled="true"
+                    android:background="#00000000"
                     android:inputType="number"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
@@ -313,10 +329,12 @@
                     android:textColor="@color/darkblue"
                     android:textSize="@dimen/_11sdp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/cust_email_id"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:enabled="false"
+                    android:background="#00000000"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
@@ -338,11 +356,13 @@
                     android:textColor="@color/darkblue"
                     android:textSize="@dimen/_11sdp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/cust_aadhar_number"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
+                    android:enabled="false"
+                    android:background="#00000000"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
@@ -370,10 +390,12 @@
                     android:textColor="@color/darkblue"
                     android:textSize="@dimen/_11sdp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/cust_gst_number"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:enabled="false"
+                    android:background="#00000000"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
@@ -395,11 +417,13 @@
                     android:textColor="@color/darkblue"
                     android:textSize="@dimen/_11sdp"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/cust_area"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
+                    android:enabled="false"
+                    android:background="#00000000"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
@@ -421,12 +445,14 @@
                     android:textColor="@color/darkblue"
                     android:textSize="@dimen/_11sdp" />
 
-                <TextView
+                <EditText
 
                     android:id="@+id/cust_area_id"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
+                    android:enabled="false"
+                    android:background="#00000000"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
@@ -447,10 +473,12 @@
                     android:textColor="@color/darkblue"
                     android:textSize="@dimen/_11sdp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/cust_subarea"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:enabled="false"
+                    android:background="#00000000"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
@@ -479,10 +507,12 @@
                     android:textColor="@color/darkblue"
                     android:textSize="@dimen/_11sdp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/cust_remarks"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:enabled="false"
+                    android:background="#00000000"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:fontFamily="@font/abeezee_regular"
                     android:textSize="@dimen/_12sdp" />
@@ -525,6 +555,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Auto Renew"
+
                     android:layout_weight="1"
                     android:visibility="visible"
                     android:layout_marginLeft="@dimen/_10sdp"

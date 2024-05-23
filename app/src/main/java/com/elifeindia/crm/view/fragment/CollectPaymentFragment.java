@@ -28,7 +28,6 @@ import android.widget.Toast;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
-import com.elifeindia.crm.BuildConfig;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.contract.activities.CollectPaymentContract;
 import com.elifeindia.crm.contract.activities.CustomerDetailsContract;

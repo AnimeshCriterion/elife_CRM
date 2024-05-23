@@ -302,7 +302,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
 
         int dialogTheme = 0;
         TypedValue typedValue = new TypedValue();
-        if (CustomerListActivity.this.getTheme().resolveAttribute(R.attr.materialCalendarTheme, typedValue, true)) {
+        if (CustomerListActivity.this.getTheme().resolveAttribute(com.google.android.material.R.attr.materialCalendarTheme, typedValue, true)) {
             dialogTheme = typedValue.data;
         }
 

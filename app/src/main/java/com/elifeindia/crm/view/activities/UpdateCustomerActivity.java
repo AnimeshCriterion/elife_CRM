@@ -53,8 +53,8 @@ import rx.schedulers.Schedulers;
 public class UpdateCustomerActivity extends AppCompatActivity {
 
     Button update_details_btn;
-    TextView acc_number, subscriber_id, cust_name, sodowo, cust_address, cust_city,
-            cust_email_id, cust_aadhar_number, cust_gst_number, cust_area, cust_area_id, cust_subarea,
+    EditText acc_number, subscriber_id, cust_name, sodowo,cust_gst_number,cust_address, cust_city,
+            cust_email_id, cust_aadhar_number, cust_area, cust_area_id, cust_subarea,
             cust_remarks;
     Spinner cust_connection_status;
     CheckBox renew_checkbox, cable_checkbox;
@@ -208,10 +208,10 @@ public class UpdateCustomerActivity extends AppCompatActivity {
 //                params.put("date", currentDateTime);
 //
                 updateCustomerPojo.setCustomerID(CustID);
-                updateCustomerPojo.setAreaCustomerID("1201-1");
-                updateCustomerPojo.setAadharNo("NA");
-                updateCustomerPojo.setGsTNumber("NA");
-                updateCustomerPojo.setAddress( "");
+                updateCustomerPojo.setAreaCustomerID(cust_area_id.getText().toString());
+                updateCustomerPojo.setAadharNo(cust_aadhar_number.getText().toString());
+                updateCustomerPojo.setGsTNumber(cust_gst_number.getText().toString());
+                updateCustomerPojo.setAddress( cust_address.getText().toString());
                 updateCustomerPojo.setCompanyID(CompanyId);
                 updateCustomerPojo.setDate(currentDateTime);
                 updateCustomerPojo.setContactNo( cust_number.getText().toString());
