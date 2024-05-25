@@ -107,7 +107,9 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
             }
 
-        }).addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show());
+        }).addOnFailureListener(e -> {
+            //Toast.makeText(getApplicationContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
 
         try {
             mUpdateManager.registerListener(installStateUpdatedListener);
