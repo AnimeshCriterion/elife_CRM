@@ -75,6 +75,7 @@
                         android:gravity="center"
                         android:padding="@dimen/_10sdp"
                         android:text="HEADER"
+                        android:textIsSelectable="true"
                         android:textAlignment="center"
                         android:textColor="@color/darkblue"
                         android:textSize="@dimen/_16sdp"
@@ -101,6 +102,7 @@
                             android:fontFamily="@font/abeezee_regular"
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Name                  "
+                            android:textIsSelectable="true"
                             android:textColor="@color/Black"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold" />
@@ -110,6 +112,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
+                            android:textIsSelectable="true"
                             android:fontFamily="@font/abeezee_regular"
                             android:textColor="@color/Black"
                             android:textSize="@dimen/_15sdp"
@@ -128,6 +131,7 @@
                             android:layout_weight="0.3"
                             android:fontFamily="@font/abeezee_regular"
                             android:paddingLeft="@dimen/_10sdp"
+                            android:textIsSelectable="true"
                             android:text="Mobile                  "
                             android:textColor="@color/Black"
                             android:textSize="@dimen/_15sdp"
@@ -138,6 +142,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
+                            android:textIsSelectable="true"
                             android:fontFamily="@font/abeezee_regular"
                             android:textColor="@color/Black"
                             android:textSize="@dimen/_15sdp"
@@ -157,6 +162,7 @@
                             android:fontFamily="@font/abeezee_regular"
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Address                  "
+                            android:textIsSelectable="true"
                             android:textColor="@color/Black"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold" />
@@ -166,6 +172,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
+                            android:textIsSelectable="true"
                             android:fontFamily="@font/abeezee_regular"
                             android:textColor="@color/Black"
                             android:textSize="@dimen/_15sdp"
@@ -186,6 +193,7 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Account No"
                             android:textColor="@color/Black"
+                            android:textIsSelectable="true"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold" />
 
@@ -196,6 +204,7 @@
                             android:layout_weight="0.2"
                             android:fontFamily="@font/abeezee_regular"
                             android:textColor="@color/Black"
+                            android:textIsSelectable="true"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -214,6 +223,7 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Subscriber Id"
                             android:textColor="@color/Black"
+                            android:textIsSelectable="true"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold" />
 
@@ -224,6 +234,7 @@
                             android:layout_weight="0.2"
                             android:fontFamily="@font/abeezee_regular"
                             android:textColor="@color/Black"
+                            android:textIsSelectable="true"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -242,6 +253,7 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Bill Date "
                             android:textColor="@color/Black"
+                            android:textIsSelectable="true"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold" />
 
@@ -252,6 +264,7 @@
                             android:layout_weight="0.2"
                             android:textColor="@color/Black"
                             android:textSize="@dimen/_15sdp"
+                            android:textIsSelectable="true"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -269,6 +282,7 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:text="Receipt No."
                             android:textColor="@color/Black"
+                            android:textIsSelectable="true"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold" />
 
@@ -280,6 +294,7 @@
                             android:fontFamily="@font/abeezee_regular"
                             android:textColor="@color/Black"
                             android:textSize="@dimen/_15sdp"
+                            android:textIsSelectable="true"
                             android:textStyle="bold" />
                     </LinearLayout>
 

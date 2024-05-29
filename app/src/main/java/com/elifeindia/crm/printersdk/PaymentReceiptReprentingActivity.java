@@ -342,41 +342,49 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         List<GetInvoiceModel.CableBoxwithSubscriptionDTO> cableBoxwithSubscriptionDTOS = getInvoiceModelInvoice.getCableBoxwithSubscription();
         List<GetInvoiceModel.InternetBoxwithSubscriptionDTO> internetBoxwithSubscriptionDTOS = getInvoiceModelInvoice.getInternetBoxwithSubscription();
 
-        if (internetBoxwithSubscriptionDTOS.size() == 0) {
-            TotalInternetRecords = "";
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-            rv_box_details.setLayoutManager(mLayoutManager);
-            cableBoxDetailsBillShareAdapter = new CableBoxDetailsBillShareAdapter(PaymentReceiptReprentingActivity.this, cableBoxwithSubscriptionDTOS, internetBoxwithSubscriptionDTOS);
-            rv_box_details.setAdapter(cableBoxDetailsBillShareAdapter);
-            if(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date()!=null){
-                activationdate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date().toString();
-            }
 
-            billtype = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getBill_Type().toString();
-            noOfMonths = String.valueOf(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getNoofMonth());
-            if(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date()!=null){
-                expiryDate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date().toString();
-            }
-
-        } else {
-            if(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date()!=null){
-                activationdate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date().toString();
-
-            }
-            billtype = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getBill_Type().toString();
-            noOfMonths = String.valueOf(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getNoofMonth());
-            if(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date()!=null){
-                expiryDate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date().toString();
-
-            }
-
-            TotalAlacarteRecords = "";
-            TotalBouquetsRecords = "";
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-            rv_box_details.setLayoutManager(mLayoutManager);
-            cableBoxDetailsBillShareAdapter = new CableBoxDetailsBillShareAdapter(PaymentReceiptReprentingActivity.this, internetBoxwithSubscriptionDTOS);
-            rv_box_details.setAdapter(cableBoxDetailsBillShareAdapter);
+try {
+    if (internetBoxwithSubscriptionDTOS.size() == 0) {
+        TotalInternetRecords = "";
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        rv_box_details.setLayoutManager(mLayoutManager);
+        cableBoxDetailsBillShareAdapter = new CableBoxDetailsBillShareAdapter(PaymentReceiptReprentingActivity.this, cableBoxwithSubscriptionDTOS, internetBoxwithSubscriptionDTOS);
+        rv_box_details.setAdapter(cableBoxDetailsBillShareAdapter);
+        if(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date()!=null){
+            activationdate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getActivation_Date().toString();
         }
+
+        billtype = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getBill_Type().toString();
+        noOfMonths = String.valueOf(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getNoofMonth());
+        if(getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date()!=null){
+            expiryDate = getInvoiceModelInvoice.getCableBoxwithSubscription().get(0).getCableBox().getExpiry_Date().toString();
+        }
+
+    } else {
+        if(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date()!=null){
+            activationdate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getActivation_Date().toString();
+
+        }
+        billtype = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getBill_Type().toString();
+        noOfMonths = String.valueOf(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getNoofMonth());
+        if(getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date()!=null){
+            expiryDate = getInvoiceModelInvoice.getInternetBoxwithSubscription().get(0).getInternetBox().getExpiry_Date().toString();
+
+        }
+
+        TotalAlacarteRecords = "";
+        TotalBouquetsRecords = "";
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        rv_box_details.setLayoutManager(mLayoutManager);
+        cableBoxDetailsBillShareAdapter = new CableBoxDetailsBillShareAdapter(PaymentReceiptReprentingActivity.this, internetBoxwithSubscriptionDTOS);
+        rv_box_details.setAdapter(cableBoxDetailsBillShareAdapter);
+    }
+}catch (Exception e){
+    Log.d("TAG", "onCreate: "+e.getMessage().toString());
+}
+
+
+
     }
 
     private void findBTprint() {
@@ -538,7 +546,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
-                BuildConfig.APPLICATION_ID + ".provider", imagePath);
+                "elifeIndia.CRMS" + ".provider", imagePath);
         String customerPhoneNumber = WhatsappNo;
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
         sendIntent.setPackage(packageName);
@@ -703,7 +711,7 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
-                BuildConfig.APPLICATION_ID + ".provider", imagePath);
+                "elifeIndia.CRMS" + ".provider", imagePath);
         Uri data = Uri.parse(imagePath.toString());
 
 

@@ -778,7 +778,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
     private void shareIt() {
         Uri uri = FileProvider.getUriForFile(requireActivity(),
-                BuildConfig.APPLICATION_ID + ".provider", imagePath);
+                "elifeIndia.CRMS" + ".provider", imagePath);
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/*");
         String shareBody = "";
@@ -797,7 +797,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
     private void shareItOnWhatsApp() {
         Uri uri = FileProvider.getUriForFile(requireActivity(),
-                BuildConfig.APPLICATION_ID + ".provider", imagePath);
+                "elifeIndia.CRMS" + ".provider", imagePath);
 
         Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
         whatsappIntent.setType("image/*");

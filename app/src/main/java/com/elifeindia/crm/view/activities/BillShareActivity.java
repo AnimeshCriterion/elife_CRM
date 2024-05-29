@@ -439,7 +439,7 @@ public class BillShareActivity extends AppCompatActivity   {
 
     private void shareIt() {
         Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
-                BuildConfig.APPLICATION_ID + ".provider", imagePath);
+                "elifeIndia.CRMS" + ".provider", imagePath);
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/*");
