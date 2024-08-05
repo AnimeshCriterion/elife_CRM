@@ -168,6 +168,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         finishAffinity();
     }
 
+
+
     private void openWhatsApp() {
         String smsNumber = "918099346155"; // E164 format without '+' sign
         Intent sendIntent = new Intent(Intent.ACTION_SEND);

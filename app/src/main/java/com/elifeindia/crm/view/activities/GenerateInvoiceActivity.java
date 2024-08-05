@@ -1078,7 +1078,6 @@ else if(strApiCallType.equals("spn_no_of_months")){
                 presenter.updateCableBox(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date.substring(0, 10), noofMonth, noofDays, "null", "null", "null", String.valueOf(box_Amount), todayDateString());
                 break;
             case "calculateExpiry":
-
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Calendar calendar = Calendar.getInstance();
                 try {
@@ -1094,7 +1093,6 @@ else if(strApiCallType.equals("spn_no_of_months")){
                     //Me
                     Log.e("activation_Date", activation_Date);
                 }
-
                 presenter.updateCableBox(this, view, view1, userId, customerID, cable_Box_ID, "null", boxType_ID, vcno, stbno, cafno, bill_Type_ID, connection_Status_ID, activation_Date, expiry_Date, noofMonth, noofDays, "null", "null", "null", String.valueOf(box_Amount), todayDateString());
 
 
