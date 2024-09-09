@@ -10,6 +10,9 @@ import android.util.Log;
 import android.util.TypedValue;
 import com.elifeindia.crm.Capture;
 import android.view.MenuItem;
+
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import android.view.View;
@@ -182,7 +185,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                     field_name = "";
                     daterange.setVisibility(View.GONE);
                     progressBar.show();
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0", "", StatusId, selectCont, pageNo, "", "", "","","");
                 } else if (StaticAppData.filterDataList().get(position).matches("Name")) {
                     field_name = "name";
                     presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
@@ -299,9 +302,9 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         SharedPrefsData.putString(this, Constants.ReceiptFlag, "false", Constants.ReceiptFlag);
         presenter.loadArea(CustomerListActivity.this, companyId, empId);
         presenter.getPaymentStatus(CustomerListActivity.this, "0");
-        presenter.loadApi(CustomerListActivity.this, companyId, userId, empId, Value, "100", "1");
+       // presenter.loadApi(CustomerListActivity.this, companyId, userId, empId, Value, "100", "1");
 
-        //  presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
+         presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0", "", StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
         Log.d("TAG", "onCreateStep4: ");
 
 
@@ -338,12 +341,12 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         long oneYearForward = calendar.getTimeInMillis();
 
 
-//        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
-//        constraintsBuilder.setStart(today);
-//        constraintsBuilder.setEnd(oneYearForward);
-//        constraintsBuilder.setValidator(DateValidatorPointForward.now());
+        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
+        constraintsBuilder.setStart(today);
+        constraintsBuilder.setEnd(oneYearForward);
+        constraintsBuilder.setValidator(DateValidatorPointForward.now());
 
-        // builder.setCalendarConstraints(constraintsBuilder.build());
+         builder.setCalendarConstraints(constraintsBuilder.build());
 
         MaterialDatePicker<?> picker = builder.build();
 
