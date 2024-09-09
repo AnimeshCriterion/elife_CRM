@@ -206,7 +206,6 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
 
             }
         });
-        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, "", "",fromDateData,toDataData);
 
 
         ivbtn_search_submit.setOnClickListener(new View.OnClickListener() {
@@ -300,7 +299,9 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         SharedPrefsData.putString(this, Constants.ReceiptFlag, "false", Constants.ReceiptFlag);
         presenter.loadArea(CustomerListActivity.this, companyId, empId);
         presenter.getPaymentStatus(CustomerListActivity.this, "0");
-        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
+        presenter.loadApi(CustomerListActivity.this, companyId, userId, empId, Value, "100", "1");
+
+        //  presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
         Log.d("TAG", "onCreateStep4: ");
 
 
@@ -473,6 +474,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
 
     @Override
     public void showArea(final AreaResponse areaResponse) {
+
         final List<AreaResponse.Area> area = areaResponse.getArea();
         ArrayList<String> areaNames = new ArrayList<String>();
         final ArrayList<String> areaIds = new ArrayList<String>();

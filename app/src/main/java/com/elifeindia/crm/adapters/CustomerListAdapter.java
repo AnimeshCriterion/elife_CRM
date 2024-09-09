@@ -62,6 +62,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         subbid = custemersLists.get(position).getSubscriberID().toString();
 
         String statusName = custemersLists.get(position).getPaymentStatus().toString();
+
         String custstatusName = custemersLists.get(position).getStatusName().toString();
 
         // String pdate = custemersLists.get(position).getPaymentDate().toString();
