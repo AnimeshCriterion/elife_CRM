@@ -322,7 +322,7 @@
                             android:background="@color/colorPrimary"
                             android:layout_width="@dimen/_1sdp"
                             android:layout_height="match_parent"/>
-                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        <Spinner
                             android:id="@+id/spn_assigned_to"
                             android:layout_gravity="center"
                             android:layout_width="match_parent"

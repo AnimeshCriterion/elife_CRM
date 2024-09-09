@@ -1,9 +1,15 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
+        mavenCentral()
         google()
-       jcenter()
-         mavenCentral()
+
+        maven { url 'https://jitpack.io'
+            credentials {
+                username = project.findProperty("jitpackUsername") ?: ""
+                password =project.findProperty("jitpackToken") ?: ""
+            }
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.3.2'
@@ -14,15 +20,18 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
-        jcenter()
         mavenCentral()
-        maven {url "https://jitpack.io"
-        }
+        google()
 
+        maven { url 'https://jitpack.io'
+            credentials {
+                username = project.findProperty("jitpackUsername") ?: ""
+                password =project.findProperty("jitpackToken") ?: ""
+            }
+        }
     }
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }

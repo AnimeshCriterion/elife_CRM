@@ -21,7 +21,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.elifeindia.crm.R;
-import com.elifeindia.crm.adapters.SliderAdapterExample;
+//import com.elifeindia.crm.adapters.SliderAdapterExample;
 import com.elifeindia.crm.contract.activities.HomeContract;
 import com.elifeindia.crm.model.RolewiseAccess;
 import com.elifeindia.crm.model.SliderItem;
@@ -41,10 +41,10 @@ import com.google.android.play.core.install.InstallStateUpdatedListener;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
-import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
-import com.smarteist.autoimageslider.SliderAnimations;
-import com.smarteist.autoimageslider.SliderView;
+//import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+//import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
+//import com.smarteist.autoimageslider.SliderAnimations;
+//import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 
@@ -52,8 +52,8 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity implements HomeContract.View {
     HomeContract.Presenter presenter;
     private DrawerLayout drawer_layout;
-    SliderView sliderView;
-    private SliderAdapterExample adapter;
+//    SliderView sliderView;
+//    private SliderAdapterExample adapter;
     TextView txt_empname, txt_empmob, txt_networkname;
     LinearLayout ll_dashboard;
     public static  Boolean hideReport=false, hideCollectPayment=false, hideInvoice=false,hideUpdateSubscription=false;
@@ -311,20 +311,20 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             }
         });
 
-        sliderView = findViewById(R.id.imageSlider);
-
-        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
-        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
-        sliderView.setIndicatorSelectedColor(Color.WHITE);
-        sliderView.setIndicatorUnselectedColor(Color.GRAY);
-        sliderView.setScrollTimeInSec(3);
-        sliderView.setAutoCycle(true);
-        sliderView.startAutoCycle();
-
-        adapter = new SliderAdapterExample(this,imagesList);
-        sliderView.setSliderAdapter(adapter);
-        adapter.notifyDataSetChanged();
+//        sliderView = findViewById(R.id.imageSlider);
+//
+//        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+//        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+//        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+//        sliderView.setIndicatorSelectedColor(Color.WHITE);
+//        sliderView.setIndicatorUnselectedColor(Color.GRAY);
+//        sliderView.setScrollTimeInSec(3);
+//        sliderView.setAutoCycle(true);
+//        sliderView.startAutoCycle();
+//
+//        adapter = new SliderAdapterExample(this,imagesList);
+//        sliderView.setSliderAdapter(adapter);
+//        adapter.notifyDataSetChanged();
 
 
 //        SliderItem sliderItem0 = new SliderItem();
@@ -478,16 +478,16 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     @Override
     public void onBackPressed() {
 
+        super.onBackPressed();
         final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.ListRow));
         builder.setIcon(android.R.drawable.ic_dialog_info).setTitle("Exit App Confirmation")
                 .setMessage("Are you sure you want to close this app?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
+                    public void onClick(DialogInterface dialog, int which) {
                         finishAffinity();
                     }
-                }).setNegativeButton("N0",null)
+                }).setNegativeButton("N0", null)
                 .show();
 
     }

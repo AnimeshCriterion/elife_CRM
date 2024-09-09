@@ -17,6 +17,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -44,7 +46,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androidnetworking.BuildConfig;
+//import com.androidnetworking.BuildConfig;
 import com.elifeindia.crm.OnClickForPaymentReceiptNew;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.TestActivity;
@@ -66,7 +68,7 @@ import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
 import com.elifeindia.crm.view.activities.BillShareActivity;
 import com.elifeindia.crm.view.activities.CustomersDetailsActivity;
-import com.github.aakira.expandablelayout.ExpandableLayout;
+//import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.itextpdf.text.BaseColor;
@@ -80,7 +82,7 @@ import com.itextpdf.text.pdf.PdfDocument;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
+//import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -112,10 +114,10 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     ViewUtils viewUtils;
     RecyclerView rv_payment_list;
     PaymentListAdapter paymentListAdapter;
-    ExpandableLayout expandableLayout;
+    LinearLayout expandableLayout;
     CardView cv_filter;
     String no, amount, dateTime, areaId = "", roleType, companyId, empName, empMob, empId = "0", custId = "0", fromDate, toDate, triplePlayId = "0", value = "";
-    SearchableSpinner searchableSpinner;
+    Spinner searchableSpinner;
     Spinner spinnerArea;
     EditText paymentsearch_edit;
     ArrayAdapter<String> adapterEmployeeList;
@@ -131,6 +133,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     Bitmap image;
     List<PaymentRecieptList.PaymentReciept> paymentReciepts;
     Button btn_share;
+    ImageView filter_image;
     ProgressDialog progressBar;
 
     private static final String TAG = "PdfCreatorActivity";
@@ -153,11 +156,11 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         iv_calendar = v.findViewById(R.id.iv_calendar);
         paymentsearch_edit = v.findViewById(R.id.custmersearch_edit);
         rv_payment_list = v.findViewById(R.id.rv_payment_list);
-        expandableLayout = v.findViewById(R.id.expandableLayout);
+        expandableLayout = v.findViewById(R.id.fillterLayout);
         txt_total_collection = v.findViewById(R.id.txt_total_collection);
         txt_total_balance = v.findViewById(R.id.txt_total_balance);
         btn_share = v.findViewById(R.id.btn_share);
-
+filter_image=v.findViewById(R.id.filter_image);
         all = v.findViewById(R.id.all);
         today = v.findViewById(R.id.today);
         yesterday = v.findViewById(R.id.yesterday);
@@ -190,6 +193,17 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
         context = getActivity();
         mFragmentManager = getFragmentManager();
+
+        filter_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(expandableLayout.getVisibility()==View.VISIBLE){
+                    expandableLayout.setVisibility(View.GONE);
+                }else{
+                    expandableLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -389,11 +403,11 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
             @Override
             public void onClick(View view) {
                 if (roleType.equals("Admin")) {
-                    if (expandableLayout.isExpanded()) {
-                        expandableLayout.collapse();
-                    } else {
-                        expandableLayout.expand();
-                    }
+//                    if (expandableLayout.isExpanded()) {
+//                        expandableLayout.collapse();
+//                    } else {
+//                        expandableLayout.expand();
+//                    }
                     cv_filter.setVisibility(View.VISIBLE);
                 } else {
                     Toast.makeText(getActivity(), "Access Denied", Toast.LENGTH_SHORT).show();
@@ -409,23 +423,25 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
 
 
-//        paymentsearch_edit.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                presenter.loadPaymentListForSearch(getActivity(), companyId, custId, fromDate, toDate, triplePlayId, charSequence.toString(), empId);
-//                pb_searching.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//            }
-//        });
+        paymentsearch_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                presenter.loadPaymentListForSearch(getActivity(), companyId, custId, fromDate, toDate, triplePlayId, charSequence.toString(), empId,areaId);
+                pb_searching.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+
+        });
 
 
         return v;
@@ -647,17 +663,17 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
 
                             }*/
                 }
-//                        if(position==0){
-//                            areaId="";
-//
-//                        }else{
-//                            try {
-//                                areaId = area.get(position).getAreaID().toString();
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//
-//                            }
-//                        }
+                        if(position==0){
+                            areaId="";
+
+                        }else{
+                            try {
+                                areaId = area.get(position).getAreaID().toString();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+
+                            }
+                        }
 
 
             }

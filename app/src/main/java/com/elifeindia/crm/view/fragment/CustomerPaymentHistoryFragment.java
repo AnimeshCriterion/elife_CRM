@@ -31,8 +31,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.androidnetworking.BuildConfig;
+//
+//import com.androidnetworking.BuildConfig;
 import com.elifeindia.crm.OnClickForPaymentReceiptNew;
 import com.elifeindia.crm.R;
 import com.elifeindia.crm.adapters.PaymentListAdapter;
@@ -52,7 +52,7 @@ import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
 import com.elifeindia.crm.view.activities.ComplaintDetailsActivity;
-import com.github.aakira.expandablelayout.ExpandableLayout;
+//import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
@@ -78,7 +78,7 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
     ViewUtils viewUtils; LinearLayout root;
     RecyclerView rv_payment_list;
     PaymentListAdapter paymentListAdapter;
-    ExpandableLayout expandableLayout;
+//    ExpandableLayout expandableLayout;
     PaymentRecieptList.PaymentReciept dataSend;
     CardView cv_filter;
     String areaId = "", dateTime, companyId, empId="0", custId="0", fromDate, toDate, roleType, triplePlayId="0", value="";
@@ -103,11 +103,11 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_payment_details, container, false);
 
-        spn_emp = v.findViewById(R.id.spn_employee);
-        iv_calendar = v.findViewById(R.id.iv_calendar);
+//        spn_emp = v.findViewById(R.id.spn_employee);
+//        iv_calendar = v.findViewById(R.id.iv_calendar);
         paymentsearch_edit = v.findViewById(R.id.custmersearch_edit);
         rv_payment_list = v.findViewById(R.id.rv_payment_list);
-        expandableLayout = v.findViewById(R.id.expandableLayout);
+//        expandableLayout = v.findViewById(R.id.expandableLayout);
         txt_total_collection = v.findViewById(R.id.txt_total_collection);
         txt_total_balance = v.findViewById(R.id.txt_total_balance);
         root = v.findViewById(R.id.root);
@@ -319,12 +319,12 @@ public class CustomerPaymentHistoryFragment extends Fragment  implements Payment
         cv_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (expandableLayout.isExpanded()) {
-                    expandableLayout.collapse();
-                } else {
-                    presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
-                    expandableLayout.expand();
-                }
+//                if (expandableLayout.isExpanded()) {
+//                    expandableLayout.collapse();
+//                } else {
+//                    presenter.loadPaymentList(getContext(),companyId,custId,fromDate,toDate,triplePlayId,value,empId,areaId);
+//                    expandableLayout.expand();
+//                }
             }
         });
 

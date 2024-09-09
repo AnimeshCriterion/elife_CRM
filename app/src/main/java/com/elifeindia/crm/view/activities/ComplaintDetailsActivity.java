@@ -38,7 +38,7 @@ import com.elifeindia.crm.printersdk.Constant;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
-import com.github.aakira.expandablelayout.ExpandableLayout;
+//import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
@@ -58,8 +58,9 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
     ComplaintListContract.Presenter presenter;
     ViewUtils viewUtils;
     RecyclerView rv_payment_list;
+    ImageView filter_image;
     ComplaintListAdapter complaintListAdapter;
-    ExpandableLayout expandableLayout;
+    LinearLayout expandableLayout;
     CardView cv_filter;
     String areaId = "", companyId, empId="0", custId="0", fromDate, toDate, statusId="0", value="", roleType="";
     Spinner spn_emp, spn_status;
@@ -81,14 +82,14 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaint_details);
-
+        filter_image=findViewById(R.id.filter_imageMatch);
         viewUtils = new ViewUtils();
         presenter = new ComplaintListPresenter(this);
         presenter.start();
         adapterCallback=this;
 
 
-        //from_date.setText((todayDateString()));
+        from_date.setText((todayDateString()));
         from_date.setVisibility(View.GONE);
         mFragmentManager=getSupportFragmentManager();
 
@@ -101,6 +102,16 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
         //Toast.makeText(this, "Customer Id "+custId, Toast.LENGTH_SHORT).show();
 
         roleType = SharedPrefsData.getString(this, Constants.RoleType, Constants.PREF_NAME);
+        filter_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(expandableLayout.getVisibility()==View.VISIBLE){
+                    expandableLayout.setVisibility(View.GONE);
+                }else{
+                    expandableLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         if(roleType.equals("Admin")){
 
@@ -295,11 +306,11 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
         cv_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (expandableLayout.isExpanded()) {
-                    expandableLayout.collapse();
-                } else {
-                    expandableLayout.expand();
-                }
+//                if (expandableLayout.isExpanded()) {
+//                    expandableLayout.collapse();
+//                } else {
+//                    expandableLayout.expand();
+//                }
             }
         });
 
@@ -406,11 +417,12 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
         iv_calendar = findViewById(R.id.iv_calendar);
         paymentsearch_edit = findViewById(R.id.custmersearch_edit);
         rv_payment_list = findViewById(R.id.rv_payment_list);
-        expandableLayout = findViewById(R.id.expandableLayout);
+        expandableLayout = findViewById(R.id.expandableLayoutComplaint);
         txt_total_collection = findViewById(R.id.txt_total_collection);
         txt_total_balance = findViewById(R.id.txt_total_balance);
         spn_status = findViewById(R.id.spn_status);
         today = findViewById(R.id.today);
+
         all = findViewById(R.id.complaint_list_all);
         yesterday = findViewById(R.id.yesterday);
         thismonth = findViewById(R.id.thismonth);
@@ -603,32 +615,32 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
     @Override
     public void onClickCallback(View view, int position, final String ComplaintID) {
 
-//        statusNames = new ArrayList<String>();
-//        statusIds = new ArrayList<String>();
-//
-//        for (int i = 0; i < complaintstatuses.size(); i++) {
-//            statusNames.add(complaintstatuses.get(i).getComplaintStatus());
-//            statusIds.add(complaintstatuses.get(i).getComplaintStatusID().toString());
-//        }
-//        adapter_status = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, statusNames);
-//        adapter_status.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-//        spn_complaint_status.setAdapter(adapter_status);
-//
-//        AdapterView.OnItemSelectedListener onItemSelectedListener =
-//                new AdapterView.OnItemSelectedListener(){
-//
-//                    @Override
-//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//
-//
-//statusId = statusIds.get(position);
-//
-//
-//                    }
-//                    @Override
-//                    public void onNothingSelected(AdapterView<?> parent) {}
-//                };
-//        spn_complaint_status.setOnItemSelectedListener(onItemSelectedListener);
+        statusNames = new ArrayList<String>();
+        statusIds = new ArrayList<String>();
+
+        for (int i = 0; i < complaintstatuses.size(); i++) {
+            statusNames.add(complaintstatuses.get(i).getComplaintStatus());
+            statusIds.add(complaintstatuses.get(i).getComplaintStatusID().toString());
+        }
+        adapter_status = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, statusNames);
+        adapter_status.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spn_complaint_status.setAdapter(adapter_status);
+
+        AdapterView.OnItemSelectedListener onItemSelectedListener =
+                new AdapterView.OnItemSelectedListener(){
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+statusId = statusIds.get(position);
+
+
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {}
+                };
+        spn_complaint_status.setOnItemSelectedListener(onItemSelectedListener);
 
 
         String custId = SharedPrefsData.getString(ComplaintDetailsActivity.this, Constants.ComplaintID, Constants.PREF_NAME);

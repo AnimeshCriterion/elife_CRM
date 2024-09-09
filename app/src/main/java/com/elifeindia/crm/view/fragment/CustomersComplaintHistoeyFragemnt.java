@@ -37,7 +37,7 @@ import com.elifeindia.crm.presenter.activities.ComplaintListPresenter;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
-import com.github.aakira.expandablelayout.ExpandableLayout;
+//import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
@@ -56,7 +56,8 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
     ViewUtils viewUtils;
     RecyclerView rv_payment_list;
     ComplaintListAdapter complaintListAdapter;
-    ExpandableLayout expandableLayout;
+    ImageView filter_imageMatch;
+    LinearLayout expandableLayout;
     CardView cv_filter;
     String areaId = "", companyId, empId="0", custId="0", fromDate, toDate, statusId="0", value="";
     EditText paymentsearch_edit;
@@ -82,12 +83,13 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
         View v = inflater.inflate(R.layout.activity_complaint_details, container, false);
 
         spn_emp = v.findViewById(R.id.spn_employee);
-        iv_calendar = v.findViewById(R.id.iv_calendar);
+//        iv_calendar = v.findViewById(R.id.iv_calendar);
         paymentsearch_edit = v.findViewById(R.id.custmersearch_edit);
         rv_payment_list = v.findViewById(R.id.rv_payment_list);
-        expandableLayout = v.findViewById(R.id.expandableLayout);
+        expandableLayout = v.findViewById(R.id.expandableLayoutComplaint);
         txt_total_collection = v.findViewById(R.id.txt_total_collection);
         txt_total_balance = v.findViewById(R.id.txt_total_balance);
+        filter_imageMatch=v.findViewById(R.id.filter_imageMatch);
         spn_status = v.findViewById(R.id.spn_status);
         all = v.findViewById(R.id.complaint_list_all);
         today = v.findViewById(R.id.today);
@@ -103,7 +105,7 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
         presenter = new ComplaintListPresenter(this);
         presenter.start();
         adapterCallback=this;
-        //from_date.setText((todayDateString()));
+        from_date.setText((todayDateString()));
         from_date.setVisibility(View.GONE);
         layoutEmployee.setVisibility(View.GONE);
         v.findViewById(R.id.tool_bar).setVisibility(View.GONE);
@@ -119,6 +121,16 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
         progressDialog.show();
         presenter.loadComplaintList(getActivity(), companyId, empId, custId, "0",  null, null, "");
         presenter.loadComplaintStatus(getActivity(),companyId,"0");
+        filter_imageMatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(expandableLayout.getVisibility()==View.VISIBLE){
+                    expandableLayout.setVisibility(View.GONE);
+                }else{
+                    expandableLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
 
         all.setOnClickListener(new View.OnClickListener() {
@@ -303,14 +315,14 @@ public class CustomersComplaintHistoeyFragemnt extends Fragment implements Compl
         cv_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (expandableLayout.isExpanded()) {
-                    expandableLayout.collapse();
-                } else {
+//                if (expandableLayout.isExpanded()) {
+//                    expandableLayout.collapse();
+//                } else {
 //                    presenter.loadEmployeeList(getActivity(), companyId);
 //                    presenter.loadComplaintStatus(getActivity(), companyId);
-                    expandableLayout.expand();
+//                    expandableLayout.expand();
                 }
-            }
+//            }
         });
 
 

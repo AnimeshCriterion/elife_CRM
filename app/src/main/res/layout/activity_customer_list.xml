@@ -150,16 +150,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.github.aakira.expandablelayout.ExpandableLinearLayout
-                android:id="@+id/expandableLayout"
+            <LinearLayout
+                android:id="@+id/fillterLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:ael_expanded="false"
-                app:ael_duration="500"
-                app:ael_interpolator="bounce"
-                app:ael_orientation="vertical"
                 android:paddingTop="10dp"
+                android:visibility="gone"
                 android:paddingRight="10dp"
                 android:paddingLeft="10dp">
 
@@ -253,18 +250,18 @@
 
 
                 </LinearLayout>
-                <Button
-                    android:visibility="gone"
-                    android:id="@+id/btn_submit_filter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Submit"
-                    android:textStyle="bold"
-                    android:background="@color/colorPrimary"
-                    android:textSize="13sp"
-                    android:textColor="@color/white"
-                    android:padding="16dp" />
-            </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+<!--                <Button-->
+<!--                    android:visibility="gone"-->
+<!--                    android:id="@+id/btn_submit_filter"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Submit"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:background="@color/colorPrimary"-->
+<!--                    android:textSize="13sp"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:padding="16dp" />-->
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFilterSelection"

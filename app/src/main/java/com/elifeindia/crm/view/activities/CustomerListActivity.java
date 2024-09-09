@@ -49,7 +49,7 @@ import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.StaticAppData;
 import com.elifeindia.crm.utils.ViewUtils;
-import com.github.aakira.expandablelayout.ExpandableLayout;
+//import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -71,7 +71,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
     RecyclerView rv_customer_list, rv_paging;
     PagingAdapter pagingAdapter;
     CustomerListAdapter customerListAdapter;
-    ExpandableLayout expandableLayout;
+   LinearLayout expandableLayout;
     CardView cv_filter;
     ImageButton ivbtn_search_submit,iv_scan_button;
     String areaId = "0", companyId, empId, userId, StatusId = "0", selectCont = "100", pageNo = "1", Value = "", field_value = "", field_name = "";
@@ -86,6 +86,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
     FilterTypeAdapter filterTypeAdapter;
 
     ProgressDialog progressBar;
+    ImageView filter_image;
     View view;
     String customerID;
     LinearLayout daterange;
@@ -110,8 +111,10 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         iv_scan_button=findViewById(R.id.iv_scan_button);
         calenderDateRange=findViewById(R.id.calenderDateRange);
         custmersearch_edit = findViewById(R.id.custmersearch_edit);
+        filter_image=findViewById(R.id.filter_image);
         ivbtn_search_submit = findViewById(R.id.ivbtn_search_submit);
         daterange=findViewById(R.id.daterange);
+        expandableLayout=findViewById(R.id.fillterLayout);
 //        iv_search = findViewById(R.id.iv_search);
         spn_status = findViewById(R.id.spn_status);
         tool_bar_text = findViewById(R.id.tool_bar_text);
@@ -130,6 +133,18 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
 
                 loadRangeDatePickerMultipleBooking();
 
+            }
+        });
+
+        filter_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(expandableLayout.getVisibility()==View.VISIBLE){
+
+                    expandableLayout.setVisibility(View.GONE);
+                }else{
+                    expandableLayout.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -270,11 +285,11 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         });
         cv_filter = findViewById(R.id.cv_filter);
         cv_filter.setOnClickListener(view -> {
-            if (expandableLayout.isExpanded()) {
-                expandableLayout.collapse();
-            } else {
-                expandableLayout.expand();
-            }
+//            if (expandableLayout.isExpanded()) {
+//                expandableLayout.collapse();
+//            } else {
+//                expandableLayout.expand();
+//            }
         });
 
         companyId = SharedPrefsData.getString(this, Constants.CompanyID, Constants.PREF_NAME);
@@ -369,7 +384,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
     @Override
     public void init() {
         rv_customer_list = findViewById(R.id.rv_customer_list);
-        expandableLayout = findViewById(R.id.expandableLayout);
+//        expandableLayout = findViewById(R.id.expandableLayout);
 
 
     }

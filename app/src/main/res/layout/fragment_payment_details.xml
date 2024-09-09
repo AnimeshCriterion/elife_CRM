@@ -67,18 +67,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.github.aakira.expandablelayout.ExpandableLinearLayout
-        android:id="@+id/expandableLayout"
+    <LinearLayout
+        android:id="@+id/fillterLayoutPayment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:visibility="gone"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        app:ael_duration="500"
-        app:ael_expanded="false"
-        app:ael_interpolator="bounce"
-        app:ael_orientation="vertical">
+        android:paddingRight="10dp">
 
 
         <TextView
@@ -101,7 +98,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            <Spinner
                 android:id="@+id/spn_employee"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
@@ -149,18 +146,18 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_submit_filter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:padding="16dp"
-            android:text="Submit"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
-    </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+<!--        <Button-->
+<!--            android:id="@+id/btn_submit_filter"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            android:padding="16dp"-->
+<!--            android:text="Submit"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="13sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:visibility="gone" />-->
+</LinearLayout>
 
     <LinearLayout
         android:id="@+id/root"

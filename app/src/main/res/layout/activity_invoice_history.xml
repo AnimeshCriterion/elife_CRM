@@ -102,64 +102,64 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.github.aakira.expandablelayout.ExpandableLinearLayout
-        android:id="@+id/expandableLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        app:ael_duration="500"
-        app:ael_expanded="false"
-        app:ael_interpolator="bounce"
-        app:ael_orientation="vertical">
+<!--    <com.github.aakira.expandablelayout.ExpandableLinearLayout-->
+<!--        android:id="@+id/expandableLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:paddingLeft="10dp"-->
+<!--        android:paddingTop="10dp"-->
+<!--        android:paddingRight="10dp"-->
+<!--        app:ael_duration="500"-->
+<!--        app:ael_expanded="false"-->
+<!--        app:ael_interpolator="bounce"-->
+<!--        app:ael_orientation="vertical">-->
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center"
-            android:fontFamily="@font/abeezee_regular"
-            android:gravity="center"
-            android:text="Select Employee"
-            android:textColor="@color/colorBlack"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="start|center"-->
+<!--            android:fontFamily="@font/abeezee_regular"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Select Employee"-->
+<!--            android:textColor="@color/colorBlack"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textStyle="bold" />-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/edittext_bg1"
-            android:gravity="center"
-            android:orientation="horizontal">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="35dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="@drawable/edittext_bg1"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="horizontal">-->
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                android:id="@+id/spn_employee"
-                android:layout_width="0dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:layout_weight="9"
-                android:gravity="center" />
+<!--&lt;!&ndash;            <com.toptoche.searchablespinnerlibrary.SearchableSpinner&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/spn_employee"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="25dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_gravity="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_weight="9"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:gravity="center" />&ndash;&gt;-->
 
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
-        <Button
-            android:id="@+id/btn_submit_filter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:padding="16dp"
-            android:text="Submit"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
-    </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+<!--        <Button-->
+<!--            android:id="@+id/btn_submit_filter"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            android:padding="16dp"-->
+<!--            android:text="Submit"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="13sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:visibility="gone" />-->
+<!--    </com.github.aakira.expandablelayout.ExpandableLinearLayout>-->
 
     <LinearLayout
         android:id="@+id/root"
