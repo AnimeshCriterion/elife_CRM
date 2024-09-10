@@ -178,50 +178,44 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         progressBar.setMessage("Please wait...");
         Bundle b = getIntent().getExtras();
 
-        filterTypeAdapter.setListener(new FilterTypeAdapter.FilterTypeListener() {
-            @Override
-            public void onClickFilterBtn(int position) {
-                if (StaticAppData.filterDataList().get(position).matches("All")) {
-                    field_name = "";
-                    daterange.setVisibility(View.GONE);
-                    progressBar.show();
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0", "", StatusId, selectCont, pageNo, "", "", "","","");
-                } else if (StaticAppData.filterDataList().get(position).matches("Name")) {
-                    field_name = "name";
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
-                } else if (StaticAppData.filterDataList().get(position).matches("A/c No")) {
-                    field_name = "account_no";
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+        filterTypeAdapter.setListener(position -> {
+            if (StaticAppData.filterDataList().get(position).matches("All")) {
+                field_name = "";
+                daterange.setVisibility(View.GONE);
+                progressBar.show();
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0", "", StatusId, selectCont, pageNo, "", "", "","","");
+            } else if (StaticAppData.filterDataList().get(position).matches("Name")) {
+                field_name = "name";
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+            } else if (StaticAppData.filterDataList().get(position).matches("A/c No")) {
+                field_name = "account_no";
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
 
-                } else if (StaticAppData.filterDataList().get(position).matches("Mobile")) {
-                    field_name = "contact_no";
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+            } else if (StaticAppData.filterDataList().get(position).matches("Mobile")) {
+                field_name = "contact_no";
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
 
-                } else if (StaticAppData.filterDataList().get(position).matches("Sub ID")) {
-                    field_name = "Subscriber_id";
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+            } else if (StaticAppData.filterDataList().get(position).matches("Sub ID")) {
+                field_name = "Subscriber_id";
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
 
-                } else if (StaticAppData.filterDataList().get(position).matches("Box No")) {
-                    field_name = "Box_no";
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
-
-                }
+            } else if (StaticAppData.filterDataList().get(position).matches("Box No")) {
+                field_name = "Box_no";
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
 
             }
+
         });
 
 
-        ivbtn_search_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Value = custmersearch_edit.getText().toString();
-                if (field_name.isEmpty()) {
-                    progressBar.show();
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, " ", StatusId, selectCont, pageNo, Value, " ", " "," "," ");
-                } else {
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, " ", StatusId, selectCont, pageNo, " ", " ", field_name," "," ");
+        ivbtn_search_submit.setOnClickListener(view -> {
+            Value = custmersearch_edit.getText().toString();
+            if (field_name.isEmpty()) {
+                progressBar.show();
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, " ", StatusId, selectCont, pageNo, Value, " ", " "," "," ");
+            } else {
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, " ", StatusId, selectCont, pageNo, " ", " ", field_name," "," ");
 
-                }
             }
         });
 

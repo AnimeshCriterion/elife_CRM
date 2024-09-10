@@ -1,7 +1,6 @@
 package com.elifeindia.crm.presenter.activities;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 
 import com.elifeindia.crm.contract.activities.CustomerListContract;
