@@ -70,7 +70,6 @@ public interface ApiService {
             @Query("User_ID") String User_ID,
             @Query("Employee_ID") String Employee_ID,
             @Query("Area_ID") String Area_ID,
-            @Query("Date") String date,
             @Query("Status_ID") String Status_ID,
             @Query("selectCount") String selectCount,
             @Query("page_no") String page_no,

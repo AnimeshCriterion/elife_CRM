@@ -129,7 +129,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         filterTypeAdapter = new FilterTypeAdapter(this, StaticAppData.filterDataList());
         recyclerViewFilterType.setAdapter(filterTypeAdapter);
         areaId = SharedPrefsData.getString(this, Constants.CustAreaId, Constants.PREF_NAME);
-
+        expandableLayout.setVisibility(View.GONE);
         calenderDateRange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,7 +143,6 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
             @Override
             public void onClick(View v) {
                 if(expandableLayout.getVisibility()==View.VISIBLE){
-
                     expandableLayout.setVisibility(View.GONE);
                 }else{
                     expandableLayout.setVisibility(View.VISIBLE);
@@ -183,25 +182,25 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                 field_name = "";
                 daterange.setVisibility(View.GONE);
                 progressBar.show();
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0", "", StatusId, selectCont, pageNo, "", "", "","","");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0",  StatusId, selectCont, pageNo, "", "", "","","");
             } else if (StaticAppData.filterDataList().get(position).matches("Name")) {
                 field_name = "name";
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, "", "", "","","");
             } else if (StaticAppData.filterDataList().get(position).matches("A/c No")) {
                 field_name = "account_no";
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", "", "","","");
 
             } else if (StaticAppData.filterDataList().get(position).matches("Mobile")) {
                 field_name = "contact_no";
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", "", "","","");
 
             } else if (StaticAppData.filterDataList().get(position).matches("Sub ID")) {
                 field_name = "Subscriber_id";
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", "", "","","");
 
             } else if (StaticAppData.filterDataList().get(position).matches("Box No")) {
                 field_name = "Box_no";
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", "", "","","");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", "", "","","");
 
             }
 
@@ -212,39 +211,14 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
             Value = custmersearch_edit.getText().toString();
             if (field_name.isEmpty()) {
                 progressBar.show();
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, " ", StatusId, selectCont, pageNo, Value, " ", " "," "," ");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, " ", " "," "," ");
             } else {
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, " ", StatusId, selectCont, pageNo, " ", " ", field_name," "," ");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, " ", " ", field_name," "," ");
 
             }
         });
 
 
-        RxTextView.textChanges(custmersearch_edit)
-                .debounce(1, TimeUnit.SECONDS)
-                .subscribe(textChanged -> {
-                    Value = custmersearch_edit.getText().toString();
-                    if (field_name.isEmpty()) {
-                        try {
-                            if(fromDateData==null && toDataData==null){
-                                Log.d("TAG", "onnnnnn2");
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, " ", StatusId, selectCont, pageNo, Value, " ", " "," ","  ");
-                            }
-                            else {
-                                Log.d("TAG", "onnnnnn1");
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, " ", StatusId, selectCont, pageNo, Value, " ", " ",fromDateData,toDataData);
-
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-//                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", Value, field_name,fromDateData,toDataData);
-//                        Log.d("TAG", "onCreateStep2: ");
-                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, "", field_name,"","");
-
-                    }
-                });
 
 
         iv_calendar.setOnClickListener(view -> {
@@ -264,7 +238,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                 txt_req_date.setText(sdf.format(mcurrentDate.getTime()));
                 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                 String date = sdf1.format(mcurrentDate.getTime());
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, date, StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
                 Log.d("TAG", "onCreateStep3: ");
 
                 //SharedPrefsData.putString(CustomerListActivity.this, Constants.RequestDate, txt_req_date.getText().toString(), Constants.PREF_NAME);
@@ -298,8 +272,33 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         presenter.getPaymentStatus(CustomerListActivity.this, "0");
        // presenter.loadApi(CustomerListActivity.this, companyId, userId, empId, Value, "100", "1");
 
-         presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0", "", StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
+         presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0", StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
         Log.d("TAG", "onCreateStep4: ");
+        RxTextView.textChanges(custmersearch_edit)
+                .debounce(1, TimeUnit.SECONDS)
+                .subscribe(textChanged -> {
+                    Value = custmersearch_edit.getText().toString();
+                    if (field_name.isEmpty()) {
+                        try {
+                            if(fromDateData==null && toDataData==null){
+                                Log.d("TAG", "onnnnnn2");
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, " ", " "," ","  ");
+                            }
+                            else {
+                                Log.d("TAG", "onnnnnn1");
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, " ", " ",fromDateData,toDataData);
+
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+//                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", Value, field_name,fromDateData,toDataData);
+//                        Log.d("TAG", "onCreateStep2: ");
+                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, "", field_name,"","");
+
+                    }
+                });
 
 
     }
@@ -359,7 +358,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                 String selectedDateEnd = dateTimeFormat.format(dateObjectEnd);
                 Log.d("Calendar: ", " " + selectedDateStart + " " + selectedDateEnd);
 
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, "", "",selectedDateStart,selectedDateEnd);
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, "", "",selectedDateStart,selectedDateEnd);
                 daterange.setVisibility(View.VISIBLE);
                 fromDate.setText(("From Date :"+selectedDateStart));
                 toDate.setText(("To Date :"+selectedDateEnd));
@@ -433,9 +432,9 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                 Value=intentResult.getContents();
                 if (field_name.isEmpty()) {
                     progressBar.show();
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, "", ""," "," ");
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, "", ""," "," ");
                 } else {
-                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", Value, field_name," "," ");
+                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", Value, field_name," "," ");
 
                 }
             } else {
@@ -496,11 +495,11 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                             areaId = areaIds.get(position);
                             SharedPrefsData.putString(CustomerListActivity.this, Constants.CustAreaId, areaId, Constants.PREF_NAME);
                             areaId = SharedPrefsData.getString(CustomerListActivity.this, Constants.CustAreaId, Constants.PREF_NAME);
-                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
+                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
 
                             if (i != 1) {
                                 progressBar.show();
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name, " "," ");
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, field_value, field_name, " "," ");
 
                             }
 
@@ -509,26 +508,26 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                             SharedPrefsData.putString(CustomerListActivity.this, Constants.CustAreaId, areaId, Constants.PREF_NAME);
                             Value = "";
                             custmersearch_edit.setText("");
-                            // presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value);
+                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
 
                             if (i != 1) {
                                 progressBar.show();
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
 
 
                             }
                         }
-//                        if(position==0){
-//                            areaId="";
-//
-//                        }else{
-//                            try {
-//                                areaId = area.get(position).getAreaID().toString();
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//
-//                            }
-//                        }
+                        if(position==0){
+                            areaId="";
+
+                        }else{
+                            try {
+                                areaId = area.get(position).getAreaID().toString();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+
+                            }
+                        }
 
 
                     }
@@ -572,10 +571,10 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                             SharedPrefsData.putString(CustomerListActivity.this, Constants.StatusId, StatusId, Constants.PREF_NAME);
                             StatusId = SharedPrefsData.getString(CustomerListActivity.this, Constants.StatusId, Constants.PREF_NAME);
                             progressBar.show();
-                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
+                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
                             if (i != 1) {
                                 progressBar.show();
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
 
                             }
                         } else {
@@ -585,10 +584,10 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                             Value = "";
                             custmersearch_edit.setText("");
                             progressBar.show();
-                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
+                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
                             if (i != 1) {
                                 progressBar.show();
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
 
 
                             }
@@ -669,7 +668,8 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
             pageNo = SharedPrefsData.getString(this, Constants.PageNo, Constants.PREF_NAME);
             Value = "";
             custmersearch_edit.setText("");
-            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
+            presenter.loadArea(this,companyId,empId);
+            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
             progressBar = new ProgressDialog(this);
             progressBar.setCancelable(false);//you can cancel it by pressing back button
             progressBar.setMessage("Please wait...");
@@ -677,6 +677,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         }
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -692,7 +693,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         pageNo = id;
         Value = "";
         custmersearch_edit.setText("");
-        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
+        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, field_value, field_name,fromDateData,toDataData);
         progressBar = new ProgressDialog(this);
         progressBar.setCancelable(false);//you can cancel it by pressing back button
         progressBar.setMessage("Please wait...");
