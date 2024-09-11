@@ -24,10 +24,10 @@ allprojects {
         google()
 
         maven { url 'https://jitpack.io'
-            credentials {
-                username = project.findProperty("jitpackUsername") ?: ""
-                password =project.findProperty("jitpackToken") ?: ""
-            }
+//            credentials {
+//                username = project.findProperty("jitpackUsername") ?: ""
+//                password =project.findProperty("jitpackToken") ?: ""
+//            }
         }
     }
 }
