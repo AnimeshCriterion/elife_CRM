@@ -328,7 +328,7 @@ public class CustemersList {
         }
 
         public Object getStatusName() {
-            return statusName;
+            return statusName!=null?statusName:"";
         }
 
         public void setStatusName(Object statusName) {

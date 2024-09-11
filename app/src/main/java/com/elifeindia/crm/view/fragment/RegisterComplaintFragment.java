@@ -95,7 +95,7 @@ public class RegisterComplaintFragment extends Fragment implements AddReportCont
                         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.US);
                         //txt_req_date.setText(sdf.format(mcurrentDate.getTime()));
 
-                        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
+                        SimpleDateFormat sdf1 = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.US);
 
                         complaintDate = sdf1.format(mcurrentDate.getTime());
                         complaint_date.setText(sdf.format(mcurrentDate.getTime()));
@@ -130,7 +130,7 @@ public class RegisterComplaintFragment extends Fragment implements AddReportCont
                         mcurrentDate.set(Calendar.DAY_OF_MONTH, selectedday);
                         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.US);
                         //txt_req_date.setText(sdf.format(mcurrentDate.getTime()));
-                        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd HH:mm", Locale.US);
+                        SimpleDateFormat sdf1 = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.US);
 
                         complaintAssignDate = sdf1.format(mcurrentDate.getTime());
                         complaint_assign_date.setText(sdf.format(mcurrentDate.getTime()));
@@ -464,7 +464,7 @@ public class RegisterComplaintFragment extends Fragment implements AddReportCont
 
     private String todayDateString() {
 
-        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.US);
         Calendar cal = Calendar.getInstance();
         return dateFormat.format(cal.getTime());
 
@@ -472,7 +472,7 @@ public class RegisterComplaintFragment extends Fragment implements AddReportCont
 
     private String todayDateShow() {
 
-        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.US);
         Calendar cal = Calendar.getInstance();
         return dateFormat.format(cal.getTime());
 
