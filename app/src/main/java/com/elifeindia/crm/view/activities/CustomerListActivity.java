@@ -185,22 +185,22 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                 presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0",  StatusId, selectCont, pageNo, "", "", "","","");
             } else if (StaticAppData.filterDataList().get(position).matches("Name")) {
                 field_name = "name";
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, "", "", "","","");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, "", "", field_name,"","");
             } else if (StaticAppData.filterDataList().get(position).matches("A/c No")) {
                 field_name = "account_no";
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", "", "","","");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", "", field_name,"","");
 
             } else if (StaticAppData.filterDataList().get(position).matches("Mobile")) {
                 field_name = "contact_no";
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", "", "","","");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", "", field_name,"","");
 
             } else if (StaticAppData.filterDataList().get(position).matches("Sub ID")) {
                 field_name = "Subscriber_id";
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", "", "","","");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", "", field_name,"","");
 
             } else if (StaticAppData.filterDataList().get(position).matches("Box No")) {
                 field_name = "Box_no";
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", "", "","","");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", "", field_name,"","");
 
             }
 
@@ -282,7 +282,8 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                         try {
                             if(fromDateData==null && toDataData==null){
                                 Log.d("TAG", "onnnnnn2");
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, " ", " "," ","  ");
+                                Log.d("TAG", "onCreate: "+Value.toString());
+                                presenter.loadApiSearch(CustomerListActivity.this, companyId, userId, empId, Value, selectCont, pageNo);
                             }
                             else {
                                 Log.d("TAG", "onnnnnn1");
@@ -293,9 +294,9 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                             e.printStackTrace();
                         }
                     } else {
-//                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, "", StatusId, selectCont, pageNo, "", Value, field_name,fromDateData,toDataData);
-//                        Log.d("TAG", "onCreateStep2: ");
-                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, "", field_name,"","");
+                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0", StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
+                        Log.d("TAG", "onCreateStep2: ");
+                     //   presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, "", field_name,"","");
 
                     }
                 });
