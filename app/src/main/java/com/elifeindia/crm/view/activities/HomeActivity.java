@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +12,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.window.OnBackInvokedDispatcher;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
@@ -29,10 +30,6 @@ import com.elifeindia.crm.presenter.activities.HomePresenter;
 import com.elifeindia.crm.printersdk.PrinterSettingsActivity;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
-import com.github.javiersantos.appupdater.AppUpdater;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.github.javiersantos.appupdater.enums.Duration;
-import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -41,15 +38,12 @@ import com.google.android.play.core.install.InstallStateUpdatedListener;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
-//import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
-//import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
-//import com.smarteist.autoimageslider.SliderAnimations;
-//import com.smarteist.autoimageslider.SliderView;
+
 
 import java.util.ArrayList;
 
 
-public class HomeActivity extends AppCompatActivity implements HomeContract.View {
+public class HomeActivity extends AppCompatActivity implements HomeContract.View  {
     HomeContract.Presenter presenter;
     private DrawerLayout drawer_layout;
 //    SliderView sliderView;
@@ -72,6 +66,10 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 //        new AppUpdater(HomeActivity.this).setUpdateFrom(UpdateFrom.GOOGLE_PLAY).setDisplay(Display.DIALOG).
 //                setDuration(Duration.INDEFINITE).start();
 
+
+        // The callback can be enabled or disabled here or in handleOnBackPressed()
+
+
         ll_dashboard = findViewById(R.id.ll_dashboard);
         drawer_layout=findViewById(R.id.drawer_layout);
         imagesList=new ArrayList<>();
@@ -92,7 +90,14 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         presenter = new HomePresenter(this);
         presenter.start();
 
-
+        // Handling the back button press with OnBackPressedDispatcher
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Show the logout confirmation dialog
+                showLogoutConfirmationDialog();
+            }
+        });
         mUpdateManager = AppUpdateManagerFactory.create(this);
         mUpdateManager.getAppUpdateInfo().addOnSuccessListener(appUpdateInfo -> {
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
@@ -476,19 +481,46 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     }
 
     @Override
-    public void onBackPressed() {
-
-        super.onBackPressed();
-        final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.ListRow));
-        builder.setIcon(android.R.drawable.ic_dialog_info).setTitle("Exit App Confirmation")
-                .setMessage("Are you sure you want to close this app?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finishAffinity();
-                    }
-                }).setNegativeButton("N0", null)
-                .show();
-
+    public void handleOnBackPressed() {
+        showLogoutConfirmationDialog();
     }
+
+
+    // Inside your Activity or Fragment
+
+    private void showLogoutConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Logout Confirmation");
+        builder.setMessage("Are you sure you want to log out?");
+
+        // Set the "Yes" button
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Handle the logout logic here
+                finishAffinity();
+            }
+        });
+
+        // Set the "No" button
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
+
+
+
+
+
+
 }

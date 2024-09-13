@@ -283,7 +283,9 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                             if(fromDateData==null && toDataData==null){
                                 Log.d("TAG", "onnnnnn2");
                                 Log.d("TAG", "onCreate: "+Value.toString());
-                                presenter.loadApiSearch(CustomerListActivity.this, companyId, userId, empId, Value, selectCont, pageNo);
+                           //     presenter.loadApiSearch(CustomerListActivity.this, companyId, userId, empId, Value, selectCont, pageNo);
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0", StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
+
                             }
                             else {
                                 Log.d("TAG", "onnnnnn1");
