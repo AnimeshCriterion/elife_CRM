@@ -13,6 +13,8 @@ public interface HomeContract {
         void showError(String message);
 
         void showResult(RolewiseAccess login);
+
+        void handleOnBackPressed();
     }
 
     interface Presenter {

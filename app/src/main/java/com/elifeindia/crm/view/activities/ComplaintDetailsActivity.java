@@ -59,6 +59,7 @@ public class ComplaintDetailsActivity extends AppCompatActivity implements Compl
     ViewUtils viewUtils;
     RecyclerView rv_payment_list;
     ImageView filter_image;
+
     ComplaintListAdapter complaintListAdapter;
     LinearLayout expandableLayout;
     CardView cv_filter;
