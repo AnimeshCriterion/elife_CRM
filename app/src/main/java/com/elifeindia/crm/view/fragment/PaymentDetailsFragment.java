@@ -156,7 +156,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
         iv_calendar = v.findViewById(R.id.iv_calendar);
         paymentsearch_edit = v.findViewById(R.id.custmersearch_edit);
         rv_payment_list = v.findViewById(R.id.rv_payment_list);
-        expandableLayout = v.findViewById(R.id.fillterLayout);
+        expandableLayout = v.findViewById(R.id.fillterLayoutPayment);
         txt_total_collection = v.findViewById(R.id.txt_total_collection);
         txt_total_balance = v.findViewById(R.id.txt_total_balance);
         btn_share = v.findViewById(R.id.btn_share);
