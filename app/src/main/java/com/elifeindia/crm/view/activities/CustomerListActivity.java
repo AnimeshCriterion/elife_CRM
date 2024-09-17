@@ -513,24 +513,24 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                             custmersearch_edit.setText("");
                             presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
 
-                            if (i != 1) {
-                                progressBar.show();
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
-
-
-                            }
+//                            if (i != 1) {
+//                                progressBar.show();
+//                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
+//
+//
+//                            }
                         }
-                        if(position==0){
-                            areaId="0";
-
-                        }else{
-                            try {
-                                areaId = area.get(position).getAreaID().toString();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-
-                            }
-                        }
+//                        if(position==0){
+//                            areaId="0";
+//
+//                        }else{
+//                            try {
+//                                areaId = area.get(position).getAreaID().toString();
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//
+//                            }
+//                        }
 
 
                     }
