@@ -128,7 +128,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         recyclerViewFilterType.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.HORIZONTAL, false));
         filterTypeAdapter = new FilterTypeAdapter(this, StaticAppData.filterDataList());
         recyclerViewFilterType.setAdapter(filterTypeAdapter);
-        areaId = SharedPrefsData.getString(this, Constants.CustAreaId, Constants.PREF_NAME);
+       // areaId = SharedPrefsData.getString(this, Constants.CustAreaId, Constants.PREF_NAME);
         expandableLayout.setVisibility(View.GONE);
         calenderDateRange.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,7 +265,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         companyId = SharedPrefsData.getString(this, Constants.CompanyID, Constants.PREF_NAME);
         userId = SharedPrefsData.getString(this, Constants.UserId, Constants.PREF_NAME);
         empId = SharedPrefsData.getString(this, Constants.EmpId, Constants.PREF_NAME);
-        areaId = SharedPrefsData.getString(this, Constants.CustAreaId, Constants.PREF_NAME);
+      //  areaId = SharedPrefsData.getString(this, Constants.CustAreaId, Constants.PREF_NAME);
         SharedPrefsData.putString(this, Constants.PageNo, "1", Constants.PREF_NAME);
         SharedPrefsData.putString(this, Constants.ReceiptFlag, "false", Constants.ReceiptFlag);
         presenter.loadArea(CustomerListActivity.this, companyId, empId);
@@ -284,7 +284,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                                 Log.d("TAG", "onnnnnn2");
                                 Log.d("TAG", "onCreate: "+Value.toString());
                            //     presenter.loadApiSearch(CustomerListActivity.this, companyId, userId, empId, Value, selectCont, pageNo);
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0", StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
+                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
 
                             }
                             else {
@@ -296,7 +296,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                             e.printStackTrace();
                         }
                     } else {
-                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0", StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
+                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
                         Log.d("TAG", "onCreateStep2: ");
                      //   presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, "", field_name,"","");
 
@@ -495,9 +495,9 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                         if (position > 0) {
                             Value = "";
                             custmersearch_edit.setText("");
-                            areaId = areaIds.get(position);
+                           areaId = areaIds.get(position);
                             SharedPrefsData.putString(CustomerListActivity.this, Constants.CustAreaId, areaId, Constants.PREF_NAME);
-                            areaId = SharedPrefsData.getString(CustomerListActivity.this, Constants.CustAreaId, Constants.PREF_NAME);
+                         //   areaId = SharedPrefsData.getString(CustomerListActivity.this, Constants.CustAreaId, Constants.PREF_NAME);
                             presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, field_value, field_name," "," ");
 
                             if (i != 1) {
@@ -521,7 +521,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                             }
                         }
                         if(position==0){
-                            areaId="";
+                            areaId="0";
 
                         }else{
                             try {
