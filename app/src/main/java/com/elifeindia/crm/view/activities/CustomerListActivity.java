@@ -272,7 +272,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         presenter.getPaymentStatus(CustomerListActivity.this, "0");
        // presenter.loadApi(CustomerListActivity.this, companyId, userId, empId, Value, "100", "1");
 
-         presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, "0", StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
+         presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
         Log.d("TAG", "onCreateStep4: ");
         RxTextView.textChanges(custmersearch_edit)
                 .debounce(1, TimeUnit.SECONDS)
