@@ -195,9 +195,23 @@ public class PaymentReceiptReprentingActivity extends AppCompatActivity implemen
             @Override
             public void onClick(View view) {
                 // startActivity(new Intent(PaymentReceiptReprentingActivity.this, MainActivity.class));
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + ContactNo));
-                intent.putExtra("sms_body", "Dear " + name + ",\n\nWe have received the amount of Rs " + paidAmnt + "/- for cable bill and the balance is Rs " + remainBal + "/-" + "\n\n" + txt_header.getText().toString());
-                startActivity(intent);
+//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + ContactNo));
+//                intent.putExtra("sms_body", "Dear " + name + ",\n\nWe have received the amount of Rs " + paidAmnt + "/- for cable bill and the balance is Rs " + remainBal + "/-" + "\n\n" + txt_header.getText().toString());
+//                startActivity(intent);
+
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("smsto:" + Uri.encode(ContactNo))); // Set the recipient phone number
+                intent.putExtra("sms_body", "Dear " + name + ",\n\nWe have received the amount of Rs "
+                        + paidAmnt + "/- for cable bill and the balance is Rs "
+                        + remainBal + "/-" + "\n\n" + txt_header.getText().toString());
+
+// Verify that there is an SMS app available to handle the intent
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    // Handle the case where no SMS app is installed
+                    Toast.makeText(PaymentReceiptReprentingActivity.this, "No SMS app found.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

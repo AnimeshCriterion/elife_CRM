@@ -52,6 +52,7 @@ import com.elifeindia.crm.adapters.AdapterCallbackTextView;
 import com.elifeindia.crm.adapters.generate_invoice_module.CableBoxDetailsBillShareAdapter;
 import com.elifeindia.crm.adapters.generate_invoice_module.InternetBoxDetailsAdapter;
 import com.elifeindia.crm.model.GetInvoiceModel;
+import com.elifeindia.crm.printersdk.PaymentReceiptReprentingActivity;
 import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
@@ -265,9 +266,24 @@ public class BillShareActivity extends AppCompatActivity   {
             public void onClick(View view) {
                 // startActivity(new Intent(PaymentReceiptActivity.this, MainActivity.class));
 
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + CustMob));
-                intent.putExtra("sms_body", "Dear " + CustName + ",\n\nWe have received the amount of Rs " + getIntent().getExtras().getString("paidAmt") + "/- for " + BillType + " Bill and the balance is Rs " + newBalance + "/-" + "\n\n" + txt_header.getText().toString());
-                startActivity(intent);
+//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + CustMob));
+//                intent.putExtra("sms_body", "Dear " + CustName + ",\n\nWe have received the amount of Rs " + getIntent().getExtras().getString("paidAmt") + "/- for " + BillType + " Bill and the balance is Rs " + newBalance + "/-" + "\n\n" + txt_header.getText().toString());
+//                startActivity(intent);
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("smsto:" + Uri.encode(CustMob))); // Set the recipient phone number
+
+                intent.putExtra("sms_body", "Dear " + CustName + ",\n\nWe have received the amount of Rs "
+                        + paidAmount + "/- for " + BillType + " Bill and the balance is Rs "
+                        + newBalance + "/-" + "\n\n" + txt_header.getText().toString());
+
+// Verify that there is an SMS app available to handle the intent
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    // Handle the case where no SMS app is available
+                    Toast.makeText(BillShareActivity.this, "No SMS app found.", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
