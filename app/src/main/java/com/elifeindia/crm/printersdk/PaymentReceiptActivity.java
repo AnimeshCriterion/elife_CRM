@@ -860,7 +860,12 @@ public class PaymentReceiptActivity extends AppCompatActivity implements Payment
 
                 while (var4.hasNext()) {
                     device1 = (BluetoothDevice) var4.next();
-                    String ID = device1.toString();
+                    String ID = "";
+                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.UPSIDE_DOWN_CAKE){
+                        ID=device1.getAddress().toString();
+                    }else{
+                        ID=device1.toString();
+                    }
                     try {
 
                     } catch (Exception ex) {
