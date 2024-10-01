@@ -587,8 +587,7 @@ try {
                         "Mobile Number: " + txt_emp_mob_no.getText().toString() + "\n" +
 
 
-                        "------------------------\n" +
-                        "" + txt_header.getText().toString().trim();
+                        "------------------------\n" + txt_header.getText().toString().trim();
 
 //        Log.d("TAG", "shareItOnWhatsApp1: "+customerPhoneNumber.toString());
         String url = "https://api.whatsapp.com/send?phone=" + customerPhoneNumber + "&text=" + message;
