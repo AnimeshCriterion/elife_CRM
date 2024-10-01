@@ -127,7 +127,12 @@ public class CableBoxDetailsBillShareAdapter extends RecyclerView.Adapter<CableB
             holder.stbno_text.setText("STB No");
             holder.stbno.setText(cableBoxList.get(position).getCableBox().getStbno()!=null?cableBoxList.get(position).getCableBox().getStbno().toString():"");
             holder.cafnum.setText(cableBoxList.get(position).getCableBox().getCafno()!=null?cableBoxList.get(position).getCableBox().getCafno().toString():"");
-            holder.vcnum.setText(cableBoxList.get(position).getCableBox().getVcno().toString());
+
+   if(cableBoxList.get(position).getCableBox().getVcno()!=null && !cableBoxList.get(position).getCableBox().getVcno().isEmpty()){
+           holder.vcnum.setText(cableBoxList.get(position).getCableBox().getVcno().toString());
+   }
+
+
             String date = null;
             date = ViewUtils.changeDateFormat(cableBoxList.get(position).getCableBox().getExpiry_Date().toString());
             holder.expirtydate.setText(date);
