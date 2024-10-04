@@ -211,9 +211,9 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
             Value = custmersearch_edit.getText().toString();
             if (field_name.isEmpty()) {
                 progressBar.show();
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, " ", " "," "," ");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", " ", " "," "," ");
             } else {
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, " ", " ", field_name," "," ");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, " ", Value, field_name," "," ");
 
             }
         });
