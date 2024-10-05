@@ -211,7 +211,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
             Value = custmersearch_edit.getText().toString();
             if (field_name.isEmpty()) {
                 progressBar.show();
-                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, "", " ", " "," "," ");
+                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, " ", " "," "," ");
             } else {
                 presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, " ", Value, field_name," "," ");
 
@@ -281,8 +281,8 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                     if (field_name.isEmpty()) {
                         try {
                             if(fromDateData==null && toDataData==null){
-                                Log.d("TAG", "onnnnnn2");
-                                Log.d("TAG", "onCreate: "+Value.toString());
+                              //  Log.d("TAG", "onnnnnn2");
+                           //     Log.d("TAG", "onCreate: "+Value.toString());
                            //     presenter.loadApiSearch(CustomerListActivity.this, companyId, userId, empId, Value, selectCont, pageNo);
                                 presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
 
@@ -296,7 +296,7 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
                             e.printStackTrace();
                         }
                     } else {
-                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
+                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, "", Value, field_name,"","");
                         Log.d("TAG", "onCreateStep2: ");
                      //   presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, "", field_name,"","");
 
