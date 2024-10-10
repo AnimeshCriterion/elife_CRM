@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -123,7 +124,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         }
 
 
-        findViewById(R.id.btn_customerList).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_customerList).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(HomeActivity.this, CustomerListActivity.class);
@@ -132,14 +133,14 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             }
         });
 
-        findViewById(R.id.collectiondetails_btn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.collectiondetails_btn).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this, CollectionDetailsActivity.class));
             }
         });
 
-        findViewById(R.id.compliantslist_btn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.compliantslist_btn).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -147,7 +148,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
                 startActivity(i);
             }
         });
-        findViewById(R.id.cardViewResetPassword).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.cardViewResetPassword).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 drawer_layout.closeDrawer(GravityCompat.START);
@@ -156,7 +157,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             }
         });
 
-        findViewById(R.id.ll_compl_summary).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_compl_summary).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(HomeActivity.this, R.style.ListRow));
@@ -173,7 +174,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             }
         });
 
-        findViewById(R.id.ll_invoice).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_invoice).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -193,7 +194,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             }
         });
 
-        findViewById(R.id.addcomplaint_btn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.addcomplaint_btn).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(HomeActivity.this, R.style.ListRow));
@@ -213,7 +214,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             }
         });
 
-        findViewById(R.id.ll_customerList).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_customerList).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(HomeActivity.this, CustomerListActivity.class);
@@ -222,21 +223,21 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             }
         });
 
-        findViewById(R.id.ll_payments).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_payments).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this, CollectionDetailsActivity.class));
             }
         });
 
-        findViewById(R.id.ll_complaints).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_complaints).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this, ComplaintDetailsActivity.class));
             }
         });
 
-        findViewById(R.id.ll_invoices).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_invoices).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 //startActivity(new Intent(HomeActivity.this, InvoiceHistoryActivity.class));
@@ -254,65 +255,38 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
             }
         });
 
-        findViewById(R.id.rl_dashboard).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        findViewById(R.id.rl_dashboard).setOnClickListener(view -> drawer_layout.closeDrawer(Gravity.LEFT));
+        findViewById(R.id.rl_share).setOnClickListener(view -> {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT,
+                    "Hey check out our eLife CRM app at: https://play.google.com/store/apps/details?id=" + "elifeIndia.CRMS");
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+
+            // startActivity(new Intent(HomeActivity.this, ComplaintDetailsActivity.class));
+        });
+        findViewById(R.id.rl_contact).setOnClickListener(view -> {
+
+            String phone = "+91 8099346155";
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+            startActivity(intent);
+         //   startActivity(new Intent(HomeActivity.this, ComplaintDetailsActivity.class));
+        });
+        findViewById(R.id.rl_about).setOnClickListener(view -> {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.elifeindia.in")));
+            //startActivity(new Intent(HomeActivity.this, AboutAppActivity.class));
+        });findViewById(R.id.rl_notifications).setOnClickListener(view -> startActivity(new Intent(HomeActivity.this, PrinterSettingsActivity.class)));
+
+        findViewById(R.id.rl_logout).setOnClickListener(view -> startActivity(new Intent(HomeActivity.this, LoginActivity.class)));
+
+        findViewById(R.id.iv_back).setOnClickListener(view -> {
+            if (drawer_layout.isDrawerOpen(Gravity.LEFT)) {
                 drawer_layout.closeDrawer(Gravity.LEFT);
-            }
-        });
-        findViewById(R.id.rl_share).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT,
-                        "Hey check out our eLife CRM app at: https://play.google.com/store/apps/details?id=" + "elifeIndia.CRMS");
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
+                getWindow().setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            } else {
+                drawer_layout.openDrawer(Gravity.LEFT);
 
-                // startActivity(new Intent(HomeActivity.this, ComplaintDetailsActivity.class));
-            }
-        });
-        findViewById(R.id.rl_contact).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String phone = "+91 8099346155";
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
-                startActivity(intent);
-             //   startActivity(new Intent(HomeActivity.this, ComplaintDetailsActivity.class));
-            }
-        });
-        findViewById(R.id.rl_about).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.elifeindia.in")));
-                //startActivity(new Intent(HomeActivity.this, AboutAppActivity.class));
-            }
-        });findViewById(R.id.rl_notifications).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, PrinterSettingsActivity.class));
-            }
-        });
-
-        findViewById(R.id.rl_logout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-            }
-        });
-
-        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (drawer_layout.isDrawerOpen(Gravity.LEFT)) {
-                    drawer_layout.closeDrawer(Gravity.LEFT);
-                    getWindow().setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-                } else {
-                    drawer_layout.openDrawer(Gravity.LEFT);
-
-                }
             }
         });
 
@@ -393,7 +367,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
 
         private void showCompletedUpdate() {
             Snackbar snackbar = Snackbar.make(drawer_layout, "New App is Ready", Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction("Install", new View.OnClickListener() {
+            snackbar.setAction("Install", new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mUpdateManager.completeUpdate();

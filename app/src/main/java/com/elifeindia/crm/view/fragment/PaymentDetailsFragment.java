@@ -116,7 +116,7 @@ public class PaymentDetailsFragment extends Fragment implements PaymentListContr
     PaymentListAdapter paymentListAdapter;
     LinearLayout expandableLayout;
     CardView cv_filter;
-    String no, amount, dateTime, areaId = "", roleType, companyId, empName, empMob, empId = "0", custId = "0", fromDate, toDate, triplePlayId = "0", value = "";
+    String no, amount, dateTime, areaId = "0", roleType, companyId, empName, empMob, empId = "0", custId = "0", fromDate, toDate, triplePlayId = "0", value = "";
     Spinner searchableSpinner;
     Spinner spinnerArea;
     EditText paymentsearch_edit;
@@ -664,7 +664,7 @@ filter_image=v.findViewById(R.id.filter_image);
                             }*/
                 }
                         if(position==0){
-                            areaId="";
+                            areaId="0";
 
                         }else{
                             try {
