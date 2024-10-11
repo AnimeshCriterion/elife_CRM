@@ -437,25 +437,25 @@ filter_image=v.findViewById(R.id.filter_image);
         presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
 
 
-        paymentsearch_edit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                presenter.loadPaymentListForSearch(getActivity(), companyId, custId, fromDate, toDate, triplePlayId, charSequence.toString(), empId,areaId);
-                pb_searching.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-
-
-        });
+//        paymentsearch_edit.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                presenter.loadPaymentListForSearch(getActivity(), companyId, custId, fromDate, toDate, triplePlayId, charSequence.toString(), empId,areaId);
+//                pb_searching.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//
+//
+//        });
 
 
         return v;
