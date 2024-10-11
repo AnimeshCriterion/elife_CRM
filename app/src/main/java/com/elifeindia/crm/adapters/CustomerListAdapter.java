@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +22,7 @@ import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.view.activities.CustomersDetailsActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,11 +32,14 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         this.context = context;
         this.custemersLists = custemersLists;
         this.adapterInterface = adapterInterface;
+
     }
 
     Context context;
-    List<CustemersList.Customer> custemersLists;
+    List<CustemersList.Customer> custemersLists;  //original data list
     AdapterInterface adapterInterface;
+
+
 
 
 
@@ -167,6 +170,8 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         Log.d("TAG", "getItemCountAnime's: "+custemersLists.size());
         return custemersLists.size();
     }
+
+
 
     @Override
     public long getItemId(int position) {

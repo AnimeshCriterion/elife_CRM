@@ -23,6 +23,7 @@ import com.elifeindia.crm.sharedpref.Constants;
 import com.elifeindia.crm.sharedpref.SharedPrefsData;
 import com.elifeindia.crm.utils.ViewUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,11 +33,13 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
     Context context;
     OnClickForPaymentReceiptNew onClickForPaymentReceiptNew;
     List<PaymentRecieptList.PaymentReciept> paymentReciepts;
+    private List<PaymentRecieptList.PaymentReciept> itemList;
 
     public PaymentListAdapter(Context context, List<PaymentRecieptList.PaymentReciept> paymentReciepts,OnClickForPaymentReceiptNew onClickForPaymentReceiptNew) {
         this.context = context;
         this.paymentReciepts = paymentReciepts;
         this.onClickForPaymentReceiptNew=onClickForPaymentReceiptNew;
+        this.itemList=new ArrayList<>(paymentReciepts);
     }
 
     @NonNull
@@ -91,6 +94,24 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
     @Override
     public int getItemCount() {
         return paymentReciepts.size();
+    }
+
+    public void filter(String text) {
+        paymentReciepts.clear();
+        if (text.isEmpty()) {
+            paymentReciepts.addAll(itemList);
+        } else {
+            text = text.toLowerCase();
+            for (PaymentRecieptList.PaymentReciept item : itemList) {
+                // Search by name, category, or description
+                if (item.getName().toLowerCase().contains(text) ||
+                        item.getContactNo().toLowerCase().contains(text) ||item.getAccountNo().toString().contains(text) ||
+                        item.getSubscriberID().toLowerCase().contains(text)) {
+                    paymentReciepts.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     public class MyviewHolder extends RecyclerView.ViewHolder {

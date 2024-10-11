@@ -6,6 +6,8 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import com.elifeindia.crm.Capture;
@@ -67,6 +69,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
+
+import rx.functions.Action1;
 
 public class CustomerListActivity extends AppCompatActivity implements CustomerListContract.View, AdapterCallback , AdapterInterface {
     CustomerListContract.Presenter presenter;
@@ -276,32 +280,38 @@ public class CustomerListActivity extends AppCompatActivity implements CustomerL
         Log.d("TAG", "onCreateStep4: ");
         RxTextView.textChanges(custmersearch_edit)
                 .debounce(1, TimeUnit.SECONDS)
-                .subscribe(textChanged -> {
-                    Value = custmersearch_edit.getText().toString();
-                    if (field_name.isEmpty()) {
-                        try {
-                            if(fromDateData==null && toDataData==null){
-                              //  Log.d("TAG", "onnnnnn2");
-                           //     Log.d("TAG", "onCreate: "+Value.toString());
-                           //     presenter.loadApiSearch(CustomerListActivity.this, companyId, userId, empId, Value, selectCont, pageNo);
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, field_value, field_name,"","");
+                .subscribe(new Action1<CharSequence>() {
+                    @Override
+                    public void call(CharSequence textChanged) {
+                        Value = custmersearch_edit.getText().toString();
+                        if (field_name.isEmpty()) {
+                            try {
+                                if (fromDateData == null && toDataData == null) {
+                                    //  Log.d("TAG", "onnnnnn2");
+                                    //     Log.d("TAG", "onCreate: "+Value.toString());
+                                    //     presenter.loadApiSearch(CustomerListActivity.this, companyId, userId, empId, Value, selectCont, pageNo);
+                                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, field_value, field_name, "", "");
 
-                            }
-                            else {
-                                Log.d("TAG", "onnnnnn1");
-                                presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId,  StatusId, selectCont, pageNo, Value, " ", " ",fromDateData,toDataData);
+                                } else {
+                                    Log.d("TAG", "onnnnnn1");
+                                    presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, " ", " ", fromDateData, toDataData);
 
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } else {
+                            presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, "", Value, field_name, "", "");
+                            Log.d("TAG", "onCreateStep2: ");
+                            //   presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, "", field_name,"","");
+
                         }
-                    } else {
-                        presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, "", Value, field_name,"","");
-                        Log.d("TAG", "onCreateStep2: ");
-                     //   presenter.loadCustomersDateWise(CustomerListActivity.this, companyId, userId, empId, areaId, StatusId, selectCont, pageNo, Value, "", field_name,"","");
-
                     }
                 });
+
+        // Listen for changes in the EditText
+
+
 
 
     }

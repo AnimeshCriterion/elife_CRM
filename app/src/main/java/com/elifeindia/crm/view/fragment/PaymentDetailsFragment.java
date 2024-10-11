@@ -224,6 +224,20 @@ filter_image=v.findViewById(R.id.filter_image);
         });
 
 
+
+        paymentsearch_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                paymentListAdapter.filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
+
         all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -386,19 +400,19 @@ filter_image=v.findViewById(R.id.filter_image);
         progressBar.setMessage("Please wait...");
         presenter.loadArea(getContext(), companyId, empId);
         presenter.loadEmployeeList(getContext(), companyId, empId, roleType);
-        paymentsearch_edit.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    progressBar.show();
-                    presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
-                    pb_searching.setVisibility(View.VISIBLE);
-
-                    return true;
-                }
-                return false;
-            }
-        });
+//        paymentsearch_edit.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    progressBar.show();
+//                    presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
+//                    pb_searching.setVisibility(View.VISIBLE);
+//
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
         cv_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -592,6 +606,7 @@ filter_image=v.findViewById(R.id.filter_image);
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "onItemSelected: "+String.valueOf(position));
                 if (position > 0) {
                     empId = empIds.get(position);
                     Log.d(TAG, "onItemSelected: " + empIds.get(position));
@@ -600,9 +615,13 @@ filter_image=v.findViewById(R.id.filter_image);
                     paymentsearch_edit.setText(empName);
                     progressBar.show();
                     presenter.loadArea(getContext(), companyId, empId);
-                    //  presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
+                      //presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
 
-                } else {
+                } else if(position==0) {
+                    empId="0";
+                        presenter.loadPaymentList(getContext(), companyId, custId, fromDate, toDate, triplePlayId, value, empId, areaId);
+
+
                     // presenter.loadEmployeeList(getContext(), companyId, empId, roleType);
                 }
 
